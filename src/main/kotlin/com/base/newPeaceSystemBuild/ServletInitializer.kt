@@ -1,4 +1,4 @@
-package com.base
+package com.base.newPeaceSystemBuild
 
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer

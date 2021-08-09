@@ -1,0 +1,14 @@
+server:
+  port: 8050
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mariadb://127.0.0.1:3306/peaceSystemBuild?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull
+    username: sbsst
+    password: sbs123414
+mybatis:
+  type-aliases-package: com.base.newPeaceSystemBuild.vo
+custom:
+  logging:
+    dir: log
+    level: debug

@@ -1,4 +1,4 @@
-package com.base
+package com.base.newPeaceSystemBuild
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
