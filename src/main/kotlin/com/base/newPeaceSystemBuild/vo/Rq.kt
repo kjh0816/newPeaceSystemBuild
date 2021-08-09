@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.vo
 
+import com.base.newPeaceSystemBuild.util.Ut
 import org.springframework.context.annotation.Scope
 import org.springframework.context.annotation.ScopedProxyMode
 import org.springframework.stereotype.Component
@@ -9,30 +10,24 @@ import javax.servlet.http.HttpSession
 // Componet를 지정해주면 view 파일에서 @rq.~로 접근할 수 있다.(rq 객체를 setAttribute 해주지 않아도 된다.)
 @Component
 // HTTPS request 객체당 하나의 빈을 return
-// requst 단위(사용자마다) 다른 rq 클래스를 참조한다.
+// request 단위(사용자마다) 다른 rq 클래스를 참조한다.
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 class Rq {
     private var currentPageCanGoEditCurrentKen: Boolean = false
     private lateinit var req: HttpServletRequest
     private var isLogined: Boolean = false
-    private var loginedMember: Member? = null
-    private var currentPageCanSaveKen = false
+    private var loginedMember: Any? = null
+
 
     fun isLogined(): Boolean {
         return this.isLogined
     }
 
-    fun getLoginedMember(): Member? {
+    fun getLoginedMember(): Any? {
         return loginedMember
     }
 
-    fun setCurrentPageCanSaveKen(can: Boolean) {
-        this.currentPageCanSaveKen = can
-    }
 
-    fun isCurrentPageCanSaveKen(): Boolean {
-        return currentPageCanSaveKen
-    }
 
     fun setLoginInfo(session: HttpSession) {
         if (session.getAttribute("loginedMemberJsonStr") == null) {
@@ -81,7 +76,7 @@ class Rq {
     }
 
 
-    fun login(member: Member) {
+    fun login(member: Any) {
         req.session.setAttribute("loginedMemberJsonStr", Ut.getJsonStrFromObj(member))
     }
 
