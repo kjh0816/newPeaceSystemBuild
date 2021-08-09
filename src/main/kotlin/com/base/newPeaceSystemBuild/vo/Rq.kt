@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession
 // request 단위(사용자마다) 다른 rq 클래스를 참조한다.
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 class Rq {
-    private var currentPageCanGoEditCurrentKen: Boolean = false
+
     private lateinit var req: HttpServletRequest
     private var isLogined: Boolean = false
     private var loginedMember: Member? = null
