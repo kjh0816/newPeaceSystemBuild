@@ -8,11 +8,11 @@
 		<version>2.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.base</groupId>
-	<artifactId>com.base</artifactId>
+	<groupId>com.base.newPeaceSystemBuild</groupId>
+	<artifactId>com.base.newPeaceSystemBuild</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>com.base</name>
+	<name>com.base.newPeaceSystemBuild</name>
 	<description>NewPeaceSystemBuild</description>
 	<properties>
 		<java.version>16</java.version>
