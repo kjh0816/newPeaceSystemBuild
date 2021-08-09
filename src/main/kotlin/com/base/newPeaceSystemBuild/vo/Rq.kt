@@ -16,14 +16,14 @@ class Rq {
     private var currentPageCanGoEditCurrentKen: Boolean = false
     private lateinit var req: HttpServletRequest
     private var isLogined: Boolean = false
-    private var loginedMember: Any? = null
+    private var loginedMember: Member? = null
 
 
     fun isLogined(): Boolean {
         return this.isLogined
     }
 
-    fun getLoginedMember(): Any? {
+    fun getLoginedMember(): Member? {
         return loginedMember
     }
 
@@ -76,7 +76,7 @@ class Rq {
     }
 
 
-    fun login(member: Any) {
+    fun login(member: Member) {
         req.session.setAttribute("loginedMemberJsonStr", Ut.getJsonStrFromObj(member))
     }
 
