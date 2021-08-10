@@ -3,9 +3,9 @@ package com.base.newPeaceSystemBuild.util
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import java.net.URLEncoder
 
 class Ut {
-
     //    전역 변수, 함수를 설정할 수 있는 companion object
     companion object {
         //        <reified T>를 통해 어떤 데이터 타입인지 알 수 있다.
@@ -20,6 +20,15 @@ class Ut {
             val mapper = ObjectMapper().registerKotlinModule()
 
             return mapper.writeValueAsString(obj)
+        }
+
+        // URI 인코딩 함수
+        fun getUriEncoded(uri: String): String {
+            return try {
+                URLEncoder.encode(uri, "UTF-8")
+            } catch (e: Exception) {
+                uri
+            }
         }
     }
 }

@@ -8,16 +8,18 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class BeforeActionInterceptor : HandlerInterceptor {
+class NeedLoginInterceptor : HandlerInterceptor {
     @Autowired
-    private lateinit var rq: Rq
+    private lateinit var rq: Rq;
 
     override fun preHandle(req: HttpServletRequest, resp: HttpServletResponse, handler: Any): Boolean {
-        println("인터셉터 실행")
+        println("로그인 인터셉터 실행")
+        if (!rq.isLogined()) {
+            rq.respUtf8()
+            rq.printReplaceJs("로그인 후 이용해주세요.", "../../usr/member/login?afterLoginUri=${rq.getEncodedAfterLoginUri()}")
 
-        rq.initWith(req, resp)
-
-        rq.setLoginInfo(req.session)
+            return false
+        }
 
         return super.preHandle(req, resp, handler)
     }
