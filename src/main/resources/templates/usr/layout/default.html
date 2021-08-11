@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="usr/fragments/head :: head">
+  <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">[[#{common.logoText}]]</title>
+</head>
+<body>
+<div class="site-wrap flex flex-col min-h-screen">
+  <header th:replace="usr/fragments/header :: header" >
+    <p>Page header goes here</p>
+  </header>
+  <main layout:fragment="main" class="flex-grow h-0 mt-2">
+    <p>Page content goes here</p>
+  </main>
+  <footer th:replace="usr/fragments/footer :: footer">
+    <p>Page footer goes here</p>
+  </footer>
+</div>
+</body>
+</html>

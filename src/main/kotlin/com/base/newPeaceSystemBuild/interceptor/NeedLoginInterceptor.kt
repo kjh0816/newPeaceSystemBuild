@@ -16,7 +16,7 @@ class NeedLoginInterceptor : HandlerInterceptor {
         println("로그인 인터셉터 실행")
         if (!rq.isLogined()) {
             rq.respUtf8()
-            rq.printReplaceJs("로그인 후 이용해주세요.", "../../usr/member/login?afterLoginUri=${rq.getEncodedAfterLoginUri()}")
+            rq.printReplaceJs("로그인 후 이용해주세요.", "/usr/member/login?afterLoginUri=${rq.getEncodedAfterLoginUri()}")
 
             return false
         }

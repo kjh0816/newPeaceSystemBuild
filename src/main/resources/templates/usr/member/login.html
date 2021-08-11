@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>로그인</title>
+</head>
+
+<main layout:fragment="main">
+    <form action="./doLogin">
+        <div>
+            <input type="text" name="loginId" placeholder="아이디를 입력해주세요.">
+        </div>
+        <div>
+            <input type="text" name="loginPw" placeholder="비밀번호를 입력해주세요.">
+        </div>
+        <div>
+            <input type="submit" value="로그인">
+        </div>
+    </form>
+</main>
+
+</html>

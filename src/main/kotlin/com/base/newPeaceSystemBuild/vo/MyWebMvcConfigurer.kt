@@ -21,6 +21,7 @@ class MyWebMvcConfigurer(
             .excludePathPatterns("/error")
         registry.addInterceptor(needLoginInterceptor)
             .addPathPatterns("/usr/account/home")
+            .addPathPatterns("/usr/member/doLogout")
         registry.addInterceptor(needLogoutInterceptor)
             .addPathPatterns("/usr/member/login")
             .addPathPatterns("/usr/member/doLogin")

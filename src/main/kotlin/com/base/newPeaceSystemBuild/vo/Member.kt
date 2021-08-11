@@ -1,23 +1,23 @@
 package com.base.newPeaceSystemBuild.vo
 
-data class Member (
-        private val id: Int,
+data class Member(
+    val id: Int,
 
-        private val regDate: String,
-        private val updateDate: String,
+    val regDate: String,
+    val updateDate: String,
 
-        private val roleLevel: Int,
+    val roleLevel: Int,
 
-        private val loginId: String,
-        private val loginPw: String,
+    val loginId: String,
+    val loginPw: String,
 
-        private val name: String,
-        private val cellphoneNo: String,
-        private val email: String,
+    val name: String,
+    val cellphoneNo: String,
+    val email: String,
 
-        private val location: String,
-        private val profile: String,
+    val location: String,
+    val profile: String,
 
-        private val delStatus: Boolean,
-        private val delDate: String
-        )
+    val delStatus: Int,
+    val delDate: String?
+)

@@ -16,7 +16,7 @@ class NeedLogoutInterceptor : HandlerInterceptor {
         println("로그아웃 인터셉터 실행")
         if (rq.isLogined()) {
             rq.respUtf8()
-            rq.printReplaceJs("로그아웃 후 이용해주세요.", "../../usr/account/home")
+            rq.printReplaceJs("로그아웃 후 이용해주세요.", "/usr/account/home")
 
             return false
         }
