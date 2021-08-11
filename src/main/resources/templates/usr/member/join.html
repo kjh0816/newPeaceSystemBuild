@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>회원가입</title>
+</head>
+
+<main layout:fragment="main">
+    <form action="./doJoin">
+        <select name="roleLevel">
+            <option value="0" disabled="disabled" selected="selected">직업 선택</option>
+            <th:block th:each="role : ${roles}">
+                <option th:value="${role.id}" th:text="${role.roleName}">roleName</option>
+            </th:block>
+        </select>
+        <div>
+            <input type="text" name="loginId" placeholder="아이디를 입력해주세요.">
+        </div>
+        <div>
+            <input type="text" name="loginPw" placeholder="비밀번호를 입력해주세요.">
+        </div>
+        <div>
+            <input type="text" name="name" placeholder="이름을 입력해주세요.">
+        </div>
+        <div>
+            <input type="text" name="cellphoneNo" placeholder="전화번호를 입력해주세요.">
+        </div>
+        <div>
+            <input type="text" name="email" placeholder="이메일을 입력해주세요.">
+        </div>
+        <div>
+            <select name="location">
+                <option value="" disabled selected>지역 선택</option>
+                <option value="서울">서울</option>
+                <option value="대전">대전</option>
+                <option value="대구">대구</option>
+                <option value="부산">부산</option>
+            </select>
+        </div>
+        <div>
+            <textarea rows="5" cols="20" name="profile" placeholder="자기소개를 입력해주세요."></textarea>
+        </div>
+        <div>
+            <input type="submit" value="가입">
+        </div>
+    </form>
+</main>
+
+</html>
