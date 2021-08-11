@@ -22,9 +22,10 @@ class MyWebMvcConfigurer(
         registry.addInterceptor(needLoginInterceptor)
             .addPathPatterns("/usr/account/home")
         registry.addInterceptor(needLogoutInterceptor)
-            .addPathPatterns("/usr/member/login")
-            .addPathPatterns("/usr/member/doLogin")
-            .addPathPatterns("/usr/member/join")
-            .addPathPatterns("/usr/member/doJoin")
+            .addPathPatterns("/**")
+            .excludePathPatterns("/usr/member/login")
+            .excludePathPatterns("/usr/member/doLogin")
+            .excludePathPatterns("/usr/member/join")
+            .excludePathPatterns("/usr/member/doJoin")
     }
 }

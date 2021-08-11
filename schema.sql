@@ -10,7 +10,7 @@ USE peaceSystemBuild;
 
 # 직업에 대한 테이블 생성
 CREATE TABLE `role`(
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '사용자 직업 (0 = 에러, 1 = 장례지도사, 2 = 영업자)',
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '사용자 직업 (0 = 에러, 1 = 관리자, 2 = 장례지도사, 3 = 영업자)',
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL
 );
