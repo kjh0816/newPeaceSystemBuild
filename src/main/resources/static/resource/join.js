@@ -90,22 +90,6 @@ function MemberJoin__submit(form) {
 // 폼체크 함수 끝
 
 // AJax 요청으로 회원정보 체크 시작
-$("#join-submit").click(function(){
-    var checked = $("#join-submit").val();
-    if(!checked.contains('loginId')){
-        $("#loginIdCheckMsg").html('아이디 중복을 확인해주세요.');
-
-        return false;
-    }
-});
-$("#join-submit").click(function(){
-    var checked = $("#join-submit").val();
-    if(!checked.contains('email')){
-        $("#emailCheckMsg").html('이메일 중복을 확인해주세요.');
-
-        return false;
-    }
-});
 $('#loginId').blur(function(){
     var loginId = $('#loginId').val();
     $("#join-submit").val() + 'loginId';
@@ -172,6 +156,9 @@ $('#email').blur(function(){
         }
     });
 });
+// 비밀번호 중복체크는 데이터베이스에있는 정보랑 비교하는것이 아니고,
+// 사용자가 방금 입력한 비밀번호랑 비교하는것이기때문에 AJax 요청을 보낼 필요가 없다.
+// 하지만 비동기 처리방식이기 때문에 이쪽 카테고리에 들어가있는것이다.
 $('#loginPwCheck').blur(function(){
     var loginPw = $("#loginPw").val();
     var loginPwCheck = $("#loginPwCheck").val();
