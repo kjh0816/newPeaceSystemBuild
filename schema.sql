@@ -12,9 +12,26 @@ USE peaceSystemBuild;
 CREATE TABLE `role`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '사용자 직업 (0 = 에러, 1 = 관리자, 2 = 장례지도사, 3 = 영업자)',
 	regDate DATETIME NOT NULL,
-	updateDate DATETIME NOT NULL
+	updateDate DATETIME NOT NULL,
+	roleName CHAR(20) UNIQUE NOT NULL
 );
 
+INSERT INTO `role`
+SET regDate = NOW(),
+updateDate = NOW(),
+roleName = '관리자';
+
+INSERT INTO `role`
+SET regDate = NOW(),
+updateDate = NOW(),
+roleName = '장례지도사';
+
+INSERT INTO `role`
+SET regDate = NOW(),
+updateDate = NOW(),
+roleName = '영업자';
+
+SELECT * FROM `role`;
 
 # 통합 회원 테이블 생성
 CREATE TABLE `member`(
@@ -31,11 +48,23 @@ CREATE TABLE `member`(
 	`profile` TEXT,
 	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부(0 = 유효 회원, 1 = 탈퇴한 회원)',
 	delDate DATETIME COMMENT '탈퇴 날짜'
-	
+
 );
 
+# 회원 테스트용 더미데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+roleLevel = 1,
+loginId = 'admin',
+loginPw = 'admin',
+`name` = '관리자',
+cellphoneNo = '01012341234',
+email = 'rkdengus1208@gmail.com',
+location = '대전',
+`profile` = '안녕하세요 관리자 입니다.';
 
-
+SELECT * FROM `member`;
 
 
 
