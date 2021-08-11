@@ -38,9 +38,20 @@ class UsrMemberController(
     // VIEW Mapping 함수 끝
 
     // VIEW 기능 함수 시작
-    @RequestMapping("/usr/member/doLogin")
+    @RequestMapping("/usr/member/doLogin", method = [RequestMethod.POST])
     @ResponseBody
-    fun doLogin(loginId: String, loginPw: String, @RequestParam(defaultValue = "../account/home") replaceUri: String): String {
+    fun doLogin(
+        @RequestParam(defaultValue = "") loginId: String,
+        @RequestParam(defaultValue = "") loginPw: String,
+        @RequestParam(defaultValue = "../account/home") replaceUri: String
+    ): String {
+        if(loginId.isEmpty()){
+            return rq.historyBackJs("아이디를 입력해주세요.")
+        }
+        if(loginPw.isEmpty()){
+            return rq.historyBackJs("비밀번호를 입력해주세요.")
+        }
+
         val member = memberService.getMemberByLoginId(loginId)
             ?: return rq.historyBackJs("존재하지 않는 아이디입니다, 다시 로그인해 주세요.")
 

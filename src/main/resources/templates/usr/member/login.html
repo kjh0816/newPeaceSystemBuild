@@ -6,10 +6,13 @@
 
 <head>
     <title>로그인</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/login.js" charset="utf-8" defer></script>
+    </th:block>
 </head>
 
 <main layout:fragment="main">
-    <form action="./doLogin">
+    <form action="./doLogin" method="POST" onsubmit="MemberLogin__submit(this); return false;">
         <div>
             <input type="text" name="loginId" placeholder="아이디를 입력해주세요.">
         </div>
