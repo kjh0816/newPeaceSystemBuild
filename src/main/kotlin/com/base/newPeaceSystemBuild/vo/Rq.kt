@@ -137,6 +137,18 @@ class Rq {
 
         return req.getParameter(paramName)
     }
+
+    private fun getIntParam(paramName: String, default: Int): Int {
+        return if (req.getParameter(paramName) != null) {
+            try {
+                req.getParameter(paramName)!!.toInt()
+            } catch (e: NumberFormatException) {
+                default
+            }
+        } else {
+            default
+        }
+    }
     
     // HttpServletResponse 요청 인코딩 함수 (alert 창 한글 깨짐)
     fun respUtf8() {
