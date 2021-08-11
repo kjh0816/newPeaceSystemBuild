@@ -82,7 +82,7 @@ class Rq {
         this.print(replaceJs(msg, uri))
     }
 
-    private fun print(str: String) {
+    fun print(str: String) {
         resp.writer.print(str)
     }
 

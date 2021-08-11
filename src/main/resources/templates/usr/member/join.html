@@ -6,10 +6,13 @@
 
 <head>
     <title>회원가입</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/join.js" charset="utf-8" defer></script>
+    </th:block>
 </head>
 
 <main layout:fragment="main">
-    <form action="./doJoin">
+    <form action="./doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
         <select name="roleLevel">
             <option value="0" disabled="disabled" selected="selected">직업 선택</option>
             <th:block th:each="role : ${roles}">
@@ -17,22 +20,28 @@
             </th:block>
         </select>
         <div>
-            <input type="text" name="loginId" placeholder="아이디를 입력해주세요.">
+            <input type="text" id="loginId" name="loginId" placeholder="아이디를 입력해주세요.">
+        </div>
+        <div id="loginIdCheckMsg" style="color : red;"></div>
+        <div>
+            <input type="text" id="loginPw" name="loginPw" placeholder="비밀번호를 입력해주세요.">
         </div>
         <div>
-            <input type="text" name="loginPw" placeholder="비밀번호를 입력해주세요.">
+            <input type="text" id="loginPwCheck" name="loginPwCheck" placeholder="비밀번호를 확인해주세요.">
+        </div>
+        <div class="pl-1 pt-2 text-sm" id="loginPwCheckMsg"></div>
+        <div>
+            <input type="text" id="name" name="name" placeholder="이름을 입력해주세요.">
         </div>
         <div>
-            <input type="text" name="name" placeholder="이름을 입력해주세요.">
+            <input type="text" id="cellphoneNo" name="cellphoneNo" placeholder="전화번호를 입력해주세요.">
         </div>
         <div>
-            <input type="text" name="cellphoneNo" placeholder="전화번호를 입력해주세요.">
+            <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요.">
         </div>
+        <div class="pl-1 pt-2 text-sm" id="emailCheckMsg" style="color : red;"></div>
         <div>
-            <input type="text" name="email" placeholder="이메일을 입력해주세요.">
-        </div>
-        <div>
-            <select name="location">
+            <select id="location" name="location">
                 <option value="" disabled selected>지역 선택</option>
                 <option value="서울">서울</option>
                 <option value="대전">대전</option>
@@ -41,10 +50,10 @@
             </select>
         </div>
         <div>
-            <textarea rows="5" cols="20" name="profile" placeholder="자기소개를 입력해주세요."></textarea>
+            <textarea rows="5" cols="20" id="profile" name="profile" placeholder="자기소개를 입력해주세요."></textarea>
         </div>
         <div>
-            <input type="submit" value="가입">
+            <button id="join-submit" type="submit" value="0">회원가입</button>
         </div>
     </form>
 </main>

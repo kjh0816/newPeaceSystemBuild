@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import javax.servlet.http.HttpSession
@@ -60,12 +61,13 @@ class UsrMemberController(
         return rq.replaceJs("로그아웃 되었습니다.", "../account/home")
     }
 
-    @RequestMapping("/usr/member/doJoin")
+    @RequestMapping("/usr/member/doJoin", method = [RequestMethod.POST])
     @ResponseBody
     fun doJoin(
         @RequestParam(defaultValue = "0") roleLevel: Int,
         @RequestParam(defaultValue = "") loginId: String,
         @RequestParam(defaultValue = "") loginPw: String,
+        @RequestParam(defaultValue = "") loginPwCheck: String,
         @RequestParam(defaultValue = "") name: String,
         @RequestParam(defaultValue = "") cellphoneNo: String,
         @RequestParam(defaultValue = "") email: String,
@@ -102,4 +104,34 @@ class UsrMemberController(
         return rq.replaceJs("회원가입이 완료되었습니다, 로그인페이지로 이동합니다.", "./login")
     }
     // VIEW 기능 함수 끝
+
+    // AJax 기능 함수 시작
+    @RequestMapping("/usr/member/loginIdCheck", method = [RequestMethod.POST])
+    @ResponseBody
+    fun loginIdCheck(
+        @RequestParam(defaultValue = "") loginId: String
+    ) {
+        val member = memberService.getMemberByLoginId(loginId)
+        if (member != null) {
+            return rq.print(member.loginId)
+        }
+
+        return rq.print("")
+    }
+
+    @RequestMapping("/usr/member/emailCheck", method = [RequestMethod.POST])
+    @ResponseBody
+    fun emailCheck(
+        @RequestParam(defaultValue = "") email: String
+    ) {
+        if (!Ut.isValidEmail(email)) {
+            return rq.print("false")
+        }
+        val member = memberService.getMemberByEmail(email)
+        if (member != null) {
+            return rq.print(member.email)
+        }
+        rq.print("")
+    }
+    // AJax 기능 함수 끝
 }

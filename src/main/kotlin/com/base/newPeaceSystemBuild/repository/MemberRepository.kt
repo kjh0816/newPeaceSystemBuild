@@ -18,6 +18,15 @@ interface MemberRepository {
     )
     fun getMemberByLoginId(@Param("loginId") loginId: String): Member?
 
+    @Select(
+        """
+        SELECT *
+        FROM `member` AS M
+        WHERE M.email = #{email}
+        """
+    )
+    fun getMemberByEmail(email: String): Member?
+
     @Insert(
         """
         INSERT INTO `member`
