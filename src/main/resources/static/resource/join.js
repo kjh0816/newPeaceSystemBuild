@@ -90,6 +90,8 @@ function MemberJoin__submit(form) {
 // 폼체크 함수 끝
 
 // AJax 요청으로 회원정보 체크 시작
+// blur 이벤트 : focus가 해제되었을 때 실행.
+// 현재 입력란에 값이 입력이 됐는지 검사해서 미입력 시, 사용자에게 입력 요청.
 $('#loginId').blur(function(){
     var loginId = $('#loginId').val();
     $("#join-submit").val() + 'loginId';
