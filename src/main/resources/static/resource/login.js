@@ -6,14 +6,22 @@ function MemberLogin__submit(form) {
     }
 
     if (form.loginId.value.length == 0) {
-        alert('아이디를 입력해주세요.');
+        swal({
+            title: "아이디를 입력해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.loginId.focus();
 
         return;
     }
 
     if (form.loginPw.value.length == 0) {
-        alert('비밀번호를 입력해주세요.');
+        swal({
+            title: "비밀번호를 입력해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.loginPw.focus();
 
         return;
