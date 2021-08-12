@@ -47,6 +47,7 @@ interface MemberRepository {
         """
         SELECT *
         FROM `role` AS R
+        WHERE id != 1
         """
     )
     fun getRoles(): List<Role>
