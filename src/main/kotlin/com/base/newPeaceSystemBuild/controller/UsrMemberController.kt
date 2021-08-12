@@ -75,19 +75,14 @@ class UsrMemberController(
     @RequestMapping("/usr/member/doJoin", method = [RequestMethod.POST])
     @ResponseBody
     fun doJoin(
-        @RequestParam(defaultValue = "0") roleLevel: Int,
         @RequestParam(defaultValue = "") loginId: String,
         @RequestParam(defaultValue = "") loginPw: String,
         @RequestParam(defaultValue = "") loginPwCheck: String,
         @RequestParam(defaultValue = "") name: String,
         @RequestParam(defaultValue = "") cellphoneNo: String,
         @RequestParam(defaultValue = "") email: String,
-        @RequestParam(defaultValue = "") location: String,
-        @RequestParam(defaultValue = "") profile: String
+        @RequestParam(defaultValue = "") location: String
     ): String {
-        if(roleLevel == 0){
-            return rq.historyBackJs("직업을 선택해주세요.")
-        }
         if(loginId.isEmpty()){
             return rq.historyBackJs("사용하실 아이디를 입력해주세요.")
         }
@@ -100,9 +95,6 @@ class UsrMemberController(
         if(location.isEmpty()){
             return rq.historyBackJs("지역을 선택해주세요.")
         }
-        if(profile.isEmpty()){
-            return rq.historyBackJs("자기소개를 입력해주세요.")
-        }
 
         val member = memberService.getMemberByLoginId(loginId)
 
@@ -110,7 +102,7 @@ class UsrMemberController(
             return rq.historyBackJs("중복된 아이디입니다.")
         }
 
-        memberService.join(roleLevel, loginId, loginPw, name, cellphoneNo, email, location, profile)
+        memberService.join(loginId, loginPw, name, cellphoneNo, email, location)
 
         return rq.replaceJs("회원가입이 완료되었습니다, 로그인페이지로 이동합니다.", "./login")
     }

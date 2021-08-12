@@ -5,18 +5,6 @@ function MemberJoin__submit(form) {
         return;
     }
 
-    form.roleLevel.value = form.roleLevel.value.trim();
-    if (form.roleLevel.value == 0) {
-        swal({
-            title: "직업을 선택해주세요.",
-            icon: "info",
-            button: "확인",
-        });
-        form.roleLevel.focus();
-
-        return;
-    }
-
     form.loginId.value = form.loginId.value.trim();
     if (form.loginId.value.length == 0) {
         swal({
@@ -108,18 +96,6 @@ function MemberJoin__submit(form) {
             button: "확인",
         });
         form.location.focus();
-
-        return;
-    }
-
-    form.profile.value = form.profile.value.trim();
-    if (form.profile.value.length == 0) {
-        swal({
-            title: "자기소개를 입력해주세요.",
-            icon: "info",
-            button: "확인",
-        });
-        form.profile.focus();
 
         return;
     }

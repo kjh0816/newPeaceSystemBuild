@@ -16,7 +16,6 @@ data class Member(
     val email: String,
 
     val location: String,
-    val profile: String,
 
     val delStatus: Int,
     val delDate: String?
