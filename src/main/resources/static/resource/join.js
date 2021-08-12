@@ -183,16 +183,35 @@ $('#loginPwCheck').blur(function(){
     if(loginPwCheck.length == 0){
         $("#loginPwCheckMsg").html("비밀번호 확인을 입력해주세요.");
         $("#loginPwCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
     }
     else{
         if(loginPw != loginPwCheck){
             $("#loginPwCheckMsg").html("비밀번호가 서로 일치하지 않습니다.");
             $("#loginPwCheckMsg").css("color", "red");
+            $("#join-submit").attr("disabled", true);
         }
         else{
             $("#loginPwCheckMsg").html("비밀번호가 서로 일치합니다.");
             $("#loginPwCheckMsg").css("color", "green");
+            $("#join-submit").attr("disabled", false);
         }
+    }
+});
+// 입력받은 계좌번호가 숫자인지 아닌지 판단해주는 함수.
+// isNaN : 주어지는 값이 문자열 타입이던, 숫자 타입이던 실행된다
+//         숫자가 입력될 경우 false를 리턴, 문자열이 입력도리 경우 true를 리턴해준다.
+$('#bankAccount').on('keyup', function(){
+    var bankAccount = $("#bankAccount").val();
+    if(isNaN (bankAccount)){
+        $("#bankAccountMsg").html("계좌번호는 숫자만 입력해주세요.");
+        $("#bankAccountMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+    }
+    else{
+        $("#bankAccountMsg").html("계좌번호 입력 완료.");
+        $("#bankAccountMsg").css("color", "green");
+        $("#join-submit").attr("disabled", false);
     }
 });
 // AJax 요청으로 회원정보 체크 끝

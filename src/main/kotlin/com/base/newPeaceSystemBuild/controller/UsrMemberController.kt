@@ -2,7 +2,6 @@ package com.base.newPeaceSystemBuild.controller
 
 import com.base.newPeaceSystemBuild.service.MemberService
 import com.base.newPeaceSystemBuild.util.Ut
-import com.base.newPeaceSystemBuild.vo.Member
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -81,7 +80,8 @@ class UsrMemberController(
         @RequestParam(defaultValue = "") name: String,
         @RequestParam(defaultValue = "") cellphoneNo: String,
         @RequestParam(defaultValue = "") email: String,
-        @RequestParam(defaultValue = "") location: String
+        @RequestParam(defaultValue = "") location: String,
+        @RequestParam(defaultValue = "") bankAccount: String
     ): String {
         if(loginId.isEmpty()){
             return rq.historyBackJs("사용하실 아이디를 입력해주세요.")
@@ -95,6 +95,15 @@ class UsrMemberController(
         if(location.isEmpty()){
             return rq.historyBackJs("지역을 선택해주세요.")
         }
+        if(bankAccount.isEmpty()){
+            return rq.historyBackJs("계좌번호를 입력해주세요.")
+        }
+        try {
+            bankAccount.toInt()
+        }
+        catch (e: NumberFormatException){
+            return rq.historyBackJs("계좌번호는 숫자만 입력해주세요.")
+        }
 
         val member = memberService.getMemberByLoginId(loginId)
 
@@ -102,7 +111,7 @@ class UsrMemberController(
             return rq.historyBackJs("중복된 아이디입니다.")
         }
 
-        memberService.join(loginId, loginPw, name, cellphoneNo, email, location)
+        memberService.join(loginId, loginPw, name, cellphoneNo, email, location, bankAccount)
 
         return rq.replaceJs("회원가입이 완료되었습니다, 로그인페이지로 이동합니다.", "./login")
     }

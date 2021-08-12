@@ -17,8 +17,16 @@ class MemberService(
         return memberRepository.getMemberByEmail(email)
     }
 
-    fun join(loginId: String, loginPw: String, name: String, cellphoneNo: String, email: String, location: String) {
-        memberRepository.join(loginId, loginPw, name, cellphoneNo, email, location)
+    fun join(
+        loginId: String,
+        loginPw: String,
+        name: String,
+        cellphoneNo: String,
+        email: String,
+        location: String,
+        bankAccount: String
+    ) {
+        memberRepository.join(loginId, loginPw, name, cellphoneNo, email, location, bankAccount)
     }
 
     fun getRoles(): List<Role> {

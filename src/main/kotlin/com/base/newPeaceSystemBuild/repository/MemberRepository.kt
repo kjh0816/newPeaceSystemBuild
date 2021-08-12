@@ -37,10 +37,19 @@ interface MemberRepository {
         `name` = #{name},
         cellphoneNo = #{cellphoneNo},
         email = #{email},
-        location = #{location}
+        location = #{location},
+        bankAccount = #{bankAccount}
         """
     )
-    fun join(loginId: String, loginPw: String, name: String, cellphoneNo: String, email: String, location: String)
+    fun join(
+        loginId: String,
+        loginPw: String,
+        name: String,
+        cellphoneNo: String,
+        email: String,
+        location: String,
+        bankAccount: String
+    )
     @Select(
         """
         SELECT *
