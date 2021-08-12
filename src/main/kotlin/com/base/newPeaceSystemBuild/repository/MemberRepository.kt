@@ -32,17 +32,15 @@ interface MemberRepository {
         INSERT INTO `member`
         SET regDate = NOW(),
         updateDate = NOW(),
-        roleLevel = #{roleLevel},
         loginId = #{loginId},
         loginPw = #{loginPw},
         `name` = #{name},
         cellphoneNo = #{cellphoneNo},
         email = #{email},
-        location = #{location},
-        `profile` = #{profile}
+        location = #{location}
         """
     )
-    fun join(roleLevel: Int, loginId: String, loginPw: String, name: String, cellphoneNo: String, email: String, location: String, profile: String)
+    fun join(loginId: String, loginPw: String, name: String, cellphoneNo: String, email: String, location: String)
     @Select(
         """
         SELECT *

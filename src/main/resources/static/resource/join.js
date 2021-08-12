@@ -5,17 +5,13 @@ function MemberJoin__submit(form) {
         return;
     }
 
-    form.roleLevel.value = form.roleLevel.value.trim();
-    if (form.roleLevel.value == 0) {
-        alert('직업을 선택해주세요.');
-        form.roleLevel.focus();
-
-        return;
-    }
-
     form.loginId.value = form.loginId.value.trim();
     if (form.loginId.value.length == 0) {
-        alert('아이디를 입력해주세요.');
+        swal({
+            title: "아이디를 입력해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.loginId.focus();
 
         return;
@@ -23,7 +19,11 @@ function MemberJoin__submit(form) {
 
     form.loginPw.value = form.loginPw.value.trim();
     if (form.loginPw.value.length == 0) {
-        alert('비밀번호를 입력해주세요.');
+        swal({
+            title: "비밀번호를 입력해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.loginPw.focus();
 
         return;
@@ -31,14 +31,22 @@ function MemberJoin__submit(form) {
 
     form.loginPwCheck.value = form.loginPwCheck.value.trim();
     if (form.loginPwCheck.value.length == 0) {
-        alert('비밀번호를 확인해 주세요.');
+        swal({
+            title: "비밀번호를 확인해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.loginPwCheck.focus();
 
         return;
     }
 
     if (form.loginPw.value != form.loginPwCheck.value) {
-        alert('비밀번호가 서로 일치하지 않습니다.');
+        swal({
+            title: "비밀번호가 서로 일치하지않습니다.",
+            icon: "warning",
+            button: "확인",
+        });
         form.loginPwCheck.focus();
 
         return;
@@ -46,7 +54,11 @@ function MemberJoin__submit(form) {
 
     form.name.value = form.name.value.trim();
     if (form.name.value.length == 0) {
-        alert('이름을 입력해주세요.');
+        swal({
+            title: "이름을 입력해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.name.focus();
 
         return;
@@ -54,7 +66,11 @@ function MemberJoin__submit(form) {
 
     form.cellphoneNo.value = form.cellphoneNo.value.trim();
     if (form.cellphoneNo.value.length == 0) {
-        alert('전화번호를 입력해주세요.');
+        swal({
+            title: "전화번호를 입력해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.cellphoneNo.focus();
 
         return;
@@ -62,7 +78,11 @@ function MemberJoin__submit(form) {
 
     form.email.value = form.email.value.trim();
     if (form.email.value.length == 0) {
-        alert('이메일을 입력해주세요.');
+        swal({
+            title: "이메일을 입력해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.email.focus();
 
         return;
@@ -70,16 +90,12 @@ function MemberJoin__submit(form) {
 
     form.location.value = form.location.value.trim();
     if (form.location.value.length == 0) {
-        alert('지역을 선택해주세요.');
+        swal({
+            title: "지역을 선택해주세요.",
+            icon: "info",
+            button: "확인",
+        });
         form.location.focus();
-
-        return;
-    }
-
-    form.profile.value = form.profile.value.trim();
-    if (form.profile.value.length == 0) {
-        alert('자기소개를 입력해주세요.');
-        form.profile.focus();
 
         return;
     }
