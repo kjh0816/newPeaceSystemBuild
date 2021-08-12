@@ -98,12 +98,6 @@ class UsrMemberController(
         if(bankAccount.isEmpty()){
             return rq.historyBackJs("계좌번호를 입력해주세요.")
         }
-        try {
-            bankAccount.toInt()
-        }
-        catch (e: NumberFormatException){
-            return rq.historyBackJs("계좌번호는 숫자만 입력해주세요.")
-        }
 
         val member = memberService.getMemberByLoginId(loginId)
 
