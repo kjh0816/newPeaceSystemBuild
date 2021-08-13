@@ -14,24 +14,24 @@
 <main layout:fragment="main">
     <form action="./doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
         <div>
-            <input type="text" id="loginId" name="loginId" placeholder="아이디를 입력해주세요.">
+            <input type="text" id="loginId" name="loginId" placeholder="아이디를 입력해주세요." autocomplete="off">
         </div>
         <div id="loginIdCheckMsg" style="color : red;"></div>
         <div>
-            <input type="password" id="loginPw" name="loginPw" placeholder="비밀번호를 입력해주세요.">
+            <input type="password" id="loginPw" name="loginPw" placeholder="비밀번호를 입력해주세요." autocomplete="off">
         </div>
         <div>
-            <input type="password" id="loginPwCheck" name="loginPwCheck" placeholder="비밀번호를 확인해주세요.">
+            <input type="password" id="loginPwCheck" name="loginPwCheck" placeholder="비밀번호를 확인해주세요." autocomplete="off">
         </div>
         <div class="pl-1 pt-2 text-sm" id="loginPwCheckMsg"></div>
         <div>
-            <input type="text" id="name" name="name" placeholder="이름을 입력해주세요.">
+            <input type="text" id="name" name="name" placeholder="이름을 입력해주세요." autocomplete="off">
         </div>
         <div>
-            <input type="text" id="cellphoneNo" name="cellphoneNo" placeholder="전화번호를 입력해주세요.">
+            <input type="text" id="cellphoneNo" name="cellphoneNo" placeholder="전화번호를 입력해주세요." autocomplete="off">
         </div>
         <div>
-            <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요.">
+            <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요." autocomplete="off">
         </div>
         <div class="pl-1 pt-2 text-sm" id="emailCheckMsg" style="color : red;"></div>
         <div>
@@ -44,7 +44,7 @@
             </select>
         </div>
         <div>
-            <input type="text" id="bankAccount" name="bankAccount" placeholder="은행계좌를 입력해주세요."/>
+            <input type="text" id="bankAccount" name="bankAccount" placeholder="은행계좌를 입력해주세요." autocomplete="off"/>
         </div>
         <div class="pl-1 pt-2 text-sm" id="bankAccountMsg" style="color : red;"></div>
         <div>
