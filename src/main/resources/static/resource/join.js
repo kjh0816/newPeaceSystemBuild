@@ -203,19 +203,19 @@ $('#loginPwConfirm').blur(function(){
 // 입력받은 계좌번호가 숫자인지 아닌지 판단해주는 함수.
 // isNaN : 주어지는 값이 문자열 타입이던, 숫자 타입이던 실행된다
 // 숫자가 입력될 경우 false를 리턴, 문자열이 입력도리 경우 true를 리턴해준다.
-$('#bankAccount').blur(function(){
-    var bankAccount = $("#bankAccount").val();
-    if(isNaN (bankAccount)){
-        $("#bankAccountMsg").html("계좌번호는 숫자만 입력해주세요.");
-        $("#bankAccountMsg").css("color", "red");
+$('#accountNum').blur(function(){
+    var accountNum = $("#accountNum").val();
+    if(isNaN (accountNum)){
+        $("#accountNumCheckMsg").html("계좌번호는 숫자만 입력해주세요.");
+        $("#accountNumCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
-    }else if(bankAccount.length < 11){
-        $("#bankAccountMsg").html("계좌번호가 올바른지 확인해주십시오.");
-        $("#bankAccountMsg").css("color", "red");
+    }else if(accountNum.length < 11){
+        $("#accountNumCheckMsg").html("계좌번호가 올바른지 확인해주십시오.");
+        $("#accountNumCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
     }else{
-        $("#bankAccountMsg").html("계좌번호 입력 완료.");
-        $("#bankAccountMsg").css("color", "green");
+        $("#accountNumCheckMsg").html("계좌번호 입력 완료.");
+        $("#accountNumCheckMsg").css("color", "green");
         $("#join-submit").attr("disabled", false);
     }
 });

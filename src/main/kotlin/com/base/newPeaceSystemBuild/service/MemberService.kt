@@ -1,6 +1,7 @@
 package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.MemberRepository
+import com.base.newPeaceSystemBuild.vo.Bank
 import com.base.newPeaceSystemBuild.vo.Department
 import com.base.newPeaceSystemBuild.vo.Member
 import com.base.newPeaceSystemBuild.vo.Role
@@ -25,9 +26,10 @@ class MemberService(
         cellphoneNo: String,
         email: String,
         location: String,
-        bankAccount: String
+        bank: String,
+        accountNum: String
     ) {
-        memberRepository.join(loginId, loginPw, name, cellphoneNo, email, location, bankAccount)
+        memberRepository.join(loginId, loginPw, name, cellphoneNo, email, location, bank, accountNum)
     }
 
     fun getRoles(): List<Role> {
@@ -36,5 +38,9 @@ class MemberService(
 
     fun getDepartments(): List<Department> {
         return memberRepository.getDepartments()
+    }
+
+    fun getBanks(): List<Bank> {
+        return memberRepository.getBanks()
     }
 }

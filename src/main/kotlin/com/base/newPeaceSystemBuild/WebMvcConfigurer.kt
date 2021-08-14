@@ -21,7 +21,6 @@ class WebMvcConfigurer(
             .excludePathPatterns("/error")
         registry.addInterceptor(needLoginInterceptor)
             //          블랙 리스트 방식
-            .addPathPatterns("/usr/account/home")
             .addPathPatterns("/usr/member/doLogout")
         registry.addInterceptor(needLogoutInterceptor)
             //          블랙 리스트 방식

@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.repository
 
+import com.base.newPeaceSystemBuild.vo.Bank
 import com.base.newPeaceSystemBuild.vo.Department
 import com.base.newPeaceSystemBuild.vo.Member
 import com.base.newPeaceSystemBuild.vo.Role
@@ -38,7 +39,8 @@ interface MemberRepository {
         cellphoneNo = #{cellphoneNo},
         email = #{email},
         location = #{location},
-        bankAccount = #{bankAccount}
+        bank = #{bank},
+        accountNum = #{accountNum}
         """
     )
     fun join(
@@ -48,7 +50,8 @@ interface MemberRepository {
         cellphoneNo: String,
         email: String,
         location: String,
-        bankAccount: String
+        bank: String,
+        accountNum: String
     )
     @Select(
         """
@@ -66,4 +69,12 @@ interface MemberRepository {
         """
     )
     fun getDepartments(): List<Department>
+
+    @Select(
+        """
+        SELECT B.*
+        FROM `bank` AS B
+        """
+    )
+    fun getBanks(): List<Bank>
 }

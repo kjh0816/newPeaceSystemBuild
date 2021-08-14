@@ -69,8 +69,16 @@
 
         <div class="label">아래 계좌로 영업비가 입금됩니다.</div>
         <div class="input">
-            <input type="text" id="bankAccount" name="bankAccount" placeholder="계좌번호" autocomplete="off"/>
-            <div class="pl-1 pt-2 text-sm" id="bankAccountMsg" style="color : red;"></div>
+            <select id="bank" name="bank">
+                <option value="" disabled selected>은행 선택</option>
+                <div th:each="bank : ${banks}" th:object="${bank}">
+                    <option th:value="*{bankName}" th:text="*{bankName}"></option>
+                </div>
+            </select>
+        </div>
+        <div class="input">
+            <input type="text" id="accountNum" name="accountNum" placeholder="계좌번호" autocomplete="off"/>
+            <div class="pl-1 pt-2 text-sm" id="accountNumCheckMsg" style="color : red;"></div>
         </div>
         <br>
         <div>

@@ -17,6 +17,9 @@ data class Member(
 
     val location: String,
 
+    val bank: String,
+    val accountNum: String,
+
     val delStatus: Int,
     val delDate: String?
 )

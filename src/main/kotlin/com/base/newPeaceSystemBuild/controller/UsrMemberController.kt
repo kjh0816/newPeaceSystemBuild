@@ -30,9 +30,11 @@ class UsrMemberController(
     fun showJoin(model: Model): String {
         val roles = memberService.getRoles()
         val departments = memberService.getDepartments()
+        val banks = memberService.getBanks()
 
         model.addAttribute("roles", roles)
         model.addAttribute("departments", departments)
+        model.addAttribute("banks", banks)
 
         return "usr/member/join"
     }
@@ -83,7 +85,8 @@ class UsrMemberController(
         @RequestParam(defaultValue = "") cellphoneNo: String,
         @RequestParam(defaultValue = "") email: String,
         @RequestParam(defaultValue = "") location: String,
-        @RequestParam(defaultValue = "") bankAccount: String
+        @RequestParam(defaultValue = "") bank: String,
+        @RequestParam(defaultValue = "") accountNum: String
     ): String {
         if(loginId.isEmpty()){
             return rq.historyBackJs("사용하실 아이디를 입력해주세요.")
@@ -97,7 +100,10 @@ class UsrMemberController(
         if(location.isEmpty()){
             return rq.historyBackJs("지역을 선택해주세요.")
         }
-        if(bankAccount.isEmpty()){
+        if(bank.isEmpty()){
+            return rq.historyBackJs("은행을 선택해주세요.")
+        }
+        if(accountNum.isEmpty()){
             return rq.historyBackJs("계좌번호를 입력해주세요.")
         }
 
@@ -107,7 +113,7 @@ class UsrMemberController(
             return rq.historyBackJs("이미 존재하는 로그인 아이디입니다.")
         }
 
-        memberService.join(loginId, loginPw, name, cellphoneNo, email, location, bankAccount)
+        memberService.join(loginId, loginPw, name, cellphoneNo, email, location, bank, accountNum)
 
         return rq.replaceJs("회원가입이 완료되었습니다, 로그인페이지로 이동합니다.", "./login")
     }
