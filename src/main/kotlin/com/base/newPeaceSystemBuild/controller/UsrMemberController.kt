@@ -46,7 +46,7 @@ class UsrMemberController(
     fun doLogin(
         @RequestParam(defaultValue = "") loginId: String,
         @RequestParam(defaultValue = "") loginPw: String,
-        @RequestParam(defaultValue = "../account/home") replaceUri: String
+        @RequestParam(defaultValue = "../home/main") replaceUri: String
     ): String {
         if(loginId.isEmpty()){
             return rq.historyBackJs("아이디를 입력해주세요.")
@@ -72,7 +72,7 @@ class UsrMemberController(
     fun doLogout(session: HttpSession): String {
         rq.logout()
 
-        return rq.replaceJs("로그아웃 되었습니다.", "../account/home")
+        return rq.replaceJs("로그아웃 되었습니다.", "../home/main")
     }
 
     @RequestMapping("/usr/member/doJoin", method = [RequestMethod.POST])

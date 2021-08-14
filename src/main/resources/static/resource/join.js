@@ -47,7 +47,7 @@ function MemberJoin__submit(form) {
             icon: "warning",
             button: "확인",
         });
-//       비밀
+
         form.loginPw.focus();
 
         return;
@@ -100,6 +100,19 @@ function MemberJoin__submit(form) {
 
         return;
     }
+
+
+    form.bank.value = form.bank.value.trim();
+        if (form.bank.value.length == 0) {
+            swal({
+                title: "은행을 선택해주세요.",
+                icon: "info",
+                button: "확인",
+            });
+            form.bank.focus();
+
+            return;
+        }
 
     form.submit();
     MemberJoin__submitDone = true;
