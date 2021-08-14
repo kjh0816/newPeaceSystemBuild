@@ -1,4 +1,4 @@
-package com.base.newPeaceSystemBuild.vo
+package com.base.newPeaceSystemBuild
 
 import com.base.newPeaceSystemBuild.interceptor.BeforeActionInterceptor
 import com.base.newPeaceSystemBuild.interceptor.NeedLoginInterceptor
