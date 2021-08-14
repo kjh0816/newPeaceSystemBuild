@@ -61,7 +61,7 @@ loginPw = 'admin',
 `name` = '관리자',
 cellphoneNo = '01012341234',
 email = 'rkdengus1208@gmail.com',
-location = '대전',
+location = '대전광역시',
 bankAccount = "97700608501019";
 
 INSERT INTO `member`
@@ -72,7 +72,7 @@ loginPw = 'user1',
 `name` = '홍길동',
 cellphoneNo = '01012341234',
 email = 'hong@gmail.com',
-location = '서울',
+location = '서울특별시',
 bankAccount = "97700608501019";
 
 SELECT * FROM `member`;

@@ -104,7 +104,7 @@ class UsrMemberController(
         val member = memberService.getMemberByLoginId(loginId)
 
         if(member != null){
-            return rq.historyBackJs("중복된 아이디입니다.")
+            return rq.historyBackJs("이미 존재하는 로그인 아이디입니다.")
         }
 
         memberService.join(loginId, loginPw, name, cellphoneNo, email, location, bankAccount)

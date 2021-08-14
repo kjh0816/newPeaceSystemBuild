@@ -18,7 +18,6 @@ interface MemberRepository {
         """
     )
     fun getMemberByLoginId(@Param("loginId") loginId: String): Member?
-
     @Select(
         """
         SELECT *

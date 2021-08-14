@@ -38,7 +38,7 @@
             <select id="location" name="location">
                 <option value="" disabled selected>지역 선택</option>
                 <div th:each="department : ${departments}" th:object="${department}">
-                    <option value="*{id}" th:text="*{name}"></option>
+                    <option value="*{departmentName}" th:text="*{departmentName}"></option>
                 </div>
             </select>
         </div>
