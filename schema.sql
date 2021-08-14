@@ -40,7 +40,7 @@ CREATE TABLE `member`(
 	updateDate DATETIME NOT NULL,
 	roleLevel SMALLINT(2) UNSIGNED NOT NULL DEFAULT 2 COMMENT 'role 테이블의 id와 연결',
 	loginId CHAR(20) NOT NULL UNIQUE,
-	loginPw CHAR(60) NOT NULL,
+	loginPw CHAR(64) NOT NULL,
 	`name` CHAR(20) NOT NULL,
 	cellphoneNo CHAR(20) NOT NULL,
 	email CHAR(50) NOT NULL,
@@ -78,27 +78,36 @@ bankAccount = "97700608501019";
 SELECT * FROM `member`;
 
 
-
-# 출력 테스트용 테이블
-CREATE TABLE article(
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	title CHAR(30) NOT NULL,
-	`body` TEXT NOT NULL
-);
+# member 테이블의 location 칼럼을 위한 department 테이블
 
 
-INSERT INTO article
-SET title = '제목1',
-`body` = '내용1';
+CREATE TABLE `department` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` CHAR(40) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO article
-SET title = '제목2',
-`body` = '내용2';
 
-INSERT INTO article
-SET title = '제목3',
-`body` = '내용3';
 
-INSERT INTO article
-SET title = '제목4',
-`body` = '내용4';
+INSERT  INTO `department`(`id`,`name`) VALUES 
+(1,'서울특별시'),
+(2,'부산광역시'),
+(3,'대구광역시'),
+(4,'인천광역시'),
+(5,'광주광역시'),
+(6,'대전광역시'),
+(7,'울산광역시'),
+(8,'세종특별자치시'),
+(9,'경기도'),
+(10,'강원도'),
+(11,'충청북도'),
+(12,'충청남도'),
+(13,'전라북도'),
+(14,'전라남도'),
+(15,'경상북도'),
+(16,'경상남도'),
+(17,'제주특별자치도');
+
+
+
+
