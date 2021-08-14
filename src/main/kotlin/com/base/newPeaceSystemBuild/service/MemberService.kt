@@ -1,6 +1,7 @@
 package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.MemberRepository
+import com.base.newPeaceSystemBuild.vo.Department
 import com.base.newPeaceSystemBuild.vo.Member
 import com.base.newPeaceSystemBuild.vo.Role
 import org.springframework.stereotype.Service
@@ -31,5 +32,9 @@ class MemberService(
 
     fun getRoles(): List<Role> {
         return memberRepository.getRoles()
+    }
+
+    fun getDepartments(): List<Department> {
+        return memberRepository.getDepartments()
     }
 }

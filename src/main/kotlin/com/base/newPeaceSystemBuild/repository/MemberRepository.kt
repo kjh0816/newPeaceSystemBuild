@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.repository
 
+import com.base.newPeaceSystemBuild.vo.Department
 import com.base.newPeaceSystemBuild.vo.Member
 import com.base.newPeaceSystemBuild.vo.Role
 import org.apache.ibatis.annotations.Insert
@@ -52,10 +53,18 @@ interface MemberRepository {
     )
     @Select(
         """
-        SELECT *
+        SELECT R.*
         FROM `role` AS R
         WHERE id != 1
         """
     )
     fun getRoles(): List<Role>
+
+    @Select(
+        """
+        SELECT D.*
+        FROM `department` AS D
+        """
+    )
+    fun getDepartments(): List<Department>
 }

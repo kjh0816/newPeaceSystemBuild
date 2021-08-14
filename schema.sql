@@ -108,6 +108,9 @@ INSERT  INTO `department`(`id`,`name`) VALUES
 (16,'경상남도'),
 (17,'제주특별자치도');
 
+SELECT * FROM department;
+
+
 
 
 

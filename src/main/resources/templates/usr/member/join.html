@@ -37,10 +37,9 @@
         <div>
             <select id="location" name="location">
                 <option value="" disabled selected>지역 선택</option>
-                <option value="서울">서울</option>
-                <option value="대전">대전</option>
-                <option value="대구">대구</option>
-                <option value="부산">부산</option>
+                <div th:each="department : ${departments}" th:object="${department}">
+                    <option value="*{id}" th:text="*{name}"></option>
+                </div>
             </select>
         </div>
         <div>

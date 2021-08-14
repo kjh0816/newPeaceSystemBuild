@@ -13,7 +13,6 @@ class BeforeActionInterceptor : HandlerInterceptor {
     private lateinit var rq: Rq
 
     override fun preHandle(req: HttpServletRequest, resp: HttpServletResponse, handler: Any): Boolean {
-        println("인터셉터 실행")
 
         rq.initWith(req, resp)
 

@@ -29,8 +29,10 @@ class UsrMemberController(
     @RequestMapping("/usr/member/join")
     fun showJoin(model: Model): String {
         val roles = memberService.getRoles()
+        val departments = memberService.getDepartments()
 
         model.addAttribute("roles", roles)
+        model.addAttribute("departments", departments)
 
         return "usr/member/join"
     }
