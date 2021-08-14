@@ -13,40 +13,66 @@
 
 <main layout:fragment="main">
     <form action="./doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
-        <div>
-            <input type="text" id="loginId" name="loginId" placeholder="아이디를 입력해주세요." autocomplete="off">
+
+        <div class="label">아이디</div>
+        <div class="input">
+            <input type="text" id="loginId" name="loginId" placeholder="아이디를 입력해주세요." autocomplete="off"/>
+            <div id="loginIdCheckMsg" style="color : red;"></div>
         </div>
-        <div id="loginIdCheckMsg" style="color : red;"></div>
-        <div>
-            <input type="password" id="loginPw" name="loginPw" placeholder="비밀번호를 입력해주세요." autocomplete="off">
+        <br>
+
+        <div class="label">비밀번호</div>
+        <div class="input">
+            <input type="password" id="loginPw" name="loginPw" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
+            <div id="loginPwCheckMsg" style="color : red;"></div>
         </div>
-        <div>
-            <input type="password" id="loginPwCheck" name="loginPwCheck" placeholder="비밀번호를 확인해주세요." autocomplete="off">
+        <br>
+
+        <div class="label">비밀번호 재입력</div>
+        <div class="input">
+            <input type="password"  id="loginPwConfirm" name="loginPwConfirm" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
+            <div id="loginPwConfirmCheckMsg" style="color : red;"></div>
         </div>
-        <div class="pl-1 pt-2 text-sm" id="loginPwCheckMsg"></div>
-        <div>
-            <input type="text" id="name" name="name" placeholder="이름을 입력해주세요." autocomplete="off">
+        <br>
+
+        <div class="label">성함</div>
+        <div class="input">
+            <input type="text" id="name" name="name" placeholder="성함을 입력해주세요." autocomplete="off"/>
+            <div id="nameCheckMsg" style="color : red;"></div>
         </div>
-        <div>
-            <input type="text" id="cellphoneNo" name="cellphoneNo" placeholder="전화번호를 입력해주세요." autocomplete="off">
+        <br>
+
+        <div class="label">전화번호</div>
+        <div class="input">
+            <input type="text" id="cellphoneNo" name="cellphoneNo" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off"/>
+            <div id="cellphoneNoCheckMsg" style="color : red;"></div>
         </div>
-        <div>
-            <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요." autocomplete="off">
+        <br>
+
+        <div class="label">이메일</div>
+        <div class="input">
+            <input type="text" id="email" name="email" placeholder="이메일 입력해주세요." autocomplete="off"/>
+            <div id="emailCheckMsg" style="color : red;"></div>
         </div>
-        <div class="pl-1 pt-2 text-sm" id="emailCheckMsg" style="color : red;"></div>
-        <div>
+        <br>
+
+        <div class="label">근무하시는 지역</div>
+        <div class="input">
             <select id="location" name="location">
                 <option value="" disabled selected>지역 선택</option>
                 <div th:each="department : ${departments}" th:object="${department}">
-                    <option value="*{departmentName}" th:text="*{departmentName}"></option>
+                    <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
                 </div>
             </select>
         </div>
-        <div>
-            <div>아래 계좌로 영업비가 입금됩니다.</div>
+        <br>
+
+        <div class="label">아래 계좌로 영업비가 입금됩니다.</div>
+        <div class="input">
             <input type="text" id="bankAccount" name="bankAccount" placeholder="계좌번호" autocomplete="off"/>
+            <div class="pl-1 pt-2 text-sm" id="bankAccountMsg" style="color : red;"></div>
         </div>
-        <div class="pl-1 pt-2 text-sm" id="bankAccountMsg" style="color : red;"></div>
+        <br>
         <div>
             <button id="join-submit" type="submit" value="0">회원가입</button>
         </div>

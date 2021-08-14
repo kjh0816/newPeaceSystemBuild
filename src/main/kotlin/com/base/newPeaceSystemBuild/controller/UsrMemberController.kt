@@ -78,7 +78,7 @@ class UsrMemberController(
     fun doJoin(
         @RequestParam(defaultValue = "") loginId: String,
         @RequestParam(defaultValue = "") loginPw: String,
-        @RequestParam(defaultValue = "") loginPwCheck: String,
+        @RequestParam(defaultValue = "") loginPwConfirm: String,
         @RequestParam(defaultValue = "") name: String,
         @RequestParam(defaultValue = "") cellphoneNo: String,
         @RequestParam(defaultValue = "") email: String,

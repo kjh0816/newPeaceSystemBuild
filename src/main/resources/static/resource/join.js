@@ -29,25 +29,26 @@ function MemberJoin__submit(form) {
         return;
     }
 
-    form.loginPwCheck.value = form.loginPwCheck.value.trim();
-    if (form.loginPwCheck.value.length == 0) {
+    form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+    if (form.loginPwConfirm.value.length == 0) {
         swal({
-            title: "비밀번호를 확인해주세요.",
+            title: "비밀번호를 입력해주세요.",
             icon: "info",
             button: "확인",
         });
-        form.loginPwCheck.focus();
+        form.loginPwConfirm.focus();
 
         return;
     }
 
-    if (form.loginPw.value != form.loginPwCheck.value) {
+    if (form.loginPw.value != form.loginPwConfirm.value) {
         swal({
             title: "비밀번호가 서로 일치하지않습니다.",
             icon: "warning",
             button: "확인",
         });
-        form.loginPwCheck.focus();
+//       비밀
+        form.loginPw.focus();
 
         return;
     }
@@ -177,23 +178,26 @@ $('#email').blur(function(){
 // 비밀번호 중복체크는 데이터베이스에있는 정보랑 비교하는것이 아니고,
 // 사용자가 방금 입력한 비밀번호랑 비교하는것이기때문에 AJax 요청을 보낼 필요가 없다.
 // 하지만 비동기 처리방식이기 때문에 이쪽 카테고리에 들어가있는것이다.
-$('#loginPwCheck').blur(function(){
+
+
+
+$('#loginPwConfirm').blur(function(){
     var loginPw = $("#loginPw").val();
-    var loginPwCheck = $("#loginPwCheck").val();
-    if(loginPwCheck.length == 0){
-        $("#loginPwCheckMsg").html("비밀번호 확인을 입력해주세요.");
-        $("#loginPwCheckMsg").css("color", "red");
+    var loginPwConfirm = $("#loginPwConfirm").val();
+    if(loginPwConfirm.length == 0){
+        $("#loginPwConfirmCheckMsg").html("비밀번호를 한 번 더 입력해주세요.");
+        $("#loginPwConfirmCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
     }
     else{
-        if(loginPw != loginPwCheck){
-            $("#loginPwCheckMsg").html("비밀번호가 서로 일치하지 않습니다.");
-            $("#loginPwCheckMsg").css("color", "red");
+        if(loginPw != loginPwConfirm){
+            $("#loginPwConfirmCheckMsg").html("비밀번호가 서로 일치하지 않습니다.");
+            $("#loginPwConfirmCheckMsg").css("color", "red");
             $("#join-submit").attr("disabled", true);
         }
         else{
-            $("#loginPwCheckMsg").html("비밀번호가 서로 일치합니다.");
-            $("#loginPwCheckMsg").css("color", "green");
+            $("#loginPwConfirmCheckMsg").html("비밀번호가 서로 일치합니다.");
+            $("#loginPwConfirmCheckMsg").css("color", "green");
             $("#join-submit").attr("disabled", false);
         }
     }
