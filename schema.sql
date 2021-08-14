@@ -89,6 +89,7 @@ CREATE TABLE `department` (
 
 
 
+
 INSERT  INTO `department`(`id`,`name`) VALUES 
 (1,'서울특별시'),
 (2,'부산광역시'),
@@ -108,7 +109,27 @@ INSERT  INTO `department`(`id`,`name`) VALUES
 (16,'경상남도'),
 (17,'제주특별자치도');
 
-SELECT * FROM department;
+
+# member 테이블의 bank 칼럼을 위한 department 테이블
+CREATE TABLE `bank` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` CHAR(40) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+
+
+INSERT  INTO `bank`(`id`,`name`) VALUES 
+(1,'KB국민'),
+(2,'우리'),
+(3,'신한'),
+(4,'SC제일'),
+(5,'KEB하나'),
+(6,'NH농협'),
+(7,'IBK기업'),
+(8,'KDB산업');
+
+
+
 
 
 

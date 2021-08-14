@@ -188,14 +188,12 @@ $('#loginPwConfirm').blur(function(){
         $("#loginPwConfirmCheckMsg").html("비밀번호를 한 번 더 입력해주세요.");
         $("#loginPwConfirmCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
-    }
-    else{
+    }else{
         if(loginPw != loginPwConfirm){
             $("#loginPwConfirmCheckMsg").html("비밀번호가 서로 일치하지 않습니다.");
             $("#loginPwConfirmCheckMsg").css("color", "red");
             $("#join-submit").attr("disabled", true);
-        }
-        else{
+        }else{
             $("#loginPwConfirmCheckMsg").html("비밀번호가 서로 일치합니다.");
             $("#loginPwConfirmCheckMsg").css("color", "green");
             $("#join-submit").attr("disabled", false);
@@ -215,8 +213,7 @@ $('#bankAccount').blur(function(){
         $("#bankAccountMsg").html("계좌번호가 올바른지 확인해주십시오.");
         $("#bankAccountMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
-    }
-    else{
+    }else{
         $("#bankAccountMsg").html("계좌번호 입력 완료.");
         $("#bankAccountMsg").css("color", "green");
         $("#join-submit").attr("disabled", false);
