@@ -222,10 +222,6 @@ $('#accountNum').blur(function(){
         $("#accountNumCheckMsg").html("계좌번호는 숫자만 입력해주세요.");
         $("#accountNumCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
-    }else if(accountNum.length < 11){
-        $("#accountNumCheckMsg").html("계좌번호가 올바른지 확인해주십시오.");
-        $("#accountNumCheckMsg").css("color", "red");
-        $("#join-submit").attr("disabled", true);
     }else{
         $("#accountNumCheckMsg").html("계좌번호 입력 완료.");
         $("#accountNumCheckMsg").css("color", "green");
