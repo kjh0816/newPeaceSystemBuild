@@ -241,21 +241,29 @@ $('#loginPwConfirm').blur(function(){
         $("#loginPwConfirmCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
         return;
-    }else{
+    }
+    var regex1 = /^[a-zA-Z0-9]{8,16}$/;
+    if(!regex1.test(loginPwConfirm)){
+            $("#loginPwConfirmCheckMsg").html("8~16자의 영대소문자 조합만 가능합니다.");
+            $("#loginPwConfirmCheckMsg").css("color", "red");
+            $("#join-submit").attr("disabled", true);
+            return;
+    }
         if(loginPw != loginPwConfirm){
             $("#loginPwConfirmCheckMsg").html("비밀번호가 서로 일치하지 않습니다.");
             $("#loginPwConfirmCheckMsg").css("color", "red");
             $("#join-submit").attr("disabled", true);
             return;
-        }else{
-//          비밀번호가 일치하면, loginPwCheckMsg는 없애준다.
-            $("#loginPwCheckMsg").html('');
+        }
+
             $("#loginPwConfirmCheckMsg").html("비밀번호가 서로 일치합니다.");
             $("#loginPwConfirmCheckMsg").css("color", "green");
             $("#join-submit").attr("disabled", false);
             return;
-        }
-    }
+
+
+
+
 });
 // 입력받은 계좌번호가 숫자인지 아닌지 판단해주는 함수.
 // isNaN : 주어지는 값이 문자열 타입이던, 숫자 타입이던 실행된다
