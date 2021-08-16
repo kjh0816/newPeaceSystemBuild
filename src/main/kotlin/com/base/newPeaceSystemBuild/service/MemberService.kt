@@ -1,10 +1,8 @@
 package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.MemberRepository
-import com.base.newPeaceSystemBuild.vo.Bank
-import com.base.newPeaceSystemBuild.vo.Department
-import com.base.newPeaceSystemBuild.vo.Member
-import com.base.newPeaceSystemBuild.vo.Role
+import com.base.newPeaceSystemBuild.util.Ut
+import com.base.newPeaceSystemBuild.vo.*
 import org.springframework.stereotype.Service
 
 @Service
@@ -42,5 +40,20 @@ class MemberService(
 
     fun getBanks(): List<Bank> {
         return memberRepository.getBanks()
+    }
+
+    fun isUsableEmail(regex: String, email: String): ResultData<String> {
+
+        if(!Ut.match(regex, email)){
+            return ResultData.from("F-1", "이메일 형식에 맞게 입력해주세요.")
+        }
+
+        val member = getMemberByEmail(email)
+        if(member != null){
+            return ResultData.from("F-2", "해당 이메일로 가입된 회원이 이미 존재합니다.")
+        }
+
+        return ResultData.from("S-1", "사용 가능한 이메일입니다.")
+
     }
 }

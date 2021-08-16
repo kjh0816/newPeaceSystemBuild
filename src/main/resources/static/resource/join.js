@@ -190,6 +190,7 @@ $('#email').blur(function(){
     $("#join-submit").val() + 'email';
     $.ajax({
         type: 'POST',
+        dataType: 'json',
         url: './emailCheck',
         data: {email:email},
         success: function(result){
@@ -199,22 +200,16 @@ $('#email').blur(function(){
                 $("#join-submit").attr("disabled", true);
                 return;
             }
-            if(result.startsWith('false')){
-                $("#emailCheckMsg").html('이메일 형식에 맞게 입력해주세요.');
+            if(result.resultCode.startsWith('F-')){
+                $("#emailCheckMsg").html(result.msg);
                 $("#emailCheckMsg").css("color", "red");
                 $("#join-submit").attr("disabled", true);
                 return;
             }
-            else if(result == ''){
+            if(result.resultCode.startsWith('S-')){
                 $("#emailCheckMsg").html('사용할 수 있는 이메일입니다.');
                 $("#emailCheckMsg").css("color", "green");
                 $("#join-submit").attr("disabled", false);
-                return;
-            }
-            else{
-                $("#emailCheckMsg").html('사용할 수 없는 이메일입니다.');
-                $("#emailCheckMsg").css("color", "red");
-                $("#join-submit").attr("disabled", true);
                 return;
             }
         }

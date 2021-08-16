@@ -36,6 +36,15 @@ class Ut {
             }
         }
 
+//      정규표현식과 정규표현식을 적용할 값을 파라미터로 받음.
+//      정규표현식에 해당할 경우, true를 return
+        fun match(regex: String, toCompare: String): Boolean{
+            val pattern: Pattern = Pattern.compile(regex)
+            val matcher: Matcher = pattern.matcher(toCompare)
+
+            return matcher.matches()
+        }
+
         // 이메일이 표준형식에 맞는지 체크해주는 함수
         fun isValidEmail(email: String?): Boolean {
             var err = false
@@ -57,14 +66,12 @@ class Ut {
             for (i in 0 until size) {
                 val keyIndex = i * 2
                 val valueIndex = keyIndex + 1
-                var key: String
-                var value: Any
-                key = try {
+                var key: String = try {
                     args[keyIndex] as String
                 } catch (e: ClassCastException) {
                     throw IllegalArgumentException("키는 String으로 입력해야 합니다. " + e.message)
                 }
-                value = args[valueIndex]
+                var value: Any = args[valueIndex]
                 map[key] = value
             }
             return map

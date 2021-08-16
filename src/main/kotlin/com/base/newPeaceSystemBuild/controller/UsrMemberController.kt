@@ -137,15 +137,13 @@ class UsrMemberController(
     @ResponseBody
     fun emailCheck(
         @RequestParam(defaultValue = "") email: String
-    ) {
-        if (!Ut.isValidEmail(email)) {
-            return rq.print("false")
-        }
-        val member = memberService.getMemberByEmail(email)
-        if (member != null) {
-            return rq.print(member.email)
-        }
-        rq.print("")
+    ): String {
+        val regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$"
+
+
+        println(Ut.getJsonStrFromObj(memberService.isUsableEmail(regex, email)))
+        return Ut.getJsonStrFromObj(memberService.isUsableEmail(regex, email))
+
     }
     // AJax 기능 함수 끝
 }
