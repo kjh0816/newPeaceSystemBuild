@@ -79,8 +79,7 @@ class UsrMemberController(
     @ResponseBody
     fun doJoin(
         @RequestParam(defaultValue = "") loginId: String,
-        @RequestParam(defaultValue = "") loginPw: String,
-        @RequestParam(defaultValue = "") loginPwConfirm: String,
+        @RequestParam(defaultValue = "") loginPwInput: String,
         @RequestParam(defaultValue = "") name: String,
         @RequestParam(defaultValue = "") cellphoneNo: String,
         @RequestParam(defaultValue = "") email: String,
@@ -91,7 +90,7 @@ class UsrMemberController(
         if(loginId.isEmpty()){
             return rq.historyBackJs("사용하실 아이디를 입력해주세요.")
         }
-        if(loginPw.isEmpty()){
+        if(loginPwInput.isEmpty()){
             return rq.historyBackJs("사용하실 비밀번호를 입력해주세요.")
         }
         if(name.isEmpty()){
@@ -107,13 +106,14 @@ class UsrMemberController(
             return rq.historyBackJs("계좌번호를 입력해주세요.")
         }
 
+
         val member = memberService.getMemberByLoginId(loginId)
 
         if(member != null){
             return rq.historyBackJs("이미 존재하는 로그인 아이디입니다.")
         }
 
-        memberService.join(loginId, loginPw, name, cellphoneNo, email, location, bank, accountNum)
+        memberService.join(loginId, loginPwInput, name, cellphoneNo, email, location, bank, accountNum)
 
         return rq.replaceJs("회원가입이 완료되었습니다, 로그인페이지로 이동합니다.", "./login")
     }

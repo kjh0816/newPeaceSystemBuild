@@ -1,6 +1,7 @@
 // 폼체크 함수 시작
 // blur 함수를 사용했을 때, 문제가 되는 경우는 입력을 아예하지 않으면서 피해가는 경우인데,
 // 아래 함수를 통해 입력값이 아예 없는 경우를 대비할 수 있다.
+
 let MemberJoin__submitDone = false;
 function MemberJoin__submit(form) {
     if (MemberJoin__submitDone) {
@@ -116,6 +117,10 @@ function MemberJoin__submit(form) {
             return;
         }
 
+    form.loginPwInput.value = sha256(form.loginPw.value);
+    form.loginPw.value = '';
+    form.loginPwConfirm.value = '';
+
     form.submit();
     MemberJoin__submitDone = true;
 }
@@ -207,7 +212,7 @@ $('#loginPw').blur(function(){
     var loginPwConfirm = $("#loginPwConfirm").val();
 //  (1) 입력 여부 검사
     if(loginPw.length == 0){
-        $("#loginPwCheckMsg").html("비밀번호를 한 번 더 입력해주세요.");
+        $("#loginPwCheckMsg").html("비밀번호를 입력해주세요.");
         $("#loginPwCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
         return;
