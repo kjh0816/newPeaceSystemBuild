@@ -31,6 +31,7 @@ class UsrDirectorController(
     }
     // VIEW Mapping 함수 끝
 
+    // VIEW 기능 함수 시작
     @RequestMapping("/usr/director/doRequest", method = [RequestMethod.POST])
     @ResponseBody
     fun doRequest(
@@ -46,4 +47,5 @@ class UsrDirectorController(
         }
         return rq.replaceJs("장례지도사 영업신청이 완료되었습니다.", "../home/main")
     }
+    // VIEW 기능 함수 끝
 }
