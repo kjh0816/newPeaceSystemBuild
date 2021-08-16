@@ -16,7 +16,7 @@ class NeedLogoutInterceptor : HandlerInterceptor {
         //          블랙 리스트 방식
         if (rq.isLogined()) {
             rq.respUtf8()
-            rq.printReplaceJs("로그아웃 후 이용해주세요.", "/usr/account/home")
+            rq.printReplaceJs("로그아웃 후 이용해주세요.", "/usr/home/main")
 
             return false
         }
