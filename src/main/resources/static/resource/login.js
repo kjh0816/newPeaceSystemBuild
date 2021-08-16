@@ -27,6 +27,9 @@ function MemberLogin__submit(form) {
         return;
     }
 
+    form.loginPwInput.value = sha256(form.loginPw.value);
+    form.loginPw.value = '';
+
     form.submit();
     MemberLogin__submitDone = true;
 }

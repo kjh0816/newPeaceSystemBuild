@@ -45,22 +45,23 @@ class UsrMemberController(
     @ResponseBody
     fun doLogin(
         @RequestParam(defaultValue = "") loginId: String,
-        @RequestParam(defaultValue = "") loginPw: String,
+        @RequestParam(defaultValue = "") loginPwInput: String,
         @RequestParam(defaultValue = "../home/main") replaceUri: String
     ): String {
         if(loginId.isEmpty()){
             return rq.historyBackJs("아이디를 입력해주세요.")
         }
-        if(loginPw.isEmpty()){
+        if(loginPwInput.isEmpty()){
             return rq.historyBackJs("비밀번호를 입력해주세요.")
         }
 
         val member = memberService.getMemberByLoginId(loginId)
             ?: return rq.historyBackJs("존재하지 않는 아이디입니다, 다시 로그인해 주세요.")
 
-        if ( member.loginPw != loginPw ) {
+        if ( member.loginPw != loginPwInput ) {
             return rq.historyBackJs("비밀번호가 일치하지 않습니다.")
         }
+
 
         rq.login(member)
 

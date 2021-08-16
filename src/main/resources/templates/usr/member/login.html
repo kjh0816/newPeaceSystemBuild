@@ -13,6 +13,7 @@
 
 <main layout:fragment="main">
     <form action="./doLogin" method="POST" onsubmit="MemberLogin__submit(this); return false;">
+        <input type="hidden" name="loginPwInput">
         <div>
             <input type="text" name="loginId" placeholder="아이디를 입력해주세요.">
         </div>
