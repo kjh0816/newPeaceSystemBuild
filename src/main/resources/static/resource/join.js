@@ -1,4 +1,6 @@
 // 폼체크 함수 시작
+// blur 함수를 사용했을 때, 문제가 되는 경우는 입력을 아예하지 않으면서 피해가는 경우인데,
+// 아래 함수를 통해 입력값이 아예 없는 경우를 대비할 수 있다.
 let MemberJoin__submitDone = false;
 function MemberJoin__submit(form) {
     if (MemberJoin__submitDone) {
@@ -122,41 +124,64 @@ function MemberJoin__submit(form) {
 // AJax 요청으로 회원정보 체크 시작
 // blur 이벤트 : focus가 해제되었을 때 실행.
 // 현재 입력란에 값이 입력이 됐는지 검사해서 미입력 시, 사용자에게 입력 요청.
+// 제출 전, 아이디의 현재 입력값에 대한 검사 - 3단계 (시작)
 $('#loginId').blur(function(){
-    var loginId = $('#loginId').val();
-    $("#join-submit").val() + 'loginId';
-    $.ajax({
-        type: 'POST',
-        url: './loginIdCheck',
-        data: {loginId:loginId},
-        success: function(result){
-            if(result == ''){
-                if(loginId.length == 0){
-                    $("#loginIdCheckMsg").html('아이디를 입력해주세요.');
-                    $("#loginIdCheckMsg").css("color", "red");
-                    $("#join-submit").attr("disabled", true);
-                    return;
+
+// (1) 길이 검사 : 입력 여부를 검사
+    var loginId = $("#loginId").val();
+    var loginIdCheckMsg = $("#loginIdCheckMsg").val();
+    if(loginId.length == 0){
+        $("#loginIdCheckMsg").html("아이디를 입력해주세요.");
+        $("#loginIdCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+    }else{
+// (2) 정규표현식 검사 : 5~20자의 영문 소문자, 숫자
+        var loginIdReg = /^[a-z0-9]{6,20}$/g;
+        if(!loginIdReg.test(loginId)){
+            $("#loginIdCheckMsg").html('5~20자의 영문 소문자, 숫자만 가능합니다.');
+            $("#loginIdCheckMsg").css("color", "red");
+            $("#join-submit").attr("disabled", true);
+            return;
+        }else{
+// (3) loginId가 이미 존재하는지 검사
+            $("#join-submit").val() + 'loginId';
+            $.ajax({
+                type: 'POST',
+                url: './loginIdCheck',
+                data: {loginId:loginId},
+                success: function(result){
+
+                    if(result == ''){
+//                  입력된 loginId의 회원이 존재하지 않는 경우
+                        if(loginId.length == 0){
+                            $("#loginIdCheckMsg").html('아이디를 입력해주세요.');
+                            $("#loginIdCheckMsg").css("color", "red");
+                            $("#join-submit").attr("disabled", true);
+                            return;
+                        }else{
+//                          3단계의 필터를 전부 거친 경우
+                            $("#loginIdCheckMsg").html('사용할 수 있는 아이디입니다.');
+                            $("#loginIdCheckMsg").css("color", "green");
+                            $("#join-submit").attr("disabled", false);
+                            return;
+                        }
+                    }else{
+//                    loginId로 조회한 값이 존재할 경우
+                        $("#loginIdCheckMsg").html(loginId + '는(은) 이미 존재하는 아이디입니다.');
+                        $("#loginIdCheckMsg").css("color", "red");
+                        $("#join-submit").attr("disabled", true);
+                        return;
+                    }
                 }
-                else{
-                    $("#loginIdCheckMsg").html('사용할 수 있는 아이디입니다.');
-                    $("#loginIdCheckMsg").css("color", "green");
-                    $("#join-submit").attr("disabled", false);
-                    return;
-                }
-            }
-            else{
-                $("#loginIdCheckMsg").html('사용할 수 없는 아이디입니다.');
-                $("#loginIdCheckMsg").css("color", "red");
-                $("#join-submit").attr("disabled", true);
-                return;
-            }
+            });
         }
-    });
+
+
+    }
 });
 
 
-
-
+// 제출 전, 아이디의 현재 입력값에 대한 검사 (끝)
 
 
 
@@ -229,6 +254,7 @@ $('#accountNum').blur(function(){
         $("#accountNumCheckMsg").html("계좌번호는 숫자만 입력해주세요.");
         $("#accountNumCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
+//       계좌번호 길이는 11 ~ 16자리
     }else if(accountNum.length < 11 || accountNum.length > 16){
         $("#accountNumCheckMsg").html("계좌번호가 올바른지 확인해주세요.");
         $("#accountNumCheckMsg").css("color", "red");

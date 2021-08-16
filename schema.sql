@@ -45,7 +45,8 @@ CREATE TABLE `member`(
 	cellphoneNo CHAR(20) NOT NULL,
 	email CHAR(50) NOT NULL,
 	location CHAR(30) NOT NULL,
-	bankAccount CHAR(20) NOT NULL,
+	bank CHAR(20) NOT NULL,
+	accountNum CHAR(20) NOT NULL,
 	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부(0 = 유효 회원, 1 = 탈퇴한 회원)',
 	delDate DATETIME COMMENT '탈퇴 날짜'
 
@@ -62,7 +63,8 @@ loginPw = 'admin',
 cellphoneNo = '01012341234',
 email = 'rkdengus1208@gmail.com',
 location = '대전광역시',
-bankAccount = "97700608501019";
+bank = '신한',
+accountNum = '97700608501019';
 
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -73,7 +75,20 @@ loginPw = 'user1',
 cellphoneNo = '01012341234',
 email = 'hong@gmail.com',
 location = '서울특별시',
-bankAccount = "97700608501019";
+bank = '신한',
+accountNum = '97700608501019';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'user999',
+loginPw = 'user999',
+`name` = '홍길동',
+cellphoneNo = '01012341234',
+email = 'hongqwe@gmail.com',
+location = '서울특별시',
+bank = '신한',
+accountNum = '97700608501019';
 
 SELECT * FROM `member`;
 
