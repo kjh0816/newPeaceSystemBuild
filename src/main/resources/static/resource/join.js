@@ -213,9 +213,9 @@ $('#loginPw').blur(function(){
         return;
     }
 //  (2) 입력값에 대한 정규표현식 적용 (시작)
-    var regex1 = /^[a-zA-Z0-9]{8,16}$/;
+    var regex = /^[a-zA-Z0-9]{8,16}$/;
 
-    if(!regex1.test(loginPw)){
+    if(!regex.test(loginPw)){
         $("#loginPwCheckMsg").html('8~16자의 영대소문자 조합만 가능합니다.');
         $("#loginPwCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
@@ -230,6 +230,31 @@ $('#loginPw').blur(function(){
         return;
 
 
+});
+
+
+$('#name').blur(function(){
+    var name = $("#name").val();
+//  (1) 입력 여부 검사
+    if(name.length == 0){
+        $("#nameCheckMsg").html("성함을 입력해주세요.");
+        $("#nameCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
+//  (2) 입력값에 대한 정규표현식 적용 (시작)
+    var regex = /^[가-힣]{2,17}$/;
+    if(!regex.test(name)){
+        $("#nameCheckMsg").html('한글만 입력해주세요.');
+        $("#nameCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
+//  (2) 입력값에 대한 정규표현식 적용 (끝)
+        $("#nameCheckMsg").html("");
+        $("#nameCheckMsg").css("color", "green");
+        $("#join-submit").attr("disabled", false);
+        return;
 });
 
 
@@ -260,11 +285,8 @@ $('#loginPwConfirm').blur(function(){
             $("#loginPwConfirmCheckMsg").css("color", "green");
             $("#join-submit").attr("disabled", false);
             return;
-
-
-
-
 });
+
 // 입력받은 계좌번호가 숫자인지 아닌지 판단해주는 함수.
 // isNaN : 주어지는 값이 문자열 타입이던, 숫자 타입이던 실행된다
 // 숫자가 입력될 경우 false를 리턴, 문자열이 입력도리 경우 true를 리턴해준다.
