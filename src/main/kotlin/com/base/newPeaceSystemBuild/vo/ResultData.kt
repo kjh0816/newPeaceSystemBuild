@@ -1,28 +1,39 @@
 package com.base.newPeaceSystemBuild.vo
 
-import com.base.newPeaceSystemBuild.util.Ut
 
-
-class ResultData() {
-    private var msg: String? = null
-
-    private var resultCode: String? = null
-
-    private var body: Map<String, Any>? = null
-
-    val isSuccess: Boolean
-        get() = resultCode!!.startsWith("S-")
-
-    val isFail: Boolean
-        get() = !isSuccess
-
+class ResultData<T>(
+    private val resultCode: String,
+    private val msg: String,
+    private val data1Name: String,
+    private val data1: T
+) {
     companion object {
-        fun from(resultCode: String, msg: String, vararg bodyArgs: Any?): ResultData {
-            val rd = ResultData()
-            rd.resultCode = resultCode
-            rd.msg = msg
-            rd.body = Ut.mapOf(bodyArgs)
-            return rd
+        fun from(resultCode: String, msg: String): ResultData<String> {
+            return ResultData(resultCode, msg, "", "")
         }
+
+        fun <T> from(resultCode: String, msg: String, data1Name: String, data1: T): ResultData<T> {
+            return ResultData(resultCode, msg, data1Name, data1)
+        }
+    }
+
+    fun isSuccess(): Boolean {
+        return resultCode.startsWith("S-")
+    }
+
+    fun isFail(): Boolean {
+        return isSuccess() == false
+    }
+
+    fun getMsg(): String {
+        return msg
+    }
+
+    fun getResultCode(): String {
+        return resultCode
+    }
+
+    fun getData(): T {
+        return data1
     }
 }

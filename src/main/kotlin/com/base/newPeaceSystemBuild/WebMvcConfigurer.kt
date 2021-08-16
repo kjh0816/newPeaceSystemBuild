@@ -22,6 +22,8 @@ class WebMvcConfigurer(
         registry.addInterceptor(needLoginInterceptor)
             //          블랙 리스트 방식
             .addPathPatterns("/usr/member/doLogout")
+            .addPathPatterns("/usr/director/request")
+            .addPathPatterns("/usr/director/doRequest")
         registry.addInterceptor(needLogoutInterceptor)
             //          블랙 리스트 방식
             .addPathPatterns("/usr/member/login")
