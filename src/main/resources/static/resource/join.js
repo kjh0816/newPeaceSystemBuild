@@ -233,29 +233,7 @@ $('#loginPw').blur(function(){
 });
 
 
-$('#name').blur(function(){
-    var name = $("#name").val();
-//  (1) 입력 여부 검사
-    if(name.length == 0){
-        $("#nameCheckMsg").html("성함을 입력해주세요.");
-        $("#nameCheckMsg").css("color", "red");
-        $("#join-submit").attr("disabled", true);
-        return;
-    }
-//  (2) 입력값에 대한 정규표현식 적용 (시작)
-    var regex = /^[가-힣]{2,17}$/;
-    if(!regex.test(name)){
-        $("#nameCheckMsg").html('한글만 입력해주세요.');
-        $("#nameCheckMsg").css("color", "red");
-        $("#join-submit").attr("disabled", true);
-        return;
-    }
-//  (2) 입력값에 대한 정규표현식 적용 (끝)
-        $("#nameCheckMsg").html("");
-        $("#nameCheckMsg").css("color", "green");
-        $("#join-submit").attr("disabled", false);
-        return;
-});
+
 
 
 $('#loginPwConfirm').blur(function(){
@@ -286,6 +264,57 @@ $('#loginPwConfirm').blur(function(){
             $("#join-submit").attr("disabled", false);
             return;
 });
+
+$('#name').blur(function(){
+    var name = $("#name").val();
+//  (1) 입력 여부 검사
+    if(name.length == 0){
+        $("#nameCheckMsg").html("성함을 입력해주세요.");
+        $("#nameCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
+//  (2) 입력값에 대한 정규표현식 적용 (시작)
+    var regex = /^[가-힣]{2,17}$/;
+    if(!regex.test(name)){
+        $("#nameCheckMsg").html('한글만 입력해주세요.');
+        $("#nameCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
+//  (2) 입력값에 대한 정규표현식 적용 (끝)
+        $("#nameCheckMsg").html("");
+        $("#nameCheckMsg").css("color", "green");
+        $("#join-submit").attr("disabled", false);
+        return;
+});
+
+
+$('#cellphoneNo').blur(function(){
+    var cellphoneNo = $("#cellphoneNo").val();
+//  (1) 입력 여부 검사
+    if(cellphoneNo.length == 0){
+        $("#cellphoneNoCheckMsg").html("핸드폰 번호를 입력해주세요.");
+        $("#cellphoneNoCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
+//  (2) 입력값에 대한 정규표현식 적용 (시작)
+    var regex = /^[0-9]{9,13}$/;
+    if(!regex.test(cellphoneNo)){
+        $("#cellphoneNoCheckMsg").html('핸드폰 번호가 올바른지 확인해주세요.');
+        $("#cellphoneNoCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
+//  (2) 입력값에 대한 정규표현식 적용 (끝)
+        $("#cellphoneNoCheckMsg").html("");
+        $("#cellphoneNoCheckMsg").css("color", "green");
+        $("#join-submit").attr("disabled", false);
+        return;
+});
+
+
 
 // 입력받은 계좌번호가 숫자인지 아닌지 판단해주는 함수.
 // isNaN : 주어지는 값이 문자열 타입이던, 숫자 타입이던 실행된다
