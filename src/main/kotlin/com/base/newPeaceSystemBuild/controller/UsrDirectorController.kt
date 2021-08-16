@@ -31,34 +31,5 @@ class UsrDirectorController(
     }
     // VIEW Mapping 함수 끝
 
-    @RequestMapping("/usr/director/doRequest")
-    @ResponseBody
-    fun doRequest(
-        @RequestParam director: MultipartFile,
-        req: HttpServletRequest,
-        multipartRequest: MultipartRequest
-    ): ResultData? {
-        val loginedMemberId = rq.getLoginedMember()!!.id
 
-        val fileMap = multipartRequest.fileMap
-        for (fileInputName in fileMap.keys) {
-            val multipartFile = fileMap[fileInputName]
-            val fileInputNameBits = fileInputName.split("__").toTypedArray()
-            if (fileInputNameBits[0] == "file" == false) {
-                continue
-            }
-            val fileSize = multipartFile!!.size.toInt()
-            if (fileSize <= 0) {
-                continue
-            }
-            val fileNo = fileInputNameBits[5].toInt()
-            val originFileName = multipartFile.originalFilename
-            val fileExtTypeCode: String = Ut.getFileExtTypeCodeFromFileName(multipartFile.originalFilename)
-            val fileExtType2Code: String = Ut.getFileExtType2CodeFromFileName(multipartFile.originalFilename)
-            val fileExt: String = Ut.getFileExtFromFileName(multipartFile.originalFilename).lowercase(Locale.getDefault())
-            val fileDir: String = Ut.getNowYearMonthDateStr()
-            directorService.putInForDirector(loginedMemberId, originFileName, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileDir)
-        }
-        return addArticleRd
-    }
 }
