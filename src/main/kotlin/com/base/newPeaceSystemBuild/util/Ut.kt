@@ -45,17 +45,7 @@ class Ut {
             return matcher.matches()
         }
 
-        // 이메일이 표준형식에 맞는지 체크해주는 함수
-        fun isValidEmail(email: String?): Boolean {
-            var err = false
-            val regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$"
-            val p: Pattern = Pattern.compile(regex)
-            val m: Matcher = p.matcher(email)
-            if (m.matches()) {
-                err = true
-            }
-            return err
-        }
+
 
         fun mapOf(vararg args: Any): Map<String, Any> {
             if (args.size % 2 != 0) {

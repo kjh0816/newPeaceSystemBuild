@@ -127,57 +127,38 @@ function MemberJoin__submit(form) {
 // 제출 전, 아이디의 현재 입력값에 대한 검사 - 3단계 (시작)
 $('#loginId').blur(function(){
 
-// (1) 길이 검사 : 입력 여부를 검사
     var loginId = $("#loginId").val();
     var loginIdCheckMsg = $("#loginIdCheckMsg").val();
+    $("#join-submit").val() + 'loginId';
+//   (1) 입력 여부 검사
     if(loginId.length == 0){
         $("#loginIdCheckMsg").html("아이디를 입력해주세요.");
         $("#loginIdCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
-    }else{
-// (2) 정규표현식 검사 : 5~20자의 영문 소문자, 숫자
-        var loginIdReg = /^[a-z0-9]{6,20}$/g;
-        if(!loginIdReg.test(loginId)){
-            $("#loginIdCheckMsg").html('5~20자의 영문 소문자, 숫자만 가능합니다.');
-            $("#loginIdCheckMsg").css("color", "red");
-            $("#join-submit").attr("disabled", true);
-            return;
-        }else{
-// (3) loginId가 이미 존재하는지 검사
-            $("#join-submit").val() + 'loginId';
+        return;
+        }
+
             $.ajax({
                 type: 'POST',
                 url: './loginIdCheck',
+                dataType: 'json',
                 data: {loginId:loginId},
                 success: function(result){
-
-                    if(result == ''){
-//                  입력된 loginId의 회원이 존재하지 않는 경우
-                        if(loginId.length == 0){
-                            $("#loginIdCheckMsg").html('아이디를 입력해주세요.');
-                            $("#loginIdCheckMsg").css("color", "red");
-                            $("#join-submit").attr("disabled", true);
-                            return;
-                        }else{
-//                          3단계의 필터를 전부 거친 경우
-                            $("#loginIdCheckMsg").html('사용할 수 있는 아이디입니다.');
-                            $("#loginIdCheckMsg").css("color", "green");
-                            $("#join-submit").attr("disabled", false);
-                            return;
-                        }
-                    }else{
-//                    loginId로 조회한 값이 존재할 경우
-                        $("#loginIdCheckMsg").html(loginId + '는(은) 이미 존재하는 아이디입니다.');
+                //   (2) ResultData에 따른 결과값 표시
+                    if(result.resultCode.startsWith("F-")){
+                        $("#loginIdCheckMsg").html(result.msg);
                         $("#loginIdCheckMsg").css("color", "red");
                         $("#join-submit").attr("disabled", true);
                         return;
                     }
+                    if(result.resultCode.startsWith("S-")){
+                        $("#loginIdCheckMsg").html(result.msg);
+                        $("#loginIdCheckMsg").css("color", "green");
+                        $("#join-submit").attr("disabled", false);
+                        return;
+                    }
                 }
             });
-        }
-
-
-    }
 });
 
 
@@ -188,18 +169,20 @@ $('#loginId').blur(function(){
 $('#email').blur(function(){
     var email = $('#email').val();
     $("#join-submit").val() + 'email';
+//   (1) 입력 여부 검사
+    if(email.length == 0){
+                    $("#emailCheckMsg").html('이메일을 입력해주세요.');
+                    $("#emailCheckMsg").css("color", "red");
+                    $("#join-submit").attr("disabled", true);
+                    return;
+                }
     $.ajax({
         type: 'POST',
         dataType: 'json',
         url: './emailCheck',
         data: {email:email},
         success: function(result){
-            if(email.length == 0){
-                $("#emailCheckMsg").html('이메일을 입력해주세요.');
-                $("#emailCheckMsg").css("color", "red");
-                $("#join-submit").attr("disabled", true);
-                return;
-            }
+//   (2) ResultData에 따른 결과값 표시
             if(result.resultCode.startsWith('F-')){
                 $("#emailCheckMsg").html(result.msg);
                 $("#emailCheckMsg").css("color", "red");
@@ -207,7 +190,7 @@ $('#email').blur(function(){
                 return;
             }
             if(result.resultCode.startsWith('S-')){
-                $("#emailCheckMsg").html('사용할 수 있는 이메일입니다.');
+                $("#emailCheckMsg").html(result.msg);
                 $("#emailCheckMsg").css("color", "green");
                 $("#join-submit").attr("disabled", false);
                 return;

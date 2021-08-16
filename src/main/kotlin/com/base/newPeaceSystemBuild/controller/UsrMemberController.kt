@@ -124,13 +124,10 @@ class UsrMemberController(
     @ResponseBody
     fun loginIdCheck(
         @RequestParam(defaultValue = "") loginId: String
-    ) {
-        val member = memberService.getMemberByLoginId(loginId)
-        if (member != null) {
-            return rq.print(member.loginId)
-        }
+    ): String {
+        val regex = "^[a-z0-9]{6,20}\$"
 
-        return rq.print("")
+        return Ut.getJsonStrFromObj(memberService.isUsableLoginId(regex, loginId))
     }
 
     @RequestMapping("/usr/member/emailCheck", method = [RequestMethod.POST])
@@ -138,10 +135,9 @@ class UsrMemberController(
     fun emailCheck(
         @RequestParam(defaultValue = "") email: String
     ): String {
+
         val regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$"
 
-
-        println(Ut.getJsonStrFromObj(memberService.isUsableEmail(regex, email)))
         return Ut.getJsonStrFromObj(memberService.isUsableEmail(regex, email))
 
     }
