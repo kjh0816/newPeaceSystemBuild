@@ -153,6 +153,13 @@ $('#loginId').blur(function(){
         }
     });
 });
+
+
+
+
+
+
+
 $('#email').blur(function(){
     var email = $('#email').val();
     $("#join-submit").val() + 'email';
@@ -222,10 +229,16 @@ $('#accountNum').blur(function(){
         $("#accountNumCheckMsg").html("계좌번호는 숫자만 입력해주세요.");
         $("#accountNumCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
+    }else if(accountNum.length < 11 || accountNum.length > 16){
+        $("#accountNumCheckMsg").html("계좌번호가 올바른지 확인해주세요.");
+        $("#accountNumCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
     }else{
         $("#accountNumCheckMsg").html("계좌번호 입력 완료.");
         $("#accountNumCheckMsg").css("color", "green");
         $("#join-submit").attr("disabled", false);
     }
+
+
 });
 // AJax 요청으로 회원정보 체크 끝
