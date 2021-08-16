@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.net.URLEncoder
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
 
 class Ut {
     //    전역 변수, 함수를 설정할 수 있는 companion object
@@ -43,6 +46,60 @@ class Ut {
                 err = true
             }
             return err
+        }
+
+        fun mapOf(vararg args: Any): Map<String, Any> {
+            require(args.size % 2 == 0) { "인자를 짝수개 입력해주세요." }
+            val size = args.size / 2
+            val map: MutableMap<String, Any> = LinkedHashMap()
+            for (i in 0 until size) {
+                val keyIndex = i * 2
+                val valueIndex = keyIndex + 1
+                var key: String
+                var value: Any
+                key = try {
+                    args[keyIndex] as String
+                } catch (e: ClassCastException) {
+                    throw IllegalArgumentException("키는 String으로 입력해야 합니다. " + e.message)
+                }
+                value = args[valueIndex]
+                map[key] = value
+            }
+            return map
+        }
+
+        fun getFileExtTypeCodeFromFileName(fileName: String): String {
+            val ext = getFileExtFromFileName(fileName).lowercase(Locale.getDefault())
+            when (ext) {
+                "jpeg", "jpg", "gif", "png" -> return "img"
+                "mp4", "avi", "mov" -> return "video"
+                "mp3" -> return "audio"
+            }
+            return "etc"
+        }
+
+        fun getFileExtType2CodeFromFileName(fileName: String): String {
+            val ext = getFileExtFromFileName(fileName).lowercase(Locale.getDefault())
+            when (ext) {
+                "jpeg", "jpg" -> return "jpg"
+                "gif" -> return ext
+                "png" -> return ext
+                "mp4" -> return ext
+                "mov" -> return ext
+                "avi" -> return ext
+                "mp3" -> return ext
+            }
+            return "etc"
+        }
+
+        fun getFileExtFromFileName(fileName: String): String {
+            val pos = fileName.lastIndexOf(".")
+            return fileName.substring(pos + 1)
+        }
+
+        fun getNowYearMonthDateStr(): String {
+            val format1 = SimpleDateFormat("yyyy_MM")
+            return format1.format(System.currentTimeMillis())
         }
     }
 }

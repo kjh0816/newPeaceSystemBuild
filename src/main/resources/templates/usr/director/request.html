@@ -5,11 +5,19 @@
       layout:decorate="~{usr/layout/default}">
 
 <head>
-    <title>메인</title>
+    <title>장례지도사 등록</title>
 </head>
 
 <main layout:fragment="main">
-
+    <form action="./doRequest" method="POST" enctype="multipart/form-data">
+        <div class="label">첨부파일</div>
+        <div class="input">
+            <input type="file" name="director">
+        </div>
+        <div>
+            <button type="submit">전송</button>
+        </div>
+    </form>
 </main>
 
 </html>
