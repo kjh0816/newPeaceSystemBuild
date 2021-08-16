@@ -13,17 +13,16 @@
 
 <main layout:fragment="main">
     <form action="./doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
-
         <div class="label">아이디</div>
         <div class="input">
-            <input type="text" id="loginId" name="loginId" maxlength="20" placeholder="아이디를 입력해주세요." autocomplete="off"/>
+            <input type="text" id="loginId" name="loginId" maxlength="16" placeholder="아이디를 입력해주세요." autocomplete="off"/>
             <div id="loginIdCheckMsg" style="color : red;"></div>
         </div>
         <br>
 
         <div class="label">비밀번호</div>
         <div class="input">
-            <input type="password" id="loginPw" name="loginPw" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
+            <input type="password" id="loginPw" name="loginPw" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
             <div id="loginPwCheckMsg" style="color : red;"></div>
         </div>
         <br>
@@ -37,7 +36,7 @@
 
         <div class="label">성함</div>
         <div class="input">
-            <input type="text" id="name" name="name" placeholder="성함을 입력해주세요." autocomplete="off"/>
+            <input type="text" id="name" name="name" maxlength="20" placeholder="성함을 입력해주세요." autocomplete="off"/>
             <div id="nameCheckMsg" style="color : red;"></div>
         </div>
         <br>

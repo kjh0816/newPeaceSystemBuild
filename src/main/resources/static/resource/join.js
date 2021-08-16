@@ -202,6 +202,35 @@ $('#email').blur(function(){
 // 사용자가 방금 입력한 비밀번호랑 비교하는것이기때문에 AJax 요청을 보낼 필요가 없다.
 // 하지만 비동기 처리방식이기 때문에 이쪽 카테고리에 들어가있는것이다.
 
+$('#loginPw').blur(function(){
+    var loginPw = $("#loginPw").val();
+    var loginPwConfirm = $("#loginPwConfirm").val();
+//  (1) 입력 여부 검사
+    if(loginPw.length == 0){
+        $("#loginPwCheckMsg").html("비밀번호를 한 번 더 입력해주세요.");
+        $("#loginPwCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
+//  (2) 입력값에 대한 정규표현식 적용 (시작)
+    var regex1 = /^[a-zA-Z0-9]{8,16}$/;
+
+    if(!regex1.test(loginPw)){
+        $("#loginPwCheckMsg").html('8~16자의 영대소문자 조합만 가능합니다.');
+        $("#loginPwCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
+
+//  (2) 입력값에 대한 정규표현식 적용 (끝)
+
+        $("#loginPwCheckMsg").html("사용 가능한 비밀번호입니다.");
+        $("#loginPwCheckMsg").css("color", "green");
+        $("#join-submit").attr("disabled", false);
+        return;
+
+
+});
 
 
 $('#loginPwConfirm').blur(function(){
@@ -211,15 +240,20 @@ $('#loginPwConfirm').blur(function(){
         $("#loginPwConfirmCheckMsg").html("비밀번호를 한 번 더 입력해주세요.");
         $("#loginPwConfirmCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
+        return;
     }else{
         if(loginPw != loginPwConfirm){
             $("#loginPwConfirmCheckMsg").html("비밀번호가 서로 일치하지 않습니다.");
             $("#loginPwConfirmCheckMsg").css("color", "red");
             $("#join-submit").attr("disabled", true);
+            return;
         }else{
+//          비밀번호가 일치하면, loginPwCheckMsg는 없애준다.
+            $("#loginPwCheckMsg").html('');
             $("#loginPwConfirmCheckMsg").html("비밀번호가 서로 일치합니다.");
             $("#loginPwConfirmCheckMsg").css("color", "green");
             $("#join-submit").attr("disabled", false);
+            return;
         }
     }
 });
@@ -228,21 +262,28 @@ $('#loginPwConfirm').blur(function(){
 // 숫자가 입력될 경우 false를 리턴, 문자열이 입력도리 경우 true를 리턴해준다.
 $('#accountNum').blur(function(){
     var accountNum = $("#accountNum").val();
+    if(accountNum.length == 0){
+        $("#accountNumCheckMsg").html("계좌번호를 입력해주세요.");
+        $("#accountNumCheckMsg").css("color", "red");
+        $("#join-submit").attr("disabled", true);
+        return;
+    }
     if(isNaN (accountNum)){
         $("#accountNumCheckMsg").html("계좌번호는 숫자만 입력해주세요.");
         $("#accountNumCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
+        return;
 //       계좌번호 길이는 11 ~ 16자리
-    }else if(accountNum.length < 11 || accountNum.length > 16){
+    }
+    if(accountNum.length < 11 || accountNum.length > 16){
         $("#accountNumCheckMsg").html("계좌번호가 올바른지 확인해주세요.");
         $("#accountNumCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
-    }else{
+        return;
+    }
         $("#accountNumCheckMsg").html("계좌번호 입력 완료.");
         $("#accountNumCheckMsg").css("color", "green");
         $("#join-submit").attr("disabled", false);
-    }
-
-
+        return;
 });
 // AJax 요청으로 회원정보 체크 끝

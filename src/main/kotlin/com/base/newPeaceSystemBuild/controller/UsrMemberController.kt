@@ -136,7 +136,7 @@ class UsrMemberController(
         @RequestParam(defaultValue = "") email: String
     ): String {
 
-        val regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$"
+        val regex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}\$"
 
         return Ut.getJsonStrFromObj(memberService.isUsableEmail(regex, email))
 
