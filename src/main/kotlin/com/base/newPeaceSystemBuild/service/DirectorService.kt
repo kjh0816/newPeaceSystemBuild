@@ -52,14 +52,23 @@ class DirectorService(
             ResultData.from("F-2", "파일이 업로드되지 않았습니다.")
         }
 
+        // relId 로 표현했지만 memberId 칼럼값이다. 추후 다른 파일업로드 기능때 헷갈리지 않기위해 변수명은 relId로 했다.
         val relId: Int = loginedMemberId
+        // 파일 번호인데, 현재 director 에서는 파일을 한개만 받기때문에, fileNo가 1밖에없지만 여러개의 파일 받을경우를 위해 남겨둠.
         val fileNo = fileInputNameBits[5].toInt()
+        // 실제 사용자가 업로드한 파일의 이름.
         val originFileName = multipartFile.originalFilename!!
+        // input name값을 쪼개서 넣어준건데, 가변값도 아니고 고정값이라 왜 필요한진 잘 모르겠음. 관례라고 해서 넣어둠.
         val typeCode = fileInputNameBits[3]
+        // 마찬가지
         val type2Code = fileInputNameBits[4]
+        // 해당 파일이 img 형식인지, video 형식인지 등을 기록함. 추후 img 형식 파일만 받을수 있게 개편해볼떄 사용해보려고 함.
         val fileExtTypeCode: String = Ut.getFileExtTypeCodeFromFileName(multipartFile.originalFilename!!)
+        // 해당 파일 확장자타입이 갈려있을경우 하나로 통합해주는 역할. / 왜 있는지는 잘 모르겠어서 뺄까 고민중
         val fileExtType2Code: String = Ut.getFileExtType2CodeFromFileName(multipartFile.originalFilename!!)
+        // 해당 파일의 실제 확장자 명
         var fileExt: String = Ut.getFileExtFromFileName(multipartFile.originalFilename!!).lowercase(Locale.getDefault())
+        // 서브 디렉토리 같은느낌 yml에서 설정해준 경로에 추가적으로 이걸 붙혀서 관리함. (날짜 정보) 리눅스에서 폴더 하나에 너무 많은파일은 저장하지 못하기에 분리.
         val fileDir: String = Ut.getNowYearMonthDateStr()
 
         if (fileExt == "jpeg") {
@@ -68,11 +77,15 @@ class DirectorService(
             fileExt = "html";
         }
 
+        // DB에 파일의 메타정보 저장
         val metaDataRd: ResultData<Any> = putInForDirector(relId, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
 
+        // Primary Key 값인 id 값
         val directorId = metaDataRd.getData()
 
+        // yml 경로 + fileDir 합친 해당파일이 저장될 경로
         val targetDirPath: String = "$directorFileDirPath/director/$fileDir"
+        // 파일이 저장될 경로가 없을경우 생성하기위해 필요해서 선언함
         val targetDir = File(targetDirPath)
 
         // 새 파일이 저장될 폴더가 존재하지 않는다면 생성
