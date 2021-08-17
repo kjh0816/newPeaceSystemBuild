@@ -8,16 +8,15 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class NeedLoginInterceptor : HandlerInterceptor {
+class DirectorInterceptor : HandlerInterceptor {
     @Autowired
     private lateinit var rq: Rq;
 
     override fun preHandle(req: HttpServletRequest, resp: HttpServletResponse, handler: Any): Boolean {
-
         //          화이트 리스트 방식
-        if (!rq.isLogined()) {
+        if (rq.getLoginedMember()!!.roleLevel != 3) {
             rq.respUtf8()
-            rq.printReplaceJs("로그인 후 이용해주세요.", "/usr/member/login?afterLoginUri=${rq.getEncodedAfterLoginUri()}")
+            rq.printReplaceJs("장례지도사만 이용할 수 있는 페이지입니다.", "/usr/home/main")
 
             return false
         }

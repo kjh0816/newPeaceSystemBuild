@@ -53,9 +53,13 @@ class Ut {
                 return mapOf()
             }
             if (args.size % 2 != 0) {
+<<<<<<< HEAD
                 println("들어온 값: $args")
                 println("들어온 값 사이즈: " + args.size)
                 throw IllegalArgumentException("인자를 짝수개 입력해주세요.");
+=======
+                throw IllegalArgumentException("인자를 짝수개 입력해주세요.")
+>>>>>>> 0396c1e4ecb0ac95fe1793d5296c18edbc61b78f
             }
             val size = args.size / 2
             val map: MutableMap<String, Any> = LinkedHashMap()

@@ -17,6 +17,7 @@ class DirectorService(
 ) {
     fun putInForDirector(
         loginedMemberId: Int,
+        aboutMe: String,
         originFileName: String,
         typeCode: String,
         type2Code: String,
@@ -26,8 +27,13 @@ class DirectorService(
         fileNo: Int,
         fileSize: Int,
         fileDir: String
+<<<<<<< HEAD
     ): ResultData {
         directorRepository.putInForDirector(loginedMemberId, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
+=======
+    ): ResultData<Any> {
+        directorRepository.putInForDirector(loginedMemberId, aboutMe, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
+>>>>>>> 0396c1e4ecb0ac95fe1793d5296c18edbc61b78f
 
         return ResultData.from("S-1", "파일 업로드에 성공하였습니다.", "id", getLastInsertId())
     }
@@ -36,7 +42,11 @@ class DirectorService(
         return directorRepository.getLastInsertId()
     }
 
+<<<<<<< HEAD
     fun save(multipartFile: MultipartFile, loginedMemberId: Int): ResultData {
+=======
+    fun save(multipartFile: MultipartFile, loginedMemberId: Int, aboutMe: String): ResultData<Any> {
+>>>>>>> 0396c1e4ecb0ac95fe1793d5296c18edbc61b78f
         val fileInputName = multipartFile.name
 
         val fileInputNameBits: List<String> = fileInputName.split("__")
@@ -77,7 +87,11 @@ class DirectorService(
         }
 
         // DB에 파일의 메타정보 저장
+<<<<<<< HEAD
         val metaDataRd: ResultData = putInForDirector(relId, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
+=======
+        val metaDataRd: ResultData<Any> = putInForDirector(relId, aboutMe, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
+>>>>>>> 0396c1e4ecb0ac95fe1793d5296c18edbc61b78f
 
         // Primary Key 값인 id 값
         val directorId = metaDataRd.getMap()
@@ -89,7 +103,7 @@ class DirectorService(
 
         // 새 파일이 저장될 폴더가 존재하지 않는다면 생성
         if (!targetDir.exists()) {
-            targetDir.mkdirs();
+            targetDir.mkdirs()
         }
 
         // 서버에 저장될 파일이름
