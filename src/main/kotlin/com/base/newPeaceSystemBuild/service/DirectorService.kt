@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
-import java.io.IOException
 import java.util.*
 
 
@@ -27,7 +26,7 @@ class DirectorService(
         fileNo: Int,
         fileSize: Int,
         fileDir: String
-    ): ResultData<Any> {
+    ): ResultData {
         directorRepository.putInForDirector(loginedMemberId, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
 
         return ResultData.from("S-1", "파일 업로드에 성공하였습니다.", "id", getLastInsertId())
@@ -37,7 +36,7 @@ class DirectorService(
         return directorRepository.getLastInsertId()
     }
 
-    fun save(multipartFile: MultipartFile, loginedMemberId: Int): ResultData<Any> {
+    fun save(multipartFile: MultipartFile, loginedMemberId: Int): ResultData {
         val fileInputName = multipartFile.name
 
         val fileInputNameBits: List<String> = fileInputName.split("__")
@@ -78,10 +77,10 @@ class DirectorService(
         }
 
         // DB에 파일의 메타정보 저장
-        val metaDataRd: ResultData<Any> = putInForDirector(relId, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
+        val metaDataRd: ResultData = putInForDirector(relId, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
 
         // Primary Key 값인 id 값
-        val directorId = metaDataRd.getData()
+        val directorId = metaDataRd.getMap()
 
         // yml 경로 + fileDir 합친 해당파일이 저장될 경로
         val targetDirPath: String = "$directorFileDirPath/director/$fileDir"
