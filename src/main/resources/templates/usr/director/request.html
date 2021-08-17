@@ -6,10 +6,13 @@
 
 <head>
     <title>장례지도사 등록</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/request.js" charset="utf-8" defer></script>
+    </th:block>
 </head>
 
 <main layout:fragment="main">
-    <form action="./doRequest" method="POST" enctype="multipart/form-data">
+    <form action="./doRequest" method="POST" enctype="multipart/form-data" onsubmit="DirectorRequest__submit(this); return false;">
         <div class="label">본인 소개</div>
         <div class="input">
             <textarea name="introduce" placeholder="본인 소개를 입력해주세요." cols="20" rows="5"></textarea>
