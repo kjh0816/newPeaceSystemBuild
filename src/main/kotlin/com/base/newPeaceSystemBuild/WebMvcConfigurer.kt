@@ -20,10 +20,13 @@ class WebMvcConfigurer(
             .excludePathPatterns("/resource/**") // resource 하위 폴더 및 파일은 제외
             .excludePathPatterns("/error")
         registry.addInterceptor(needLoginInterceptor)
-            //          블랙 리스트 방식
-            .addPathPatterns("/usr/member/doLogout")
-            .addPathPatterns("/usr/director/request")
-            .addPathPatterns("/usr/director/doRequest")
+            //          화이트 리스트 방식
+            .addPathPatterns("/usr/member/**")
+            .addPathPatterns("/usr/director/**")
+            .excludePathPatterns("/usr/member/login")
+            .excludePathPatterns("/usr/member/doLogin")
+            .excludePathPatterns("/usr/member/join")
+            .excludePathPatterns("/usr/member/doJoin")
         registry.addInterceptor(needLogoutInterceptor)
             //          블랙 리스트 방식
             .addPathPatterns("/usr/member/login")
