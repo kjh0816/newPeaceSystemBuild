@@ -6,13 +6,14 @@ import com.base.newPeaceSystemBuild.util.Ut
 class ResultData(
     private val resultCode: String,
     private val msg: String,
-    private vararg val map: Any
+    private vararg val keyOrValue: Any
 ) {
     companion object {
 
 
-        fun from(resultCode: String, msg: String, vararg map: Any): ResultData {
-            return ResultData(resultCode, msg, Ut.mapOf(map))
+        fun from(resultCode: String, msg: String, vararg keyOrValue: Any): ResultData {
+//            println("ResultData에서 들어온 값:" + Ut.getJsonStrFromObj(keyOrValue))
+            return ResultData(resultCode, msg, Ut.mapOf(keyOrValue))
         }
 
 
@@ -23,7 +24,7 @@ class ResultData(
     }
 
     fun isFail(): Boolean {
-        return isSuccess() == false
+        return !isSuccess()
     }
 
     fun getMsg(): String {

@@ -128,6 +128,9 @@ class UsrMemberController(
     ): String {
         val regex = "^[a-z0-9]{6,20}\$"
 
+        val test1 = Ut.getJsonStrFromObj(memberService.isUsableLoginId(regex, loginId))
+//        println(test1)
+
         return Ut.getJsonStrFromObj(memberService.isUsableLoginId(regex, loginId))
     }
 

@@ -48,7 +48,13 @@ class Ut {
 
 
         fun mapOf(vararg args: Any): Map<String, Any> {
+
+            if(args.size == 1){
+                return mapOf()
+            }
             if (args.size % 2 != 0) {
+                println("들어온 값: $args")
+                println("들어온 값 사이즈: " + args.size)
                 throw IllegalArgumentException("인자를 짝수개 입력해주세요.");
             }
             val size = args.size / 2
