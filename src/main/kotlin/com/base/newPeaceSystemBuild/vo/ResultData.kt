@@ -1,22 +1,20 @@
 package com.base.newPeaceSystemBuild.vo
 
-import com.base.newPeaceSystemBuild.util.Ut
 
-
-class ResultData(
+class ResultData<T>(
     private val resultCode: String,
     private val msg: String,
-    private vararg val keyOrValue: Any
+    private val data1Name: String,
+    private val data1: T
 ) {
     companion object {
-
-
-        fun from(resultCode: String, msg: String, vararg keyOrValue: Any): ResultData {
-//            println("ResultData에서 들어온 값:" + Ut.getJsonStrFromObj(keyOrValue))
-            return ResultData(resultCode, msg, Ut.mapOf(keyOrValue))
+        fun from(resultCode: String, msg: String): ResultData<String> {
+            return ResultData(resultCode, msg, "", "")
         }
 
-
+        fun <T> from(resultCode: String, msg: String, data1Name: String, data1: T): ResultData<T> {
+            return ResultData(resultCode, msg, data1Name, data1)
+        }
     }
 
     fun isSuccess(): Boolean {
@@ -24,7 +22,7 @@ class ResultData(
     }
 
     fun isFail(): Boolean {
-        return !isSuccess()
+        return isSuccess() == false
     }
 
     fun getMsg(): String {
@@ -35,9 +33,7 @@ class ResultData(
         return resultCode
     }
 
-    fun getMap(): Map<String, Any> {
-        return Ut.mapOf()
+    fun getData(): T {
+        return data1
     }
-
-
 }

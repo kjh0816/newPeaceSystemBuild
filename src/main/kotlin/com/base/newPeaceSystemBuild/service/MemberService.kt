@@ -42,7 +42,7 @@ class MemberService(
         return memberRepository.getBanks()
     }
 
-    fun isUsableEmail(regex: String, email: String): ResultData {
+    fun isUsableEmail(regex: String, email: String): ResultData<String> {
 
         if(!Ut.match(regex, email)){
             return ResultData.from("F-1", "이메일 형식에 맞게 입력해주세요.")
@@ -57,7 +57,7 @@ class MemberService(
 
     }
 
-    fun isUsableLoginId(regex: String, loginId: String): ResultData {
+    fun isUsableLoginId(regex: String, loginId: String): ResultData<String> {
         if(!Ut.match(regex, loginId)){
             return ResultData.from("F-1", "6~20자의 영문 소문자, 숫자만 가능합니다.")
         }
