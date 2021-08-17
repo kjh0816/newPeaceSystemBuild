@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>장례지도사 등록</title>
+</head>
+
+<main layout:fragment="main">
+    <form action="./doRequest" method="POST" enctype="multipart/form-data">
+        <div class="label">본인 소개</div>
+        <div class="input">
+            <textarea name="aboutMe" placeholder="본인 소개를 입력해주세요." cols="20" rows="5"></textarea>
+        </div>
+        <div>
+            <button type="submit">신청하기</button>
+        </div>
+    </form>
+</main>
+
+</html>

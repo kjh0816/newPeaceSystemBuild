@@ -24,6 +24,11 @@ class UsrDirectorController(
     fun showRequest(): String {
         return "usr/director/request"
     }
+
+    @RequestMapping("/usr/director/modify")
+    fun showModify(): String {
+        return "usr/director/modify"
+    }
     // VIEW Mapping 함수 끝
 
     // VIEW 기능 함수 시작
