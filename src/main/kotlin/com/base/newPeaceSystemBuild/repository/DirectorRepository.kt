@@ -14,10 +14,14 @@ interface DirectorRepository {
     fun getLastInsertId(): Int
     @Insert(
         """
+            <script>
             INSERT INTO director
             SET regDate = NOW(),
             updateDate = NOW(),
             memberId = #{loginedMemberId},
+            <if test="aboutMe.trim() != ''">
+                 aboutMe = #{aboutMe},
+            </if>
             originFileName = #{originFileName},
             typeCode = #{typeCode},
             type2Code = #{type2Code},
@@ -27,10 +31,12 @@ interface DirectorRepository {
             fileExt = #{fileExt},
             fileNo = #{fileNo},
             fileDir = #{fileDir}
+            </script>
         """
     )
     fun putInForDirector(
         loginedMemberId: Int,
+        aboutMe: String,
         originFileName: String,
         typeCode: String,
         type2Code: String,

@@ -49,7 +49,7 @@ class Ut {
 
         fun mapOf(vararg args: Any): Map<String, Any> {
             if (args.size % 2 != 0) {
-                throw IllegalArgumentException("인자를 짝수개 입력해주세요.");
+                throw IllegalArgumentException("인자를 짝수개 입력해주세요.")
             }
             val size = args.size / 2
             val map: MutableMap<String, Any> = LinkedHashMap()

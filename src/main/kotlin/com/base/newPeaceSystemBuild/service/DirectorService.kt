@@ -18,6 +18,7 @@ class DirectorService(
 ) {
     fun putInForDirector(
         loginedMemberId: Int,
+        aboutMe: String,
         originFileName: String,
         typeCode: String,
         type2Code: String,
@@ -28,7 +29,7 @@ class DirectorService(
         fileSize: Int,
         fileDir: String
     ): ResultData<Any> {
-        directorRepository.putInForDirector(loginedMemberId, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
+        directorRepository.putInForDirector(loginedMemberId, aboutMe, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
 
         return ResultData.from("S-1", "파일 업로드에 성공하였습니다.", "id", getLastInsertId())
     }
@@ -37,7 +38,7 @@ class DirectorService(
         return directorRepository.getLastInsertId()
     }
 
-    fun save(multipartFile: MultipartFile, loginedMemberId: Int): ResultData<Any> {
+    fun save(multipartFile: MultipartFile, loginedMemberId: Int, aboutMe: String): ResultData<Any> {
         val fileInputName = multipartFile.name
 
         val fileInputNameBits: List<String> = fileInputName.split("__")
@@ -78,7 +79,7 @@ class DirectorService(
         }
 
         // DB에 파일의 메타정보 저장
-        val metaDataRd: ResultData<Any> = putInForDirector(relId, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
+        val metaDataRd: ResultData<Any> = putInForDirector(relId, aboutMe, originFileName, typeCode, type2Code, fileExtTypeCode, fileExtType2Code, fileExt, fileNo, fileSize, fileDir)
 
         // Primary Key 값인 id 값
         val directorId = metaDataRd.getData()
@@ -90,7 +91,7 @@ class DirectorService(
 
         // 새 파일이 저장될 폴더가 존재하지 않는다면 생성
         if (!targetDir.exists()) {
-            targetDir.mkdirs();
+            targetDir.mkdirs()
         }
 
         // 서버에 저장될 파일이름
