@@ -13,17 +13,39 @@ import org.apache.ibatis.annotations.Select
 interface MemberRepository {
     @Select(
         """
-        SELECT *
-        FROM `member` AS M
-        WHERE M.loginId = #{loginId}
+            SELECT 
+            M.*,
+            MR.regDate AS `memberRoleRegDate`,
+            MR.updateDate AS `memberRoleUpdateDate`,
+            MR.introduce AS `introduce`,
+            MR.authenticationStatus AS `authenticationStatus`,
+            MR.authenticationDate AS `authenticationDate`,
+            R.roleName AS `roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE M.loginId = #{loginId}
         """
     )
     fun getMemberByLoginId(@Param("loginId") loginId: String): Member?
     @Select(
         """
-        SELECT *
-        FROM `member` AS M
-        WHERE M.email = #{email}
+            SELECT 
+            M.*,
+            MR.regDate AS `memberRoleRegDate`,
+            MR.updateDate AS `memberRoleUpdateDate`,
+            MR.introduce AS `introduce`,
+            MR.authenticationStatus AS `authenticationStatus`,
+            MR.authenticationDate AS `authenticationDate`,
+            R.roleName AS `roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE M.email = #{email}
         """
     )
     fun getMemberByEmail(email: String): Member?

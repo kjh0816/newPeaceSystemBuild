@@ -92,6 +92,19 @@ accountNum = '97700608501019';
 
 SELECT * FROM `member`;
 
+# 회원직업 테이블 생성
+CREATE TABLE memberRole(
+  id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  regDate DATETIME NOT NULL,
+  updateDate DATETIME NOT NULL,
+  memberId INT(10) UNSIGNED NOT NULL,
+  roleId INT(10) UNSIGNED NOT NULL,
+  introduce LONGTEXT DEFAULT "소개글이 없습니다.",
+  authenticationStatus SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '승인 여부(0 = 미승인, 1 = 승인, 2 = 보류)',
+  authenticationDate DATETIME COMMENT '인증된 날짜'
+);
+
+SELECT * FROM memberRole;
 
 # member 테이블의 location 칼럼을 위한 department 테이블
 
@@ -105,7 +118,7 @@ CREATE TABLE `department` (
 
 
 
-INSERT  INTO `department`(`id`,`name`) VALUES 
+INSERT  INTO `department`(`id`,`name`) VALUES
 (1,'서울특별시'),
 (2,'부산광역시'),
 (3,'대구광역시'),
@@ -133,7 +146,7 @@ CREATE TABLE `bank` (
 ) ENGINE=INNODB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 
-INSERT  INTO `bank`(`id`,`name`) VALUES 
+INSERT  INTO `bank`(`id`,`name`) VALUES
 (1,'KB국민'),
 (2,'우리'),
 (3,'신한'),
@@ -152,6 +165,7 @@ CREATE TABLE director(
   updateDate DATETIME DEFAULT NULL,
   memberId INT(10) UNSIGNED NOT NULL,
   qualification TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '승인 여부(0 = 미승인, 1 = 승인)',
+  aboutMe LONGTEXT DEFAULT "소개글이 없습니다.",
   originFileName VARCHAR(100) NOT NULL, # 업로드 당시의 파일이름
   fileExt CHAR(10) NOT NULL, # 확장자
   typeCode CHAR(20) NOT NULL, # 종류코드 (common)
@@ -164,6 +178,3 @@ CREATE TABLE director(
 );
 
 SELECT * FROM director;
-
-
-
