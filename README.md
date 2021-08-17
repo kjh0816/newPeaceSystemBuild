@@ -23,8 +23,7 @@
 - 회원의 비밀번호에 대한 암호화
 
 # 전달 (읽은 후 지우면 됨)
-- ResultData.from 을 data1Name, data1 로 데이터를 받고있는데, Jsp 에서 했던것처럼 Map 형태로 받아야 할것같음.
-  - ResultData로 1개이상의 데이터를 넘겨받을 수 없음 
+
 
 
    
