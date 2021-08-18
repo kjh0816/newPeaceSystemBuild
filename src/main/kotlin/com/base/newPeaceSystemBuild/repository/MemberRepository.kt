@@ -30,6 +30,7 @@ interface MemberRepository {
         """
     )
     fun getMemberByLoginId(@Param("loginId") loginId: String): Member?
+
     @Select(
         """
             SELECT 
@@ -49,6 +50,26 @@ interface MemberRepository {
         """
     )
     fun getMemberByEmail(email: String): Member?
+
+    @Select(
+        """
+            SELECT 
+            M.*,
+            MR.regDate AS `memberRoleRegDate`,
+            MR.updateDate AS `memberRoleUpdateDate`,
+            MR.introduce AS `introduce`,
+            MR.authenticationStatus AS `authenticationStatus`,
+            MR.authenticationDate AS `authenticationDate`,
+            R.roleName AS `roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE M.id = #{id}
+        """
+    )
+    fun getMemberById(id: Int): Member?
 
     @Insert(
         """

@@ -1,9 +1,6 @@
 package com.base.newPeaceSystemBuild
 
-import com.base.newPeaceSystemBuild.interceptor.BeforeActionInterceptor
-import com.base.newPeaceSystemBuild.interceptor.DirectorInterceptor
-import com.base.newPeaceSystemBuild.interceptor.NeedLoginInterceptor
-import com.base.newPeaceSystemBuild.interceptor.NeedLogoutInterceptor
+import com.base.newPeaceSystemBuild.interceptor.*
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -13,7 +10,8 @@ class WebMvcConfigurer(
     private val beforeActionInterceptor: BeforeActionInterceptor,
     private val needLoginInterceptor: NeedLoginInterceptor,
     private val needLogoutInterceptor: NeedLogoutInterceptor,
-    private val directorInterceptor: DirectorInterceptor
+    private val directorInterceptor: DirectorInterceptor,
+    private val memberInterceptor: MemberInterceptor
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
