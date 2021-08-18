@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class DirectorInterceptor : HandlerInterceptor {
+class AuthenticationStatusInterceptor : HandlerInterceptor {
     @Autowired
     private lateinit var rq: Rq
 
@@ -16,9 +16,21 @@ class DirectorInterceptor : HandlerInterceptor {
         //          화이트 리스트 방식
         val loginedMember = rq.getLoginedMember()!!
         rq.respUtf8()
-        println(loginedMember)
-        if (loginedMember.roleLevel != 3 || loginedMember.extra__authenticationStatus != 1) {
-            rq.printReplaceJs("장례지도사만 이용할 수 있는 페이지입니다.", "/usr/home/main")
+
+        if (loginedMember.extra__authenticationStatus == 1) {
+            rq.printReplaceJs("장례지도사 재신청은 할 수 없습니다.", "/usr/home/main")
+
+            return false
+        }
+
+        if (loginedMember.extra__authenticationStatus == 3) {
+            rq.printReplaceJs("장례지도사 승인 대기중입니다.", "/usr/home/main")
+
+            return false
+        }
+
+        if (loginedMember.extra__authenticationStatus == 2) {
+            rq.printReplaceJs("장례지도사 임시 보류된 회원입니다.", "/usr/home/main")
 
             return false
         }
