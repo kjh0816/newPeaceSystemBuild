@@ -1,9 +1,9 @@
 package com.base.newPeaceSystemBuild.repository
 
-import com.base.newPeaceSystemBuild.vo.Bank
-import com.base.newPeaceSystemBuild.vo.Department
-import com.base.newPeaceSystemBuild.vo.Member
-import com.base.newPeaceSystemBuild.vo.Role
+import com.base.newPeaceSystemBuild.vo.member.Bank
+import com.base.newPeaceSystemBuild.vo.member.Department
+import com.base.newPeaceSystemBuild.vo.member.Member
+import com.base.newPeaceSystemBuild.vo.member.Role
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Param

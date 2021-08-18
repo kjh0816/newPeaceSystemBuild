@@ -1,6 +1,7 @@
 package com.base.newPeaceSystemBuild.vo
 
 import com.base.newPeaceSystemBuild.util.Ut
+import com.base.newPeaceSystemBuild.vo.member.Member
 import org.springframework.context.annotation.Scope
 import org.springframework.context.annotation.ScopedProxyMode
 import org.springframework.stereotype.Component

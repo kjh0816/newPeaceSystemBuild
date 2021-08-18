@@ -17,7 +17,7 @@ class MemberInterceptor : HandlerInterceptor {
         val loginedMember = rq.getLoginedMember()!!
         rq.respUtf8()
 
-        if (loginedMember.extra__authenticationStatus == 0) {
+        if (loginedMember.extra__authenticationStatus == 3) {
             rq.printReplaceJs("장례지도사 승인 대기중입니다.", "/usr/home/main")
 
             return false

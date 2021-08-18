@@ -3,6 +3,10 @@ package com.base.newPeaceSystemBuild.service
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.*
+import com.base.newPeaceSystemBuild.vo.member.Bank
+import com.base.newPeaceSystemBuild.vo.member.Department
+import com.base.newPeaceSystemBuild.vo.member.Member
+import com.base.newPeaceSystemBuild.vo.member.Role
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,6 +19,10 @@ class MemberService(
 
     fun getMemberByEmail(email: String): Member? {
         return memberRepository.getMemberByEmail(email)
+    }
+
+    fun getMemberById(id: Int): Member? {
+        return memberRepository.getMemberById(id)
     }
 
     fun join(
@@ -63,14 +71,14 @@ class MemberService(
 
 
 
-            return ResultData.from("F-1", "6~20자의 영문 소문자, 숫자만 가능합니다.", "loginId", loginId, "menu", 1)
+            return ResultData.from("F-1", "6~20자의 영문 소문자, 숫자만 가능합니다.")
         }
 
         val member = getMemberByLoginId(loginId)
         if(member != null){
-            return ResultData.from("F-2", loginId+"는(은) 이미 존재하는 로그인 아이디입니다.", "loginId", loginId, "menu", 1)
+            return ResultData.from("F-2", loginId+"는(은) 이미 존재하는 로그인 아이디입니다.")
         }
 
-        return ResultData.from("S-1", "사용 가능한 로그인 아이디입니다.", "loginId", loginId, "menu", 1)
+        return ResultData.from("S-1", "사용 가능한 로그인 아이디입니다.")
     }
 }

@@ -1,4 +1,4 @@
-package com.base.newPeaceSystemBuild.vo
+package com.base.newPeaceSystemBuild.vo.member
 
 data class Department(
         val departmentId: Int,

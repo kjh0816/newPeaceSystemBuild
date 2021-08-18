@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>제단꽃 업체 선정 동의서</title>
+</head>
+
+<main layout:fragment="main">
+    <div class="label" style="font-weight: bold; font-size: 24px;">취급해야할 꽃 규격</div>
+
+    <div class="output">
+<hr>
+        <div th:each="flower : ${flowers}" th:object="${flower}">
+            <div th:value="${flower.name}" th:text="${flower.name}"></div>
+            <div th:value="${flower.retailPrice}" th:text="|소비자가: ${flower.retailPrice}원|"></div>
+            <div th:value="${flower.standardPrice}" th:text="|기준가: ${flower.standardPrice}원|"></div>
+            <div th:value="${flower.costPrice}" th:text="|원가: ${flower.costPrice}원|"></div>
+<hr>
+        </div>
+
+    </div>
+
+
+
+    <form action="./doRequest" method="POST">
+        <button type="submit">위 규격을 취급할 수 있음에 동의합니다.</button>
+        </div>
+    </form>
+</main>
+
+</html>

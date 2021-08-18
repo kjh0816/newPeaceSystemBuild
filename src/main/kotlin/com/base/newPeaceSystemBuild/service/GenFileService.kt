@@ -99,7 +99,7 @@ class GenFileService(
             fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir
         )
         // Primary Key 인 ID값
-        val newGenFileId = saveMetaRd.getMap()
+        val newGenFileId = saveMetaRd.getMap()["id"]
 
         // 새 파일이 저장될 폴더(io파일) 객체 생성
         val targetDirPath: String = "$genFileDirPath/$relTypeCode/$fileDir"

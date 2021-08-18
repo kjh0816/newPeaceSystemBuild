@@ -35,10 +35,14 @@ class WebMvcConfigurer(
             .addPathPatterns("/usr/member/doLogin")
             .addPathPatterns("/usr/member/join")
             .addPathPatterns("/usr/member/doJoin")
+        registry.addInterceptor(memberInterceptor)
+            //          화이트 리스트 방식
+            .addPathPatterns("/usr/director/**")
         registry.addInterceptor(directorInterceptor)
             //          화이트 리스트 방식
             .addPathPatterns("/usr/director/**")
             .excludePathPatterns("/usr/director/request")
             .excludePathPatterns("/usr/director/doRequest")
+
     }
 }
