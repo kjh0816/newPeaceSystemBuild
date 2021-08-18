@@ -144,6 +144,8 @@ $('#loginId').blur(function(){
                 dataType: 'json',
                 data: {loginId:loginId},
                 success: function(result){
+
+
                 //   (2) ResultData에 따른 결과값 표시
                     if(result.resultCode.startsWith("F-")){
                         $("#loginIdCheckMsg").html(result.msg);

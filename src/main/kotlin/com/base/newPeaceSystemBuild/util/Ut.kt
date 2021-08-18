@@ -36,36 +36,43 @@ class Ut {
             }
         }
 
-//      정규표현식과 정규표현식을 적용할 값을 파라미터로 받음.
+        //      정규표현식과 정규표현식을 적용할 값을 파라미터로 받음.
 //      정규표현식에 해당할 경우, true를 return
-        fun match(regex: String, toCompare: String): Boolean{
+        fun match(regex: String, toCompare: String): Boolean {
             val pattern: Pattern = Pattern.compile(regex)
             val matcher: Matcher = pattern.matcher(toCompare)
 
             return matcher.matches()
         }
 
+        fun arrayToMap(array: ArrayList<Any>): Map<String, Any> {
 
 
-        fun mapOf(vararg args: Any): Map<String, Any> {
-            if (args.size % 2 != 0) {
+            if (array.size % 2 != 0) {
                 throw IllegalArgumentException("인자를 짝수개 입력해주세요.");
             }
-            val size = args.size / 2
+
+            val size = array.size / 2
             val map: MutableMap<String, Any> = LinkedHashMap()
             for (i in 0 until size) {
                 val keyIndex = i * 2
                 val valueIndex = keyIndex + 1
-                var key: String = try {
-                    args[keyIndex] as String
+
+                val key: String = try {
+                    array[keyIndex] as String
                 } catch (e: ClassCastException) {
                     throw IllegalArgumentException("키는 String으로 입력해야 합니다. " + e.message)
                 }
-                var value: Any = args[valueIndex]
+
+                val value: Any = array[valueIndex]
                 map[key] = value
             }
+
             return map
         }
+
+
+
 
         fun getFileExtTypeCodeFromFileName(fileName: String): String {
             val ext = getFileExtFromFileName(fileName).lowercase(Locale.getDefault())

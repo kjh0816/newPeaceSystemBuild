@@ -1,20 +1,26 @@
 package com.base.newPeaceSystemBuild.vo
 
+import com.base.newPeaceSystemBuild.util.Ut
 
-class ResultData<T>(
+
+class ResultData(
     private val resultCode: String,
     private val msg: String,
-    private val data1Name: String,
-    private val data1: T
+    private val body: Map<String, Any>
 ) {
     companion object {
-        fun from(resultCode: String, msg: String): ResultData<String> {
-            return ResultData(resultCode, msg, "", "")
+        fun from(resultCode: String, msg: String, vararg keyOrValue: Any): ResultData {
+
+            var arr = arrayListOf<Any>()
+            for(keyValue in keyOrValue){
+                arr.add(keyValue)
+            }
+
+
+            return ResultData(resultCode, msg, Ut.arrayToMap(arr))
         }
 
-        fun <T> from(resultCode: String, msg: String, data1Name: String, data1: T): ResultData<T> {
-            return ResultData(resultCode, msg, data1Name, data1)
-        }
+
     }
 
     fun isSuccess(): Boolean {
@@ -22,7 +28,7 @@ class ResultData<T>(
     }
 
     fun isFail(): Boolean {
-        return isSuccess() == false
+        return !isSuccess()
     }
 
     fun getMsg(): String {
@@ -33,7 +39,9 @@ class ResultData<T>(
         return resultCode
     }
 
-    fun getData(): T {
-        return data1
+    fun getMap(): Map<String, Any> {
+        return body
     }
+
+
 }
