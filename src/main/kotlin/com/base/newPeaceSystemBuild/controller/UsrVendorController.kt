@@ -23,4 +23,11 @@ class UsrVendorController(
 
         return "usr/vendor/request"
     }
+
+    @RequestMapping("/usr/vendor/explain")
+    fun showRequest(): String{
+
+
+        return "usr/vendor/explain"
+    }
 }
