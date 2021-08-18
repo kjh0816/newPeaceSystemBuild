@@ -4,6 +4,7 @@
 
 let MemberJoin__submitDone = false;
 function MemberJoin__submit(form) {
+
     if (MemberJoin__submitDone) {
         return;
     }
@@ -137,6 +138,7 @@ $('#loginId').blur(function(){
     $("#join-submit").val() + 'loginId';
 //   (1) 입력 여부 검사
     if(loginId.length == 0){
+
         $("#loginIdCheckMsg").html("아이디를 입력해주세요.");
         $("#loginIdCheckMsg").css("color", "red");
         $("#join-submit").attr("disabled", true);
@@ -149,6 +151,8 @@ $('#loginId').blur(function(){
                 dataType: 'json',
                 data: {loginId:loginId},
                 success: function(result){
+
+
                 //   (2) ResultData에 따른 결과값 표시
                     if(result.resultCode.startsWith("F-")){
                         $("#loginIdCheckMsg").html(result.msg);
@@ -163,6 +167,7 @@ $('#loginId').blur(function(){
                         return;
                     }
                 }
+
             });
 });
 

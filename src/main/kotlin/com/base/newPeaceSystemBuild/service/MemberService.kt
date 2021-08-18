@@ -59,6 +59,10 @@ class MemberService(
 
     fun isUsableLoginId(regex: String, loginId: String): ResultData {
         if(!Ut.match(regex, loginId)){
+
+
+
+
             return ResultData.from("F-1", "6~20자의 영문 소문자, 숫자만 가능합니다.", "loginId", loginId, "menu", 1)
         }
 

@@ -27,6 +27,8 @@ class WebMvcConfigurer(
             .excludePathPatterns("/usr/member/doLogin")
             .excludePathPatterns("/usr/member/join")
             .excludePathPatterns("/usr/member/doJoin")
+            .excludePathPatterns("/usr/member/loginIdCheck")
+            .excludePathPatterns("/usr/member/emailCheck")
         registry.addInterceptor(needLogoutInterceptor)
             //          블랙 리스트 방식
             .addPathPatterns("/usr/member/login")

@@ -128,6 +128,15 @@ class UsrMemberController(
     ): String {
         val regex = "^[a-z0-9]{6,20}\$"
 
+        println("로그인 아이디: " + loginId)
+        println("로그인 아이디: " + loginId)
+        println("로그인 아이디: " + loginId)
+        println("로그인 아이디: " + loginId)
+        println("로그인 아이디: " + loginId)
+        println("로그인 아이디: " + loginId)
+        println("로그인 아이디: " + loginId)
+        println("로그인 아이디: " + loginId)
+
 
         return Ut.getJsonStrFromObj(memberService.isUsableLoginId(regex, loginId))
     }
