@@ -3,6 +3,10 @@ package com.base.newPeaceSystemBuild.service
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.*
+import com.base.newPeaceSystemBuild.vo.member.Bank
+import com.base.newPeaceSystemBuild.vo.member.Department
+import com.base.newPeaceSystemBuild.vo.member.Member
+import com.base.newPeaceSystemBuild.vo.member.Role
 import org.springframework.stereotype.Service
 
 @Service

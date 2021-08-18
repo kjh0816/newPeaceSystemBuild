@@ -1,4 +1,4 @@
-package com.base.newPeaceSystemBuild.vo
+package com.base.newPeaceSystemBuild.vo.member
 
 data class Bank(
         val bankId: Int,
