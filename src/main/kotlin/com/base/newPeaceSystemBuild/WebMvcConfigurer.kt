@@ -1,8 +1,6 @@
 package com.base.newPeaceSystemBuild
 
-import com.base.newPeaceSystemBuild.interceptor.BeforeActionInterceptor
-import com.base.newPeaceSystemBuild.interceptor.NeedLoginInterceptor
-import com.base.newPeaceSystemBuild.interceptor.NeedLogoutInterceptor
+import com.base.newPeaceSystemBuild.interceptor.*
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -11,7 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebMvcConfigurer(
     private val beforeActionInterceptor: BeforeActionInterceptor,
     private val needLoginInterceptor: NeedLoginInterceptor,
-    private val needLogoutInterceptor: NeedLogoutInterceptor
+    private val needLogoutInterceptor: NeedLogoutInterceptor,
+    private val directorInterceptor: DirectorInterceptor,
+    private val memberInterceptor: MemberInterceptor
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
@@ -20,15 +20,23 @@ class WebMvcConfigurer(
             .excludePathPatterns("/resource/**") // resource 하위 폴더 및 파일은 제외
             .excludePathPatterns("/error")
         registry.addInterceptor(needLoginInterceptor)
-            //          블랙 리스트 방식
-            .addPathPatterns("/usr/member/doLogout")
-            .addPathPatterns("/usr/director/request")
-            .addPathPatterns("/usr/director/doRequest")
+            //          화이트 리스트 방식
+            .addPathPatterns("/usr/member/**")
+            .addPathPatterns("/usr/director/**")
+            .excludePathPatterns("/usr/member/login")
+            .excludePathPatterns("/usr/member/doLogin")
+            .excludePathPatterns("/usr/member/join")
+            .excludePathPatterns("/usr/member/doJoin")
         registry.addInterceptor(needLogoutInterceptor)
             //          블랙 리스트 방식
             .addPathPatterns("/usr/member/login")
             .addPathPatterns("/usr/member/doLogin")
             .addPathPatterns("/usr/member/join")
             .addPathPatterns("/usr/member/doJoin")
+        registry.addInterceptor(directorInterceptor)
+            //          화이트 리스트 방식
+            .addPathPatterns("/usr/director/**")
+            .excludePathPatterns("/usr/director/request")
+            .excludePathPatterns("/usr/director/doRequest")
     }
 }

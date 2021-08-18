@@ -47,7 +47,6 @@ class Ut {
 
         fun arrayToMap(array: ArrayList<Any>): Map<String, Any> {
 
-
             if (array.size % 2 != 0) {
                 throw IllegalArgumentException("인자를 짝수개 입력해주세요.");
             }
@@ -69,8 +68,8 @@ class Ut {
             }
 
             return map
-        }
 
+        }
 
 
 

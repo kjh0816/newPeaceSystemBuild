@@ -5,41 +5,45 @@ import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
 
 @Mapper
-interface DirectorRepository {
+interface GenFileRepository {
     @Select(
         """
            SELECT last_insert_id(); 
         """
     )
     fun getLastInsertId(): Int
+
     @Insert(
         """
-            INSERT INTO director
+            INSERT INTO genFile
             SET regDate = NOW(),
             updateDate = NOW(),
-            memberId = #{loginedMemberId},
-            originFileName = #{originFileName},
+            relTypeCode = #{relTypeCode},
+            relId = #{relId},
             typeCode = #{typeCode},
             type2Code = #{type2Code},
+            fileNo = #{fileNo},
+            originFileName = #{originFileName},
             fileExtTypeCode = #{fileExtTypeCode},
             fileExtType2Code = #{fileExtType2Code},
-            fileSize = #{fileSize},
             fileExt = #{fileExt},
-            fileNo = #{fileNo},
+            fileSize = #{fileSize},
             fileDir = #{fileDir}
         """
     )
-    fun putInForDirector(
-        loginedMemberId: Int,
-        originFileName: String,
+    fun saveMeta(
+        relTypeCode: String,
+        relId: Int,
         typeCode: String,
         type2Code: String,
+        fileNo: Int,
+        originFileName: String,
         fileExtTypeCode: String,
         fileExtType2Code: String,
         fileExt: String,
-        fileNo: Int,
         fileSize: Int,
         fileDir: String
     )
+
 
 }

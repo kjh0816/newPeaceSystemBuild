@@ -6,18 +6,25 @@
 
 <head>
     <title>장례지도사 등록</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/request.js" charset="utf-8" defer></script>
+    </th:block>
 </head>
 
 <main layout:fragment="main">
-    <form action="./doRequest" method="POST" enctype="multipart/form-data">
-        <div class="label">첨부파일</div>
+    <form action="./doRequest" method="POST" enctype="multipart/form-data" onsubmit="DirectorRequest__submit(this); return false;">
+        <div class="label">본인 소개</div>
+        <div class="input">
+            <textarea name="introduce" placeholder="본인 소개를 입력해주세요." cols="20" rows="5"></textarea>
+        </div>
+        <div class="label">장례지도사 자격증명서 파일 첨부</div>
         <div class="input">
             <!-- file__{relTypeCode}__{relId}__{typeCode}__{type2Code}__{fileNo} -->
             <!-- 이런식으로 입력받는게 관례라고 함 -->
-            <input type="file" name="file__director__0__common__attachment__1">
+            <input type="file" name="file__member__0__director__attachment__1">
         </div>
         <div>
-            <button type="submit">전송</button>
+            <button type="submit">신청하기</button>
         </div>
     </form>
 </main>

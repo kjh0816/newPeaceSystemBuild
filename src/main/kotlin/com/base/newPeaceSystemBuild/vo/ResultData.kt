@@ -16,11 +16,8 @@ class ResultData(
                 arr.add(keyValue)
             }
 
-
             return ResultData(resultCode, msg, Ut.arrayToMap(arr))
         }
-
-
     }
 
     fun isSuccess(): Boolean {

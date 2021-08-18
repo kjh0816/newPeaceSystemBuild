@@ -8,16 +8,23 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class NeedLoginInterceptor : HandlerInterceptor {
+class MemberInterceptor : HandlerInterceptor {
     @Autowired
     private lateinit var rq: Rq;
 
     override fun preHandle(req: HttpServletRequest, resp: HttpServletResponse, handler: Any): Boolean {
-
         //          화이트 리스트 방식
-        if (!rq.isLogined()) {
-            rq.respUtf8()
-            rq.printReplaceJs("로그인 후 이용해주세요.", "/usr/member/login?afterLoginUri=${rq.getEncodedAfterLoginUri()}")
+        val loginedMember = rq.getLoginedMember()!!
+        rq.respUtf8()
+
+        if (loginedMember.extra__authenticationStatus == 0) {
+            rq.printReplaceJs("장례지도사 승인 대기중입니다.", "/usr/home/main")
+
+            return false
+        }
+
+        else if (loginedMember.extra__authenticationStatus == 2) {
+            rq.printReplaceJs("장례지도사 임시 보류된 회원입니다.", "/usr/home/main")
 
             return false
         }
