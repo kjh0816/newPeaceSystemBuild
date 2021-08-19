@@ -11,7 +11,8 @@ class WebMvcConfigurer(
     private val needLoginInterceptor: NeedLoginInterceptor,
     private val needLogoutInterceptor: NeedLogoutInterceptor,
     private val roleLevelInterceptor: RoleLevelInterceptor,
-    private val authenticationStatusInterceptor: AuthenticationStatusInterceptor
+    private val authenticationStatusInterceptor: AuthenticationStatusInterceptor,
+    private val needAdminInterceptor: NeedAdminInterceptor
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
@@ -21,6 +22,7 @@ class WebMvcConfigurer(
             .excludePathPatterns("/error")
         registry.addInterceptor(needLoginInterceptor)
             //          화이트 리스트 방식
+            .addPathPatterns("/adm/**")
             .addPathPatterns("/usr/member/**")
             .addPathPatterns("/usr/director/**")
             .excludePathPatterns("/usr/member/login")
@@ -29,6 +31,9 @@ class WebMvcConfigurer(
             .excludePathPatterns("/usr/member/doJoin")
             .excludePathPatterns("/usr/member/loginIdCheck")
             .excludePathPatterns("/usr/member/emailCheck")
+        registry.addInterceptor(needAdminInterceptor)
+            //          화이트 리스트 방식
+            .addPathPatterns("/adm/**")
         registry.addInterceptor(needLogoutInterceptor)
             //          블랙 리스트 방식
             .addPathPatterns("/usr/member/login")
