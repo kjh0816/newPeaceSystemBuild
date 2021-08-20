@@ -16,7 +16,7 @@ class AuthenticationStatusInterceptor : HandlerInterceptor {
         //          화이트 리스트 방식
         val loginedMember = rq.getLoginedMember()!!
         rq.respUtf8()
-
+        
         if (loginedMember.extra__authenticationStatus == 1) {
             rq.printReplaceJs("장례지도사 재신청은 할 수 없습니다.", "/usr/home/main")
 
