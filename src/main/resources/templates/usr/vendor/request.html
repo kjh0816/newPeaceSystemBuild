@@ -20,12 +20,12 @@
             <div th:value="${flower.costPrice}" th:text="|원가: ${flower.costPrice}원|"></div>
 <hr>
         </div>
-
     </div>
 
 
 
     <form action="./doRequest" method="POST">
+        <input type="file" enctype="multipart/form-data">
         <button type="submit">위 규격을 취급할 수 있음에 동의합니다.</button>
         </div>
     </form>
