@@ -10,6 +10,7 @@ class VendorService(
     private val vendorRepository: VendorRepository
 ) {
     fun getFlowers(): List<Flower> {
+        // 취급할 제단꽃 standard를 불러온다.
         return vendorRepository.getFlowers()
     }
 }

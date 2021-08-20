@@ -118,6 +118,13 @@ class UsrMemberController(
 
         return rq.replaceJs("회원가입이 완료되었습니다, 로그인페이지로 이동합니다.", "./login")
     }
+
+    @RequestMapping("/usr/member/info")
+    fun showModify(): String {
+        return "usr/member/modify"
+    }
+
+
     // VIEW 기능 함수 끝
 
     // AJax 기능 함수 시작
