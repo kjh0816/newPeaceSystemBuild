@@ -81,6 +81,18 @@ accountNum = '97700608501019';
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
+loginId = 'user2',
+loginPw = SHA2('user2', 256),
+`name` = '홍길동',
+cellphoneNo = '01012341234',
+email = 'hong2@gmail.com',
+location = '서울특별시',
+bank = '신한',
+accountNum = '97700608501019';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
 loginId = 'user999',
 loginPw = 'db1edbcfb80fd965fe6d8a3aab2a59739255671a0b45dc263d99b9ace81e9e79',
 `name` = '홍길동',
@@ -240,6 +252,14 @@ FROM flower;
 
 
 
+
+SELECT * FROM MEMBER;
+
+SELECT * FROM memberRole;
+
+SELECT * FROM genFile;
+
+SELECT NOW();
 
 
 
