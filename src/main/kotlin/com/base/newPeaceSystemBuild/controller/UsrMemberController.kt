@@ -121,7 +121,7 @@ class UsrMemberController(
 
     @RequestMapping("/usr/member/info")
     fun showModify(): String {
-        return "usr/member/modify"
+        return "usr/member/info"
     }
 
 
