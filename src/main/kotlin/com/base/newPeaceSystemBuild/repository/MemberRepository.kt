@@ -12,12 +12,12 @@ interface MemberRepository {
         """
             SELECT 
             M.*,
-            MR.regDate AS `memberRoleRegDate`,
-            MR.updateDate AS `memberRoleUpdateDate`,
-            MR.introduce AS `introduce`,
-            MR.authenticationStatus AS `authenticationStatus`,
-            MR.authenticationDate AS `authenticationDate`,
-            R.roleName AS `roleName`
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
             ON M.id = MR.memberId
@@ -32,12 +32,12 @@ interface MemberRepository {
         """
             SELECT 
             M.*,
-            MR.regDate AS `memberRoleRegDate`,
-            MR.updateDate AS `memberRoleUpdateDate`,
-            MR.introduce AS `introduce`,
-            MR.authenticationStatus AS `authenticationStatus`,
-            MR.authenticationDate AS `authenticationDate`,
-            R.roleName AS `roleName`
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
             ON M.id = MR.memberId
@@ -52,12 +52,12 @@ interface MemberRepository {
         """
             SELECT 
             M.*,
-            MR.regDate AS `memberRoleRegDate`,
-            MR.updateDate AS `memberRoleUpdateDate`,
-            MR.introduce AS `introduce`,
-            MR.authenticationStatus AS `authenticationStatus`,
-            MR.authenticationDate AS `authenticationDate`,
-            R.roleName AS `roleName`
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
             ON M.id = MR.memberId
@@ -72,12 +72,12 @@ interface MemberRepository {
         """
             SELECT 
             M.*,
-            MR.regDate AS `memberRoleRegDate`,
-            MR.updateDate AS `memberRoleUpdateDate`,
-            MR.introduce AS `introduce`,
-            MR.authenticationStatus AS `authenticationStatus`,
-            MR.authenticationDate AS `authenticationDate`,
-            R.roleName AS `roleName`
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
             ON M.id = MR.memberId
