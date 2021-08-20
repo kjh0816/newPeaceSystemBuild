@@ -25,6 +25,10 @@ class MemberService(
         return memberRepository.getMemberById(id)
     }
 
+    fun getMembersByAuthenticationStatus(authenticationStatus: Int): List<Member>? {
+        return memberRepository.getMembersByAuthenticationStatus(authenticationStatus)
+    }
+
     fun join(
         loginId: String,
         loginPw: String,
@@ -67,10 +71,6 @@ class MemberService(
 
     fun isUsableLoginId(regex: String, loginId: String): ResultData {
         if(!Ut.match(regex, loginId)){
-
-
-
-
             return ResultData.from("F-1", "6~20자의 영문 소문자, 숫자만 가능합니다.")
         }
 
@@ -80,5 +80,13 @@ class MemberService(
         }
 
         return ResultData.from("S-1", "사용 가능한 로그인 아이디입니다.")
+    }
+
+    fun updateAuthenticationStatus(memberId: Int, authenticationStatus: Int) {
+        memberRepository.updateAuthenticationStatus(memberId, authenticationStatus)
+    }
+
+    fun updateRoleLevel(memberId: Int) {
+        memberRepository.updateRoleLevel(memberId)
     }
 }

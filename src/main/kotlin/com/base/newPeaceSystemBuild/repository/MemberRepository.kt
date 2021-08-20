@@ -4,10 +4,7 @@ import com.base.newPeaceSystemBuild.vo.member.Bank
 import com.base.newPeaceSystemBuild.vo.member.Department
 import com.base.newPeaceSystemBuild.vo.member.Member
 import com.base.newPeaceSystemBuild.vo.member.Role
-import org.apache.ibatis.annotations.Insert
-import org.apache.ibatis.annotations.Mapper
-import org.apache.ibatis.annotations.Param
-import org.apache.ibatis.annotations.Select
+import org.apache.ibatis.annotations.*
 
 @Mapper
 interface MemberRepository {
@@ -71,6 +68,26 @@ interface MemberRepository {
     )
     fun getMemberById(id: Int): Member?
 
+    @Select(
+        """
+            SELECT 
+            M.*,
+            MR.regDate AS `memberRoleRegDate`,
+            MR.updateDate AS `memberRoleUpdateDate`,
+            MR.introduce AS `introduce`,
+            MR.authenticationStatus AS `authenticationStatus`,
+            MR.authenticationDate AS `authenticationDate`,
+            R.roleName AS `roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE MR.authenticationStatus = #{authenticationStatus}
+        """
+    )
+    fun getMembersByAuthenticationStatus(authenticationStatus: Int): List<Member>?
+
     @Insert(
         """
         INSERT INTO `member`
@@ -120,4 +137,24 @@ interface MemberRepository {
         """
     )
     fun getBanks(): List<Bank>
+
+    @Update(
+        """
+            UPDATE memberRole SET 
+            authenticationStatus = #{authenticationStatus}, 
+            authenticationDate = NOW() 
+            WHERE memberId = #{memberId}
+        """
+    )
+    fun updateAuthenticationStatus(memberId: Int, authenticationStatus: Int)
+
+    @Update(
+        """
+            UPDATE `member` SET 
+            roleLevel = 3 
+            WHERE id = #{memberId};
+        """
+    )
+    fun updateRoleLevel(memberId: Int)
+
 }

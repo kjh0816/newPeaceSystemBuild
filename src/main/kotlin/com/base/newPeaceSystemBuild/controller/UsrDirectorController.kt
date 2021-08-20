@@ -41,7 +41,7 @@ class UsrDirectorController(
         multipartRequest: MultipartRequest
     ): String {
         // Request 페이지에서 넘어온 파라미터를 DB에 추가하는 과정
-        memberRoleService.putInForDirector(introduce, rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.roleLevel)
+        memberRoleService.putInForDirector(introduce, rq.getLoginedMember()!!.id, 3)
         val fileMap = multipartRequest.fileMap
         for (fileInputName in fileMap.keys) {
             val multipartFile = fileMap[fileInputName]

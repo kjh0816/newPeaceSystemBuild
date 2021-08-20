@@ -9,7 +9,26 @@
 </head>
 
 <main layout:fragment="main">
-    
+    <div class="director-request-box">
+        <th:block th:each="directorRequestMember : ${directorRequestMembers}">
+            <form action="./doApproval" method="POST">
+                <input type="hidden" name="id" th:value="${directorRequestMember.id}">
+                <span>가입 날짜 : [[${directorRequestMember.regDate}]]</span><br>
+                <span>장례지도사 신청 날짜 : [[${directorRequestMember.extra__regDate}]]</span><br>
+                <span>이름 : [[${directorRequestMember.name}]]</span><br>
+                <span>전화번호 : [[${directorRequestMember.cellphoneNo}]]</span><br>
+                <span>이메일 : [[${directorRequestMember.email}]]</span><br>
+                <div>
+                    <input type="radio" id="approval" name="authenticationStatus" value="1" checked>
+                    <label for="approval">승인</label>
+                    <input type="radio" id="hold" name="authenticationStatus" value="2">
+                    <label for="hold">보류</label>
+                </div>
+                <input type="submit" value="확인">
+                <hr>
+            </form>
+        </th:block>
+    </div>
 </main>
 
 </html>
