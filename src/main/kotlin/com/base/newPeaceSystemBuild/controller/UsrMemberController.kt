@@ -120,7 +120,15 @@ class UsrMemberController(
     }
 
     @RequestMapping("/usr/member/info")
-    fun showModify(): String {
+    fun showInfo(model: Model): String {
+
+
+    // 회원 정보 페이지에서 하이픈이 중간에 들어간 형태로 핸드폰 번호를 보여주기 위해서 따로 출력해서 넘겨준다.
+    // 현재 로그인된 회원의 memberId를 넘겨준다.
+        val cellphoneNo = memberService.getCellphoneNoFormatted(rq.getLoginedMember()!!.id)
+
+        model.addAttribute("cellphoneNo", cellphoneNo)
+
         return "usr/member/info"
     }
 

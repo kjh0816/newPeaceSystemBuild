@@ -2,7 +2,7 @@ package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.util.Ut
-import com.base.newPeaceSystemBuild.vo.*
+import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.member.Bank
 import com.base.newPeaceSystemBuild.vo.member.Department
 import com.base.newPeaceSystemBuild.vo.member.Member
@@ -88,5 +88,9 @@ class MemberService(
 
     fun updateRoleLevel(memberId: Int) {
         memberRepository.updateRoleLevel(memberId)
+    }
+
+    fun getCellphoneNoFormatted(id: Int): String {
+        return memberRepository.getCellphoneNoFormatted(id)
     }
 }
