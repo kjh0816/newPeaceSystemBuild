@@ -55,7 +55,9 @@ class UsrDirectorController(
 
         //  장례지도사의 roleLevel(roleId)는 3
         //  승인 요청 시, roleLevel은 장례지도사가 되고, authenticationStatus로 구분된다.
+
         memberRoleService.insertDataIntoMemberRole(introduce, rq.getLoginedMember()!!.id, 3)
+
         memberService.updateRoleLevel(rq.getLoginedMember()!!.id, 3)
 
         // 장례지도사 신청은 회원데이터 수정이기 때문에 세션데이터를 수정된값으로 다시 넣어준다.

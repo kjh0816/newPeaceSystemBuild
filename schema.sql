@@ -119,7 +119,7 @@ CREATE TABLE memberRole(
   roleId INT(10) UNSIGNED NOT NULL,
   introduce LONGTEXT DEFAULT "소개글이 없습니다.",
   authenticationStatus SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '승인 여부(0 = 미승인, 1 = 승인, 2 = 보류)',
-  authenticationDate DATETIME COMMENT '인증된 날짜'
+  authenticationDate DATETIME DEFAULT NOW() COMMENT '인증된 날짜'
 );
 
 SELECT * FROM memberRole;
@@ -265,4 +265,9 @@ FROM `member`;
 
 SELECT * FROM MEMBER;
 SELECT * FROM memberRole;
+
+UPDATE memberRole
+SET authenticationStatus = 1,
+authenticationDate = NOW()
+WHERE memberId = 2;
 
