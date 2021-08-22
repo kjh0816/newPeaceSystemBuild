@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpSession
 
-// Componet를 지정해주면 view 파일에서 @rq.~로 접근할 수 있다.(rq 객체를 setAttribute 해주지 않아도 된다.)
+// Component를 지정해주면 view 파일에서 @rq.~로 접근할 수 있다.(rq 객체를 setAttribute 해주지 않아도 된다.)
 @Component
 // HTTPS request 객체당 하나의 빈을 return
 // request 단위(사용자마다) 다른 rq 클래스를 참조한다.

@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service
 class MemberRoleService(
     private val memberRoleRepository: MemberRoleRepository
 ) {
-    fun putInForDirector(introduce: String, memberId: Int, roleId: Int) {
-        memberRoleRepository.putInForDirector(introduce, memberId, roleId)
+
+
+    fun insertDataIntoMemberRole(introduce: String, memberId: Int, roleId: Int) {
+        memberRoleRepository.insertDataIntoMemberRole(introduce, memberId, roleId)
     }
 
 }

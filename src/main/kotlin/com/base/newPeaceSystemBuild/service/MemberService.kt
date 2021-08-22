@@ -86,8 +86,8 @@ class MemberService(
         memberRepository.updateAuthenticationStatus(memberId, authenticationStatus)
     }
 
-    fun updateRoleLevel(memberId: Int) {
-        memberRepository.updateRoleLevel(memberId)
+    fun updateRoleLevel(memberId: Int, authenticationStatus: Int) {
+        memberRepository.updateRoleLevel(memberId, authenticationStatus)
     }
 
     fun getCellphoneNoFormatted(id: Int): String {

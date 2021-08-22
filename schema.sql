@@ -31,6 +31,12 @@ SET regDate = NOW(),
 updateDate = NOW(),
 roleName = '장례지도사';
 
+INSERT INTO `role`
+SET regDate = NOW(),
+updateDate = NOW(),
+roleName = '물품 공급업자';
+
+
 SELECT * FROM `role`;
 
 # 통합 회원 테이블 생성
@@ -245,22 +251,18 @@ FROM flower;
 
 
 
-
-
-
-
+SELECT CONCAT(
+SUBSTR(cellphoneNo, 1, 3)
+, '-'
+, SUBSTR(cellphoneNo, 4, 4)
+, '-'
+, SUBSTR(cellphoneNo, 8, 4)
+) AS `cellphoneNo`
+FROM `member`;
 
 
 
 
 SELECT * FROM MEMBER;
-
 SELECT * FROM memberRole;
-
-SELECT * FROM genFile;
-
-SELECT NOW();
-
-
-
 

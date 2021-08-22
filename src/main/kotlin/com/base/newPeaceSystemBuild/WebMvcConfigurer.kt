@@ -10,7 +10,6 @@ class WebMvcConfigurer(
     private val beforeActionInterceptor: BeforeActionInterceptor,
     private val needLoginInterceptor: NeedLoginInterceptor,
     private val needLogoutInterceptor: NeedLogoutInterceptor,
-    private val roleLevelInterceptor: RoleLevelInterceptor,
     private val authenticationStatusInterceptor: AuthenticationStatusInterceptor,
     private val needAdminInterceptor: NeedAdminInterceptor
 ) : WebMvcConfigurer {
@@ -45,11 +44,8 @@ class WebMvcConfigurer(
         registry.addInterceptor(authenticationStatusInterceptor)
             //          화이트 리스트 방식
             .addPathPatterns("/usr/director/**")
-        registry.addInterceptor(roleLevelInterceptor)
-            //          화이트 리스트 방식
-            .addPathPatterns("/usr/director/**")
-            .excludePathPatterns("/usr/director/request")
-            .excludePathPatterns("/usr/director/doRequest")
+            .addPathPatterns("/usr/vendor/**")
+
 
     }
 }

@@ -151,11 +151,11 @@ interface MemberRepository {
     @Update(
         """
             UPDATE `member` SET 
-            roleLevel = 3 
+            roleLevel = #{authenticationStatus}
             WHERE id = #{memberId};
         """
     )
-    fun updateRoleLevel(memberId: Int)
+    fun updateRoleLevel(memberId: Int, authenticationStatus: Int)
 
     @Select(
         """

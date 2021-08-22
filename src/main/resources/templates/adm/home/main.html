@@ -10,14 +10,14 @@
 
 <main layout:fragment="main">
     <div class="director-request-box">
-        <th:block th:each="directorRequestMember : ${directorRequestMembers}">
+        <th:block th:each="memberByAuthenticationStatus : ${membersByAuthenticationStatus}">
             <form action="./doApproval" method="POST">
-                <input type="hidden" name="id" th:value="${directorRequestMember.id}">
-                <span>가입 날짜 : [[${directorRequestMember.regDate}]]</span><br>
-                <span>장례지도사 신청 날짜 : [[${directorRequestMember.extra__regDate}]]</span><br>
-                <span>이름 : [[${directorRequestMember.name}]]</span><br>
-                <span>전화번호 : [[${directorRequestMember.cellphoneNo}]]</span><br>
-                <span>이메일 : [[${directorRequestMember.email}]]</span><br>
+                <input type="hidden" name="id" th:value="${memberByAuthenticationStatus.id}">
+                <span>가입 날짜 : [[${memberByAuthenticationStatus.regDate}]]</span><br>
+                <span>장례지도사 신청 날짜 : [[${memberByAuthenticationStatus.extra__regDate}]]</span><br>
+                <span>이름 : [[${memberByAuthenticationStatus.name}]]</span><br>
+                <span>전화번호 : [[${memberByAuthenticationStatus.cellphoneNo}]]</span><br>
+                <span>이메일 : [[${memberByAuthenticationStatus.email}]]</span><br>
                 <div>
                     <input type="radio" id="approval" name="authenticationStatus" value="1" checked>
                     <label for="approval">승인</label>

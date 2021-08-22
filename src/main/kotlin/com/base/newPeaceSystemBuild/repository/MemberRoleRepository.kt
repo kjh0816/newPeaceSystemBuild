@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper
 
 @Mapper
 interface MemberRoleRepository {
+
     @Insert(
         """
             INSERT INTO memberRole
@@ -15,5 +16,5 @@ interface MemberRoleRepository {
             introduce = #{introduce}
         """
     )
-    fun putInForDirector(introduce: String, memberId: Int, roleId: Int)
+    fun insertDataIntoMemberRole(introduce: String, memberId: Int, roleId: Int)
 }
