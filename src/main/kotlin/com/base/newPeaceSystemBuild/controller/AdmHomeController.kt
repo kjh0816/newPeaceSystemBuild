@@ -19,12 +19,10 @@ class AdmHomeController(
 
     // VIEW Mapping 함수 시작
     @RequestMapping("/adm/home/main")
-    fun showMain(model: Model): String {
-        val membersByAuthenticationStatus = memberService.getMembersByAuthenticationStatus(0)
+    fun showMain(model: Model, authenticationStatus: Int): String {
+        val membersByAuthenticationStatus = memberService.getMembersByAuthenticationStatus(authenticationStatus)
 
-        if (membersByAuthenticationStatus != null) {
-            model.addAttribute("membersByAuthenticationStatus", membersByAuthenticationStatus)
-        }
+        model.addAttribute("membersByAuthenticationStatus", membersByAuthenticationStatus)
 
         return "adm/home/main"
     }
@@ -35,7 +33,13 @@ class AdmHomeController(
     @ResponseBody
     fun doApproval(memberId: Int, authenticationStatus: Int): String {
         memberService.updateAuthenticationStatus(memberId, authenticationStatus)
-        return rq.replaceJs("승인완료.", "main")
+        if(authenticationStatus == 1){
+            return rq.replaceJs("장례지도사 승인완료.", "main?authenticationStatus=$authenticationStatus")
+        }
+        else if(authenticationStatus == 2){
+            return rq.replaceJs("장례지도사 보류완료.", "main?authenticationStatus=$authenticationStatus")
+        }
+        return "redirect:"
     }
     // VIEW 기능 함수 끝
 }

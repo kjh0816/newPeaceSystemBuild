@@ -93,4 +93,8 @@ class MemberService(
     fun getCellphoneNoFormatted(id: Int): String {
         return memberRepository.getCellphoneNoFormatted(id)
     }
+
+    fun getMembers(): List<Member>? {
+        return memberRepository.getMembers()
+    }
 }
