@@ -61,6 +61,7 @@ class UsrDirectorController(
         memberService.updateRoleLevel(rq.getLoginedMember()!!.id, 3)
 
         // 장례지도사 신청은 회원데이터 수정이기 때문에 세션데이터를 수정된값으로 다시 넣어준다.
+
         rq.login(memberService.getMemberById(rq.getLoginedMember()!!.id)!!)
 
         return rq.replaceJs("장례지도사 영업신청이 완료되었습니다.", "../home/main")
