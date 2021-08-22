@@ -12,7 +12,7 @@
     <div class="director-request-box">
         <th:block th:each="memberByAuthenticationStatus : ${membersByAuthenticationStatus}">
             <form action="./doApproval" method="POST">
-                <input type="hidden" name="id" th:value="${memberByAuthenticationStatus.id}">
+                <input type="hidden" name="memberId" th:value="${memberByAuthenticationStatus.id}">
                 <span>가입 날짜 : [[${memberByAuthenticationStatus.regDate}]]</span><br>
                 <span>장례지도사 신청 날짜 : [[${memberByAuthenticationStatus.extra__regDate}]]</span><br>
                 <span>이름 : [[${memberByAuthenticationStatus.name}]]</span><br>

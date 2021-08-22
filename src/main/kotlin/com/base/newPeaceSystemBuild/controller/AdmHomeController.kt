@@ -19,7 +19,7 @@ class AdmHomeController(
 
     // VIEW Mapping 함수 시작
     @RequestMapping("/adm/home/main")
-    fun showLogin(model: Model): String {
+    fun showMain(model: Model): String {
         val membersByAuthenticationStatus = memberService.getMembersByAuthenticationStatus(0)
 
         if (membersByAuthenticationStatus != null) {
@@ -33,7 +33,7 @@ class AdmHomeController(
     // VIEW 기능 함수 시작
     @RequestMapping("/adm/home/doApproval", method = [RequestMethod.POST])
     @ResponseBody
-    fun doLogin(memberId: Int, authenticationStatus: Int): String {
+    fun doApproval(memberId: Int, authenticationStatus: Int): String {
         memberService.updateAuthenticationStatus(memberId, authenticationStatus)
         return rq.replaceJs("승인완료.", "main")
     }
