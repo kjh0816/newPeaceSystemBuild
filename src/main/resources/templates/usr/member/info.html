@@ -45,6 +45,23 @@
 
     <br>
     <br>
+    <!-- 관리자나 영업자가 아닐 경우, -->
+    <div th:if="${@rq.loginedMember.roleLevel != 1 && @rq.loginedMember.roleLevel != 2}">
+        <!-- authenticationStatus가 0(미승인)일 경우, 직업명 + 상태 -->
+        <div th:if="${@rq.loginedMember.extra__authenticationStatus == 0}">
+            [[${@rq.loginedMember.extra__roleName}]]: 승인 대기 중입니다.</div>
+        <!-- authenticationStatus가 1(승인) 상태일 경우, 직업명 + 승인날짜 -->
+        <div th:if="${@rq.loginedMember.extra__authenticationStatus == 1}">
+            [[${@rq.loginedMember.extra__roleName}]]
+            <br>
+            (승인된 날짜: [[${@rq.loginedMember.extra__authenticationDate}]])</div>
+        <!-- authenticationStatus가 2(승인 보류)일 경우, 직업명 + 상태 -->
+        <div th:if="${@rq.loginedMember.extra__authenticationStatus == 2}">
+            [[${@rq.loginedMember.extra__roleName}]]: 승인 임시 보류 중입니다.</div>
+
+    </div>
+
+
     <div>
         <a href="../home/main">돌아가기</a>
     </div>
