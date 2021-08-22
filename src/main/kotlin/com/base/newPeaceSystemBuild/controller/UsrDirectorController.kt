@@ -1,7 +1,7 @@
 package com.base.newPeaceSystemBuild.controller
 
-import com.base.newPeaceSystemBuild.service.MemberRoleService
 import com.base.newPeaceSystemBuild.service.GenFileService
+import com.base.newPeaceSystemBuild.service.MemberRoleService
 import com.base.newPeaceSystemBuild.service.MemberService
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
@@ -41,6 +41,7 @@ class UsrDirectorController(
         multipartRequest: MultipartRequest
     ): String {
         // Request 페이지에서 넘어온 파라미터를 DB에 추가하는 과정
+        // 장례지도사 승인 신청 시, roleLevel(=roleId)는 3(장례지도사)가 되고, authenticationStatus에 따라서 이후 구분된다.
         memberRoleService.putInForDirector(introduce, rq.getLoginedMember()!!.id, 3)
         val fileMap = multipartRequest.fileMap
         for (fileInputName in fileMap.keys) {

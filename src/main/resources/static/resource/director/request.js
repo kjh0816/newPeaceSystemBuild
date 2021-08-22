@@ -5,13 +5,14 @@ function DirectorRequest__submit(form) {
         return;
     }
 
-    if (form.file__director__0__common__attachment__1.value.length == 0) {
+
+    if (form.file__member__0__director__attachment__1.value.length == 0) {
         swal({
-            title: "파일을 업로드해주세요.",
+            title: "장례지도사 자격증 사진을 업로드해주세요.",
             icon: "info",
             button: "확인",
         });
-        form.file__director__0__common__attachment__1.focus();
+        form.file__member__0__director__attachment__1.focus();
 
         return;
     }
