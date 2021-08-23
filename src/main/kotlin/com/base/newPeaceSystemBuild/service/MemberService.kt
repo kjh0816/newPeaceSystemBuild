@@ -25,8 +25,8 @@ class MemberService(
         return memberRepository.getMemberById(id)
     }
 
-    fun getMembersByAuthenticationStatus(authenticationStatus: Int): List<Member>? {
-        return memberRepository.getMembersByAuthenticationStatus(authenticationStatus)
+    fun getMembersByAuthenticationLevel(authenticationLevel: Int): List<Member>? {
+        return memberRepository.getMembersByAuthenticationLevel(authenticationLevel)
     }
 
     fun join(
@@ -82,8 +82,8 @@ class MemberService(
         return ResultData.from("S-1", "사용 가능한 로그인 아이디입니다.")
     }
 
-    fun updateAuthenticationStatus(memberId: Int, authenticationStatus: Int) {
-        memberRepository.updateAuthenticationStatus(memberId, authenticationStatus)
+    fun modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId: Int, authenticationLevel: Int) {
+        memberRepository.modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId, authenticationLevel)
     }
 
     fun updateRoleLevel(memberId: Int, authenticationStatus: Int) {
