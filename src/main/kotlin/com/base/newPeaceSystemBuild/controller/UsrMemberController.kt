@@ -58,19 +58,12 @@ class UsrMemberController(
     @RequestMapping("/usr/member/doLogout")
     @ResponseBody
     fun doLogout(session: HttpSession) {
+//      로그인 세션 해제
         rq.logout()
-        println("rq.logout 실행됨")
-        println("rq.logout 실행됨")
-        println("rq.logout 실행됨")
-        println("rq.logout 실행됨")
-        println("rq.logout 실행됨")
-        println("rq.logout 실행됨")
-        println("rq.logout 실행됨")
-        println("rq.logout 실행됨")
 
     }
 
-    @RequestMapping("/usr/member/doJoin")
+    @RequestMapping("/usr/member/doJoin", method = [RequestMethod.POST])
     @ResponseBody
     fun doJoin(
         @RequestParam(defaultValue = "") loginId: String,
@@ -82,35 +75,9 @@ class UsrMemberController(
         @RequestParam(defaultValue = "") bank: String,
         @RequestParam(defaultValue = "") accountNum: String
     ): String {
-        if(loginId.isEmpty()){
-            return rq.historyBackJs("사용하실 아이디를 입력해주세요.")
-        }
-        if(loginPwInput.isEmpty()){
-            return rq.historyBackJs("사용하실 비밀번호를 입력해주세요.")
-        }
-        if(name.isEmpty()){
-            return rq.historyBackJs("이름을 입력해주세요.")
-        }
-        if(location.isEmpty()){
-            return rq.historyBackJs("지역을 선택해주세요.")
-        }
-        if(bank.isEmpty()){
-            return rq.historyBackJs("은행을 선택해주세요.")
-        }
-        if(accountNum.isEmpty()){
-            return rq.historyBackJs("계좌번호를 입력해주세요.")
-        }
 
 
-        val member = memberService.getMemberByLoginId(loginId)
-
-        if(member != null){
-            return rq.historyBackJs("이미 존재하는 로그인 아이디입니다.")
-        }
-
-        memberService.join(loginId, loginPwInput, name, cellphoneNo, email, location, bank, accountNum)
-
-        return rq.replaceJs("회원가입이 완료되었습니다, 로그인페이지로 이동합니다.", "./login")
+        return Ut.getJsonStrFromObj(memberService.doJoin(loginId, loginPwInput, name, cellphoneNo, email, location, bank, accountNum))
     }
 
     @RequestMapping("/usr/member/info")

@@ -121,4 +121,46 @@ class MemberService(
 
         return ResultData.from("S-1", "","replaceUri", replaceUri)
     }
+
+    fun doJoin(
+        loginId: String,
+        loginPw: String,
+        name: String,
+        cellphoneNo: String,
+        email: String,
+        location: String,
+        bank: String,
+        accountNum: String
+    ): ResultData {
+
+        if(loginId.isEmpty()){
+            return ResultData.from("F-1", "사용하실 아이디를 입력해주세요.")
+        }
+        if(loginPw.isEmpty()){
+            return ResultData.from("F-2", "사용하실 비밀번호를 입력해주세요.")
+        }
+        if(name.isEmpty()){
+            return ResultData.from("F-3", "이름을 입력해주세요.")
+        }
+        if(location.isEmpty()){
+            return ResultData.from("F-4", "지역을 선택해주세요.")
+        }
+        if(bank.isEmpty()){
+            return ResultData.from("F-5", "은행을 선택해주세요.")
+        }
+        if(accountNum.isEmpty()){
+            return ResultData.from("F-6", "계좌번호를 입력해주세요.")
+        }
+
+
+        val member = getMemberByLoginId(loginId)
+
+        if(member != null){
+            return ResultData.from("F-7", "이미 존재하는 로그인 아이디입니다.")
+        }
+
+        join(loginId, loginPw, name, cellphoneNo, email, location, bank, accountNum)
+
+        return ResultData.from("S-1", "회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.")
+    }
 }

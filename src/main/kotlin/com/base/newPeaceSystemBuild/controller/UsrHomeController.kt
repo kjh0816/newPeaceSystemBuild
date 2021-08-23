@@ -14,7 +14,7 @@ class UsrHomeController(
 
     // VIEW Mapping 함수 시작
     @RequestMapping("/usr/home/main")
-    fun showLogin(): String {
+    fun showMain(): String {
         return "usr/home/main"
     }
 
