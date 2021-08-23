@@ -1,3 +1,10 @@
+# 구현 규칙
+- 함수명
+  1) InsertInto + 테이블명
+  2) modify + 칼럼명(길면 주석으로만) + In + 테이블명
+  3) SELECT : get~
+  4) DELETE : delStatus를 변경하므로 modify로 쓴다.
+
 # 큰 틀
 - 회원 관리
   - 최초 회원가입을 한 회원은 영업자의 권한만 가지고 있다.
