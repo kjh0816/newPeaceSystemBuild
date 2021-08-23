@@ -3,16 +3,21 @@ package com.base.newPeaceSystemBuild.service
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.ResultData
+import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.member.Bank
 import com.base.newPeaceSystemBuild.vo.member.Department
 import com.base.newPeaceSystemBuild.vo.member.Member
 import com.base.newPeaceSystemBuild.vo.member.Role
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class MemberService(
     private val memberRepository: MemberRepository
 ) {
+    @Autowired
+    private lateinit var rq: Rq;
+
     fun getMemberByLoginId(loginId: String): Member? {
         return memberRepository.getMemberByLoginId(loginId)
     }
@@ -96,5 +101,24 @@ class MemberService(
 
     fun getMembers(): List<Member>? {
         return memberRepository.getMembers()
+    }
+
+    fun doLogin(loginId: String, loginPwInput: String, replaceUri: String): ResultData {
+
+        if(loginId.isEmpty()){
+            return ResultData.from("F-1", "아이디를 입력해주세요.")
+        }
+        if(loginPwInput.isEmpty()){
+            return ResultData.from("F-2", "비밀번호를 입력해주세요.")
+        }
+        val member = getMemberByLoginId(loginId)
+            ?: return ResultData.from("F-3", "입력하신 정보가 일치하지 않습니다.")
+        if ( member.loginPw != loginPwInput ) {
+            return ResultData.from("F-3", "입력하신 정보가 일치하지 않습니다.")
+        }
+
+        rq.login(member)
+
+        return ResultData.from("S-1", "","replaceUri", replaceUri)
     }
 }

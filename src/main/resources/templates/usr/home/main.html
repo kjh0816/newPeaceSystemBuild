@@ -6,6 +6,10 @@
 
 <head>
     <title>메인</title>
+<!--  로그아웃을 Ajax로 실행하기 위한 의존성  -->
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/member/logout.js" charset="utf-8" defer></script>
+    </th:block>
 </head>
 
 <main layout:fragment="main">
@@ -15,7 +19,9 @@
     <a href="../member/login">로그인</a>
     <br>
     <br>
-    <a href="../member/doLogout">로그아웃</a>
+<!--  아래 로그아웃 함수는 button(this)를 받아야 함수가 실행됨  -->
+    <button onclick="MemberLogout__submit(this); return false;">로그아웃</button>
+
     <br>
     <br>
     <a href="../member/join">회원가입</a>

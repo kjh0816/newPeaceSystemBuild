@@ -48,35 +48,29 @@ class UsrMemberController(
         @RequestParam(defaultValue = "") loginPwInput: String,
         @RequestParam(defaultValue = "../home/main") replaceUri: String
     ): String {
-        if(loginId.isEmpty()){
-            return rq.historyBackJs("아이디를 입력해주세요.")
-        }
-        if(loginPwInput.isEmpty()){
-            return rq.historyBackJs("비밀번호를 입력해주세요.")
-        }
-        val member = memberService.getMemberByLoginId(loginId)
-            ?: return rq.historyBackJs("존재하지 않는 아이디입니다, 다시 로그인해 주세요.")
-        if ( member.loginPw != loginPwInput ) {
-            return rq.historyBackJs("비밀번호가 일치하지 않습니다.")
-        }
 
+//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
 
+        return Ut.getJsonStrFromObj(memberService.doLogin(loginId, loginPwInput, replaceUri))
 
-        rq.login(member)
-
-
-        return rq.replaceJs("환영합니다.", replaceUri)
     }
 
     @RequestMapping("/usr/member/doLogout")
     @ResponseBody
-    fun doLogout(session: HttpSession): String {
+    fun doLogout(session: HttpSession) {
         rq.logout()
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
 
-        return rq.replaceJs("로그아웃 되었습니다.", "../home/main")
     }
 
-    @RequestMapping("/usr/member/doJoin", method = [RequestMethod.POST])
+    @RequestMapping("/usr/member/doJoin")
     @ResponseBody
     fun doJoin(
         @RequestParam(defaultValue = "") loginId: String,
