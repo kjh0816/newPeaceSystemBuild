@@ -28,6 +28,11 @@
   - 사업자 인증 버튼
   - 인력 정보 등록 버튼
   - 장례지도사 호출 버튼
+# 함수명 템플릿
+  - Insert : Insert[테이블명]
+  - Select : get[테이블명]By[기준칼럼명]
+  - Update : modify[테이블명]Into[칼럼명]And[칼럼명]...
+  - Delete(UpdateDelStatus) : delete[테이블명]
 
 # 구현된 것
 - 회원가입
