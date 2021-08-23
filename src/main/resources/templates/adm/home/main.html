@@ -10,23 +10,23 @@
 
 <main layout:fragment="main">
     <div class="director-request-box">
-        <a href="./main?authenticationStatus=0">신청받은 리스트</a>
-        <a href="./main?authenticationStatus=1">승인된 리스트</a>
-        <a href="./main?authenticationStatus=2">보류된 리스트</a>
+        <a href="./main?authenticationLevel=0">신청받은 리스트</a>
+        <a href="./main?authenticationLevel=1">승인된 리스트</a>
+        <a href="./main?authenticationLevel=2">보류된 리스트</a>
 
-        <th:block th:each="memberByAuthenticationStatus : ${membersByAuthenticationStatus}">
+        <th:block th:each="member : ${members}">
             <form action="./doApproval" method="POST">
-                <input type="hidden" name="memberId" th:value="${memberByAuthenticationStatus.id}">
-                <span>가입 날짜 : [[${memberByAuthenticationStatus.regDate}]]</span><br>
-                <span>장례지도사 신청 날짜 : [[${memberByAuthenticationStatus.extra__regDate}]]</span><br>
-                <span>이름 : [[${memberByAuthenticationStatus.name}]]</span><br>
-                <span>전화번호 : [[${memberByAuthenticationStatus.cellphoneNo}]]</span><br>
-                <span>권한 : [[${memberByAuthenticationStatus.extra__authenticationStatus}]]</span><br>
-                <span>이메일 : [[${memberByAuthenticationStatus.email}]]</span><br>
+                <input type="hidden" name="memberId" th:value="${member.id}">
+                <span>가입 날짜 : [[${member.regDate}]]</span><br>
+                <span>장례지도사 신청 날짜 : [[${member.extra__regDate}]]</span><br>
+                <span>이름 : [[${member.name}]]</span><br>
+                <span>전화번호 : [[${member.cellphoneNo}]]</span><br>
+                <span>권한 : [[${member.extra__authenticationLevel}]]</span><br>
+                <span>이메일 : [[${member.email}]]</span><br>
                 <div>
-                    <input type="radio" id="approval" name="authenticationStatus" value="1">
+                    <input type="radio" id="approval" name="authenticationLevel" value="1">
                     <label for="approval">승인</label>
-                    <input type="radio" id="hold" name="authenticationStatus" value="2">
+                    <input type="radio" id="hold" name="authenticationLevel" value="2">
                     <label for="hold">보류</label>
                 </div>
                 <input type="submit" value="확인">

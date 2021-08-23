@@ -19,10 +19,10 @@ class AdmHomeController(
 
     // VIEW Mapping 함수 시작
     @RequestMapping("/adm/home/main")
-    fun showMain(model: Model, authenticationStatus: Int): String {
-        val membersByAuthenticationStatus = memberService.getMembersByAuthenticationStatus(authenticationStatus)
+    fun showMain(model: Model, authenticationLevel: Int): String {
+        val members = memberService.getMembersByAuthenticationLevel(authenticationLevel)
 
-        model.addAttribute("membersByAuthenticationStatus", membersByAuthenticationStatus)
+        model.addAttribute("members", members)
 
         return "adm/home/main"
     }
@@ -31,13 +31,13 @@ class AdmHomeController(
     // VIEW 기능 함수 시작
     @RequestMapping("/adm/home/doApproval", method = [RequestMethod.POST])
     @ResponseBody
-    fun doApproval(memberId: Int, authenticationStatus: Int): String {
-        memberService.updateAuthenticationStatus(memberId, authenticationStatus)
-        if(authenticationStatus == 1){
-            return rq.replaceJs("장례지도사 승인완료.", "main?authenticationStatus=$authenticationStatus")
+    fun doApproval(memberId: Int, authenticationLevel: Int): String {
+        memberService.modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId, authenticationLevel)
+        if(authenticationLevel == 1){
+            return rq.replaceJs("장례지도사 승인완료.", "main?authenticationLevel=$authenticationLevel")
         }
-        else if(authenticationStatus == 2){
-            return rq.replaceJs("장례지도사 보류완료.", "main?authenticationStatus=$authenticationStatus")
+        else if(authenticationLevel == 2){
+            return rq.replaceJs("장례지도사 보류완료.", "main?authenticationLevel=$authenticationLevel")
         }
         return "redirect:"
     }

@@ -20,13 +20,15 @@ data class Member(
     val bank: String,
     val accountNum: String,
 
+    val requestStatus: Boolean,
+
     val delStatus: Int,
     val delDate: String?,
 
     val extra__regDate: String?,
     val extra__updateDate: String?,
     val extra__introduce: String?,
-    val extra__authenticationStatus: Int?,
+    val extra__authenticationLevel: Int?,
     val extra__authenticationDate: String?,
     val extra__roleName: String?
 )

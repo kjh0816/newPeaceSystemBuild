@@ -15,7 +15,7 @@ interface MemberRepository {
             MR.regDate AS `extra__regDate`,
             MR.updateDate AS `extra__updateDate`,
             MR.introduce AS `extra__introduce`,
-            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
@@ -35,7 +35,7 @@ interface MemberRepository {
             MR.regDate AS `extra__regDate`,
             MR.updateDate AS `extra__updateDate`,
             MR.introduce AS `extra__introduce`,
-            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
@@ -55,7 +55,7 @@ interface MemberRepository {
             MR.regDate AS `extra__regDate`,
             MR.updateDate AS `extra__updateDate`,
             MR.introduce AS `extra__introduce`,
-            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
@@ -75,7 +75,7 @@ interface MemberRepository {
             MR.regDate AS `extra__regDate`,
             MR.updateDate AS `extra__updateDate`,
             MR.introduce AS `extra__introduce`,
-            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
@@ -83,10 +83,10 @@ interface MemberRepository {
             ON M.id = MR.memberId
             LEFT JOIN `role` AS R
             ON M.roleLevel = R.id
-            WHERE MR.authenticationStatus = #{authenticationStatus}
+            WHERE MR.authenticationLevel = #{authenticationLevel}
         """
     )
-    fun getMembersByAuthenticationStatus(authenticationStatus: Int): List<Member>?
+    fun getMembersByAuthenticationLevel(authenticationLevel: Int): List<Member>?
 
     @Insert(
         """
@@ -141,12 +141,12 @@ interface MemberRepository {
     @Update(
         """
             UPDATE memberRole SET 
-            authenticationStatus = #{authenticationStatus}, 
+            authenticationLevel = #{authenticationLevel}, 
             authenticationDate = NOW() 
             WHERE memberId = #{memberId}
         """
     )
-    fun updateAuthenticationStatus(memberId: Int, authenticationStatus: Int)
+    fun modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId: Int, authenticationLevel: Int)
 
     @Update(
         """
