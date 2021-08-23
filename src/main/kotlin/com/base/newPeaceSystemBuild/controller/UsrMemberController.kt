@@ -48,24 +48,12 @@ class UsrMemberController(
         @RequestParam(defaultValue = "") loginPwInput: String,
         @RequestParam(defaultValue = "../home/main") replaceUri: String
     ): String {
-        if(loginId.isEmpty()){
-            return rq.historyBackJs("아이디를 입력해주세요.")
-        }
-        if(loginPwInput.isEmpty()){
-            return rq.historyBackJs("비밀번호를 입력해주세요.")
-        }
-        val member = memberService.getMemberByLoginId(loginId)
-            ?: return rq.historyBackJs("존재하지 않는 아이디입니다, 다시 로그인해 주세요.")
-        if ( member.loginPw != loginPwInput ) {
-            return rq.historyBackJs("비밀번호가 일치하지 않습니다.")
-        }
 
+        println("로그인 아이디: $loginId")
+        println("로그인 비밀번호: $loginPwInput")
 
+        return Ut.getJsonStrFromObj(memberService.doLogin(loginId, loginPwInput, replaceUri))
 
-        rq.login(member)
-
-
-        return rq.replaceJs("환영합니다.", replaceUri)
     }
 
     @RequestMapping("/usr/member/doLogout")
