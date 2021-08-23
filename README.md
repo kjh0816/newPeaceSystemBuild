@@ -1,10 +1,9 @@
 # 구현 규칙
-- 함수명
-  1) InsertInto + 테이블명
-  2) modify + 칼럼명(길면 주석으로만) + In + 테이블명
-  3) SELECT : get~
-  4) DELETE : delStatus를 변경하므로 modify로 쓴다.
-
+  - 함수명
+    - Insert : Insert[테이블명]
+    - Select : get[테이블명]By[기준칼럼명]
+    - Update : modify[테이블명]Into[칼럼명]And[칼럼명]...
+    - Delete(UpdateDelStatus) : delete[테이블명]
 # 큰 틀
 - 회원 관리
   - 최초 회원가입을 한 회원은 영업자의 권한만 가지고 있다.
@@ -28,11 +27,6 @@
   - 사업자 인증 버튼
   - 인력 정보 등록 버튼
   - 장례지도사 호출 버튼
-# 함수명 템플릿
-  - Insert : Insert[테이블명]
-  - Select : get[테이블명]By[기준칼럼명]
-  - Update : modify[테이블명]Into[칼럼명]And[칼럼명]...
-  - Delete(UpdateDelStatus) : delete[테이블명]
 
 # 구현된 것
 - 회원가입
