@@ -20,6 +20,7 @@ class AdmHomeController(
     // VIEW Mapping 함수 시작
     @RequestMapping("/adm/home/main")
     fun showMain(model: Model, authenticationLevel: Int): String {
+        // Member 테이블에서 authenticationLevel 이 일치하는 데이터들만 추려서 가져온다.
         val members = memberService.getMembersByAuthenticationLevel(authenticationLevel)
 
         model.addAttribute("members", members)
@@ -32,6 +33,8 @@ class AdmHomeController(
     @RequestMapping("/adm/home/doApproval", method = [RequestMethod.POST])
     @ResponseBody
     fun doApproval(memberId: Int, authenticationLevel: Int): String {
+        // 장례지도사 신청시 생긴 MemberRole 테이블의 authenticationLevel를 파라미터로 받아온 authenticationLevel로 수정한다.
+        // 수정 대상은 WHERE 절로 memberId를 통해 선택한다.
         memberService.modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId, authenticationLevel)
         if(authenticationLevel == 1){
             return rq.replaceJs("장례지도사 승인완료.", "main?authenticationLevel=$authenticationLevel")
