@@ -104,8 +104,7 @@ class MemberService(
     }
 
     fun doLogin(loginId: String, loginPwInput: String, replaceUri: String): ResultData {
-        println("(Service)로그인 아이디: $loginId")
-        println("(Service)로그인 비밀번호: $loginPwInput")
+
         if(loginId.isEmpty()){
             return ResultData.from("F-1", "아이디를 입력해주세요.")
         }

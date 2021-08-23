@@ -49,8 +49,7 @@ class UsrMemberController(
         @RequestParam(defaultValue = "../home/main") replaceUri: String
     ): String {
 
-        println("로그인 아이디: $loginId")
-        println("로그인 비밀번호: $loginPwInput")
+//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
 
         return Ut.getJsonStrFromObj(memberService.doLogin(loginId, loginPwInput, replaceUri))
 
@@ -58,13 +57,20 @@ class UsrMemberController(
 
     @RequestMapping("/usr/member/doLogout")
     @ResponseBody
-    fun doLogout(session: HttpSession): String {
+    fun doLogout(session: HttpSession) {
         rq.logout()
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
+        println("rq.logout 실행됨")
 
-        return rq.replaceJs("로그아웃 되었습니다.", "../home/main")
     }
 
-    @RequestMapping("/usr/member/doJoin", method = [RequestMethod.POST])
+    @RequestMapping("/usr/member/doJoin")
     @ResponseBody
     fun doJoin(
         @RequestParam(defaultValue = "") loginId: String,
