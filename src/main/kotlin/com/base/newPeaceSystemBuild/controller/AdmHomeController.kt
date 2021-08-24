@@ -30,7 +30,7 @@ class AdmHomeController(
         if(members != null){
             for (member in members) {
                 // 중복코드 발생으로 인한 객체화
-                setThumbnailImgUrl(member, roleLevel)
+                setExtra__thumbnailImgUrl(member, roleLevel)
             }
         }
 
@@ -45,7 +45,7 @@ class AdmHomeController(
 
         if(member != null){
             // 중복코드 발생으로 인한 객체화
-            setThumbnailImgUrl(member, roleLevel)
+            setExtra__thumbnailImgUrl(member, roleLevel)
         }
         model.addAttribute("member", member)
 
@@ -81,7 +81,8 @@ class AdmHomeController(
     // VIEW 기능 함수 끝
 
     // Controller 내부에서 사용할 함수 시작
-    fun setThumbnailImgUrl(member: Member, roleLevel: Int){
+    // Member 객체 field 안에있는 extra__thumbnailImgUrl에 값을 할당해주는 함수
+    fun setExtra__thumbnailImgUrl(member: Member, roleLevel: Int){
         var genFileTypeCode = ""
         if(roleLevel == 3){
             genFileTypeCode = "director"
