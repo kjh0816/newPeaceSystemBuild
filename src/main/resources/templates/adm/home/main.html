@@ -25,6 +25,7 @@
         <th:block th:each="member : ${members}">
             <form action="./doApproval" method="POST">
                 <input type="hidden" name="memberId" th:value="${member.id}">
+                <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                 <span>가입 날짜 : [[${member.regDate}]]</span><br>
                 <span>[[${member.extra__roleName}]] 신청 날짜 : [[${member.extra__regDate}]]</span><br>
                 <span>이름 : [[${member.name}]]</span><br>
