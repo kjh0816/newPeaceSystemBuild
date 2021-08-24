@@ -1,5 +1,7 @@
 package com.base.newPeaceSystemBuild.vo.member
 
+import com.base.newPeaceSystemBuild.vo.GenFile
+
 data class Member(
     val id: Int,
 
@@ -31,4 +33,6 @@ data class Member(
     val extra__authenticationLevel: Int?,
     val extra__authenticationDate: String?,
     val extra__roleName: String?
-)
+) {
+    var extra__thumbnailImgUrl: String? = null
+}
