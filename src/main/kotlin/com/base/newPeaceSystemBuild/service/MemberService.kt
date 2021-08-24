@@ -103,6 +103,10 @@ class MemberService(
         return memberRepository.getMembers()
     }
 
+    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>? {
+        return memberRepository.getMembersByRoleLevelAndAuthenticationLevel(roleLevel, authenticationLevel)
+    }
+
     fun doLogin(loginId: String, loginPwInput: String, replaceUri: String): ResultData {
 
         if(loginId.isEmpty()){
