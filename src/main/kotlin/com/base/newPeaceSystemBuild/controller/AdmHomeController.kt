@@ -3,6 +3,7 @@ package com.base.newPeaceSystemBuild.controller
 import com.base.newPeaceSystemBuild.service.GenFileService
 import com.base.newPeaceSystemBuild.service.MemberService
 import com.base.newPeaceSystemBuild.vo.Rq
+import com.base.newPeaceSystemBuild.vo.member.Member
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -28,22 +29,8 @@ class AdmHomeController(
 
         if(members != null){
             for (member in members) {
-                // 매개변수로 넘겨준 5개의 값이 모두 일치하는 데이터를 찾음
-                var genFileTypeCode = ""
-                if(roleLevel == 3){
-                    genFileTypeCode = "director"
-                }
-                else if(roleLevel == 4){
-                    genFileTypeCode = "vendor"
-                }
-                val genFile = genFileService.getGenFile("member", member.id, genFileTypeCode, "attachment", 1)
-
-                if (genFile != null) {
-                    if(member.id == genFile.relId && genFile.fileNo == 1){
-                        // Java Setter 랑 같은역할 member 객체에 extra__thumbnailImgUrl 변수에 값 주입
-                        member.extra__thumbnailImgUrl = genFile.getForPrintUrl()
-                    }
-                }
+                // 중복코드 발생으로 인한 객체화
+                setThumbnailImgUrl(member, roleLevel)
             }
         }
 
@@ -57,21 +44,8 @@ class AdmHomeController(
         val member = memberService.getMemberById(memberId)
 
         if(member != null){
-            var genFileTypeCode = ""
-            if(roleLevel == 3){
-                genFileTypeCode = "director"
-            }
-            else if(roleLevel == 4){
-                genFileTypeCode = "vendor"
-            }
-            val genFile = genFileService.getGenFile("member", member.id, genFileTypeCode, "attachment", 1)
-
-            if (genFile != null) {
-                if(member.id == genFile.relId && genFile.fileNo == 1){
-                    // Java Setter 랑 같은역할 member 객체에 extra__thumbnailImgUrl 변수에 값 주입
-                    member.extra__thumbnailImgUrl = genFile.getForPrintUrl()
-                }
-            }
+            // 중복코드 발생으로 인한 객체화
+            setThumbnailImgUrl(member, roleLevel)
         }
         model.addAttribute("member", member)
 
@@ -107,5 +81,24 @@ class AdmHomeController(
     // VIEW 기능 함수 끝
 
     // Controller 내부에서 사용할 함수 시작
+    fun setThumbnailImgUrl(member: Member, roleLevel: Int){
+        var genFileTypeCode = ""
+        if(roleLevel == 3){
+            genFileTypeCode = "director"
+        }
+        else if(roleLevel == 4){
+            genFileTypeCode = "vendor"
+        }
+
+        // 매개변수로 넘겨준 5개의 값이 모두 일치하는 데이터를 찾음
+        val genFile = genFileService.getGenFile("member", member.id, genFileTypeCode, "attachment", 1)
+
+        if (genFile != null) {
+            if(member.id == genFile.relId && genFile.fileNo == 1){
+                // Java Setter 랑 같은역할 member 객체에 extra__thumbnailImgUrl 변수에 값 주입
+                member.extra__thumbnailImgUrl = genFile.getForPrintUrl()
+            }
+        }
+    }
     // Controller 내부에서 사용할 함수 끝
 }
