@@ -9,7 +9,7 @@
 </head>
 
 <main layout:fragment="main">
-    <div class="director-request-box">
+    <div class="admin-main-box">
         <a href="./main?authenticationLevel=0&roleLevel=3">장례지도사 신청받은 리스트</a>
         <a href="./main?authenticationLevel=1&roleLevel=3">장례지도사 승인된 리스트</a>
         <a href="./main?authenticationLevel=2&roleLevel=3">장례지도사 보류된 리스트</a>
@@ -32,6 +32,8 @@
                 <span>전화번호 : [[${member.cellphoneNo}]]</span><br>
                 <span>권한 : [[${member.extra__authenticationLevel}]]</span><br>
                 <span>이메일 : [[${member.email}]]</span><br>
+                <!-- 타임리프 th:href Adding Parameter URL 형식 -->
+                <a th:href="@{./detail(memberId=${member.id}, roleLevel=${param.roleLevel})}">상세페이지로 보기</a>
                 <div th:if="${member.extra__thumbnailImgUrl != null}">
                     <img th:src="${member.extra__thumbnailImgUrl}" width="500" height="300" alt="" />
                 </div>

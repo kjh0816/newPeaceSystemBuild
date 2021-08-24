@@ -51,6 +51,32 @@ class AdmHomeController(
 
         return "adm/home/main"
     }
+
+    @RequestMapping("/adm/home/detail")
+    fun showDetail(model: Model, memberId: Int, roleLevel: Int): String {
+        val member = memberService.getMemberById(memberId)
+
+        if(member != null){
+            var genFileTypeCode = ""
+            if(roleLevel == 3){
+                genFileTypeCode = "director"
+            }
+            else if(roleLevel == 4){
+                genFileTypeCode = "vendor"
+            }
+            val genFile = genFileService.getGenFile("member", member.id, genFileTypeCode, "attachment", 1)
+
+            if (genFile != null) {
+                if(member.id == genFile.relId && genFile.fileNo == 1){
+                    // Java Setter 랑 같은역할 member 객체에 extra__thumbnailImgUrl 변수에 값 주입
+                    member.extra__thumbnailImgUrl = genFile.getForPrintUrl()
+                }
+            }
+        }
+        model.addAttribute("member", member)
+
+        return "adm/home/detail"
+    }
     // VIEW Mapping 함수 끝
 
     // VIEW 기능 함수 시작
@@ -79,4 +105,7 @@ class AdmHomeController(
         return ""
     }
     // VIEW 기능 함수 끝
+
+    // Controller 내부에서 사용할 함수 시작
+    // Controller 내부에서 사용할 함수 끝
 }

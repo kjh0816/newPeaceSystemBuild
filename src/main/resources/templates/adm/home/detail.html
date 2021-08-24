@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>관리자 승인리스트 상세페이지</title>
+</head>
+
+<main layout:fragment="main">
+    <div class="admin-detail-box">
+        <a href="./main?authenticationLevel=0&roleLevel=3">장례지도사 신청받은 리스트</a>
+        <a href="./main?authenticationLevel=1&roleLevel=3">장례지도사 승인된 리스트</a>
+        <a href="./main?authenticationLevel=2&roleLevel=3">장례지도사 보류된 리스트</a>
+        <br>
+        <a href="./main?authenticationLevel=0&roleLevel=4">물품 공급업자 신청받은 리스트</a>
+        <a href="./main?authenticationLevel=1&roleLevel=4">물품 공급업자 승인된 리스트</a>
+        <a href="./main?authenticationLevel=2&roleLevel=4">물품 공급업자 보류된 리스트</a>
+
+        <br>
+        <br>
+        <a href="/usr/home/main">메인 페이지</a>
+
+        <div>
+            <span>가입 날짜 : [[${member.regDate}]]</span><br>
+            <span>[[${member.extra__roleName}]] 신청 날짜 : [[${member.extra__regDate}]]</span><br>
+            <span>이름 : [[${member.name}]]</span><br>
+            <span>전화번호 : [[${member.cellphoneNo}]]</span><br>
+            <span>권한 : [[${member.extra__authenticationLevel}]]</span><br>
+            <span>이메일 : [[${member.email}]]</span><br>
+        </div>
+        <div th:if="${member.extra__thumbnailImgUrl != null}">
+            <img th:src="${member.extra__thumbnailImgUrl}" width="500" height="300" alt="" />
+        </div>
+        <form action="./doApproval" method="POST">
+            <input type="hidden" name="memberId" th:value="${member.id}">
+            <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+            <div>
+                <input type="radio" id="approval" name="authenticationLevel" value="1">
+                <label for="approval">승인</label>
+                <input type="radio" id="hold" name="authenticationLevel" value="2">
+                <label for="hold">보류</label>
+            </div>
+            <input type="submit" value="확인">
+        </form>
+    </div>
+</main>
+
+</html>
