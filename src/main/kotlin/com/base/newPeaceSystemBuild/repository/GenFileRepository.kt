@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.repository
 
+import com.base.newPeaceSystemBuild.vo.GenFile
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
@@ -44,6 +45,20 @@ interface GenFileRepository {
         fileSize: Int,
         fileDir: String
     )
+
+    @Select(
+        """
+            SELECT *
+            FROM genFile
+            WHERE 1
+            AND relTypeCode = #{relTypeCode}
+            AND relId = #{relId}
+            AND typeCode = #{typeCode}
+            AND type2Code = #{type2Code}
+            AND fileNo = #{fileNo}
+        """
+    )
+    fun getGenFile(relTypeCode: String, relId: Int, typeCode: String, type2Code: String, fileNo: Int): GenFile?
 
 
 }

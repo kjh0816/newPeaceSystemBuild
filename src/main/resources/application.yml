@@ -10,7 +10,7 @@ mybatis:
 
 custom:
   # director 등록신청시 업로드한 파일이 서버에 저장되는 경로 지정
-  directorFileDirPath: C:/work/peace
+  genFileDirPath: C:/work/peace
   logging:
     dir: log
     level: debug

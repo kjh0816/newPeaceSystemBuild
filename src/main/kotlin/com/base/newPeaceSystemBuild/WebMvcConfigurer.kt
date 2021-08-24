@@ -1,12 +1,16 @@
 package com.base.newPeaceSystemBuild
 
 import com.base.newPeaceSystemBuild.interceptor.*
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+
 
 @Configuration
 class WebMvcConfigurer(
+    @Value("\${custom.genFileDirPath}") private val genFileDirPath: String,
     private val beforeActionInterceptor: BeforeActionInterceptor,
     private val needLoginInterceptor: NeedLoginInterceptor,
     private val needLogoutInterceptor: NeedLogoutInterceptor,
@@ -18,6 +22,7 @@ class WebMvcConfigurer(
         registry.addInterceptor(beforeActionInterceptor)
             .addPathPatterns("/**") // 모든 template view에 접근 가능
             .excludePathPatterns("/resource/**") // resource 하위 폴더 및 파일은 제외
+            .excludePathPatterns("/gen/**")
             .excludePathPatterns("/error")
         registry.addInterceptor(needLoginInterceptor)
             //          화이트 리스트 방식
@@ -45,7 +50,10 @@ class WebMvcConfigurer(
             //          화이트 리스트 방식
             .addPathPatterns("/usr/director/**")
             .addPathPatterns("/usr/vendor/**")
+    }
 
-
+    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        registry.addResourceHandler("/gen/**").addResourceLocations("file:///$genFileDirPath/")
+            .setCachePeriod(20)
     }
 }

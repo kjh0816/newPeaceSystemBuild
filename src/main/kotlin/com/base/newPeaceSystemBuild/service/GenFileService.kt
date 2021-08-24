@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.GenFileRepository
 import com.base.newPeaceSystemBuild.util.Ut
+import com.base.newPeaceSystemBuild.vo.GenFile
 import com.base.newPeaceSystemBuild.vo.ResultData
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -12,7 +13,7 @@ import java.util.*
 
 @Service
 class GenFileService(
-    @Value("\${custom.directorFileDirPath}") private val genFileDirPath: String,
+    @Value("\${custom.genFileDirPath}") private val genFileDirPath: String,
     private val genFileRepository: GenFileRepository
 ) {
     fun saveMeta(
@@ -124,5 +125,9 @@ class GenFileService(
         multipartFile.transferTo(File(targetFilePath))
 
         return ResultData.from("S-1", "파일 업로드 성공")
+    }
+
+    fun getGenFile(relTypeCode: String, relId: Int, typeCode: String, type2Code: String, fileNo: Int): GenFile? {
+        return genFileRepository.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
     }
 }

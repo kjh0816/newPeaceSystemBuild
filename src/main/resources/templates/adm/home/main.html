@@ -23,6 +23,9 @@
                 <span>전화번호 : [[${member.cellphoneNo}]]</span><br>
                 <span>권한 : [[${member.extra__authenticationLevel}]]</span><br>
                 <span>이메일 : [[${member.email}]]</span><br>
+                <div th:if="${member.extra__thumbnailImgUrl != null}">
+                    <img th:src="${member.extra__thumbnailImgUrl}" width="500" height="300" alt="" />
+                </div>
                 <div>
                     <input type="radio" id="approval" name="authenticationLevel" value="1">
                     <label for="approval">승인</label>

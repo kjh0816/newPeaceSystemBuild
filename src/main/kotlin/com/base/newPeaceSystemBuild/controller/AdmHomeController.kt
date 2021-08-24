@@ -1,6 +1,8 @@
 package com.base.newPeaceSystemBuild.controller
 
+import com.base.newPeaceSystemBuild.service.GenFileService
 import com.base.newPeaceSystemBuild.service.MemberService
+import com.base.newPeaceSystemBuild.vo.GenFile
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -12,7 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
 class AdmHomeController(
-    private val memberService: MemberService
+    private val memberService: MemberService,
+    private val genFileService: GenFileService
 ) {
     @Autowired
     private lateinit var rq: Rq;
@@ -22,6 +25,19 @@ class AdmHomeController(
     fun showMain(model: Model, authenticationLevel: Int): String {
         // Member 테이블에서 authenticationLevel 이 일치하는 데이터들만 추려서 가져온다.
         val members = memberService.getMembersByAuthenticationLevel(authenticationLevel)
+
+        if(members != null){
+            for (member in members) {
+                val genFile = genFileService.getGenFile("member", member.id, "director", "attachment", 1)
+
+                if (genFile != null) {
+                    if(member.id == genFile.relId && genFile.fileNo == 1){
+                        model.addAttribute("genFile", genFile)
+                        member.extra__thumbnailImgUrl = genFile.getForPrintUrl()
+                    }
+                }
+            }
+        }
 
         model.addAttribute("members", members)
 
