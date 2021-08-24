@@ -210,6 +210,6 @@ interface MemberRepository {
             AND MR.authenticationLevel = #{authenticationLevel}
         """
     )
-    fun getMembersByRoleLevel(roleLevel: Int, authenticationLevel: Int): List<Member>?
+    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>?
 
 }

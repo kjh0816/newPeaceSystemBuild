@@ -2,7 +2,6 @@ package com.base.newPeaceSystemBuild.controller
 
 import com.base.newPeaceSystemBuild.service.GenFileService
 import com.base.newPeaceSystemBuild.service.MemberService
-import com.base.newPeaceSystemBuild.vo.GenFile
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -23,8 +22,8 @@ class AdmHomeController(
     // VIEW Mapping 함수 시작
     @RequestMapping("/adm/home/main")
     fun showMain(model: Model, authenticationLevel: Int, roleLevel: Int): String {
-        // Member 테이블에서 authenticationLevel 이 일치하는 데이터들만 추려서 가져온다.
-        val members = memberService.getMembersByRoleLevel(roleLevel, authenticationLevel)
+        // Member 테이블에서 roleLevel 과 authenticationLevel 이 일치하는 데이터들만 추려서 가져온다.
+        val members = memberService.getMembersByRoleLevelAndAuthenticationLevel(roleLevel, authenticationLevel)
 
 
         if(members != null){
