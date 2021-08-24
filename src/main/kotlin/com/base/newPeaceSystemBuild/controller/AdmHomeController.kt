@@ -29,7 +29,14 @@ class AdmHomeController(
         if(members != null){
             for (member in members) {
                 // 매개변수로 넘겨준 5개의 값이 모두 일치하는 데이터를 찾음
-                val genFile = genFileService.getGenFile("member", member.id, "director", "attachment", 1)
+                var genFileTypeCode = ""
+                if(roleLevel == 3){
+                    genFileTypeCode = "director"
+                }
+                else if(roleLevel == 4){
+                    genFileTypeCode = "vendor"
+                }
+                val genFile = genFileService.getGenFile("member", member.id, genFileTypeCode, "attachment", 1)
 
                 if (genFile != null) {
                     if(member.id == genFile.relId && genFile.fileNo == 1){
