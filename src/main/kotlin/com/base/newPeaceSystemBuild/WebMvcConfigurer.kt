@@ -22,7 +22,7 @@ class WebMvcConfigurer(
         registry.addInterceptor(beforeActionInterceptor)
             .addPathPatterns("/**") // 모든 template view에 접근 가능
             .excludePathPatterns("/resource/**") // resource 하위 폴더 및 파일은 제외
-            .excludePathPatterns("/gen/**")
+            .excludePathPatterns("/peace/**") // 업로드된 파일이 저장되는 폴더
             .excludePathPatterns("/error")
         registry.addInterceptor(needLoginInterceptor)
             //          화이트 리스트 방식
@@ -52,8 +52,10 @@ class WebMvcConfigurer(
             .addPathPatterns("/usr/vendor/**")
     }
 
+    // 정적 리소스 로드
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/gen/**").addResourceLocations("file:///$genFileDirPath/")
+        registry.addResourceHandler("/peace/**")
+            .addResourceLocations("file:/$genFileDirPath/")
             .setCachePeriod(20)
     }
 }
