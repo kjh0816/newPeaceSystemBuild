@@ -25,18 +25,11 @@
     <div class="label">상주님의 연락처</div>
     <div class="input">
       <input type="text"  id="cellphoneNo" name="cellphoneNo" maxlength="12" placeholder="상주의 연락처를 입력해주세요." autocomplete="off"/>
-      <div id="loginPwConfirmCheckMsg" style="color : red;"></div>
+      <div id="cellphoneNoCheckMsg" style="color : red;"></div>
     </div>
     <br>
 
-    <div class="label">이메일</div>
-    <div class="input">
-      <input type="text" id="email" name="email" placeholder="이메일 입력해주세요." autocomplete="off"/>
-      <div id="emailCheckMsg" style="color : red;"></div>
-    </div>
-    <br>
-
-    <div class="label">근무하시는 지역</div>
+    <div class="label">장례를 치르시는 지역</div>
     <div class="input">
       <select id="location" name="location">
         <option value="" disabled selected>지역 선택</option>
@@ -46,23 +39,8 @@
       </select>
     </div>
     <br>
-
-    <div class="label">아래 계좌로 영업비가 입금됩니다.</div>
-    <div class="input">
-      <select id="bank" name="bank">
-        <option value="" disabled selected>은행 선택</option>
-        <div th:each="bank : ${banks}" th:object="${bank}">
-          <option th:value="*{bankName}" th:text="*{bankName}"></option>
-        </div>
-      </select>
-    </div>
-    <div class="input">
-      <input type="text" id="accountNum" name="accountNum" maxlength="16" placeholder="계좌번호" autocomplete="off"/>
-      <div class="pl-1 pt-2 text-sm" id="accountNumCheckMsg" style="color : red;"></div>
-    </div>
-    <br>
     <div>
-      <button id="join-submit">회원가입</button>
+      <button id="call-submit">출동 요청</button>
     </div>
   </form>
 </main>
