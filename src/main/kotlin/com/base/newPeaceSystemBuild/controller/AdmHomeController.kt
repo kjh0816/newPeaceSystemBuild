@@ -28,11 +28,12 @@ class AdmHomeController(
 
         if(members != null){
             for (member in members) {
+                // 매개변수로 넘겨준 5개의 값이 모두 일치하는 데이터를 찾음
                 val genFile = genFileService.getGenFile("member", member.id, "director", "attachment", 1)
 
                 if (genFile != null) {
                     if(member.id == genFile.relId && genFile.fileNo == 1){
-                        model.addAttribute("genFile", genFile)
+                        // Java Setter 랑 같은역할 member 객체에 extra__thumbnailImgUrl 변수에 값 주입
                         member.extra__thumbnailImgUrl = genFile.getForPrintUrl()
                     }
                 }

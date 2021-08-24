@@ -20,6 +20,7 @@ data class GenFile(
     val fileNo: Int,
     val fileDir: String
 ){
+    // JsonIgnore : Jackson 어노테이션 인데, Json 으로 출력시에 이부분 무시한다는뜻
     @JsonIgnore
     fun getFilePath(genFileDirPath: String): String? {
         return genFileDirPath + getBaseFileUri()
@@ -35,6 +36,6 @@ data class GenFile(
     }
 
     fun getForPrintUrl(): String? {
-        return "/gen" + getBaseFileUri() + "?updateDate=" + updateDate
+        return "/peace" + getBaseFileUri()
     }
 }
