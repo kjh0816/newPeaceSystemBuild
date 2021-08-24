@@ -208,11 +208,13 @@ SELECT * FROM genFile;
 
 CREATE TABLE `client`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	deceasedName CHAR(20) NOT NULL,
-	relatedName CHAR(20) NOT NULL,
-	cellphoneNo CHAR(20) NOT NULL,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	deceasedName CHAR(20) NOT NULL COMMENT '고인의 성함',
+	relatedName CHAR(20) NOT NULL COMMENT '상주 또는 유족의 성함',
+	cellphoneNo CHAR(20) NOT NULL COMMENT '위 성함분의 연락처',
 	location CHAR(30) NOT NULL,
-	deceasedLocation TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 모름, 1 = 장례식장, 2 = 자택, 병원, 요양원, 기타',
+	address CHAR(30) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록'
 );
 
 

@@ -7,7 +7,7 @@
   <title>장례지도사 출동 요청</title>
 </head>
 <main layout:fragment="main">
-  <form action="./doJoin" method="POST" onsubmit="MemberCall__submit(this); return false;">
+  <form action="./doCall" method="POST" onsubmit="MemberCall__submit(this); return false;">
     <div class="label">고인의 성함</div>
     <div class="input">
       <input type="text" id="deceasedName" name="deceasedName" maxlength="30" placeholder="고인의 성함을 입력해주세요." autocomplete="off"/>
@@ -16,7 +16,7 @@
     <br>
 
     <div class="label">상주님의 성함</div>
-    <div class="relatedNameInfo"></div>
+    <div class="relatedNameInfo">장례지도사가 고인의 장례를 같이 모실 수 있도록 유족 중 한 분의 정보를 입력해주십시오.</div>
     <div class="input">
       <input type="text" id="relatedName" name="relatedName" maxlength="30" placeholder="상주의 성함을 입력해주세요." autocomplete="off"/>
       <div id="relatedNameCheckMsg" style="color : red;"></div>
@@ -24,7 +24,7 @@
     <br>
 
     <div class="label">상주님의 연락처</div>
-    <div class="cellphoneNoInfo"></div>
+    <div class="cellphoneNoInfo">아래 입력하신 연락처를 통해 장례지도사가 연락하게 됩니다.</div>
     <div class="input">
       <input type="text"  id="cellphoneNo" name="cellphoneNo" maxlength="12" placeholder="상주의 연락처를 입력해주세요." autocomplete="off"/>
       <div id="cellphoneNoCheckMsg" style="color : red;"></div>
@@ -32,8 +32,8 @@
     <br>
 
     <div class="label">장례를 치르시는 지역</div>
-    <div class="locationInfo">현재 돌아가신 지역이 아니라, 고인의 장례를 치르고자하시는 지역(고향 등)을 입력해주세요.
-    해당 지역의 장례지도사가 연결됩니다.</div>
+    <div class="locationInfo">대개, 고인이 계신 지역에서 장례를 치루지만, 고향 등에서 장례를 치루시는 분들도 계십니다.
+    유족분들과 상의해서 장례를 어디서 치루시는지 입력해주십시오. 주소가 상세할수록 빨리 도움을 드릴 수 있는 장례지도사가 연결될 수 있습니다.</div>
     <div class="input">
       <select id="location" name="location">
         <option value="" disabled selected>지역 선택</option>
@@ -41,6 +41,7 @@
           <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
         </div>
       </select>
+      <input type="text" id="address" name="address" placeholder="나머지 상세 주소를 입력해주세요." autocomplete="off"/>
     </div>
     <br>
     <div>

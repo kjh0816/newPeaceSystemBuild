@@ -3,6 +3,7 @@ package com.base.newPeaceSystemBuild.controller
 import com.base.newPeaceSystemBuild.service.MemberService
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
+import com.base.newPeaceSystemBuild.vo.member.Department
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -91,6 +92,26 @@ class UsrMemberController(
         model.addAttribute("cellphoneNo", cellphoneNo)
 
         return "usr/member/info"
+    }
+
+
+    @RequestMapping("/usr/member/call")
+    @ResponseBody
+    fun showCall(model: Model): String{
+
+        val departments: List<Department> = memberService.getDepartments()
+
+        model.addAttribute("departments", departments)
+
+
+        return "usr/member/call"
+    }
+
+
+    @RequestMapping("/usr/member/doCall")
+    @ResponseBody
+    fun doCall(model: Model){
+
     }
 
 
