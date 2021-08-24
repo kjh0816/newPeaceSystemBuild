@@ -33,7 +33,7 @@ function DirectorRequest__submit(form) {
 
             if (form.file__member__0__director__attachment__1.files[0].size > maxSize) {
                 alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
-                form.file__article__0__common__attachment__1.focus();
+                form.file__member__0__director__attachment__1.focus();
 
                 return;
             }
