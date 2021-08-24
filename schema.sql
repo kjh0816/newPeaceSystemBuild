@@ -204,6 +204,18 @@ SELECT * FROM genFile;
 
 
 
+# 고인에 대한 정보를 담는 테이블
+
+CREATE TABLE `client`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	deceasedName CHAR(20) NOT NULL,
+	relatedName CHAR(20) NOT NULL,
+	cellphoneNo CHAR(20) NOT NULL,
+	location CHAR(30) NOT NULL,
+	deceasedLocation TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 모름, 1 = 장례식장, 2 = 자택, 병원, 요양원, 기타',
+);
+
+
 # '제단꽃 표준' 테이블
 
 CREATE TABLE flower(
@@ -260,6 +272,8 @@ SUBSTR(cellphoneNo, 1, 3)
 , SUBSTR(cellphoneNo, 8, 4)
 ) AS `cellphoneNo`
 FROM `member`;
+
+
 
 
 
