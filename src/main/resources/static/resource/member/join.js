@@ -146,17 +146,15 @@ function MemberJoin__submit(form) {
                         success: function(result){
     //                      Controller에서 doJoin은 ResultData(String)을 return한다.
 
-    //                      로그인 실패일 경우, 실패 원인 메시지를 띠워준다.
+    //                      회원가입 실패일 경우, 실패 원인 메시지를 띠워준다.
                             if(result.resultCode.startsWith("F-")){
                                 alert(result.msg);
                             }
-    //                      로그인 성공일 경우, 로그인 페이지로 replace시킨다.
+    //                      회원가입 성공일 경우, 로그인 페이지로 replace시킨다.
                             if(result.resultCode.startsWith("S-")){
 
                             alert(result.msg);
-                            location.assign('/usr/member/login');
-
-
+                            window.location.replace('/usr/member/login');
                             }
 
 

@@ -5,7 +5,7 @@ function MemberLogout__submit(button) {
                 success: function(){
                     alert('로그아웃되었습니다.');
 //                  로그인 페이지를 절대경로로 이동
-                    location.replace('/usr/member/login');
+                    window.location.replace('/usr/home/main');
                 }
 
             });

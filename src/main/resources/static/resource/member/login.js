@@ -55,7 +55,7 @@ function MemberLogin__submit(form) {
                         }
 //                      로그인 성공일 경우, replaceUri를 Map으로 같이 return 해주는데, 이곳으로 replace시킨다.
                         if(result.resultCode.startsWith("S-")){
-                            location.replace(result.map.replaceUri);
+                            window.location.replace(result.map.replaceUri);
                         }
 
 
