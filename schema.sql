@@ -40,21 +40,22 @@ roleName = '물품 공급업자';
 SELECT * FROM `role`;
 
 # 통합 회원 테이블 생성
-CREATE TABLE `member`(
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	regDate DATETIME NOT NULL,
-	updateDate DATETIME NOT NULL,
-	roleLevel SMALLINT(2) UNSIGNED NOT NULL DEFAULT 2 COMMENT 'role 테이블의 id와 연결',
-	loginId CHAR(20) NOT NULL UNIQUE,
-	loginPw CHAR(64) NOT NULL,
-	`name` CHAR(20) NOT NULL,
-	cellphoneNo CHAR(20) NOT NULL,
-	email CHAR(50) NOT NULL,
-	location CHAR(30) NOT NULL,
-	bank CHAR(20) NOT NULL,
-	accountNum CHAR(20) NOT NULL,
-	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부(0 = 유효 회원, 1 = 탈퇴한 회원)',
-	delDate DATETIME COMMENT '탈퇴 날짜'
+CREATE TABLE MEMBER(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    roleLevel SMALLINT(2) UNSIGNED NOT NULL DEFAULT 2 COMMENT 'role 테이블의 id와 연결',
+    loginId CHAR(20) NOT NULL UNIQUE,
+    loginPw CHAR(64) NOT NULL,
+    NAME CHAR(20) NOT NULL,
+    cellphoneNo CHAR(20) NOT NULL,
+    email CHAR(50) NOT NULL,
+    location CHAR(30) NOT NULL,
+    bank CHAR(20) NOT NULL,
+    accountNum CHAR(20) NOT NULL,
+    requestStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '신청 여부(0 = 미신청, 1= 신청)',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부(0 = 유효 회원, 1 = 탈퇴한 회원)',
+    delDate DATETIME COMMENT '탈퇴 날짜'
 
 );
 
@@ -118,8 +119,8 @@ CREATE TABLE memberRole(
   memberId INT(10) UNSIGNED NOT NULL,
   roleId INT(10) UNSIGNED NOT NULL,
   introduce LONGTEXT DEFAULT "소개글이 없습니다.",
-  authenticationStatus SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '승인 여부(0 = 미승인, 1 = 승인, 2 = 보류)',
-  authenticationDate DATETIME COMMENT '인증된 날짜'
+  authenticationLevel SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '승인 여부(0 = 미확인, 1 = 승인, 2 = 보류)',
+  authenticationDate DATETIME DEFAULT NOW() COMMENT '인증된 날짜'
 );
 
 SELECT * FROM memberRole;
