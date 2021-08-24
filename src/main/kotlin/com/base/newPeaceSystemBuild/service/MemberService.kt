@@ -167,4 +167,48 @@ class MemberService(
 
         return ResultData.from("S-1", "회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.")
     }
+
+    fun insertIntoClient(
+        deceasedName: String,
+        relatedName: String,
+        cellphoneNo: String,
+        location: String,
+        address: String
+    ): ResultData {
+        if(deceasedName.isEmpty()){
+            return ResultData.from("F-1", "고인의 성함을 입력해주세요.")
+        }
+        if(relatedName.isEmpty()){
+            return ResultData.from("F-2", "상주의 성함을 입력해주세요.")
+        }
+        if(cellphoneNo.isEmpty()){
+            return ResultData.from("F-3", "상주의 연락처를 입력해주세요.")
+        }
+        if(location.isEmpty()){
+            return ResultData.from("F-4", "지역을 선택해주세요.")
+        }
+        if(address.isEmpty()){
+            return ResultData.from("F-5", "상세 주소를 입력해주세요.")
+        }
+
+        memberRepository.insertIntoClient(deceasedName, relatedName, cellphoneNo, location, address)
+        val clientId = memberRepository.getLastInsertId()
+        println("clientId: $clientId")
+        println("clientId: $clientId")
+        println("clientId: $clientId")
+        println("clientId: $clientId")
+        println("clientId: $clientId")
+        println("clientId: $clientId")
+        println("clientId: $clientId")
+        println("clientId: $clientId")
+
+
+
+
+        // 연결된 장례지도사에게 고인의 정보를 주기 위해 clientId를 성공 시, 같이 return
+        return ResultData.from("S-1", "장례지도사 출동 요청이 완료되었습니다. 문자 메세지를 확인해주십시오.",
+            "clientId", clientId)
+
+
+    }
 }

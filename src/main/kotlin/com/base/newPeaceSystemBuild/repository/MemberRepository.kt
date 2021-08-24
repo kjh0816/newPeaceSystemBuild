@@ -212,4 +212,25 @@ interface MemberRepository {
     )
     fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>?
 
+
+    @Insert(
+        """
+            INSERT INTO `client`
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            deceasedName = #{deceasedName},
+            relatedName = #{relatedName},
+            cellphoneNo = #{cellphoneNo},
+            location = #{location},
+            address = #{address}
+        """
+    )
+    fun insertIntoClient(deceasedName: String, relatedName: String, cellphoneNo: String, location: String, address: String)
+    @Select(
+        """
+            SELECT LAST_INSERT_ID();
+        """
+    )
+    fun getLastInsertId(): Int
+
 }

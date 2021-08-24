@@ -96,7 +96,6 @@ class UsrMemberController(
 
 
     @RequestMapping("/usr/member/call")
-    @ResponseBody
     fun showCall(model: Model): String{
 
         val departments: List<Department> = memberService.getDepartments()
@@ -110,7 +109,16 @@ class UsrMemberController(
 
     @RequestMapping("/usr/member/doCall")
     @ResponseBody
-    fun doCall(model: Model){
+    fun doCall(
+        @RequestParam(defaultValue = "") deceasedName: String,
+        @RequestParam(defaultValue = "") relatedName: String,
+        @RequestParam(defaultValue = "") cellphoneNo: String,
+        @RequestParam(defaultValue = "") location: String,
+        @RequestParam(defaultValue = "") address: String
+    ): String{
+
+        return Ut.getJsonStrFromObj(memberService.insertIntoClient(
+            deceasedName, relatedName, cellphoneNo, location, address))
 
     }
 
