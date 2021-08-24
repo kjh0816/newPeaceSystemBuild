@@ -34,6 +34,14 @@ class MemberService(
         return memberRepository.getMembersByAuthenticationLevel(authenticationLevel)
     }
 
+    fun getMembersByRoleLevel(roleLevel: Int): List<Member>? {
+        return memberRepository.getMembersByRoleLevel(roleLevel)
+    }
+
+    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>? {
+        return memberRepository.getMembersByRoleLevelAndAuthenticationLevel(roleLevel, authenticationLevel)
+    }
+
     fun join(
         loginId: String,
         loginPw: String,
@@ -101,10 +109,6 @@ class MemberService(
 
     fun getMembers(): List<Member>? {
         return memberRepository.getMembers()
-    }
-
-    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>? {
-        return memberRepository.getMembersByRoleLevelAndAuthenticationLevel(roleLevel, authenticationLevel)
     }
 
     fun doLogin(loginId: String, loginPwInput: String, replaceUri: String): ResultData {

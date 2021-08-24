@@ -42,12 +42,14 @@ class AdmHomeController(
     @RequestMapping("/adm/home/detail")
     fun showDetail(model: Model, memberId: Int, roleLevel: Int): String {
         val member = memberService.getMemberById(memberId)
+        val members = memberService.getMembersByRoleLevel(roleLevel)
 
         if(member != null){
             // 중복코드 발생으로 인한 객체화
             setExtra__thumbnailImgUrl(member, roleLevel)
         }
         model.addAttribute("member", member)
+        model.addAttribute("members", members)
 
         return "adm/home/detail"
     }

@@ -33,17 +33,33 @@
         <div th:if="${member.extra__thumbnailImgUrl != null}">
             <img th:src="${member.extra__thumbnailImgUrl}" width="500" height="300" alt="" />
         </div>
-        <form action="./doApproval" method="POST">
-            <input type="hidden" name="memberId" th:value="${member.id}">
-            <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
-            <div>
-                <input type="radio" id="approval" name="authenticationLevel" value="1">
-                <label for="approval">승인</label>
-                <input type="radio" id="hold" name="authenticationLevel" value="2">
-                <label for="hold">보류</label>
-            </div>
-            <input type="submit" value="확인">
-        </form>
+        <div>
+            <form action="./doApproval" method="POST">
+                <input type="hidden" name="memberId" th:value="${member.id}">
+                <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+                <div>
+                    <input type="radio" id="approval" name="authenticationLevel" value="1">
+                    <label for="approval">승인</label>
+                    <input type="radio" id="hold" name="authenticationLevel" value="2">
+                    <label for="hold">보류</label>
+                </div>
+                <input type="submit" value="확인">
+            </form>
+        </div>
+        <div>
+            <th:block th:each="memberByRoleLevel : ${members}">
+                <!-- 열람중인 페이지를 제외시킴 -->
+                <th:block th:if="${memberByRoleLevel.id != member.id}">
+                    <a th:href="@{./detail(memberId=${memberByRoleLevel.id}, roleLevel=${memberByRoleLevel.roleLevel})}">
+                        <span>이름 : [[${memberByRoleLevel.name}]]</span>
+                        <span th:if="${memberByRoleLevel.extra__authenticationLevel == 0}">미승인</span>
+                        <span th:if="${memberByRoleLevel.extra__authenticationLevel == 1}">승인</span>
+                        <span th:if="${memberByRoleLevel.extra__authenticationLevel == 2}">보류</span>
+                        <br>
+                    </a>
+                </th:block>
+            </th:block>
+        </div>
     </div>
 </main>
 

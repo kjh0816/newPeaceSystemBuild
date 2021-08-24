@@ -84,9 +84,53 @@ interface MemberRepository {
             LEFT JOIN `role` AS R
             ON M.roleLevel = R.id
             WHERE MR.authenticationLevel = #{authenticationLevel}
+            ORDER BY M.id DESC
         """
     )
     fun getMembersByAuthenticationLevel(authenticationLevel: Int): List<Member>?
+
+    @Select(
+        """
+            SELECT 
+            M.*,
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationLevel AS `extra__authenticationLevel`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            R.roleName AS `extra__roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE M.roleLevel = #{roleLevel}
+            ORDER BY M.id DESC
+        """
+    )
+    fun getMembersByRoleLevel(roleLevel: Int): List<Member>?
+
+    @Select(
+        """
+            SELECT 
+            M.*,
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationLevel AS `authenticationLevel`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            R.roleName AS `extra__roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE M.roleLevel = #{roleLevel}
+            AND MR.authenticationLevel = #{authenticationLevel}
+            ORDER BY M.id DESC
+        """
+    )
+    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>?
 
     @Insert(
         """
@@ -187,31 +231,10 @@ interface MemberRepository {
             ON M.id = MR.memberId
             LEFT JOIN `role` AS R
             ON M.roleLevel = R.id
+            ORDER BY M.id DESC
         """
     )
     fun getMembers(): List<Member>?
-
-    @Select(
-        """
-            SELECT 
-            M.*,
-            MR.regDate AS `extra__regDate`,
-            MR.updateDate AS `extra__updateDate`,
-            MR.introduce AS `extra__introduce`,
-            MR.authenticationLevel AS `authenticationLevel`,
-            MR.authenticationDate AS `extra__authenticationDate`,
-            R.roleName AS `extra__roleName`
-            FROM `member` AS M
-            LEFT JOIN memberRole AS MR
-            ON M.id = MR.memberId
-            LEFT JOIN `role` AS R
-            ON M.roleLevel = R.id
-            WHERE M.roleLevel = #{roleLevel}
-            AND MR.authenticationLevel = #{authenticationLevel}
-        """
-    )
-    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>?
-
 
     @Insert(
         """
@@ -232,5 +255,8 @@ interface MemberRepository {
         """
     )
     fun getLastInsertId(): Int
+
+
+
 
 }
