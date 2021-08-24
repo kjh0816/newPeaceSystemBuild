@@ -179,7 +179,7 @@ interface MemberRepository {
             MR.regDate AS `extra__regDate`,
             MR.updateDate AS `extra__updateDate`,
             MR.introduce AS `extra__introduce`,
-            MR.authenticationStatus AS `extra__authenticationStatus`,
+            MR.authenticationLevel AS `authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
@@ -190,5 +190,26 @@ interface MemberRepository {
         """
     )
     fun getMembers(): List<Member>?
+
+    @Select(
+        """
+            SELECT 
+            M.*,
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationLevel AS `authenticationLevel`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            R.roleName AS `extra__roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE M.roleLevel = #{roleLevel}
+            AND MR.authenticationLevel = #{authenticationLevel}
+        """
+    )
+    fun getMembersByRoleLevel(roleLevel: Int, authenticationLevel: Int): List<Member>?
 
 }

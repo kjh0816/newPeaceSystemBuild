@@ -22,9 +22,10 @@ class AdmHomeController(
 
     // VIEW Mapping 함수 시작
     @RequestMapping("/adm/home/main")
-    fun showMain(model: Model, authenticationLevel: Int): String {
+    fun showMain(model: Model, authenticationLevel: Int, roleLevel: Int): String {
         // Member 테이블에서 authenticationLevel 이 일치하는 데이터들만 추려서 가져온다.
-        val members = memberService.getMembersByAuthenticationLevel(authenticationLevel)
+        val members = memberService.getMembersByRoleLevel(roleLevel, authenticationLevel)
+
 
         if(members != null){
             for (member in members) {
