@@ -214,6 +214,8 @@ CREATE TABLE `client`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
+	memberId INT(10) UNSIGNED NOT NULL COMMENT '현재 로그인한 회원 id(장례지도사를 연결해준 영업자)',
+	directorMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0일 경우, 장례지도사가 아직 미정, 정해지면 장례지도사 id를 넣는다.',
 	deceasedName CHAR(20) NOT NULL COMMENT '고인의 성함',
 	relatedName CHAR(20) NOT NULL COMMENT '상주 또는 유족의 성함',
 	cellphoneNo CHAR(20) NOT NULL COMMENT '위 성함분의 연락처',
@@ -237,7 +239,6 @@ CREATE TABLE flower(
 	height CHAR(10) NOT NULL COMMENT '세로 길이 (단위: mm)',
 	width CHAR(10) NOT NULL COMMENT '가로 길이 (단위: mm)'
 );
-
 
 
 INSERT INTO flower
@@ -283,7 +284,18 @@ SUBSTR(cellphoneNo, 1, 3)
 FROM `member`;
 
 
+# 진행하는 장례에 대한 funeral 테이블
+# funeral 테이블에 최초로 데이터가 들어가는 시점은, client에 대한 장례지도사가 정해졌을 때
+# 물품공급업, 인력 공급업 테이블이 추가될 때마다 칼럼이 추가돼야 한다.
 
+CREATE TABLE funeral(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	clientId INT(10) UNSIGNED NOT NULL,
+	directorMemberId INT(10) UNSIGNED NOT NULL,
+	memberId INT(10) UNSIGNED NOT NULL,
+	flowerId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음. 선택된 flower의 id',
+	ended TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '장례가 끝나면 1로 바뀐다.'
+);
 
 
 
