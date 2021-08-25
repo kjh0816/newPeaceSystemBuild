@@ -117,8 +117,12 @@ class UsrMemberController(
         @RequestParam(defaultValue = "") address: String
     ): String{
 
+        val memberId = rq.getLoginedMember()!!.id
+
+
+
         return Ut.getJsonStrFromObj(memberService.insertIntoClient(
-            deceasedName, relatedName, cellphoneNo, location, address))
+            memberId, deceasedName, relatedName, cellphoneNo, location, address))
 
     }
 

@@ -248,6 +248,7 @@ interface MemberRepository {
             INSERT INTO `client`
             SET regDate = NOW(),
             updateDate = NOW(),
+            memberId = #{memberId},
             deceasedName = #{deceasedName},
             relatedName = #{relatedName},
             cellphoneNo = #{cellphoneNo},
@@ -255,7 +256,7 @@ interface MemberRepository {
             address = #{address}
         """
     )
-    fun insertIntoClient(deceasedName: String, relatedName: String, cellphoneNo: String, location: String, address: String)
+    fun insertIntoClient(memberId: Int, deceasedName: String, relatedName: String, cellphoneNo: String, location: String, address: String)
     @Select(
         """
             SELECT LAST_INSERT_ID();
