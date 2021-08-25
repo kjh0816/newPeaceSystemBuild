@@ -76,6 +76,7 @@ accountNum = '97700608501019';
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
+roleLevel = 2,
 loginId = 'user1',
 loginPw = '0a041b9462caa4a31bac3567e0b6e6fd9100787db2ab433d96f6d178cabfce90',
 `name` = '홍길동',
@@ -88,6 +89,7 @@ accountNum = '97700608501019';
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
+roleLevel = 2,
 loginId = 'user2',
 loginPw = SHA2('user2', 256),
 `name` = '홍길동',
@@ -100,6 +102,7 @@ accountNum = '97700608501019';
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
+roleLevel = 2,
 loginId = 'user999',
 loginPw = 'db1edbcfb80fd965fe6d8a3aab2a59739255671a0b45dc263d99b9ace81e9e79',
 `name` = '홍길동',
@@ -118,6 +121,7 @@ CREATE TABLE memberRole(
   updateDate DATETIME NOT NULL,
   memberId INT(10) UNSIGNED NOT NULL,
   roleId INT(10) UNSIGNED NOT NULL,
+  roleCategoryId SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '어떤 물품을 공급하는지, 어떤 인력인지(README.md 참조)', 
   introduce LONGTEXT DEFAULT "소개글이 없습니다.",
   authenticationLevel SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '승인 여부(0 = 미확인, 1 = 승인, 2 = 보류)',
   authenticationDate DATETIME DEFAULT NOW() COMMENT '인증된 날짜'
@@ -218,9 +222,11 @@ CREATE TABLE `client`(
 );
 
 
-# '제단꽃 표준' 테이블
 
-CREATE TABLE flower(
+
+# '제단꽃 표준' 테이블
+# 
+CREATE TABLE flower(  
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
@@ -231,6 +237,7 @@ CREATE TABLE flower(
 	height CHAR(10) NOT NULL COMMENT '세로 길이 (단위: mm)',
 	width CHAR(10) NOT NULL COMMENT '가로 길이 (단위: mm)'
 );
+
 
 
 INSERT INTO flower

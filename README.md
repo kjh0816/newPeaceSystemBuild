@@ -4,6 +4,9 @@
     - Select : get[테이블명]By[기준칼럼명]
     - Update : modify[테이블명]Into[칼럼명]And[칼럼명]...
     - Delete(UpdateDelStatus) : delete[테이블명]
+  - memberRole 테이블의 roleCategoryId 칼럼
+    1) vendor: roleId가 4인 경우
+      - 1 = flower 테이블(제단꽃 공급업)
 # 큰 틀
 - 회원 관리
   - 최초 회원가입을 한 회원은 영업자의 권한만 가지고 있다.

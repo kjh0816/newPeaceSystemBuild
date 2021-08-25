@@ -1,7 +1,5 @@
 package com.base.newPeaceSystemBuild.vo.member
 
-import com.base.newPeaceSystemBuild.vo.GenFile
-
 data class Member(
     val id: Int,
 
@@ -24,7 +22,7 @@ data class Member(
 
     val requestStatus: Boolean,
 
-    val delStatus: Int,
+    val delStatus: Boolean,
     val delDate: String?,
 
     val extra__regDate: String?,

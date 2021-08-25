@@ -197,14 +197,6 @@ class MemberService(
 
         memberRepository.insertIntoClient(deceasedName, relatedName, cellphoneNo, location, address)
         val clientId = memberRepository.getLastInsertId()
-        println("clientId: $clientId")
-        println("clientId: $clientId")
-        println("clientId: $clientId")
-        println("clientId: $clientId")
-        println("clientId: $clientId")
-        println("clientId: $clientId")
-        println("clientId: $clientId")
-        println("clientId: $clientId")
 
 
 
