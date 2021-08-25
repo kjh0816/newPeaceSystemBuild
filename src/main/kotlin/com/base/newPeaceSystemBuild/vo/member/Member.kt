@@ -30,6 +30,7 @@ data class Member(
     val extra__introduce: String?,
     val extra__authenticationLevel: Int?,
     val extra__authenticationDate: String?,
+    val extra__roleCategoryId: Int,
     val extra__roleName: String?
 ) {
     // MyBatis 통해 DB에서 값을 할당받는것이 아닌 추후에 썸네일 표시할때 주입받기때문에 매개변수가 아닌 필드에 선언

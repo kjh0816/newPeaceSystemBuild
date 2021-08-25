@@ -17,6 +17,7 @@ interface MemberRepository {
             MR.introduce AS `extra__introduce`,
             MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
@@ -37,6 +38,7 @@ interface MemberRepository {
             MR.introduce AS `extra__introduce`,
             MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
@@ -57,6 +59,7 @@ interface MemberRepository {
             MR.introduce AS `extra__introduce`,
             MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
@@ -77,6 +80,7 @@ interface MemberRepository {
             MR.introduce AS `extra__introduce`,
             MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
@@ -98,6 +102,7 @@ interface MemberRepository {
             MR.introduce AS `extra__introduce`,
             MR.authenticationLevel AS `extra__authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
@@ -119,6 +124,7 @@ interface MemberRepository {
             MR.introduce AS `extra__introduce`,
             MR.authenticationLevel AS `authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
@@ -225,6 +231,7 @@ interface MemberRepository {
             MR.introduce AS `extra__introduce`,
             MR.authenticationLevel AS `authenticationLevel`,
             MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
             R.roleName AS `extra__roleName`
             FROM `member` AS M
             LEFT JOIN memberRole AS MR
