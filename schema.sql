@@ -297,6 +297,122 @@ CREATE TABLE funeral(
 	ended TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '장례가 끝나면 1로 바뀐다.'
 );
 
+#더미데이터 추가하는 부분
+# 테스트 회원 장례지도사 신청 더미데이터
+/*
+INSERT INTO memberRole
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+roleId = 3,
+authenticationLevel = 0,
+authenticationDate = NOW();
+
+INSERT INTO memberRole
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+roleId = 3,
+authenticationLevel = 0,
+authenticationDate = NOW();
+
+INSERT INTO memberRole
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+roleId = 3,
+authenticationLevel = 0,
+authenticationDate = NOW();
+
+INSERT INTO memberRole
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 4,
+roleId = 3,
+authenticationLevel = 0,
+authenticationDate = NOW();
+*/
+/*
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = "member",
+relId = 1,
+originFileName = "제목없음.png",
+fileExt = "png",
+typeCode = "director",
+type2Code = "attachment",
+fileSize = 6180,
+fileExtTypeCode = "img",
+fileExtType2Code = "png",
+fileNo = 1,
+fileDir = "2021_08";
+
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = "member",
+relId = 2,
+originFileName = "제목없음.png",
+fileExt = "png",
+typeCode = "director",
+type2Code = "attachment",
+fileSize = 6180,
+fileExtTypeCode = "img",
+fileExtType2Code = "png",
+fileNo = 1,
+fileDir = "2021_08";
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = "member",
+relId = 3,
+originFileName = "제목없음.png",
+fileExt = "png",
+typeCode = "director",
+type2Code = "attachment",
+fileSize = 6180,
+fileExtTypeCode = "img",
+fileExtType2Code = "png",
+fileNo = 1,
+fileDir = "2021_08";
+
+INSERT INTO genFile
+SET regDate = NOW(),
+updateDate = NOW(),
+relTypeCode = "member",
+relId = 4,
+originFileName = "제목없음.png",
+fileExt = "png",
+typeCode = "director",
+type2Code = "attachment",
+fileSize = 6180,
+fileExtTypeCode = "img",
+fileExtType2Code = "png",
+fileNo = 1,
+fileDir = "2021_08";
+*/
+/*
+# @mid 변수는 한번만 실행
+SET @mid = 4;
+
+INSERT INTO `member` (regDate, updateDate, roleLevel, loginId, loginPw, `name`, cellphoneNo, email, location, bank, accountNum, requestStatus)
+SELECT NOW(), NOW(), 3, CONCAT("user", RAND()), CONCAT("user", RAND()), CONCAT("user", RAND()), "01012312312", CONCAT("user", RAND(), "@naveer.com"), "대전", "신한", "123123123123", 1
+FROM `member`;
+
+insert into memberRole (regDate, updateDate, memberId, roleId, authenticationLevel, authenticationDate)
+select now(), now(), @mid := @mid + 1, 3, 0, now()
+from memberRole;
+
+insert into genFile (regDate, updateDate, relTypeCode, relId, originFileName, fileExt, typeCode, type2Code, fileSize, fileExtTypeCode, fileExtType2Code, fileNo, fileDir)
+select now(), now(), "member", @mid := @mid + 1, "제목없음.png", "png", "director", "attachment", 6180, "img", "png", 1, "2021_08"
+from genFile;
+
+update memberRole set roleId = 1 where id = 1;
+*/
+
 
 
 SELECT * FROM MEMBER;
