@@ -173,6 +173,7 @@ class MemberService(
     }
 
     fun insertIntoClient(
+        memberId: Int,
         deceasedName: String,
         relatedName: String,
         cellphoneNo: String,
@@ -195,7 +196,7 @@ class MemberService(
             return ResultData.from("F-5", "상세 주소를 입력해주세요.")
         }
 
-        memberRepository.insertIntoClient(deceasedName, relatedName, cellphoneNo, location, address)
+        memberRepository.insertIntoClient(memberId, deceasedName, relatedName, cellphoneNo, location, address)
         val clientId = memberRepository.getLastInsertId()
 
 

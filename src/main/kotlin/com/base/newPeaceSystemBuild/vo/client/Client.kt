@@ -4,6 +4,8 @@ data class Client(
     val id: Int,
     val regDate: String,
     val updateDate: String,
+    val memberId: Int,
+    val directorMemberId: Int,
     val deceasedName: String,
     val relatedName: String,
     val cellphoneNo: String,
