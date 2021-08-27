@@ -355,6 +355,9 @@ memberId = 4,
 roleId = 3,
 authenticationLevel = 0,
 authenticationDate = NOW();
+
+UPDATE `member` SET roleLevel = 3;
+UPDATE `member` SET roleLevel = 1 WHERE id = 1;
 */
 /*
 INSERT INTO genFile
@@ -419,8 +422,9 @@ fileNo = 1,
 fileDir = "2021_08";
 */
 /*
-# @mid 변수는 한번만 실행
-SET @mid = 4;
+# @mid, @genMid 변수는 한번만 실행
+SET @mid = 5;
+SET @genMid = @mid;
 
 INSERT INTO `member` (regDate, updateDate, roleLevel, loginId, loginPw, `name`, cellphoneNo, email, location, bank, accountNum, requestStatus)
 SELECT NOW(), NOW(), 3, CONCAT("user", RAND()), CONCAT("user", RAND()), CONCAT("user", RAND()), "01012312312", CONCAT("user", RAND(), "@naveer.com"), "대전", "신한", "123123123123", 1
@@ -431,10 +435,8 @@ select now(), now(), @mid := @mid + 1, 3, 0, now()
 from memberRole;
 
 insert into genFile (regDate, updateDate, relTypeCode, relId, originFileName, fileExt, typeCode, type2Code, fileSize, fileExtTypeCode, fileExtType2Code, fileNo, fileDir)
-select now(), now(), "member", @mid := @mid + 1, "제목없음.png", "png", "director", "attachment", 6180, "img", "png", 1, "2021_08"
+select now(), now(), "member", @genMid := @genMid + 1, "제목없음.png", "png", "director", "attachment", 6180, "img", "png", 1, "2021_08"
 from genFile;
-
-update memberRole set roleId = 1 where id = 1;
 */
 
 
