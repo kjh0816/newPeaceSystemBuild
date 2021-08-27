@@ -38,7 +38,7 @@ class MemberService(
         return memberRepository.getMembersByRoleLevel(roleLevel)
     }
 
-    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>? {
+    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member> {
         return memberRepository.getMembersByRoleLevelAndAuthenticationLevel(roleLevel, authenticationLevel)
     }
 
@@ -207,5 +207,9 @@ class MemberService(
             "clientId", clientId)
 
 
+    }
+
+    fun getFilteredMembers(roleLevel: Int, authenticationLevel: Int, page: Int, itemsInAPage: Int, limitFrom: Int): List<Member> {
+        return memberRepository.getFilteredMembers(roleLevel, authenticationLevel, page, itemsInAPage, limitFrom)
     }
 }
