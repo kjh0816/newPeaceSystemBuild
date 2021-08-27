@@ -2,13 +2,10 @@
 // blur 함수를 사용했을 때, 문제가 되는 경우는 입력을 아예하지 않으면서 피해가는 경우인데,
 // 아래 함수를 통해 입력값이 아예 없는 경우를 대비할 수 있다.
 
-let MemberJoin__submitDone = false;
+
 
 function MemberJoin__submit(form) {
 
-    if ( MemberJoin__submitDone ) {
-        return;
-	}
 
     form.loginId.value = form.loginId.value.trim();
     if (form.loginId.value.length == 0) {
@@ -131,7 +128,7 @@ function MemberJoin__submit(form) {
     					);
 
 
-                        MemberLogin__submitDone = true;
+
 
 
     					post$.subscribe(
@@ -145,7 +142,7 @@ function MemberJoin__submit(form) {
     							}
     							else {
         //                                    회원가입 실패일 경우, 실패 원인 메시지를 띠워준다.
-    								MemberLogin__submitDone = false;
+
                                     alert(res.response.msg);
     							}
     						}

@@ -1,8 +1,8 @@
 // 폼체크 함수 시작
 
+let MemberLogin__submitDone = false;
+
 function MemberLogin__submit(form) {
-
-
 
 
     if (form.loginId.value.length == 0) {
@@ -36,33 +36,23 @@ function MemberLogin__submit(form) {
     var loginPwInput = form.loginPwInput.value;
 
 
+       const post$ = rxjs.ajax.ajax.post(
+           						'/usr/member/doLogin',
+           						new FormData(form)
+           					);
 
 
-    $.ajax({
-                    type: 'POST',
-                    url: './doLogin',
-                    data: {
-                    loginId:loginId
-                    , loginPwInput:loginPwInput
-                    },
-                    dataType: 'json',
-                    success: function(result){
-//                      Controller에서 doLogin은 ResultData(String)을 return한다.
-
-//                      로그인 실패일 경우, 실패 원인 메시지를 띠워준다.
-                        if(result.resultCode.startsWith("F-")){
-                            alert(result.msg);
-                        }
-//                      로그인 성공일 경우, replaceUri를 Map으로 같이 return 해주는데, 이곳으로 replace시킨다.
-                        if(result.resultCode.startsWith("S-")){
-                            window.location.replace(result.map.replaceUri);
-                        }
-
-
-                    }
-
-                });
-
-
+           					post$.subscribe(
+           						res => {
+           							if ( res.response.success ) {
+                   //                      회원가입 성공일 경우, 로그인 페이지로 replace시킨다.
+                                           window.location.replace(res.response.map.replaceUri);
+           							}
+           							else {
+               //                                    회원가입 실패일 경우, 실패 원인 메시지를 띠워준다.
+                                           alert(res.response.msg);
+           							}
+           						}
+           					);
 }
 // 폼체크 함수 끝
