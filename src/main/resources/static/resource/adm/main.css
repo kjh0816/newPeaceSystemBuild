@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-menu__list{
+    padding: 0 8px;
+}

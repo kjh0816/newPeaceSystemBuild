@@ -136,7 +136,7 @@ interface MemberRepository {
             ORDER BY M.id DESC
         """
     )
-    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>?
+    fun getMembersByRoleLevelAndAuthenticationLevel(roleLevel: Int, authenticationLevel: Int): List<Member>
 
     @Insert(
         """
@@ -264,7 +264,30 @@ interface MemberRepository {
     )
     fun getLastInsertId(): Int
 
-
+    @Select(
+        """
+            SELECT 
+            M.*,
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationLevel AS `extra__authenticationLevel`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
+            R.roleName AS `extra__roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE M.roleLevel = #{roleLevel}
+            AND MR.authenticationLevel = #{authenticationLevel}
+            ORDER BY M.id DESC
+            LIMIT #{itemsInAPage}
+            OFFSET #{limitFrom}
+        """
+    )
+    abstract fun getFilteredMembers(roleLevel: Int, authenticationLevel: Int, page: Int, itemsInAPage: Int, limitFrom: Int): List<Member>
 
 
 }

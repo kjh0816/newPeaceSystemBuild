@@ -10,6 +10,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
+import kotlin.math.ceil
 
 
 @Controller
@@ -22,19 +23,27 @@ class AdmHomeController(
 
     // VIEW Mapping 함수 시작
     @RequestMapping("/adm/home/main")
-    fun showMain(model: Model, authenticationLevel: Int, roleLevel: Int): String {
+    fun showMain(model: Model, authenticationLevel: Int, roleLevel: Int, page: Int): String {
         // Member 테이블에서 roleLevel 과 authenticationLevel 이 일치하는 데이터들만 추려서 가져온다.
         val members = memberService.getMembersByRoleLevelAndAuthenticationLevel(roleLevel, authenticationLevel)
 
+        val itemsInAPage = 5
 
-        if(members != null){
-            for (member in members) {
-                // 중복코드 발생으로 인한 객체화
-                setExtra__thumbnailImgUrl(member, roleLevel)
-            }
+        val limitFrom = (page - 1) * itemsInAPage
+
+        // 파라미터로 받은 roleLevel, authenticationLevel 를 기준으로 page 별로 필터링된 회원정보를 가져온다.
+        val filteredMembers = memberService.getFilteredMembers(roleLevel, authenticationLevel, page, itemsInAPage, limitFrom)
+
+        val totalPage = ceil(members.size.toDouble() / itemsInAPage).toInt()
+
+        for (member in filteredMembers) {
+            // 중복코드 발생으로 인한 객체화
+            setExtra__thumbnailImgUrl(member, roleLevel)
         }
 
-        model.addAttribute("members", members)
+        model.addAttribute("members", filteredMembers)
+        model.addAttribute("page", page)
+        model.addAttribute("totalPage", totalPage)
 
         return "adm/home/main"
     }
