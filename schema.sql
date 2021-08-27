@@ -92,7 +92,7 @@ updateDate = NOW(),
 roleLevel = 2,
 loginId = 'user2',
 loginPw = SHA2('user2', 256),
-`name` = '홍길동',
+`name` = '윤길동',
 cellphoneNo = '01012341234',
 email = 'hong2@gmail.com',
 location = '서울특별시',
@@ -103,16 +103,18 @@ INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 roleLevel = 2,
-loginId = 'user999',
-loginPw = 'db1edbcfb80fd965fe6d8a3aab2a59739255671a0b45dc263d99b9ace81e9e79',
-`name` = '홍길동',
+loginId = 'user3',
+loginPw = SHA2('user3', 256),
+`name` = '김지후',
 cellphoneNo = '01012341234',
-email = 'hongqwe@gmail.com',
+email = 'readshot2@gmail.com',
 location = '서울특별시',
 bank = '신한',
-accountNum = '97700608501019';
+accountNum = '110222014684';
 
 SELECT * FROM `member`;
+
+
 
 # 회원직업 테이블 생성
 CREATE TABLE memberRole(
@@ -127,7 +129,8 @@ CREATE TABLE memberRole(
   authenticationDate DATETIME DEFAULT NOW() COMMENT '인증된 날짜'
 );
 
-SELECT * FROM memberRole;
+
+
 
 # member 테이블의 location 칼럼을 위한 department 테이블
 
@@ -224,6 +227,13 @@ CREATE TABLE `client`(
 );
 
 
+SELECT * FROM CLIENT;
+
+
+
+
+
+
 
 
 # '제단꽃 표준' 테이블
@@ -290,12 +300,26 @@ FROM `member`;
 
 CREATE TABLE funeral(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
 	clientId INT(10) UNSIGNED NOT NULL,
 	directorMemberId INT(10) UNSIGNED NOT NULL,
 	memberId INT(10) UNSIGNED NOT NULL,
 	flowerId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음. 선택된 flower의 id',
-	ended TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '장례가 끝나면 1로 바뀐다.'
+	progress SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '장례 진행 상태'
 );
+
+/*
+insert into funeral
+set regDate = now(),
+updateDate = now(),
+clientId = 1,
+directorMemberId = 3,
+memberId = 2,
+flowerId = 1;
+*/
+SELECT * FROM funeral;
+
 
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
@@ -415,11 +439,5 @@ update memberRole set roleId = 1 where id = 1;
 
 
 
-SELECT * FROM MEMBER;
-SELECT * FROM memberRole;
 
-UPDATE memberRole
-SET authenticationStatus = 1,
-authenticationDate = NOW()
-WHERE memberId = 2;
 

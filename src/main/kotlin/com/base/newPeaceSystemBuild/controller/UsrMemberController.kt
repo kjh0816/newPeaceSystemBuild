@@ -123,7 +123,6 @@ class UsrMemberController(
 
         return Ut.getJsonStrFromObj(memberService.insertIntoClient(
             memberId, deceasedName, relatedName, cellphoneNo, location, address))
-
     }
 
 
