@@ -123,6 +123,7 @@ class UsrMemberController(
 
         return Ut.getJsonStrFromObj(memberService.insertIntoClient(
             memberId, deceasedName, relatedName, cellphoneNo, location, address))
+
     }
 
 
@@ -134,6 +135,9 @@ class UsrMemberController(
     fun loginIdCheck(
         @RequestParam(defaultValue = "") loginId: String
     ): String {
+
+
+
         val regex = "^[a-z0-9]{6,20}\$"
 
 

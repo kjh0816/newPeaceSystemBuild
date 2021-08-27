@@ -2,8 +2,13 @@
 // blur 함수를 사용했을 때, 문제가 되는 경우는 입력을 아예하지 않으면서 피해가는 경우인데,
 // 아래 함수를 통해 입력값이 아예 없는 경우를 대비할 수 있다.
 
+let MemberJoin__submitDone = false;
 
 function MemberJoin__submit(form) {
+
+    if ( MemberJoin__submitDone ) {
+        return;
+	}
 
     form.loginId.value = form.loginId.value.trim();
     if (form.loginId.value.length == 0) {
@@ -118,49 +123,33 @@ function MemberJoin__submit(form) {
     form.loginPw.value = '';
     form.loginPwConfirm.value = '';
 
-    var loginId = form.loginId.value;
-    var loginPwInput = form.loginPwInput.value;
-    var name = form.name.value;
-    var cellphoneNo = form.cellphoneNo.value;
-    var email = form.email.value;
-    var location = form.location.value;
-    var bank = form.bank.value;
-    var accountNum = form.accountNum.value;
 
 
-
-        $.ajax({
-                        type: 'POST',
-                        url: './doJoin',
-                        data: {
-                        loginId:loginId
-                        , loginPwInput:loginPwInput
-                        , name:name
-                        , cellphoneNo:cellphoneNo
-                        , email:email
-                        , location:location
-                        , bank:bank
-                        , accountNum:accountNum
-                        },
-                        dataType: 'json',
-                        success: function(result){
-    //                      Controller에서 doJoin은 ResultData(String)을 return한다.
-
-    //                      회원가입 실패일 경우, 실패 원인 메시지를 띠워준다.
-                            if(result.resultCode.startsWith("F-")){
-                                alert(result.msg);
-                            }
-    //                      회원가입 성공일 경우, 로그인 페이지로 replace시킨다.
-                            if(result.resultCode.startsWith("S-")){
-
-                            alert(result.msg);
-                            window.location.replace('/usr/member/login');
-                            }
+    const post$ = rxjs.ajax.ajax.post(
+    						'/usr/member/doJoin',
+    						new FormData(form)
+    					);
 
 
-                        }
+                        MemberLogin__submitDone = true;
 
-                    });
+
+    					post$.subscribe(
+    						res => {
+    							if ( res.response.success ) {
+            //                      회원가입 성공일 경우, 로그인 페이지로 replace시킨다.
+                                    alert(res.response.msg);
+                                    window.location.replace('/usr/member/login');
+
+
+    							}
+    							else {
+        //                                    회원가입 실패일 경우, 실패 원인 메시지를 띠워준다.
+    								MemberLogin__submitDone = false;
+                                    alert(res.response.msg);
+    							}
+    						}
+    					);
 
 
 }
@@ -184,30 +173,32 @@ $('#loginId').blur(function(){
         return;
         }
 
-            $.ajax({
-                type: 'POST',
-                url: './loginIdCheck',
-                dataType: 'json',
-                data: {loginId:loginId},
-                success: function(result){
+
+        $.ajax({
+                        type: 'POST',
+                        url: './loginIdCheck',
+                        dataType: 'json',
+                        data: {loginId:loginId},
+                        success: function(result){
 
 
-                //   (2) ResultData에 따른 결과값 표시
-                    if(result.resultCode.startsWith("F-")){
-                        $("#loginIdCheckMsg").html(result.msg);
-                        $("#loginIdCheckMsg").css("color", "red");
-                        $("#join-submit").attr("disabled", true);
-                        return;
-                    }
-                    if(result.resultCode.startsWith("S-")){
-                        $("#loginIdCheckMsg").html(result.msg);
-                        $("#loginIdCheckMsg").css("color", "green");
-                        $("#join-submit").attr("disabled", false);
-                        return;
-                    }
-                }
+                        //   (2) ResultData에 따른 결과값 표시
+                            if(result.resultCode.startsWith("F-")){
+                                $("#loginIdCheckMsg").html(result.msg);
+                                $("#loginIdCheckMsg").css("color", "red");
+                                $("#join-submit").attr("disabled", true);
+                                return;
+                            }
+                            if(result.resultCode.startsWith("S-")){
+                                $("#loginIdCheckMsg").html(result.msg);
+                                $("#loginIdCheckMsg").css("color", "green");
+                                $("#join-submit").attr("disabled", false);
+                                return;
+                            }
+                        }
 
-            });
+                    });
+
 });
 
 
