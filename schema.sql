@@ -223,7 +223,9 @@ CREATE TABLE `client`(
 	relatedName CHAR(20) NOT NULL COMMENT '상주 또는 유족의 성함',
 	cellphoneNo CHAR(20) NOT NULL COMMENT '위 성함분의 연락처',
 	location CHAR(30) NOT NULL,
-	address CHAR(30) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록'
+	address CHAR(30) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록',
+	bank CHAR(20) NOT NULL COMMENT '유족이 부조금을 받을 수 있는 계좌',
+	accountNum CHAR(20) NOT NULL
 );
 
 
