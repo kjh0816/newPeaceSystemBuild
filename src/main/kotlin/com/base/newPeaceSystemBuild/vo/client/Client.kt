@@ -10,5 +10,7 @@ data class Client(
     val relatedName: String,
     val cellphoneNo: String,
     val location: String,
-    val address: String
+    val address: String,
+    val bank: String,
+    val accountNum: String
 )
