@@ -37,9 +37,9 @@
                 <span>이메일 : [[${member.email}]]</span><br>
                 <!-- 타임리프 th:href Adding Parameter URL 형식 -->
                 <a th:href="@{./detail(memberId=${member.id}, roleLevel=${param.roleLevel})}">상세페이지로 보기</a>
-                <div th:if="${member.extra__thumbnailImgUrl != null}">
-                    <img th:src="${member.extra__thumbnailImgUrl}" width="500" height="300" alt="" />
-                </div>
+<!--                <div th:if="${member.extra__thumbnailImgUrl != null}">-->
+<!--                    <img th:src="${member.extra__thumbnailImgUrl}" width="500" height="300" alt="" />-->
+<!--                </div>-->
                 <div>
                     <input type="radio" id="approval" name="authenticationLevel" value="1">
                     <label for="approval">승인</label>
@@ -59,39 +59,61 @@
                         "
         >
             <div class="pagination">
-                <a class="first-page" th:href="@{${baseUri}(page=1)}">
-                    <i class="fas fa-angle-double-left"></i>
-                </a>
+                <form action="./main" method="POST">
+                    <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
+                    <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+                    <input type="hidden" name="page" value="1">
+                    <button type="submit"><i class="fas fa-angle-double-left"></i></button>
+                </form>
                 <th:block th:if="${page == 1}">
-                    <span class="prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </span>
+                    <div>
+                        <button class="prev" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    </div>
                 </th:block>
                 <th:block th:unless="${page == 1}">
-                    <a class="prev-page" th:href="@{${baseUri}(page=${page-1})}">
-                        <i class="fas fa-chevron-left"></i>
-                    </a>
+                    <form action="./main" method="POST">
+                        <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
+                        <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+                        <input type="hidden" name="page" th:value="${page - 1}">
+                        <button type="submit"><i class="fas fa-chevron-left"></i></button>
+                    </form>
                 </th:block>
 
                 <th:block th:each="i: ${#numbers.sequence(startPage, endPage)}">
                     <th:block th:if="${i != 0}">
-                        <a class="page-menu__list" th:href="@{${baseUri}(page=${i})}" th:text="${i}"></a>
+                        <form action="./main" method="POST">
+                            <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
+                            <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+                            <input type="hidden" name="page" th:value="${i}">
+                            <input type="submit" th:value="${i}">
+                        </form>
+                        <!--<a class="page-menu__list" th:href="@{${baseUri}(page=${i})}" th:text="${i}"></a>-->
                     </th:block>
                 </th:block>
 
                 <th:block th:if="${page >= endPage}">
-                    <span class="next text-gray-200">
-						<i class="fas fa-chevron-right"></i>
-					</span>
+                    <div>
+                        <button class="next" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </th:block>
                 <th:block th:unless="${page >= endPage}">
-                    <a class="next-page" th:href="@{${baseUri}(page=${page+1})}">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
+                    <form action="./main" method="POST">
+                        <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
+                        <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+                        <input type="hidden" name="page" th:value="${page + 1}">
+                        <button type="submit"><i class="fas fa-chevron-right"></i></button>
+                    </form>
                 </th:block>
-                <a class="end-page" th:href="@{${baseUri}(page=${totalPage})}">
-                    <i class="fas fa-angle-double-right"></i>
-                </a>
+                <form action="./main" method="POST">
+                    <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
+                    <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+                    <input type="hidden" name="page" th:value="${totalPage}">
+                    <button type="submit"><i class="fas fa-angle-double-right"></i></button>
+                </form>
             </div>
         </nav>
     </div>
