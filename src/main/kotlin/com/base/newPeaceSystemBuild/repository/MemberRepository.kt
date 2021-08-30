@@ -1,5 +1,7 @@
 package com.base.newPeaceSystemBuild.repository
 
+import com.base.newPeaceSystemBuild.vo.client.Client
+import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Bank
 import com.base.newPeaceSystemBuild.vo.member.Department
 import com.base.newPeaceSystemBuild.vo.member.Member
@@ -288,6 +290,24 @@ interface MemberRepository {
         """
     )
     abstract fun getFilteredMembers(roleLevel: Int, authenticationLevel: Int, page: Int, itemsInAPage: Int, limitFrom: Int): List<Member>
+
+
+    @Select(
+        """
+            SELECT *
+            FROM `client`
+            WHERE id = #{clientId}
+        """
+    )
+    fun getClientById(clientId: Int): Client
+    @Select(
+        """
+            SELECT *
+            FROM funeral
+            WHERE clientId = #{clientId}
+        """
+    )
+    fun getFuneralByClientId(clientId: Int): Funeral
 
 
 }

@@ -128,6 +128,34 @@ class UsrMemberController(
 
     }
 
+    @RequestMapping("/usr/member/progress")
+    fun showProgress(
+        model: Model,
+        @RequestParam(defaultValue = "0") clientId: Int
+    ): String{
+
+        // 영업자 본인이 연결한 장례가 어떻게 진행되고 있는지 보여주는 페이지(progress.html)
+
+        // progress 페이지 이동 시, clientId를 파라미터로 받았고,
+        // clientId를 통해 고인(client) 테이블의 row를 얻는다.
+        val client = memberService.getClientById(clientId)
+        // funeral 테이블의 값은 장례지도사가 유족과 연락한 후, 추가적인 정보를 입력했을 때 row가 생성된다.
+        // 즉, 처음 funeral 테이블을 조회할 때, 값이 null이다.
+        val funeral = memberService.getFuneralByClientId(clientId)
+
+        // 장례지도사가 연결됐을 때, 장례지도사의 이름, 연락처를 영업자에게 보여주기 위함.
+        // 장례지도사가 연결되지 않은 상태(funeral 테이블이 null)에서 director를 아래처럼 조회하면 NPE 발생.
+        if(funeral != null) {
+            val director = memberService.getMemberById(funeral.directorMemberId)
+            model.addAttribute("director", director)
+        }
+        model.addAttribute("client", client)
+        model.addAttribute("funeral", funeral)
+
+
+        return "usr/member/progress"
+    }
+
 
     // VIEW 기능 함수 끝
 

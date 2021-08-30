@@ -61,4 +61,28 @@ function MemberCall__submit(form) {
             return;
     }
 
+    const post$ = rxjs.ajax.ajax.post(
+    //              고인의 정보를 올바르게 입력했을 경우, client 테이블에 row가 추가된다.
+    //              clientId를 추가 정보로 return한다.
+                    '/usr/member/doCall',
+                    new FormData(form)
+                );
+
+    post$.subscribe(
+        res => {
+            if ( res.response.success ) {
+
+//          doCall에서 return된 clientId를 URL 파라미터로 넘겨준다.
+                const clientId = res.response.map.clientId;
+
+                alert(res.response.msg);
+                window.location.replace('/usr/member/progress?clientId=' + clientId);
+            }
+            else {
+//              고인 정보가 제대로 입력되지 않은 경우
+                alert(res.response.msg);
+            }
+        }
+    );
+
 }

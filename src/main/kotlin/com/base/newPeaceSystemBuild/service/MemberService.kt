@@ -4,6 +4,8 @@ import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
+import com.base.newPeaceSystemBuild.vo.client.Client
+import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Bank
 import com.base.newPeaceSystemBuild.vo.member.Department
 import com.base.newPeaceSystemBuild.vo.member.Member
@@ -211,5 +213,13 @@ class MemberService(
 
     fun getFilteredMembers(roleLevel: Int, authenticationLevel: Int, page: Int, itemsInAPage: Int, limitFrom: Int): List<Member> {
         return memberRepository.getFilteredMembers(roleLevel, authenticationLevel, page, itemsInAPage, limitFrom)
+    }
+
+    fun getClientById(clientId: Int): Client {
+        return memberRepository.getClientById(clientId)
+    }
+
+    fun getFuneralByClientId(clientId: Int): Funeral {
+        return memberRepository.getFuneralByClientId(clientId)
     }
 }
