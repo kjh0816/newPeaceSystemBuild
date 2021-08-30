@@ -29,6 +29,7 @@
             <form action="./doApproval" method="POST">
                 <input type="hidden" name="memberId" th:value="${member.id}">
                 <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+                <input type="hidden" name="page" value="1">
                 <div>
                     <input type="radio" id="approval" name="authenticationLevel" value="1">
                     <label for="approval">승인</label>

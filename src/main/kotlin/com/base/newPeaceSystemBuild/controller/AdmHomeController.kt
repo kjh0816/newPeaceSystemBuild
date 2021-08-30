@@ -69,24 +69,34 @@ class AdmHomeController(
     // VIEW 기능 함수 시작
     @RequestMapping("/adm/home/doApproval", method = [RequestMethod.POST])
     @ResponseBody
-    fun doApproval(memberId: Int, authenticationLevel: Int, roleLevel: Int): String {
+    fun doApproval(
+        memberId: Int,
+        authenticationLevel: Int,
+        roleLevel: Int,
+    ): String {
         // 장례지도사 신청시 생긴 MemberRole 테이블의 authenticationLevel를 파라미터로 받아온 authenticationLevel로 수정한다.
         // 수정 대상은 WHERE 절로 memberId를 통해 선택한다.
         memberService.modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId, authenticationLevel)
+
+        var replaceUri =  "main?authenticationLevel=0&roleLevel=3&page=1"
         if(authenticationLevel == 1){
             if(roleLevel == 3){
-                return rq.replaceJs("장례지도사 승인완료.", "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel")
+                replaceUri = "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel&page=1"
+                return rq.replaceJs("장례지도사 승인완료.", replaceUri)
             }
             else if(roleLevel == 4){
-                return rq.replaceJs("물품 공급업자 승인완료.", "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel")
+                replaceUri = "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel&page=1"
+                return rq.replaceJs("물품 공급업자 승인완료.", replaceUri)
             }
         }
         else if(authenticationLevel == 2){
             if(roleLevel == 3){
-                return rq.replaceJs("장례지도사 보류완료.", "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel")
+                replaceUri = "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel&page=1"
+                return rq.replaceJs("장례지도사 보류완료.", replaceUri)
             }
             else if(roleLevel == 4){
-                return rq.replaceJs("물품 공급업자 보류완료.", "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel")
+                replaceUri = "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel&page=1"
+                return rq.replaceJs("물품 공급업자 보류완료.", replaceUri)
             }
         }
         return ""
