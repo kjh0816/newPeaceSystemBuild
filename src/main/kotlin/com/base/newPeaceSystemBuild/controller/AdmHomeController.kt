@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.controller
 
 import com.base.newPeaceSystemBuild.service.GenFileService
 import com.base.newPeaceSystemBuild.service.MemberService
+import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.member.Member
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import kotlin.math.ceil
 
@@ -113,4 +115,32 @@ class AdmHomeController(
         }
     }
     // Controller 내부에서 사용할 함수 끝
+    @RequestMapping("/adm/home/getPage", method = [RequestMethod.POST])
+    @ResponseBody
+    fun getPage(
+        model: Model, authenticationLevel: Int, roleLevel: Int, page: Int
+    ): String {
+        // Member 테이블에서 roleLevel 과 authenticationLevel 이 일치하는 데이터들만 추려서 가져온다.
+        val members = memberService.getMembersByRoleLevelAndAuthenticationLevel(roleLevel, authenticationLevel)
+
+        val itemsInAPage = 5
+
+        val limitFrom = (page - 1) * itemsInAPage
+
+        // 파라미터로 받은 roleLevel, authenticationLevel 를 기준으로 page 별로 필터링된 회원정보를 가져온다.
+        val filteredMembers = memberService.getFilteredMembers(roleLevel, authenticationLevel, page, itemsInAPage, limitFrom)
+
+        val totalPage = ceil(members.size.toDouble() / itemsInAPage).toInt()
+
+        for (member in filteredMembers) {
+            // 중복코드 발생으로 인한 객체화
+            setExtra__thumbnailImgUrl(member, roleLevel)
+        }
+
+        model.addAttribute("members", filteredMembers)
+        model.addAttribute("page", page)
+        model.addAttribute("totalPage", totalPage)
+
+        return Ut.getJsonStrFromObj(memberService.getForPrintPageMember(roleLevel, authenticationLevel, page, itemsInAPage, limitFrom))
+    }
 }

@@ -9,11 +9,17 @@
 <!--  로그아웃을 Ajax로 실행하기 위한 의존성  -->
     <th:block layout:fragment="js">
         <script type="text/javascript" src="/resource/member/logout.js" charset="utf-8" defer></script>
+        <script type="text/javascript" src="/resource/adm/main.js" charset="utf-8" defer></script>
     </th:block>
 </head>
 
 <main layout:fragment="main">
-    <a href="../../adm/home/main?authenticationLevel=0&roleLevel=3&page=1">관리자 메인페이지</a>
+    <form onsubmit="pagination(this); return false;">
+        <input type="hidden" name="authenticationLevel" value="0">
+        <input type="hidden" name="roleLevel" value="3">
+        <input type="hidden" name="page" value="1">
+        <button type="submit">관리자페이지</button>
+    </form>
     <br>
     <br>
     <a href="../member/login">로그인</a>
