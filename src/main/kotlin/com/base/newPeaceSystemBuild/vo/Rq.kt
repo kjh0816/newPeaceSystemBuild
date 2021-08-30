@@ -50,6 +50,16 @@ class Rq {
         loginedMember = Ut.getObjFromJsonStr(loginedMemberJsonStr)
     }
 
+    fun alert(msg: String): String{
+        return """
+            const msg = '${msg}'.trim();
+            
+            if(msg.length > 0){
+                alert(msg);
+            }  
+        """.trimIndent()
+    }
+
     //  매개변수로 받은 msg를 alert로 보여주고 받은 uri로 replace시킨다.
     fun replaceJs(msg: String, uri: String): String{
         return """

@@ -52,6 +52,7 @@ class UsrMemberController(
 
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
 
+
         return Ut.getJsonStrFromObj(memberService.doLogin(loginId, loginPwInput, replaceUri))
 
     }
@@ -119,6 +120,8 @@ class UsrMemberController(
 
         val memberId = rq.getLoginedMember()!!.id
 
+
+
 //      영업자가 고인 관련 정보를 입력해서 장례지도사 연결 요청
 //      신청 시, client 테이블의 directorMemberId = 0
 //      장례지도사가 연결되면, 장례지도사 memberId 가 0을 대체한다.
@@ -139,6 +142,12 @@ class UsrMemberController(
         // progress 페이지 이동 시, clientId를 파라미터로 받았고,
         // clientId를 통해 고인(client) 테이블의 row를 얻는다.
         val client = memberService.getClientById(clientId)
+        // URL로 존재하지 않는 clientId의 접근에 대한 예외처리.
+        if(client == null){
+
+            rq.alert("잘못된 접근입니다.")
+            return "redirect:/usr/home/main"
+        }
         // funeral 테이블의 값은 장례지도사가 유족과 연락한 후, 추가적인 정보를 입력했을 때 row가 생성된다.
         // 즉, 처음 funeral 테이블을 조회할 때, 값이 null이다.
         val funeral = memberService.getFuneralById(clientId)

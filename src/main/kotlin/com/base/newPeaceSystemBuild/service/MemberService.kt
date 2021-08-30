@@ -182,6 +182,7 @@ class MemberService(
         location: String,
         address: String
     ): ResultData {
+
         if(deceasedName.isEmpty()){
             return ResultData.from("F-1", "고인의 성함을 입력해주세요.")
         }
@@ -197,6 +198,10 @@ class MemberService(
         if(address.isEmpty()){
             return ResultData.from("F-5", "상세 주소를 입력해주세요.")
         }
+
+
+
+
 
         memberRepository.insertIntoClient(memberId, deceasedName, relatedName, cellphoneNo, location, address)
         val clientId = memberRepository.getLastInsertId()
