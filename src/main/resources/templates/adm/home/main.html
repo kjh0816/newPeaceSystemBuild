@@ -9,6 +9,9 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" href="/resource/adm/main.css">
     </th:block>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/adm/main.js" charset="utf-8" defer></script>
+    </th:block>
 </head>
 
 <main layout:fragment="main">
@@ -52,14 +55,13 @@
         </th:block>
         <nav
                 th:with="
-                        baseUri = |./main?authenticationLevel=${param.authenticationLevel}&roleLevel=${param.roleLevel}|,
                         pageMenuArmSize = 4,
                         startPage = ${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1},
                         endPage = ${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}
                         "
         >
             <div class="pagination">
-                <form action="./main" method="POST">
+                <form onsubmit="pagination(this); return false;">
                     <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
                     <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                     <input type="hidden" name="page" value="1">
@@ -73,7 +75,7 @@
                     </div>
                 </th:block>
                 <th:block th:unless="${page == 1}">
-                    <form action="./main" method="POST">
+                    <form onsubmit="pagination(this); return false;">
                         <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
                         <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                         <input type="hidden" name="page" th:value="${page - 1}">
@@ -83,13 +85,12 @@
 
                 <th:block th:each="i: ${#numbers.sequence(startPage, endPage)}">
                     <th:block th:if="${i != 0}">
-                        <form action="./main" method="POST">
+                        <form onsubmit="pagination(this); return false;">
                             <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
                             <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                             <input type="hidden" name="page" th:value="${i}">
                             <input type="submit" th:value="${i}">
                         </form>
-                        <!--<a class="page-menu__list" th:href="@{${baseUri}(page=${i})}" th:text="${i}"></a>-->
                     </th:block>
                 </th:block>
 
@@ -101,14 +102,14 @@
                     </div>
                 </th:block>
                 <th:block th:unless="${page >= endPage}">
-                    <form action="./main" method="POST">
+                    <form onsubmit="pagination(this); return false;">
                         <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
                         <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                         <input type="hidden" name="page" th:value="${page + 1}">
                         <button type="submit"><i class="fas fa-chevron-right"></i></button>
                     </form>
                 </th:block>
-                <form action="./main" method="POST">
+                <form onsubmit="pagination(this); return false;">
                     <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
                     <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                     <input type="hidden" name="page" th:value="${totalPage}">

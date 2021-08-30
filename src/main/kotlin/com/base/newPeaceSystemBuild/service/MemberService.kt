@@ -215,11 +215,30 @@ class MemberService(
         return memberRepository.getFilteredMembers(roleLevel, authenticationLevel, page, itemsInAPage, limitFrom)
     }
 
+
     fun getClientById(clientId: Int): Client {
         return memberRepository.getClientById(clientId)
     }
 
     fun getFuneralByClientId(clientId: Int): Funeral {
         return memberRepository.getFuneralByClientId(clientId)
+    }
+
+    fun getForPrintPageMember(
+        roleLevel: Int,
+        authenticationLevel: Int,
+        page: Int,
+        itemsInAPage: Int,
+        limitFrom: Int
+    ): ResultData {
+        val members = getFilteredMembers(roleLevel, authenticationLevel, page, itemsInAPage, limitFrom)
+        if (members.isEmpty()) {
+            return ResultData.from("F-1", "존재하지 않는 페이지입니다.")
+        }
+
+        val replaceUri = "/adm/home/main?roleLevel=$roleLevel&authenticationLevel=$authenticationLevel&page=$page"
+
+        return ResultData.from("S-1", "${page}번 페이지를 불러옵니다.", "replaceUri", replaceUri)
+
     }
 }

@@ -289,7 +289,7 @@ interface MemberRepository {
             OFFSET #{limitFrom}
         """
     )
-    abstract fun getFilteredMembers(roleLevel: Int, authenticationLevel: Int, page: Int, itemsInAPage: Int, limitFrom: Int): List<Member>
+    fun getFilteredMembers(roleLevel: Int, authenticationLevel: Int, page: Int, itemsInAPage: Int, limitFrom: Int): List<Member>
 
 
     @Select(
