@@ -52,11 +52,13 @@ class Rq {
 
     fun alert(msg: String): String{
         return """
+            <script>
             const msg = '${msg}'.trim();
             
             if(msg.length > 0){
                 alert(msg);
             }  
+            </script>
         """.trimIndent()
     }
 
@@ -87,6 +89,10 @@ class Rq {
             history.back();
             </script>
         """.trimIndent()
+    }
+
+    fun printAlertJs(msg: String) {
+        this.print(alert(msg))
     }
 
     fun printReplaceJs(msg: String, uri: String) {
