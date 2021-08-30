@@ -143,7 +143,7 @@ class UsrMemberController(
         // clientId를 통해 고인(client) 테이블의 row를 얻는다.
         val client = memberService.getClientById(clientId)
         // URL로 존재하지 않는 clientId의 접근에 대한 예외처리.
-        if(client == null){
+        if(client == null || client.memberId != rq.getLoginedMember()!!.id){
 
             rq.alert("잘못된 접근입니다.")
             return "redirect:/usr/home/main"
