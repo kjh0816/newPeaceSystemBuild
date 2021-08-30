@@ -141,7 +141,7 @@ class UsrMemberController(
         val client = memberService.getClientById(clientId)
         // funeral 테이블의 값은 장례지도사가 유족과 연락한 후, 추가적인 정보를 입력했을 때 row가 생성된다.
         // 즉, 처음 funeral 테이블을 조회할 때, 값이 null이다.
-        val funeral = memberService.getFuneralByClientId(clientId)
+        val funeral = memberService.getFuneralById(clientId)
 
         // 장례지도사가 연결됐을 때, 장례지도사의 이름, 연락처를 영업자에게 보여주기 위함.
         // 장례지도사가 연결되지 않은 상태(funeral 테이블이 null)에서 director를 아래처럼 조회하면 NPE 발생.

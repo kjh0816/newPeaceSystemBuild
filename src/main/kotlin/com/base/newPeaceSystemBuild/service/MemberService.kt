@@ -220,7 +220,7 @@ class MemberService(
         return memberRepository.getClientById(clientId)
     }
 
-    fun getFuneralByClientId(clientId: Int): Funeral {
+    fun getFuneralById(clientId: Int): Funeral {
         return memberRepository.getFuneralByClientId(clientId)
     }
 
