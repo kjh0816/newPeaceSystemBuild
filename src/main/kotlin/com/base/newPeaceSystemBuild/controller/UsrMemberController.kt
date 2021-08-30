@@ -142,10 +142,9 @@ class UsrMemberController(
         // progress 페이지 이동 시, clientId를 파라미터로 받았고,
         // clientId를 통해 고인(client) 테이블의 row를 얻는다.
         val client = memberService.getClientById(clientId)
-        // URL로 존재하지 않는 clientId의 접근에 대한 예외처리.
+        // URL로 존재하지 않는 clientId의 접근과 본인이 연결한 client가 아닌 경우에 대한 예외처리를 동시에 한다.
         if(client == null || client.memberId != rq.getLoginedMember()!!.id){
 
-            rq.alert("잘못된 접근입니다.")
             return "redirect:/usr/home/main"
         }
         // funeral 테이블의 값은 장례지도사가 유족과 연락한 후, 추가적인 정보를 입력했을 때 row가 생성된다.
