@@ -5,6 +5,9 @@
       layout:decorate="~{usr/layout/default}">
 <head>
   <title>장례지도사 출동 요청</title>
+  <th:block layout:fragment="js">
+    <script type="text/javascript" src="/resource/member/call.js" charset="utf-8" defer></script>
+  </th:block>
 </head>
 <main layout:fragment="main">
   <div style="font-weight: bold; font-size: 18px;">신청인: [[${@rq.loginedMember.name}]]</div>

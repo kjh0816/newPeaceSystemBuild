@@ -119,7 +119,9 @@ class UsrMemberController(
 
         val memberId = rq.getLoginedMember()!!.id
 
-
+//      영업자가 고인 관련 정보를 입력해서 장례지도사 연결 요청
+//      신청 시, client 테이블의 directorMemberId = 0
+//      장례지도사가 연결되면, 장례지도사 memberId 가 0을 대체한다.
 
         return Ut.getJsonStrFromObj(memberService.insertIntoClient(
             memberId, deceasedName, relatedName, cellphoneNo, location, address))
