@@ -9,6 +9,9 @@ spring:
 mybatis:
 
 custom:
+  aligo:
+    userId: readshot2
+    apiKey: 7mg3f08mf9x67dbqty9mwvm9bth9pjri
   # director 등록신청시 업로드한 파일이 서버에 저장되는 경로 지정
   genFileDirPath: C:/work/peace
   logging:
