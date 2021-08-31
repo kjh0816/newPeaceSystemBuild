@@ -299,7 +299,7 @@ interface MemberRepository {
             WHERE id = #{clientId}
         """
     )
-    fun getClientById(clientId: Int): Client
+    fun getClientById(clientId: Int): Client?
     @Select(
         """
             SELECT *
@@ -308,6 +308,21 @@ interface MemberRepository {
         """
     )
     fun getFuneralByClientId(clientId: Int): Funeral
+
+    @Select(
+        """
+            SELECT 
+            F.*
+            FROM `funeral` AS F
+            INNER JOIN `client` AS C
+            ON F.clientId = C.id
+            INNER JOIN `member` AS M
+            ON F.`directorMemberId` = M.id
+            WHERE F.progress = 0
+            AND F.directorMemberId = #{directorMemberId}
+        """
+    )
+    fun getProgressingFuneral(directorMemberId: Int): Funeral?
 
 
 }

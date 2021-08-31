@@ -221,8 +221,14 @@ class MemberService(
     }
 
 
-    fun getClientById(clientId: Int): Client {
+    fun getClientById(clientId: Int): Client? {
         return memberRepository.getClientById(clientId)
+    }
+
+    fun getClientByIdRd(clientId: Int): ResultData {
+        val client = memberRepository.getClientById(clientId) ?: return ResultData.from("F-1", "데이터 조회 실패")
+
+        return ResultData.from("S-1", "성공", "client", client)
     }
 
     fun getFuneralById(clientId: Int): Funeral {
@@ -242,5 +248,9 @@ class MemberService(
 
         return ResultData.from("S-1", "${page}번 페이지를 불러옵니다.", "replaceUri", replaceUri)
 
+    }
+
+    fun getProgressingFuneral(directorMemberId: Int): Funeral? {
+        return memberRepository.getProgressingFuneral(directorMemberId)
     }
 }

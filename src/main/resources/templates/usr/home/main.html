@@ -10,6 +10,7 @@
     <th:block layout:fragment="js">
         <script type="text/javascript" src="/resource/member/logout.js" charset="utf-8" defer></script>
         <script type="text/javascript" src="/resource/adm/main.js" charset="utf-8" defer></script>
+        <script type="text/javascript" src="/resource/usr/main.js" charset="utf-8" defer></script>
     </th:block>
 </head>
 
@@ -43,6 +44,12 @@
     <br>
     <br>
     <a href="../member/call">장례지도사 출동 요청</a>
+    <br>
+    <br>
+    <form onsubmit="DirectorMoveProgress__submit(this); return false;">
+        <input type="hidden" name="clientId" value="1">
+        <button type="submit">내가맡은 장례 진행현황</button>
+    </form>
     <br>
     <br>
 </main>

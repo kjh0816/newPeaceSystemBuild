@@ -13,4 +13,8 @@ class VendorService(
         // 취급할 제단꽃 standard를 불러온다.
         return vendorRepository.getFlowers()
     }
+
+    fun modifyFuneralIntoFlowerId(funeralId:Int, flowerId: Int) {
+        vendorRepository.modifyFuneralIntoFlowerId(funeralId, flowerId)
+    }
 }

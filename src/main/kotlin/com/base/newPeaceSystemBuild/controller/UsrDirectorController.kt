@@ -3,11 +3,15 @@ package com.base.newPeaceSystemBuild.controller
 import com.base.newPeaceSystemBuild.service.GenFileService
 import com.base.newPeaceSystemBuild.service.MemberRoleService
 import com.base.newPeaceSystemBuild.service.MemberService
+import com.base.newPeaceSystemBuild.service.VendorService
+import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartRequest
 
@@ -16,7 +20,8 @@ import org.springframework.web.multipart.MultipartRequest
 class UsrDirectorController(
     private val memberService: MemberService,
     private val genFileService: GenFileService,
-    private val memberRoleService: MemberRoleService
+    private val memberRoleService: MemberRoleService,
+    private val vendorService: VendorService
 ) {
     @Autowired
     private lateinit var rq: Rq;
@@ -30,6 +35,32 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/modify")
     fun showModify(): String {
         return "usr/director/modify"
+    }
+
+    @RequestMapping("/usr/director/progress")
+    fun showProgress(
+        model: Model,
+        clientId: Int
+    ): String {
+        val funeral = memberService.getProgressingFuneral(rq.getLoginedMember()!!.id)
+
+        if(funeral == null){
+            return "redirect:/usr/home/main"
+        }
+
+        val client = memberService.getClientById(clientId)
+
+        if(client == null){
+            return "redirect:/usr/home/main"
+        }
+
+        val flowers = vendorService.getFlowers()
+
+        model.addAttribute("client", client)
+        model.addAttribute("funeral", funeral)
+        model.addAttribute("flowers", flowers)
+
+        return "usr/director/progress"
     }
     // VIEW Mapping 함수 끝
 
@@ -66,5 +97,25 @@ class UsrDirectorController(
 
         return rq.replaceJs("장례지도사 영업신청이 완료되었습니다.", "../home/main")
     }
+
+    @RequestMapping("/usr/director/doSelectFlower", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doSelectFlower(
+        funeralId: Int,
+        flowerId: Int
+    ): String {
+        vendorService.modifyFuneralIntoFlowerId(funeralId, flowerId)
+        return rq.historyBackJs("제단꽃 선택이 완료되었습니다.")
+    }
     // VIEW 기능 함수 끝
+
+    @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doLogin(
+        @RequestParam(defaultValue = "") clientId: Int
+    ): String {
+//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
+        return Ut.getJsonStrFromObj(memberService.getClientByIdRd(clientId))
+
+    }
 }
