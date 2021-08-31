@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.vo.member
 
+
 data class Member(
     val id: Int,
 

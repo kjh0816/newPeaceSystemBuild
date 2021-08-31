@@ -1,18 +1,178 @@
 package com.base.newPeaceSystemBuild.util
 
+
+import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
+import com.base.newPeaceSystemBuild.vo.member.Member
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.apache.http.HttpEntity
+import org.apache.http.HttpResponse
+import org.apache.http.client.HttpClient
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.entity.ContentType
+import org.apache.http.entity.mime.HttpMultipartMode
+import org.apache.http.entity.mime.MultipartEntityBuilder
+import org.apache.http.impl.client.HttpClients
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.net.URLEncoder
+import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
-class Ut {
+class Ut(
+
+) {
+
+
     //    전역 변수, 함수를 설정할 수 있는 companion object
     companion object {
+
+        private lateinit var aligoUserId: String
+        private lateinit var aligoApiKey: String
+
+
+        fun initAligo(aligoUserId: String, aligoApiKey: String) {
+            Ut.aligoUserId = aligoUserId
+            Ut.aligoApiKey = aligoApiKey
+        }
+
+        fun sendSms(from: String, to: String, msg: String, isTest: Boolean): Aligo__send__ResponseBody {
+
+
+            try {
+
+                val encodingType = "utf-8"
+                val boundary = "____boundary____"
+
+
+/*
+ "result_code":결과 코드
+   "message":결과 문구
+   "msg_id":메세지ID
+   "error_cnt":에러갯수
+   "success_cnt":성공갯수
+*/
+
+                val sms_url = "https://apis.aligo.in/send/" // 전송요청 URL
+
+                val sms: MutableMap<String, String> = LinkedHashMap<String, String>()
+
+                /**************** 인증정보 (시작) ******************/
+
+                sms["user_id"] = aligoUserId
+                sms["key"] = aligoApiKey
+
+                /******************** 인증정보 (끝) ********************/
+
+
+
+                /******************** 전송정보 (이하) ********************/
+
+                sms["msg"] = msg // 메세지 내용
+
+                sms["receiver"] = to // 수신번호
+
+                // sms.put("destination", "01111111111|담당자,01111111112|홍길동"); // 수신인 %고객명% 치환
+                // sms.put("destination", "01111111111|담당자,01111111112|홍길동"); // 수신인 %고객명% 치환
+                sms["sender"] = from // 발신번호
+
+                // sms.put("rdate", ""); // 예약일자 - 20161004 : 2016-10-04일기준
+                // sms.put("rtime", ""); // 예약시간 - 1930 : 오후 7시30분
+                // sms.put("rdate", ""); // 예약일자 - 20161004 : 2016-10-04일기준
+                // sms.put("rtime", ""); // 예약시간 - 1930 : 오후 7시30분
+                sms["testmode_yn"] = if (isTest) "Y" else "N" // Y 인경우 실제문자 전송X , 자동취소(환불) 처리
+
+                // sms.put("title", "제목입력"); // LMS, MMS 제목 (미입력시 본문중 44Byte 또는 엔터 구분자 첫라인)
+
+                // sms.put("title", "제목입력"); // LMS, MMS 제목 (미입력시 본문중 44Byte 또는 엔터 구분자 첫라인)
+                val image = ""
+                // image = "/tmp/pic_57f358af08cf7_sms_.jpg"; // MMS 이미지 파일 위치
+
+
+
+
+                val builder: MultipartEntityBuilder = MultipartEntityBuilder.create()
+
+
+
+                builder.setBoundary(boundary)
+                builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
+                builder.setCharset(Charset.forName(encodingType))
+
+                // i in sms 와 i in sms.iterator()의 차이가 없다.
+
+                for (i in sms) {
+                    val key = i.key
+
+                    builder.addTextBody(key, sms[key], ContentType.create("Multipart/related", encodingType))
+                }
+//                사진 파일을 첨부하기 위한 코드 (시작) Multipart/related -> multipart/form-data 바꿔줘야함.
+//                val imageFile = File(image)
+//                if (image != null && image.length > 0 && imageFile.exists()) {
+//
+//                    builder.addPart(
+//                        "image", FileBody(
+//                            imageFile, ContentType.create("application/octet-stream"),
+//                            URLEncoder.encode(imageFile.getName(), encodingType)
+//                        )
+//                    )
+//                }
+//                사진 파일을 첨부하기 위한 코드 (끝)
+
+
+
+                val entity: HttpEntity = builder.build()
+
+                val client: HttpClient = HttpClients.createDefault()
+                val post = HttpPost(sms_url)
+                post.entity = entity
+
+                val res: HttpResponse = client.execute(post)
+
+
+
+                var result = ""
+                if (res != null) {
+                    val input = BufferedReader(
+                        InputStreamReader(res.entity.content, encodingType)
+                    )
+
+
+                    val buffer: String? = input.readLine()
+                    if (buffer != null) {
+                        result += buffer
+
+
+                    }
+                    input.close()
+                }
+
+
+
+
+
+
+
+                return getObjFromJsonStr(result)
+
+            } catch (e: Exception) {
+
+                println("Ut.sendSms함수가 Exception으로 빠짐")
+                println("Ut.sendSms함수가 Exception으로 빠짐")
+                println("Ut.sendSms함수가 Exception으로 빠짐")
+                e.printStackTrace()
+                val rb = Aligo__send__ResponseBody("Exception", e.localizedMessage, "-1", 0, 1, "msg")
+
+                return rb
+            }
+        }
+
+
         //        <reified T>를 통해 어떤 데이터 타입인지 알 수 있다.
         inline fun <reified T> getObjFromJsonStr(jsonStr: String): T {
             val mapper = ObjectMapper().registerKotlinModule()
@@ -72,7 +232,6 @@ class Ut {
         }
 
 
-
         fun getFileExtTypeCodeFromFileName(fileName: String): String {
             val ext = getFileExtFromFileName(fileName).lowercase(Locale.getDefault())
             when (ext) {
@@ -105,6 +264,24 @@ class Ut {
         fun getNowYearMonthDateStr(): String {
             val format1 = SimpleDateFormat("yyyy_MM")
             return format1.format(System.currentTimeMillis())
+        }
+
+        fun getCellphoneNosFromMembers(members: List<Member>): String{
+
+            val sb = StringBuilder()
+
+                for(i in members.indices){
+
+                    if(i == 0){
+                        sb.append(members[i].cellphoneNo)
+                    }else{
+                        sb.append("," + members[i].cellphoneNo)
+                    }
+                }
+
+
+            return sb.toString()
+
         }
     }
 }

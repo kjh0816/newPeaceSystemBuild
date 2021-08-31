@@ -59,13 +59,23 @@ CREATE TABLE MEMBER(
 
 );
 
+
+
+
+
+
+
+
+
+
+
 # 회원 테스트용 더미데이터
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 roleLevel = 1,
 loginId = 'admin',
-loginPw = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
+loginPw = SHA2('admin', 256),
 `name` = '관리자',
 cellphoneNo = '01012341234',
 email = 'rkdengus1208@gmail.com',
@@ -78,9 +88,9 @@ SET regDate = NOW(),
 updateDate = NOW(),
 roleLevel = 2,
 loginId = 'user1',
-loginPw = '0a041b9462caa4a31bac3567e0b6e6fd9100787db2ab433d96f6d178cabfce90',
+loginPw = SHA2('user1', 256),
 `name` = '홍길동',
-cellphoneNo = '01012341234',
+cellphoneNo = '01011111111',
 email = 'hong@gmail.com',
 location = '서울특별시',
 bank = '신한',
@@ -93,7 +103,7 @@ roleLevel = 2,
 loginId = 'user2',
 loginPw = SHA2('user2', 256),
 `name` = '윤길동',
-cellphoneNo = '01012341234',
+cellphoneNo = '01022222222',
 email = 'hong2@gmail.com',
 location = '서울특별시',
 bank = '신한',
@@ -224,12 +234,15 @@ CREATE TABLE `client`(
 	cellphoneNo CHAR(20) NOT NULL COMMENT '위 성함분의 연락처',
 	location CHAR(30) NOT NULL,
 	address CHAR(30) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록',
-	bank CHAR(20) NOT NULL COMMENT '유족이 부조금을 받을 수 있는 계좌',
-	accountNum CHAR(20) NOT NULL
+	bank CHAR(20) NOT NULL DEFAULT '' COMMENT '유족이 부조금을 받을 수 있는 계좌',
+	accountNum CHAR(20) NOT NULL DEFAULT ''
 );
 
 
+
 SELECT * FROM CLIENT;
+
+	
 
 
 
@@ -310,6 +323,8 @@ CREATE TABLE funeral(
 	flowerId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음. 선택된 flower의 id',
 	progress SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '장례 진행 상태'
 );
+
+
 
 /*
 insert into funeral
@@ -444,4 +459,8 @@ from genFile;
 
 
 
+
+SELECT * FROM memberRole;
+
+SELECT * FROM CLIENT;
 

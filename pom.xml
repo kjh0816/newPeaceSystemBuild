@@ -84,6 +84,11 @@
 			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
 			<version>1.16</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.5.13</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -113,6 +118,21 @@
 						<groupId>org.jetbrains.kotlin</groupId>
 						<artifactId>kotlin-maven-allopen</artifactId>
 						<version>${kotlin.version}</version>
+					</dependency>
+					<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
+					<dependency>
+						<groupId>org.apache.httpcomponents</groupId>
+						<artifactId>httpmime</artifactId>
+					</dependency>
+					<!-- 구아바(구글에서 만든 유용한 유틸) -->
+					<dependency>
+						<groupId>com.google.guava</groupId>
+						<artifactId>guava</artifactId>
+						<version>29.0-jre</version>
+					</dependency>
+					<dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-webflux</artifactId>
 					</dependency>
 				</dependencies>
 			</plugin>
