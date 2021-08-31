@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.util
 
 
 import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
+import com.base.newPeaceSystemBuild.vo.member.Member
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -152,11 +153,7 @@ class Ut(
                 }
 
 
-                println("Json형태의 result값: $result")
-                println("Json형태의 result값: $result")
-                println("Json형태의 result값: $result")
-                println("Json형태의 result값: $result")
-                println("Json형태의 result값: $result")
+
 
 
 
@@ -267,6 +264,24 @@ class Ut(
         fun getNowYearMonthDateStr(): String {
             val format1 = SimpleDateFormat("yyyy_MM")
             return format1.format(System.currentTimeMillis())
+        }
+
+        fun getCellphoneNosFromMembers(members: List<Member>): String{
+
+            val sb = StringBuilder()
+
+                for(i in members.indices){
+
+                    if(i == 0){
+                        sb.append(members[i].cellphoneNo)
+                    }else{
+                        sb.append("," + members[i].cellphoneNo)
+                    }
+                }
+
+
+            return sb.toString()
+
         }
     }
 }

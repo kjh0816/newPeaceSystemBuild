@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.util.Ut
+import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
@@ -202,16 +203,55 @@ class MemberService(
 
 
 
-
+        //  client에 대한 데이터를 DB에 저장
         memberRepository.insertIntoClient(memberId, deceasedName, relatedName, cellphoneNo, location, address)
         val clientId = memberRepository.getLastInsertId()
 
+        // 문자 메세지 전달 (시작)
+        // client 정보 중, location을 반영해서 해당하는 장례지도사들에 문자 메세지 전달
 
 
+        // 직업: 장례지도사 ( roleLevel = 3 )
+        val roleLevel = 3
+
+        // 직업을 구분하기 위해 roleLevel 지역을 구분하기 위해 location을 매개변수로 받아, members를 출력
+        val directors: List<Member> = memberRepository.getMembersByLocationAndRole(location, roleLevel)
+
+        // 몇 명의 장례지도사가 조회되었고, 문자가 갈 것인지를 알려주기 위한 변수
+        val directorsCount = directors.size
+        // location으로 조회했을 때, 해당 지역에 한 명도 없는 경우에 대한 예외처리
+        if(directors.isEmpty()){
+            return ResultData.from("F-6", "${location}에 등록된 장례지도사가 없습니다.")
+        }
+
+
+
+
+        // 발신자 전화번호
+        val from = "01049219810"
+        // 1명 이상의 수신자 전화번호 ( 알리고 API에서 수신인(receiver)로써 인식 가능한 상태로 넣어주는 함수 )
+        // 다른 직업에 대해서도 재사용 가능
+        val to = Ut.getCellphoneNosFromMembers(directors)
+        // 문자 내용
+        val msg = "ㅎㅇ"
+
+
+
+        // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
+
+        println("rb 결과값: $rb")
+        println("rb 결과값: $rb")
+        println("rb 결과값: $rb")
+
+        return ResultData.from("S-1", "${directorsCount}명의 장례지도사 출동을 요청했습니다..", "from", from, "to", to, "msg", msg, "rb", rb, "clientId", clientId)
+
+
+        // 문자 메세지 전달 (끝)
 
         // 연결된 장례지도사에게 고인의 정보를 주기 위해 clientId를 성공 시, 같이 return
-        return ResultData.from("S-1", "장례지도사 출동 요청이 완료되었습니다. 문자 메세지를 확인해주십시오.",
-            "clientId", clientId)
+//        return ResultData.from("S-1", "${directorsCount}명의 장례지도사 출동을 요청했습니다.",
+//            "clientId", clientId)
 
 
     }
