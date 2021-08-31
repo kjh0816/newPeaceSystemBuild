@@ -51,7 +51,21 @@
     - URL 전달은 상주의 몫
 # 에러 
 # 전달 (읽은 후 지우면 됨)
-
-
-
-   
+- AuthenticationStatusInterceptor 하나로만 처리하려고 했을경우 발생하는 문제
+  - 인터셉터 하나로 여러가지 권한을 가진 사용자를 한번에 처리할 수 없다.
+    - 하나의 인터셉터로 처리했을 경우 장례지도사가 사업자의 모든 URL을 접속할수 있고, 반대로 사업자가 장례지도사의 모든 URL을 접속할 수 있게된다.
+    - 이런 경우를 막기위해선 사업자랑 장례지도사의 인터셉터를 분리해야한다.
+  - 인터셉터 하나로는 여러 개의 경우의 수를 막을 수 없다.
+    - 현재 발생한 문제 : 
+      - AuthenticationLevel = 0, 1, 2 인 회원은 request 페이지에 접근할 수 없어야한다.
+      - AuthenticationLevel = null 인 회원은 request 페이지에 접근할 수 있어야하며, 그 외의 모든페이지(vendor, director로 시작하는)는 접근할 수 없어야한다.
+      - AuthenticationLevel = 1 인 회원은 request 페이지에 접근할 수 없지만, 그외의 모든페이지(vendor, director로 시작하는)는 접근할 수 있어야한다
+      - AuthenticationLevel = 0, 2 인 회원은 request 페이지를 포함한 모든페이지(vendor, director로 시작하는)에 접근할 수 없어야한다. (영업자보다 권한이 적은거임)
+      - 해당 조건을 다 만족하는 하나의 인터셉터는 존재할 수 없다.
+        - 인터셉터의 경우 Boolean타입과 다르지만 비슷하다 true 일 경우엔 인터셉터에서 if문을 통해 처리해줄 수 있지만, false 일 경우에는 해당 URL은 인터셉터 안으로 들어오지않는다
+          - true : addPathPatterns, false : excludePathPatterns 
+  - 결론 : 인터셉터는 순차적으로 실행되기때문에 Request 에 관련된 처리 담당 인터셉터를 하나 추가, Director 인터셉터 추가 Vendor 인터셉터 추가
+    - Vendor, Director 인터셉터를 하나로 합쳐보려했지만 이럴경우엔 Vendor 가 Director 의 고유한 페이지에 접속할 수 있고, 반대의 경우도 가능하다.
+    - 그게 가능한 이유 : 인터셉터에서 IF문으로 처리를 한다고해도, 결국은 인터페이스 내부에서 반환할 수 있는것도 true false 이다.
+      - rq.printReplaceJs 를 이용해 메인페이지로 보내버리거나, super.preHandle(req, resp, handler) 로 접속을 허용하거나 둘중하나인데, Vendor 일경우엔 접속가능 Director 일 경우엔 접속 불가능한 로직을 만들려면 인터셉터 내부에서 URL에 관련된 설정을 해줘야하는데, WebMvcConfigurer 에서 URL을 지정해주기 때문에 불가능하다.
+  

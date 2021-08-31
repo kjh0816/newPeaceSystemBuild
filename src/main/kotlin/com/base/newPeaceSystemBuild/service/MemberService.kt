@@ -237,9 +237,6 @@ class MemberService(
         limitFrom: Int
     ): ResultData {
         val members = getFilteredMembers(roleLevel, authenticationLevel, page, itemsInAPage, limitFrom)
-        if (members.isEmpty()) {
-            return ResultData.from("F-1", "존재하지 않는 페이지입니다.")
-        }
 
         val replaceUri = "/adm/home/main?roleLevel=$roleLevel&authenticationLevel=$authenticationLevel&page=$page"
 
