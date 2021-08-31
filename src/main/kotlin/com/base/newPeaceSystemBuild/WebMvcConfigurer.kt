@@ -14,9 +14,10 @@ class WebMvcConfigurer(
     private val beforeActionInterceptor: BeforeActionInterceptor,
     private val needLoginInterceptor: NeedLoginInterceptor,
     private val needLogoutInterceptor: NeedLogoutInterceptor,
-    private val authenticationStatusInterceptor: AuthenticationStatusInterceptor,
     private val needAdminInterceptor: NeedAdminInterceptor,
-    private val requestInterceptor: RequestInterceptor
+    private val requestInterceptor: RequestInterceptor,
+    private val directorInterceptor: DirectorInterceptor,
+    private val vendorInterceptor: VendorInterceptor
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
@@ -47,14 +48,23 @@ class WebMvcConfigurer(
             .addPathPatterns("/usr/member/doLogin")
             .addPathPatterns("/usr/member/join")
             .addPathPatterns("/usr/member/doJoin")
+        registry.addInterceptor(directorInterceptor)
+            //          화이트 리스트 방식
+            .addPathPatterns("/usr/director/**")
+            .excludePathPatterns("/usr/director/request")
+            .excludePathPatterns("/usr/director/doRequest")
+        registry.addInterceptor(vendorInterceptor)
+            //          화이트 리스트 방식
+            .addPathPatterns("/usr/vendor/**")
+            .excludePathPatterns("/usr/vendor/request")
+            .excludePathPatterns("/usr/vendor/doRequest")
+            .excludePathPatterns("/usr/vendor/explain")
         registry.addInterceptor(requestInterceptor)
             //          화이트 리스트 방식
             .addPathPatterns("/usr/director/request")
+            .addPathPatterns("/usr/director/doRequest")
             .addPathPatterns("/usr/vendor/request")
-        registry.addInterceptor(authenticationStatusInterceptor)
-            //          화이트 리스트 방식
-            .addPathPatterns("/usr/director/**")
-            .addPathPatterns("/usr/vendor/**")
+            .addPathPatterns("/usr/vendor/doRequest")
     }
 
     // 정적 리소스 로드
