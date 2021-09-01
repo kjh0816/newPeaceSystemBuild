@@ -53,14 +53,24 @@ class UsrDirectorController(
         if(client == null){
             return "redirect:/usr/home/main"
         }
-
-        val flowers = vendorService.getFlowers()
+        val flower = vendorService.getFlowerById(funeral.flowerId)
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
-        model.addAttribute("flowers", flowers)
+        model.addAttribute("flower", flower)
 
         return "usr/director/progress"
+    }
+
+    @RequestMapping("/usr/director/selectFlower")
+    fun showSelectFlower(model: Model): String {
+        val funeral = memberService.getProgressingFuneral(rq.getLoginedMember()!!.id)
+        val flowers = vendorService.getFlowers()
+
+        model.addAttribute("flowers", flowers)
+        model.addAttribute("funeral", funeral)
+
+        return "usr/director/selectFlower"
     }
     // VIEW Mapping 함수 끝
 
@@ -104,14 +114,13 @@ class UsrDirectorController(
         funeralId: Int,
         flowerId: Int
     ): String {
-        vendorService.modifyFuneralIntoFlowerId(funeralId, flowerId)
-        return rq.historyBackJs("제단꽃 선택이 완료되었습니다.")
+        return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoFlowerId(funeralId, flowerId))
     }
     // VIEW 기능 함수 끝
 
     @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
     @ResponseBody
-    fun doLogin(
+    fun doMoveProgressPage(
         @RequestParam(defaultValue = "") clientId: Int
     ): String {
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)

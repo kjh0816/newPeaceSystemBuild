@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.repository
 
+import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.standard.Flower
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
@@ -25,5 +26,23 @@ interface VendorRepository {
         """
     )
     fun modifyFuneralIntoFlowerId(funeralId:Int, flowerId: Int)
+
+    @Select(
+        """
+            SELECT * 
+            FROM funeral 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun getFuneralById(funeralId: Int): Funeral
+
+    @Select(
+        """
+            SELECT *
+            FROM `flower`
+            WHERE id = #{flowerId}
+        """
+    )
+    fun getFlowerById(flowerId: Int): Flower
 
 }

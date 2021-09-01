@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+<head>
+    <title>제단꽃 선택</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/selectFlower.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+<main layout:fragment="main">
+    <div th:each="flower : ${flowers}">
+        <form onsubmit="SelectFlower__submit(this); return false;">
+            <input type="hidden" name="funeralId" th:value="${funeral.id}">
+            <input type="hidden" name="flowerId" th:value="${flower.id}">
+
+            <div>제단꽃 : [[${flower.name}]]</div>
+            <div>소매가 : [[${flower.retailPrice}]]</div>
+            <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" width="300px" height="150px">
+            <input type="submit" value="선택">
+        </form>
+    </div>
+</main>
+
+</html>

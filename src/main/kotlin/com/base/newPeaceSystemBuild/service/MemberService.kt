@@ -268,7 +268,7 @@ class MemberService(
     }
 
     fun getClientByIdRd(clientId: Int): ResultData {
-        val client = memberRepository.getClientById(clientId) ?: return ResultData.from("F-1", "데이터 조회 실패")
+        val client = memberRepository.getClientById(clientId) ?: return ResultData.from("F-2", "현재 지도사님이 진행중인 장례가 없습니다.")
 
         return ResultData.from("S-1", "성공", "client", client)
     }
