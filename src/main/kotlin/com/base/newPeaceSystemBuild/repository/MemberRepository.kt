@@ -320,6 +320,7 @@ interface MemberRepository {
             ON F.`directorMemberId` = M.id
             WHERE F.progress = 0
             AND F.directorMemberId = #{directorMemberId}
+            
         """
     )
     fun getProgressingFuneral(directorMemberId: Int): Funeral?
@@ -327,6 +328,7 @@ interface MemberRepository {
 
     @Select(
         """
+            <script>
             SELECT 
             M.*,
             MR.regDate AS `extra__regDate`,
@@ -343,9 +345,13 @@ interface MemberRepository {
             ON M.roleLevel = R.id
             WHERE M.location = #{location}
             AND MR.authenticationLevel = 1
+            <if test="roleCategoryId != 0">
+            AND MR.roleCategoryId = #{roleCategoryId}
+            </if>
+            </script>
         """
     )
-    fun getMembersByLocationAndRole(location: String, roleLevel: Int): List<Member>
+    fun getMembersByLocationAndRole(location: String, roleLevel: Int, roleCategoryId: Int): List<Member>
 
 
 }

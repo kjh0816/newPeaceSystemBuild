@@ -2,14 +2,15 @@ package com.base.newPeaceSystemBuild.controller
 
 import com.base.newPeaceSystemBuild.service.MemberService
 import com.base.newPeaceSystemBuild.util.Ut
-import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
-import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.member.Department
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 import javax.servlet.http.HttpSession
 
 
@@ -26,23 +27,6 @@ class UsrMemberController(
         return "usr/member/login"
     }
 
-    @GetMapping("/usr/home/doSendSms")
-    @ResponseBody
-    fun doSendSms(
-        @RequestParam(defaultValue = "") from: String,
-        @RequestParam(defaultValue = "") to: String,
-        @RequestParam(defaultValue = "") msg: String
-        ): ResultData {
-
-
-
-        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to, msg, false)
-
-
-
-
-        return ResultData.from("S-1", "발송되었습니다.", "from", from, "to", to, "msg", msg, "rb", rb)
-    }
 
     @RequestMapping("/usr/member/join")
     fun showJoin(model: Model): String {
