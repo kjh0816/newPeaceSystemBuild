@@ -215,7 +215,9 @@ class MemberService(
         val roleLevel = 3
 
         // 직업을 구분하기 위해 roleLevel 지역을 구분하기 위해 location을 매개변수로 받아, members를 출력
-        val directors: List<Member> = memberRepository.getMembersByLocationAndRole(location, roleLevel)
+        // 추후 범용적으로 이 함수를 사용하기 위해 roleCategoryId를 넣었다. (0일 경우, roleCategoryId가 내부적으로 적용되지 않는다.)
+        // 반대로, vendor의 경우, roleCategoryId 값을 넣으면 내부적으로 적용된다.
+        val directors: List<Member> = memberRepository.getMembersByLocationAndRole(location, roleLevel, 0)
 
         // 몇 명의 장례지도사가 조회되었고, 문자가 갈 것인지를 알려주기 위한 변수
         val directorsCount = directors.size
