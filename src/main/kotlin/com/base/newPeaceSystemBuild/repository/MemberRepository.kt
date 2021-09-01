@@ -318,7 +318,7 @@ interface MemberRepository {
             ON F.clientId = C.id
             INNER JOIN `member` AS M
             ON F.`directorMemberId` = M.id
-            WHERE F.progress = 0
+            WHERE F.progress = 1
             AND F.directorMemberId = #{directorMemberId}
             
         """
@@ -352,6 +352,38 @@ interface MemberRepository {
         """
     )
     fun getMembersByLocationAndRole(location: String, roleLevel: Int, roleCategoryId: Int): List<Member>
+
+    @Update(
+        """
+            UPDATE `client`
+            SET directorMemberId = #{memberId}
+            WHERE id = #{clientId};
+        """
+    )
+    fun modifyClientIntoDirectorMemberIdByClientId(memberId: Int, clientId: Int)
+
+    @Insert(
+        """
+            INSERT INTO funeral
+            SET regDate = NOW(),
+            updateDate =NOW(),
+            clientId = #{clientId},
+            directorMemberId = #{directorMemberId},
+            memberId = #{memberId},
+            progress = 1
+        """
+    )
+    fun insertFuneral(memberId: Int, directorMemberId: Int, clientId: Int)
+
+    @Select(
+        """
+            SELECT *
+            FROM funeral
+            WHERE directorMemberId = #{directorMemberId}
+            AND progress = 1
+        """
+    )
+    fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral?
 
 
 }

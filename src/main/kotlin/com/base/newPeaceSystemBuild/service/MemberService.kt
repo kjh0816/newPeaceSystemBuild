@@ -295,4 +295,24 @@ class MemberService(
     fun getProgressingFuneral(directorMemberId: Int): Funeral? {
         return memberRepository.getProgressingFuneral(directorMemberId)
     }
+
+    fun modifyClientIntoDirectorMemberIdByClientId(memberId: Int, clientId: Int): ResultData {
+        val client = getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
+
+        val funeral = getProgressingFuneralByIdDirectorMemberId(rq.getLoginedMember()!!.id)
+
+        if(funeral != null){
+            return ResultData.from("F-2", "이미 진행중이신 장례가 있습니다.")
+        }
+
+        memberRepository.modifyClientIntoDirectorMemberIdByClientId(memberId, clientId)
+
+        memberRepository.insertFuneral(client.memberId, client.directorMemberId, client.id)
+
+        return ResultData.from("S-1", "출동요청을 승낙하였습니다.", "client", client)
+    }
+
+    private fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral? {
+        return memberRepository.getProgressingFuneralByIdDirectorMemberId(directorMemberId)
+    }
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+<head>
+    <title>출동 확인</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/dispatch.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+<main layout:fragment="main">
+    <div>故 [[${client.deceasedName}]]님의 장례</div>
+    <br>
+    <div>상주 성함: [[${client.relatedName}]]</div>
+    <br>
+    <div>지역: [[${client.location}]]</div>
+    <br>
+    <div>상세 주소: [[${client.address}]]</div>
+    <br>
+    <form onsubmit="Dispatch__submit(this); return false;">
+        <input type="hidden" name="clientId" th:value="${client.id}">
+        <input type="submit" value="출동하기">
+    </form>
+</main>
+
+</html>

@@ -72,6 +72,15 @@ class UsrDirectorController(
 
         return "usr/director/selectFlower"
     }
+
+    @RequestMapping("/usr/director/dispatch")
+    fun showDispatch(model: Model, clientId: Int): String {
+        val client = memberService.getClientById(clientId)
+
+        model.addAttribute("client", client)
+
+        return "usr/director/dispatch"
+    }
     // VIEW Mapping 함수 끝
 
     // VIEW 기능 함수 시작
@@ -126,5 +135,22 @@ class UsrDirectorController(
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
         return Ut.getJsonStrFromObj(memberService.getClientByIdRd(clientId))
 
+    }
+
+    @RequestMapping("/usr/director/doDispatch", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doDispatch(
+        @RequestParam(defaultValue = "") clientId: Int
+    ): String {
+//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
+        print("1")
+        print("1")
+        print("1")
+        print("1")
+        print("1")
+        print("1")
+        print("1")
+
+        return Ut.getJsonStrFromObj(memberService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }
 }
