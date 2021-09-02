@@ -145,6 +145,12 @@ class UsrMemberController(
     ): String {
         // 정보 수정 페이지로 이동
 
+        val banks = memberService.getBanks()
+        val departments = memberService.getDepartments()
+
+
+        model.addAttribute("banks", banks)
+        model.addAttribute("departments", departments)
 
         return "usr/member/modifyInfo"
     }
@@ -152,9 +158,13 @@ class UsrMemberController(
     @RequestMapping("/usr/member/doModifyInfo")
     @ResponseBody
     fun doModifyInfo(
-        @RequestParam(defaultValue = "") loginPwInput: String
+        @RequestParam(defaultValue = "") cellphoneNo: String,
+        @RequestParam(defaultValue = "") email: String,
+        @RequestParam(defaultValue = "") location: String,
+        @RequestParam(defaultValue = "") bank: String,
+        @RequestParam(defaultValue = "") accountNum: String
     ): String{
-        return ""
+        return Ut.getJsonStrFromObj(memberService.modifyInfo(cellphoneNo, email, location, bank, accountNum))
     }
 
 
