@@ -76,12 +76,15 @@ class MemberService(
             return ResultData.from("F-1", "이메일 형식에 맞게 입력해주세요.")
         }
 
+
+        // rq.getLoginedMember()!!.email 를 map으로 반환하는 것은 수정 페이지에서 기존 이메일인 경우에 대응하기 위함.
+
         val member = getMemberByEmail(email)
         if(member != null){
-            return ResultData.from("F-2", "해당 이메일로 가입된 회원이 이미 존재합니다.")
+            return ResultData.from("F-2", "해당 이메일로 가입된 회원이 이미 존재합니다.", "email", rq.getLoginedMember()!!.email)
         }
 
-        return ResultData.from("S-1", "사용 가능한 이메일입니다.")
+        return ResultData.from("S-1", "사용 가능한 이메일입니다.", "email", rq.getLoginedMember()!!.email)
 
     }
 
