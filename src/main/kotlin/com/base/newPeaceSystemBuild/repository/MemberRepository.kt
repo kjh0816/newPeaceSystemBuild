@@ -189,16 +189,21 @@ interface MemberRepository {
         """
     )
     fun getBanks(): List<Bank>
-
+    // 현재 제단꽃 제작 업체만 존재하기때문에 roleCategoryId 를 임시로 1로 하드코딩
     @Update(
         """
+            <script>
             UPDATE memberRole SET 
             authenticationLevel = #{authenticationLevel}, 
-            authenticationDate = NOW() 
+            authenticationDate = NOW(),
+            <if test="roleLevel == 4">
+            roleCategoryId = 1
+            </if>
             WHERE memberId = #{memberId}
+            </script>
         """
     )
-    fun modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId: Int, authenticationLevel: Int)
+    fun modifyMemberRoleIntoAuthenticationLevelAndRoleLevelByMemberId(memberId: Int, authenticationLevel: Int, roleLevel: Int)
 
     @Update(
         """

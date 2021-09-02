@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.repository
 
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
 import org.apache.ibatis.annotations.Update
@@ -45,4 +46,22 @@ interface VendorRepository {
     )
     fun getFlowerById(flowerId: Int): Flower
 
+    @Select(
+        """
+            SELECT LAST_INSERT_ID();
+        """
+    )
+    fun getLastInsertId(): Int
+
+    @Insert(
+        """
+            INSERT INTO `order`
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            directorMemberId = #{directorMemberId},
+            goodsLevel = #{goodsLevel},
+            standardId = #{flowerId}
+        """
+    )
+    fun insertIntoOrder(directorMemberId: Int, goodsLevel: Int, flowerId: Int)
 }

@@ -101,8 +101,8 @@ class MemberService(
         return ResultData.from("S-1", "사용 가능한 로그인 아이디입니다.")
     }
 
-    fun modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId: Int, authenticationLevel: Int) {
-        memberRepository.modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId, authenticationLevel)
+    fun modifyMemberRoleIntoAuthenticationLevelAndRoleLevelByMemberId(memberId: Int, authenticationLevel: Int, roleLevel: Int) {
+        memberRepository.modifyMemberRoleIntoAuthenticationLevelAndRoleLevelByMemberId(memberId, authenticationLevel, roleLevel)
     }
 
     fun updateRoleLevel(memberId: Int, authenticationStatus: Int) {

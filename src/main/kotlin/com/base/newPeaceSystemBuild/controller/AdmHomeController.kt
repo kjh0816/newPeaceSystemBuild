@@ -76,7 +76,7 @@ class AdmHomeController(
     ): String {
         // 장례지도사 신청시 생긴 MemberRole 테이블의 authenticationLevel를 파라미터로 받아온 authenticationLevel로 수정한다.
         // 수정 대상은 WHERE 절로 memberId를 통해 선택한다.
-        memberService.modifyMemberRoleIntoAuthenticationLevelByMemberId(memberId, authenticationLevel)
+        memberService.modifyMemberRoleIntoAuthenticationLevelAndRoleLevelByMemberId(memberId, authenticationLevel, roleLevel)
 
         var replaceUri =  "main?authenticationLevel=0&roleLevel=3&page=1"
         if(authenticationLevel == 1){
