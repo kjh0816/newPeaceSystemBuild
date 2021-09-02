@@ -1,20 +1,34 @@
 package com.base.newPeaceSystemBuild.controller
 
+import com.base.newPeaceSystemBuild.service.MemberService
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 
 
 @Controller
 class UsrHomeController(
+    private val memberService: MemberService
 ) {
     @Autowired
     private lateinit var rq: Rq;
 
     // VIEW Mapping 함수 시작
     @RequestMapping("/usr/home/main")
-    fun showMain(): String {
+    fun showMain(model: Model): String {
+        if(rq.isLogined()){
+            if(rq.getLoginedMember()!!.roleLevel == 3 && rq.getLoginedMember()!!.extra__authenticationLevel == 1){
+                val progressingFuneral = memberService.getProgressingFuneralByIdDirectorMemberId(rq.getLoginedMember()!!.id)
+                if(progressingFuneral != null){
+                    val progressingFuneralClientId = progressingFuneral.clientId
+
+                    model.addAttribute("progressingFuneralClientId", progressingFuneralClientId)
+                }
+
+            }
+        }
         return "usr/home/main"
     }
 

@@ -47,7 +47,7 @@
     <br>
     <br>
     <form onsubmit="DirectorMoveProgress__submit(this); return false;">
-        <input type="hidden" name="clientId" value="1">
+        <input type="hidden" name="clientId" th:value="${progressingFuneralClientId}">
         <button type="submit">내가맡은 장례 진행현황</button>
     </form>
     <br>

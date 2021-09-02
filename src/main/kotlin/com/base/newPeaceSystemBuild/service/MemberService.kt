@@ -312,7 +312,7 @@ class MemberService(
         return ResultData.from("S-1", "출동요청을 승낙하였습니다.", "client", client)
     }
 
-    private fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral? {
+    fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral? {
         return memberRepository.getProgressingFuneralByIdDirectorMemberId(directorMemberId)
     }
 }
