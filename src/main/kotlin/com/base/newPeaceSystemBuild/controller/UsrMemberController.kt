@@ -96,6 +96,49 @@ class UsrMemberController(
         return "usr/member/info"
     }
 
+    @RequestMapping("/usr/member/requirePw")
+    fun showRequirePw(
+        model: Model,
+        @RequestParam(defaultValue = "") action: String
+    ): String {
+        // 비밀번호 입력 페이지로 이동
+
+        model.addAttribute("action", action)
+
+        return "usr/member/requirePw"
+    }
+
+    @RequestMapping("/usr/member/doRequirePw")
+    @ResponseBody
+    fun doRequirePw(
+        @RequestParam(defaultValue = "") loginPwInput: String,
+        @RequestParam(defaultValue = "") action: String
+    ): String{
+        // 비밀번호 일치 여부에 따라서 Json 데이터 return
+        return Ut.getJsonStrFromObj(memberService.isCorrectLoginPw(loginPwInput, action))
+
+    }
+
+    @RequestMapping("/usr/member/modifyPw")
+    fun showModifyPw(
+        model: Model
+    ): String {
+        // 비밀번호 수정 페이지로 이동
+
+
+        return "usr/member/modifyPw"
+    }
+
+    @RequestMapping("/usr/member/modifyInfo")
+    fun showModifyInfo(
+        model: Model
+    ): String {
+        // 정보 수정 페이지로 이동
+
+
+        return "usr/member/modifyInfo"
+    }
+
 
     @RequestMapping("/usr/member/call")
     fun showCall(model: Model): String{

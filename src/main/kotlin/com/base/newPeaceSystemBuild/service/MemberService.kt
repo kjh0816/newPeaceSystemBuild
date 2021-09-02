@@ -315,4 +315,14 @@ class MemberService(
     private fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral? {
         return memberRepository.getProgressingFuneralByIdDirectorMemberId(directorMemberId)
     }
+
+    fun isCorrectLoginPw(loginPwInput: String, action: String): ResultData {
+        if(loginPwInput.isEmpty()){
+            return ResultData.from("F-1", "비밀번호를 입력해주세요.")
+        }
+        if(rq.getLoginedMember()!!.loginPw != loginPwInput){
+            return ResultData.from("F-2", "비밀번호가 일치하지 않습니다.")
+        }
+        return ResultData.from("S-1", "비밀번호가 일치합니다.", "action", action)
+    }
 }

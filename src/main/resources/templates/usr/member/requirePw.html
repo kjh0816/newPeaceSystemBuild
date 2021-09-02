@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+  <title>비밀번호 입력</title>
+
+  <th:block layout:fragment="js">
+    <script type="text/javascript" src="/resource/member/requirePw.js" charset="utf-8" defer></script>
+  </th:block>
+</head>
+<main layout:fragment="main">
+  <form action="./doRequirePw" method="POST" onsubmit="MemberRequirePw__submit(this); return false;">
+    <input type="hidden" name="action" th:value="${param.action}">
+    <input type="hidden" name="loginPwInput">
+    <div class="label">비밀번호</div>
+    <div class="input">
+      <input type="password" id="loginPw" name="loginPw" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
+      <div id="loginPwCheckMsg" style="color : red;"></div>
+    </div>
+    <br>
+      <button>확인</button>
+  </form>
+</main>
+
+</html>
