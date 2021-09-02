@@ -103,7 +103,7 @@ class ClientService(
         return ResultData.from("S-1", "성공", "client", client)
     }
 
-    fun getFuneralById(clientId: Int): Funeral {
+    fun getFuneralById(clientId: Int): Funeral? {
         return clientRepository.getFuneralByClientId(clientId)
     }
 

@@ -47,7 +47,7 @@ interface ClientRepository {
             WHERE clientId = #{clientId}
         """
     )
-    fun getFuneralByClientId(clientId: Int): Funeral
+    fun getFuneralByClientId(clientId: Int): Funeral?
 
     @Select(
         """

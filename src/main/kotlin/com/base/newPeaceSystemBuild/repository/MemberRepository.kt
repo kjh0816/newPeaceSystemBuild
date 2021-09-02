@@ -304,4 +304,13 @@ interface MemberRepository {
         """
     )
     fun getMembersByLocationAndRole(location: String, roleLevel: Int, roleCategoryId: Int): List<Member>
+
+    @Update(
+        """
+            UPDATE `member`
+            SET loginPw = #{loginPwInput}
+            WHERE id = #{memberId}
+        """
+    )
+    fun modifyPw(loginPwInput: String, memberId: Int)
 }
