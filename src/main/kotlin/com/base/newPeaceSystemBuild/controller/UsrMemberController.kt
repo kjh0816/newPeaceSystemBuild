@@ -129,6 +129,14 @@ class UsrMemberController(
         return "usr/member/modifyPw"
     }
 
+    @RequestMapping("/usr/member/doModifyPw")
+    @ResponseBody
+    fun doModifyPw(
+        @RequestParam(defaultValue = "") loginPwInput: String
+    ): String{
+        return Ut.getJsonStrFromObj(memberService.modifyPw(loginPwInput))
+    }
+
     @RequestMapping("/usr/member/modifyInfo")
     fun showModifyInfo(
         model: Model
@@ -137,6 +145,14 @@ class UsrMemberController(
 
 
         return "usr/member/modifyInfo"
+    }
+
+    @RequestMapping("/usr/member/doModifyInfo")
+    @ResponseBody
+    fun doModifyInfo(
+        @RequestParam(defaultValue = "") loginPwInput: String
+    ): String{
+        return ""
     }
 
 

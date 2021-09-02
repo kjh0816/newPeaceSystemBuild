@@ -325,4 +325,15 @@ class MemberService(
         }
         return ResultData.from("S-1", "비밀번호가 일치합니다.", "action", action)
     }
+
+    fun modifyPw(loginPwInput: String): ResultData {
+        if(loginPwInput.isEmpty()){
+            return ResultData.from("F-1", "비밀번호를 입력해주세요.")
+        }
+
+        memberRepository.modifyPw(loginPwInput, rq.getLoginedMember()!!.id)
+
+        return ResultData.from("S-1", "비밀번호가 변경되었습니다.")
+
+    }
 }

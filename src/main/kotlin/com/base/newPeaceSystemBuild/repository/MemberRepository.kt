@@ -385,5 +385,14 @@ interface MemberRepository {
     )
     fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral?
 
+    @Update(
+        """
+            UPDATE `member`
+            SET loginPw = #{loginPwInput}
+            WHERE id = #{memberId}
+        """
+    )
+    fun modifyPw(loginPwInput: String, memberId: Int)
+
 
 }

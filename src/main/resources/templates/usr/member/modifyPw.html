@@ -5,14 +5,30 @@
       layout:decorate="~{usr/layout/default}">
 
 <head>
-    <title>회원가입</title>
+    <title>비밀번호 수정</title>
 
     <th:block layout:fragment="js">
-        <script type="text/javascript" src="/resource/member/join.js" charset="utf-8" defer></script>
+        <script type="text/javascript" src="/resource/member/modifyPw.js" charset="utf-8" defer></script>
     </th:block>
 </head>
 <main layout:fragment="main">
-    비번 수정 페이지
+    <form action="./doModifyPw" method="POST" onsubmit="MemberModifyPw__submit(this); return false;">
+        <input type="hidden" name="loginPwInput">
+        <div class="label">비밀번호</div>
+        <div class="input">
+            <input type="password" id="loginPw" name="loginPw" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
+            <div id="loginPwCheckMsg" style="color : red;"></div>
+        </div>
+        <br>
+
+        <div class="label">비밀번호 재입력</div>
+        <div class="input">
+            <input type="password"  id="loginPwConfirm" name="loginPwConfirm" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
+            <div id="loginPwConfirmCheckMsg" style="color : red;"></div>
+        </div>
+        <br>
+            <button>완료</button>
+    </form>
 </main>
 
 </html>
