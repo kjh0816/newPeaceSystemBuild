@@ -337,6 +337,17 @@ flowerId = 1;
 */
 SELECT * FROM funeral;
 
+CREATE TABLE `order`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	vendorMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '상품 등록한 사업자 회원번호 0일경우 아직 미정',
+	directorMemberId INT(10) UNSIGNED NOT NULL COMMENT '주문을 넣은 장례지도사 회원번호',
+	goodsLevel SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
+	standardId INT(10) UNSIGNED NOT NULL COMMENT '스탠다드 상품의 번호'
+);
+
+SELECT * FROM `order`;
 
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
