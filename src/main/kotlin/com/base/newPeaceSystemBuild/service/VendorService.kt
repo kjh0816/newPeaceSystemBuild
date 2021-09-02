@@ -25,7 +25,7 @@ class VendorService(
         vendorRepository.modifyFuneralIntoFlowerId(funeralId, flowerId)
         val funeral = getFuneralById(funeralId)
 
-        return ResultData.from("S-1", "제단꽃 선택이 완료되었습니다.", "funeral", funeral)
+        return ResultData.from("S-1", "선택 후 변경할 수 없습니다.\n정말 선택하시겠습니까?", "funeral", funeral)
     }
 
     fun getFlowerById(flowerId: Int): Flower {

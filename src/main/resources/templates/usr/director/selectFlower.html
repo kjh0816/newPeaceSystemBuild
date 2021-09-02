@@ -10,17 +10,19 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    <div th:each="flower : ${flowers}">
-        <form onsubmit="SelectFlower__submit(this); return false;">
-            <input type="hidden" name="funeralId" th:value="${funeral.id}">
-            <input type="hidden" name="flowerId" th:value="${flower.id}">
-
-            <div>제단꽃 : [[${flower.name}]]</div>
-            <div>소매가 : [[${flower.retailPrice}]]</div>
-            <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" width="300px" height="150px">
-            <input type="submit" value="선택">
-        </form>
-    </div>
+    <form onsubmit="SelectFlower__submit(this); return false;">
+        <input type="hidden" name="funeralId" th:value="${funeral.id}">
+        <div th:each="flower : ${flowers}">
+            <label>
+                <div>제단꽃 : [[${flower.name}]]</div>
+                <div>소매가 : [[${flower.retailPrice}]]</div>
+                <input type="radio" name="flowerId" th:value="${flower.id}">
+                <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" width="300px" height="150px">
+            </label>
+            <hr>
+        </div>
+        <input type="submit" value="선택 완료">
+    </form>
 </main>
 
 </html>
