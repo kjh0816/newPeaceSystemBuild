@@ -1,9 +1,6 @@
 package com.base.newPeaceSystemBuild.controller
 
-import com.base.newPeaceSystemBuild.service.GenFileService
-import com.base.newPeaceSystemBuild.service.MemberRoleService
-import com.base.newPeaceSystemBuild.service.MemberService
-import com.base.newPeaceSystemBuild.service.VendorService
+import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,7 +18,8 @@ class UsrDirectorController(
     private val memberService: MemberService,
     private val genFileService: GenFileService,
     private val memberRoleService: MemberRoleService,
-    private val vendorService: VendorService
+    private val vendorService: VendorService,
+    private val clientService: ClientService
 ) {
     @Autowired
     private lateinit var rq: Rq;
@@ -42,13 +40,13 @@ class UsrDirectorController(
         model: Model,
         clientId: Int
     ): String {
-        val funeral = memberService.getProgressingFuneral(rq.getLoginedMember()!!.id)
+        val funeral = clientService.getProgressingFuneral(rq.getLoginedMember()!!.id)
 
         if(funeral == null){
             return "redirect:/usr/home/main"
         }
 
-        val client = memberService.getClientById(clientId)
+        val client = clientService.getClientById(clientId)
 
         if(client == null){
             return "redirect:/usr/home/main"
@@ -64,7 +62,7 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/selectFlower")
     fun showSelectFlower(model: Model): String {
-        val funeral = memberService.getProgressingFuneral(rq.getLoginedMember()!!.id)
+        val funeral = clientService.getProgressingFuneral(rq.getLoginedMember()!!.id)
         val flowers = vendorService.getFlowers()
 
         model.addAttribute("flowers", flowers)
@@ -75,7 +73,7 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/dispatch")
     fun showDispatch(model: Model, clientId: Int): String {
-        val client = memberService.getClientById(clientId)
+        val client = clientService.getClientById(clientId)
 
         model.addAttribute("client", client)
 
@@ -133,7 +131,7 @@ class UsrDirectorController(
         @RequestParam(defaultValue = "0") clientId: Int
     ): String {
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
-        return Ut.getJsonStrFromObj(memberService.getClientByIdRd(clientId))
+        return Ut.getJsonStrFromObj(clientService.getClientByIdRd(clientId))
 
     }
 
@@ -143,6 +141,6 @@ class UsrDirectorController(
         @RequestParam(defaultValue = "") clientId: Int
     ): String {
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
-        return Ut.getJsonStrFromObj(memberService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
+        return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }
 }

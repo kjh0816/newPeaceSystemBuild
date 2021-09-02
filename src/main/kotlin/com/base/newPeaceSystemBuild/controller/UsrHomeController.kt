@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.controller
 
+import com.base.newPeaceSystemBuild.service.ClientService
 import com.base.newPeaceSystemBuild.service.MemberService
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 class UsrHomeController(
-    private val memberService: MemberService
+    private val memberService: MemberService,
+    private val clientService: ClientService
 ) {
     @Autowired
     private lateinit var rq: Rq;
@@ -20,7 +22,7 @@ class UsrHomeController(
     fun showMain(model: Model): String {
         if(rq.isLogined()){
             if(rq.getLoginedMember()!!.roleLevel == 3 && rq.getLoginedMember()!!.extra__authenticationLevel == 1){
-                val progressingFuneral = memberService.getProgressingFuneralByIdDirectorMemberId(rq.getLoginedMember()!!.id)
+                val progressingFuneral = clientService.getProgressingFuneralByIdDirectorMemberId(rq.getLoginedMember()!!.id)
                 if(progressingFuneral != null){
                     val progressingFuneralClientId = progressingFuneral.clientId
 
