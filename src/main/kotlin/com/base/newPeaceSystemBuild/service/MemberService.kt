@@ -331,9 +331,36 @@ class MemberService(
             return ResultData.from("F-1", "비밀번호를 입력해주세요.")
         }
 
+        // 비밀번호를 변경해주고 현재 세션을 재설정한다.
         memberRepository.modifyPw(loginPwInput, rq.getLoginedMember()!!.id)
+        rq.login(getMemberById(rq.getLoginedMember()!!.id)!!)
 
         return ResultData.from("S-1", "비밀번호가 변경되었습니다.")
+
+    }
+
+    fun modifyInfo(cellphoneNo: String, email: String, location: String, bank: String, accountNum: String): ResultData {
+        if(cellphoneNo.isEmpty()){
+            return ResultData.from("F-1", "핸드폰 번호를 입력해주세요.")
+        }
+        if(email.isEmpty()){
+            return ResultData.from("F-2", "이메일을 입력해주세요.")
+        }
+        if(location.isEmpty()){
+            return ResultData.from("F-3", "지역을 선택해주세요.")
+        }
+        if(bank.isEmpty()){
+            return ResultData.from("F-4", "은행을 선택해주세요.")
+        }
+        if(accountNum.isEmpty()){
+            return ResultData.from("F-5", "계좌번호를 입력해주세요.")
+        }
+
+        // 회원정보를 변경해주고 현재 세션을 재설정한다.
+        memberRepository.modifyInfo(cellphoneNo, email, location, bank, accountNum, rq.getLoginedMember()!!.id)
+        rq.login(getMemberById(rq.getLoginedMember()!!.id)!!)
+
+        return ResultData.from("S-1", "${rq.getLoginedMember()!!.name}님의 정보가 수정되었습니다.")
 
     }
 }

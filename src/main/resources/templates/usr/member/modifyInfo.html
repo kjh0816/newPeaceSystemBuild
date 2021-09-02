@@ -5,14 +5,60 @@
       layout:decorate="~{usr/layout/default}">
 
 <head>
-    <title>회원가입</title>
+    <title>[[${@rq.loginedMember.name}]] 님의 정보 수정</title>
 
     <th:block layout:fragment="js">
-        <script type="text/javascript" src="/resource/member/join.js" charset="utf-8" defer></script>
+        <script type="text/javascript" src="/resource/member/modifyInfo.js" charset="utf-8" defer></script>
     </th:block>
 </head>
 <main layout:fragment="main">
-    정보 수정 페이지
+    <form action="./doModifyInfo" method="POST" onsubmit="MemberModifyInfo__submit(this); return false;">
+        <div class="label">핸드폰 번호</div>
+        <div class="input">
+            <input type="text" id="cellphoneNo" name="cellphoneNo" th:value="${@rq.loginedMember.cellphoneNo}" maxlength="13" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off"/>
+            <div id="cellphoneNoCheckMsg" style="color : red;"></div>
+        </div>
+        <br>
+
+        <div class="label">이메일</div>
+        <div>아래 이메일로 분실하신 아이디와 비밀번호를 찾을 수 있습니다.</div>
+        <div class="input">
+            <input type="text" id="email" name="email" th:value="${@rq.loginedMember.email}" placeholder="이메일 입력해주세요." autocomplete="off"/>
+            <div id="emailCheckMsg" style="color : red;"></div>
+        </div>
+        <br>
+
+        <div class="label">근무하시는 지역</div>
+        <div class="input">
+            <select id="location" name="location">
+                <option value="" disabled selected>지역 선택</option>
+                <div th:each="department : ${departments}" th:object="${department}">
+                    <option th:value="*{departmentName}" th:text="*{departmentName}" th:selected="${@rq.loginedMember.location} == *{departmentName}"></option>
+                </div>
+            </select>
+        </div>
+        <br>
+
+        <div class="label">아래 계좌로 영업비가 입금됩니다.</div>
+        <div class="input">
+            <select id="bank" name="bank">
+                <option value="" disabled selected>은행 선택</option>
+                <div th:each="bank : ${banks}" th:object="${bank}">
+                    <option th:value="*{bankName}" th:text="*{bankName}" th:selected="${@rq.loginedMember.bank} == *{bankName}"></option>
+                </div>
+            </select>
+        </div>
+        <div class="input">
+            <input type="text" id="accountNum" name="accountNum" th:value="${@rq.loginedMember.accountNum}" maxlength="16" placeholder="계좌번호" autocomplete="off"/>
+            <div class="pl-1 pt-2 text-sm" id="accountNumCheckMsg" style="color : red;"></div>
+        </div>
+        <br>
+        <div>
+            <button>수정 완료</button>
+        </div>
+    </form>
+
+    <a href="/usr/member/info">돌아가기</a>
 </main>
 
 </html>

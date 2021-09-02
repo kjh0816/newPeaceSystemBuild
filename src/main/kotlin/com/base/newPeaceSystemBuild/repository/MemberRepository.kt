@@ -388,11 +388,27 @@ interface MemberRepository {
     @Update(
         """
             UPDATE `member`
-            SET loginPw = #{loginPwInput}
+            SET updateDate = NOW(), 
+            loginPw = #{loginPwInput}
             WHERE id = #{memberId}
         """
     )
     fun modifyPw(loginPwInput: String, memberId: Int)
+
+
+    @Update(
+        """
+            UPDATE `member`
+            SET updateDate = NOW(),
+            cellphoneNo = #{cellphoneNo},
+            email = #{email},
+            location = #{location},
+            bank = #{bank},
+            accountNum = #{accountNum}
+            WHERE id = #{id}
+        """
+    )
+    fun modifyInfo(cellphoneNo: String, email: String, location: String, bank: String, accountNum: String, id: Int)
 
 
 }
