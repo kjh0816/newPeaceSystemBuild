@@ -130,7 +130,7 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
     @ResponseBody
     fun doMoveProgressPage(
-        @RequestParam(defaultValue = "") clientId: Int
+        @RequestParam(defaultValue = "0") clientId: Int
     ): String {
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
         return Ut.getJsonStrFromObj(memberService.getClientByIdRd(clientId))
@@ -143,14 +143,6 @@ class UsrDirectorController(
         @RequestParam(defaultValue = "") clientId: Int
     ): String {
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
-        print("1")
-        print("1")
-        print("1")
-        print("1")
-        print("1")
-        print("1")
-        print("1")
-
         return Ut.getJsonStrFromObj(memberService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }
 }

@@ -29,9 +29,12 @@
     <form action="./selectFlower">
         <button type="submit">제단꽃 선택하기</button>
     </form>
-    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}" alt="" width="300px" height="150px">
-    <br>
-    <div>가격 : [[${flower.retailPrice}]] 원</div>
+    <div th:if="${funeral.flowerId != 0}">
+        <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}" alt="" width="300px" height="150px">
+        <br>
+        <div>가격 : [[${flower.retailPrice}]] 원</div>
+    </div>
+
     <div>
 
     </div>
