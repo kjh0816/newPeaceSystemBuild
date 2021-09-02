@@ -356,11 +356,11 @@ interface MemberRepository {
     @Update(
         """
             UPDATE `client`
-            SET directorMemberId = #{memberId}
+            SET directorMemberId = #{directorMemberId}
             WHERE id = #{clientId};
         """
     )
-    fun modifyClientIntoDirectorMemberIdByClientId(memberId: Int, clientId: Int)
+    fun modifyClientIntoDirectorMemberIdByClientId(directorMemberId: Int, clientId: Int)
 
     @Insert(
         """
