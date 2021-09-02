@@ -245,20 +245,7 @@ interface MemberRepository {
     )
     fun getMembers(): List<Member>?
 
-    @Insert(
-        """
-            INSERT INTO `client`
-            SET regDate = NOW(),
-            updateDate = NOW(),
-            memberId = #{memberId},
-            deceasedName = #{deceasedName},
-            relatedName = #{relatedName},
-            cellphoneNo = #{cellphoneNo},
-            location = #{location},
-            address = #{address}
-        """
-    )
-    fun insertIntoClient(memberId: Int, deceasedName: String, relatedName: String, cellphoneNo: String, location: String, address: String)
+
     @Select(
         """
             SELECT LAST_INSERT_ID();
@@ -291,41 +278,6 @@ interface MemberRepository {
     )
     fun getFilteredMembers(roleLevel: Int, authenticationLevel: Int, page: Int, itemsInAPage: Int, limitFrom: Int): List<Member>
 
-
-    @Select(
-        """
-            SELECT *
-            FROM `client`
-            WHERE id = #{clientId}
-        """
-    )
-    fun getClientById(clientId: Int): Client?
-    @Select(
-        """
-            SELECT *
-            FROM funeral
-            WHERE clientId = #{clientId}
-        """
-    )
-    fun getFuneralByClientId(clientId: Int): Funeral
-
-    @Select(
-        """
-            SELECT 
-            F.*
-            FROM `funeral` AS F
-            INNER JOIN `client` AS C
-            ON F.clientId = C.id
-            INNER JOIN `member` AS M
-            ON F.`directorMemberId` = M.id
-            WHERE F.progress = 1
-            AND F.directorMemberId = #{directorMemberId}
-            
-        """
-    )
-    fun getProgressingFuneral(directorMemberId: Int): Funeral?
-
-
     @Select(
         """
             <script>
@@ -352,38 +304,4 @@ interface MemberRepository {
         """
     )
     fun getMembersByLocationAndRole(location: String, roleLevel: Int, roleCategoryId: Int): List<Member>
-
-    @Update(
-        """
-            UPDATE `client`
-            SET directorMemberId = #{directorMemberId}
-            WHERE id = #{clientId};
-        """
-    )
-    fun modifyClientIntoDirectorMemberIdByClientId(directorMemberId: Int, clientId: Int)
-
-    @Insert(
-        """
-            INSERT INTO funeral
-            SET regDate = NOW(),
-            updateDate =NOW(),
-            clientId = #{clientId},
-            directorMemberId = #{directorMemberId},
-            memberId = #{memberId},
-            progress = 1
-        """
-    )
-    fun insertFuneral(memberId: Int, directorMemberId: Int, clientId: Int)
-
-    @Select(
-        """
-            SELECT *
-            FROM funeral
-            WHERE directorMemberId = #{directorMemberId}
-            AND progress = 1
-        """
-    )
-    fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral?
-
-
 }

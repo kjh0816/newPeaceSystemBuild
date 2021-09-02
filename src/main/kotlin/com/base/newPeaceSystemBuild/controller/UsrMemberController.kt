@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.controller
 
+import com.base.newPeaceSystemBuild.service.ClientService
 import com.base.newPeaceSystemBuild.service.MemberService
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
@@ -16,7 +17,8 @@ import javax.servlet.http.HttpSession
 
 @Controller
 class UsrMemberController(
-    private val memberService: MemberService
+    private val memberService: MemberService,
+    private val clientService: ClientService
 ) {
     @Autowired
     private lateinit var rq: Rq;
@@ -170,7 +172,7 @@ class UsrMemberController(
 //      신청 시, client 테이블의 directorMemberId = 0
 //      장례지도사가 연결되면, 장례지도사 memberId 가 0을 대체한다.
 
-        return Ut.getJsonStrFromObj(memberService.insertIntoClient(
+        return Ut.getJsonStrFromObj(clientService.insertIntoClient(
             memberId, deceasedName, relatedName, cellphoneNo, location, address))
 
     }
@@ -185,7 +187,7 @@ class UsrMemberController(
 
         // progress 페이지 이동 시, clientId를 파라미터로 받았고,
         // clientId를 통해 고인(client) 테이블의 row를 얻는다.
-        val client = memberService.getClientById(clientId)
+        val client = clientService.getClientById(clientId)
         // URL로 존재하지 않는 clientId의 접근과 본인이 연결한 client가 아닌 경우에 대한 예외처리를 동시에 한다.
         if(client == null || client.memberId != rq.getLoginedMember()!!.id){
 
@@ -193,7 +195,7 @@ class UsrMemberController(
         }
         // funeral 테이블의 값은 장례지도사가 유족과 연락한 후, 추가적인 정보를 입력했을 때 row가 생성된다.
         // 즉, 처음 funeral 테이블을 조회할 때, 값이 null이다.
-        val funeral = memberService.getFuneralById(clientId)
+        val funeral = clientService.getFuneralById(clientId)
 
         // 장례지도사가 연결됐을 때, 장례지도사의 이름, 연락처를 영업자에게 보여주기 위함.
         // 장례지도사가 연결되지 않은 상태(funeral 테이블이 null)에서 director를 아래처럼 조회하면 NPE 발생.
