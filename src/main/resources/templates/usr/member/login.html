@@ -12,8 +12,11 @@
 </head>
 
 <main layout:fragment="main">
-    <form action="./doLogin" method="POST" onsubmit="MemberLogin__submit(this); return false;">
+    <form onsubmit="MemberLogin__submit(this); return false;">
         <input type="hidden" name="loginPwInput">
+        <th:block th:if="${param.afterLoginUri != null}">
+            <input type="hidden" name="replaceUri" th:value="${param.afterLoginUri}">
+        </th:block>
         <div>
             <input type="text"  name="loginId" placeholder="아이디를 입력해주세요.">
         </div>
