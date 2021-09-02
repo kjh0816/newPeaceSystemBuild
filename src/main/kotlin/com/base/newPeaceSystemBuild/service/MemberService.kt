@@ -240,7 +240,7 @@ class MemberService(
 
 
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
-        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
 
         println("rb 결과값: $rb")
         println("rb 결과값: $rb")
