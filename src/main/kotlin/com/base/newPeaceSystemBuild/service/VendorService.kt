@@ -39,6 +39,10 @@ class VendorService(
             return ResultData.from("F-1", "올바르지 않은 접근입니다.")
         }
 
+        if(funeral.flowerId != 0){
+            return ResultData.from("F-3", "이미 제단꽃을 신청하였습니다.")
+        }
+
         val client = clientRepository.getClientById(funeral.clientId)
 
         if(client == null){
