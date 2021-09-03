@@ -193,12 +193,14 @@ interface MemberRepository {
     @Update(
         """
             <script>
-            UPDATE memberRole SET 
-            authenticationLevel = #{authenticationLevel}, 
-            authenticationDate = NOW(),
-            <if test="roleLevel == 4">
-            roleCategoryId = 1
-            </if>
+            UPDATE memberRole 
+            <set>
+                authenticationLevel = #{authenticationLevel}, 
+                authenticationDate = NOW(),
+                <if test="roleLevel == 4">
+                roleCategoryId = 1,
+                </if>
+            </set>
             WHERE memberId = #{memberId}
             </script>
         """

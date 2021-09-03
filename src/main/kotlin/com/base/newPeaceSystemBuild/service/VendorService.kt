@@ -46,9 +46,9 @@ class VendorService(
         }
 
         //  order에 대한 데이터를 DB에 저장
-        val goodsLevel = 1
+        val roleCategoryId = 1
 
-        vendorRepository.insertIntoOrder(rq.getLoginedMember()!!.id, goodsLevel, flowerId)
+        vendorRepository.insertIntoOrder(rq.getLoginedMember()!!.id, roleCategoryId, flowerId)
 
         val orderId = vendorRepository.getLastInsertId()
 
@@ -62,7 +62,7 @@ class VendorService(
         // 직업을 구분하기 위해 roleLevel 지역을 구분하기 위해 location을 매개변수로 받아, members를 출력
         // 추후 범용적으로 이 함수를 사용하기 위해 roleCategoryId를 넣었다. (0일 경우, roleCategoryId가 내부적으로 적용되지 않는다.)
         // 반대로, vendor의 경우, roleCategoryId 값을 넣으면 내부적으로 적용된다.
-        val vendors: List<Member> = memberRepository.getMembersByLocationAndRole(client.location, roleLevel, goodsLevel)
+        val vendors: List<Member> = memberRepository.getMembersByLocationAndRole(client.location, roleLevel, roleCategoryId)
 
         // 몇 명의 등록업자가 조회되었고, 문자가 갈 것인지를 알려주기 위한 변수
         val directorsCount = vendors.size
@@ -72,7 +72,7 @@ class VendorService(
         }
 
         // 발신자 전화번호
-        val from = "01049363694"
+        val from = "01049219810"
         // 1명 이상의 수신자 전화번호 ( 알리고 API에서 수신인(receiver)로써 인식 가능한 상태로 넣어주는 함수 )
         // 다른 직업에 대해서도 재사용 가능
         val to = Ut.getCellphoneNosFromMembers(vendors)

@@ -59,9 +59,9 @@ interface VendorRepository {
             SET regDate = NOW(),
             updateDate = NOW(),
             directorMemberId = #{directorMemberId},
-            goodsLevel = #{goodsLevel},
+            roleCategoryId = #{roleCategoryId},
             standardId = #{flowerId}
         """
     )
-    fun insertIntoOrder(directorMemberId: Int, goodsLevel: Int, flowerId: Int)
+    fun insertIntoOrder(directorMemberId: Int, roleCategoryId: Int, flowerId: Int)
 }
