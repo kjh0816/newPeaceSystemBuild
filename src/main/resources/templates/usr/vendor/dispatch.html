@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{usr/layout/default}">
 <head>
-    <title>출동 확인</title>
+    <title>제단꽃 주문 확인</title>
     <th:block layout:fragment="js">
         <script type="text/javascript" src="/resource/vendor/dispatch.js" charset="utf-8" defer></script>
     </th:block>
@@ -18,9 +18,14 @@
     <br>
     <div>상세 주소: [[${client.address}]]</div>
     <br>
+    <div>제단 꽃 : [[${flower.name}]]</div>
+    <br>
+    <div>제단 꽃 가격 : [[${flower.retailPrice}]]</div>
+    <br>
+    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" width="300px" height="150px">
     <form onsubmit="Dispatch__submit(this); return false;">
         <input type="hidden" name="clientId" th:value="${client.id}">
-        <input type="submit" value="출동하기">
+        <input type="submit" value="주문받기">
     </form>
 </main>
 

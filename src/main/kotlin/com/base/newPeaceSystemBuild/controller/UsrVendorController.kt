@@ -1,16 +1,16 @@
 package com.base.newPeaceSystemBuild.controller
 
-import com.base.newPeaceSystemBuild.service.GenFileService
-import com.base.newPeaceSystemBuild.service.MemberRoleService
-import com.base.newPeaceSystemBuild.service.MemberService
-import com.base.newPeaceSystemBuild.service.VendorService
+import com.base.newPeaceSystemBuild.service.*
+import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
+import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.standard.Flower
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartRequest
 
@@ -20,7 +20,8 @@ class UsrVendorController(
     private val memberService: MemberService,
     private val genFileService: GenFileService,
     private val memberRoleService: MemberRoleService,
-    private val vendorService: VendorService
+    private val vendorService: VendorService,
+    private val clientService: ClientService
 ) {
     @Autowired
     private lateinit var rq: Rq;
@@ -44,6 +45,22 @@ class UsrVendorController(
         return "usr/vendor/request"
     }
 
+    @RequestMapping("/usr/vendor/dispatch")
+    fun showDispatch(model: Model, clientId: Int, flowerId: Int): String {
+        val client = clientService.getClientById(clientId)
+        val flower = vendorService.getFlowerById(flowerId)
+
+        model.addAttribute("client", client)
+        model.addAttribute("flower", flower)
+
+        return "usr/vendor/dispatch"
+    }
+
+    @RequestMapping("/usr/vendor/order")
+    fun showOrder(): String {
+        return "usr/vendor/order"
+    }
+
     @RequestMapping("/usr/vendor/doRequest", method = [RequestMethod.POST])
     @ResponseBody
     fun doRequest(
@@ -56,7 +73,7 @@ class UsrVendorController(
             val multipartFile = fileMap[fileInputName]
 
             if (multipartFile != null) {
-                // 파일을 저장
+                // 파일을 저장야
                 genFileService.save(multipartFile, rq.getLoginedMember()!!.id)
             }
 
@@ -71,5 +88,14 @@ class UsrVendorController(
         rq.login(memberService.getMemberById(rq.getLoginedMember()!!.id)!!)
 
         return rq.replaceJs("제단꽃 공급업자 등록 신청이 완료되었습니다.", "../home/main")
+    }
+
+    @RequestMapping("/usr/vendor/doDispatch", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doDispatch(
+        clientId: Int
+    ): String {
+//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
+        return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoDirectorMemberIdByDirectorId(rq.getLoginedMember()!!.id, clientId))
     }
 }

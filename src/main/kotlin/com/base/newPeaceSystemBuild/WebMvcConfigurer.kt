@@ -31,6 +31,7 @@ class WebMvcConfigurer(
             .addPathPatterns("/adm/**")
             .addPathPatterns("/usr/member/**")
             .addPathPatterns("/usr/director/**")
+            .addPathPatterns("/usr/vendor/**")
             .excludePathPatterns("/usr/member/login")
             .excludePathPatterns("/usr/member/doLogin")
             .excludePathPatterns("/usr/member/join")

@@ -64,4 +64,13 @@ interface VendorRepository {
         """
     )
     fun insertIntoOrder(directorMemberId: Int, roleCategoryId: Int, flowerId: Int)
+
+    @Update(
+        """
+            UPDATE `order` SET
+            vendorMemberId = #{vendorMemberId}
+            WHERE directorMemberId = #{directorMemberId}
+        """
+    )
+    fun modifyOrderIntoVendorMemberIdByDirectorMemberId(vendorMemberId: Int, directorMemberId: Int)
 }

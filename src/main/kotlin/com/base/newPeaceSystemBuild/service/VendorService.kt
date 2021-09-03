@@ -7,6 +7,7 @@ import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
+import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Member
 import com.base.newPeaceSystemBuild.vo.standard.Flower
@@ -97,5 +98,12 @@ class VendorService(
 
     fun getFlowerById(flowerId: Int): Flower {
         return vendorRepository.getFlowerById(flowerId)
+    }
+
+    fun modifyOrderIntoDirectorMemberIdByDirectorId(memberId: Int, clientId: Int): ResultData{
+        val client = clientRepository.getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
+        vendorRepository.modifyOrderIntoVendorMemberIdByDirectorMemberId(memberId, client.directorMemberId)
+
+        return ResultData.from("S-1", "주문접수가 완료되었습니다.", "client", client)
     }
 }
