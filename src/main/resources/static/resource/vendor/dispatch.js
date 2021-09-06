@@ -7,7 +7,7 @@ function Dispatch__submit(form) {
         res => {
             if ( res.response.success ) {
                    alert(res.response.msg);
-                   window.location.href="/usr/vendor/order?clientId="+res.response.map.client.id;
+                   window.location.href="/usr/vendor/order";
             }
             else {
                    alert(res.response.msg);
