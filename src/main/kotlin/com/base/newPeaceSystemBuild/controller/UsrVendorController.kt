@@ -44,11 +44,19 @@ class UsrVendorController(
     }
 
     @RequestMapping("/usr/vendor/dispatch")
-    fun showDispatch(model: Model, clientId: Int, flowerId: Int): String {
+    fun showDispatch(model: Model, clientId: Int, funeralId: Int): String {
         val client = clientService.getClientById(clientId)
-        val flower = vendorService.getFlowerById(flowerId)
+        val funeral = clientService.getFuneralById(funeralId)
+
+        if(funeral == null){
+            return "redirect:/usr/home/main"
+        }
+
+        val flower = vendorService.getFlowerById(funeral.flowerId)
+
 
         model.addAttribute("client", client)
+        model.addAttribute("funeral", funeral)
         model.addAttribute("flower", flower)
 
         return "usr/vendor/dispatch"

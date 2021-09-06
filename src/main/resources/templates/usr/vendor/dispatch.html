@@ -22,7 +22,7 @@
     <br>
     <div>제단 꽃 가격 : [[${flower.retailPrice}]]</div>
     <br>
-    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" width="300px" height="150px">
+    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}" alt="" width="300px" height="150px">
     <form onsubmit="Dispatch__submit(this); return false;">
         <input type="hidden" name="clientId" th:value="${client.id}">
         <input type="submit" value="주문받기">

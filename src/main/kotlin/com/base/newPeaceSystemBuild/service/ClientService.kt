@@ -120,6 +120,10 @@ class ClientService(
             return ResultData.from("F-2", "이미 진행중이신 장례가 있습니다.")
         }
 
+        if(client.directorMemberId != 0){
+            return ResultData.from("F-2", "다른 장례지도사님이 먼저 출동하셨습니다.")
+        }
+
         clientRepository.modifyClientIntoDirectorMemberIdByClientId(directorMemberId, clientId)
 
         clientRepository.insertFuneral(client.memberId, directorMemberId, client.id)
