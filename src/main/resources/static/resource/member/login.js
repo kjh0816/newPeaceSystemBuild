@@ -34,10 +34,6 @@ function MemberLogin__submit(form) {
 
     var loginId = form.loginId.value;
     var loginPwInput = form.loginPwInput.value;
-    var autoLogin = form.autoLogin.checked;
-
-
-
 
 
        const post$ = rxjs.ajax.ajax.post(
