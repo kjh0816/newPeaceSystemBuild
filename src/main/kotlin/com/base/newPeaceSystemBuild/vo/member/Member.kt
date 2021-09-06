@@ -11,6 +11,7 @@ data class Member(
 
     val loginId: String,
     val loginPw: String,
+    val authKey: String,
 
     val name: String,
     val cellphoneNo: String,
