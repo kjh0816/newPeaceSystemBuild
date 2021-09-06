@@ -312,6 +312,7 @@ interface MemberRepository {
             LEFT JOIN `role` AS R
             ON M.roleLevel = R.id
             WHERE M.location = #{location}
+            AND M.roleLevel = #{roleLevel}
             AND MR.authenticationLevel = 1
             <if test="roleCategoryId != 0">
             AND MR.roleCategoryId = #{roleCategoryId}
