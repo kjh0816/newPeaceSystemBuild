@@ -133,13 +133,14 @@ SET regDate = NOW(),
 updateDate = NOW(),
 roleLevel = 2,
 loginId = 'user4',
-loginPw = SHA2('user3', 256),
+loginPw = SHA2('user4', 256),
 `name` = '강두현',
 cellphoneNo = '01012341234',
 email = 'rkdengus1208@gmail.com',
 location = '서울특별시',
 bank = '신한',
 accountNum = '12341234123';
+
 
 
 
@@ -158,7 +159,7 @@ CREATE TABLE memberRole(
   updateDate DATETIME NOT NULL,
   memberId INT(10) UNSIGNED NOT NULL,
   roleId INT(10) UNSIGNED NOT NULL,
-  roleCategoryId SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '어떤 물품을 공급하는지, 어떤 인력인지(README.md 참조)', 
+  roleCategoryId SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '어떤 물품을 공급하는지, 어떤 인력인지(README.md 참조)',
   introduce LONGTEXT DEFAULT "소개글이 없습니다.",
   authenticationLevel SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '승인 여부(0 = 미확인, 1 = 승인, 2 = 보류)',
   authenticationDate DATETIME DEFAULT NOW() COMMENT '인증된 날짜'
@@ -267,7 +268,7 @@ CREATE TABLE `client`(
 
 SELECT * FROM CLIENT;
 
-	
+
 
 
 
@@ -277,8 +278,8 @@ SELECT * FROM CLIENT;
 
 
 # '제단꽃 표준' 테이블
-# 
-CREATE TABLE flower(  
+#
+CREATE TABLE flower(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
@@ -313,7 +314,7 @@ height = '1650',
 width = '999';
 
 
-SELECT 
+SELECT
 `name`,
 FORMAT(`retailPrice` , 0) AS `retailPrice`,
 FORMAT(`standardPrice` , 0) AS `standardPrice`,
@@ -371,7 +372,8 @@ CREATE TABLE `order`(
 	directorMemberId INT(10) UNSIGNED NOT NULL COMMENT '주문을 넣은 장례지도사 회원번호',
 	roleCategoryId SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
 	standardId INT(10) UNSIGNED NOT NULL COMMENT '스탠다드 상품의 번호',
-	orderStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '주문을 받으면 기본적으로 0 배송완료 혹은 서비스 완료시 1'
+	orderStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '지도사가 오더를 넣으면 기본값 0 업자가 오더를 받으면 1로 변경',
+	completeionStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '기본값 0 업자가 오더를 받고 서비스를 완료하면 1로 변경',
 );
 
 SELECT * FROM `order`;
@@ -501,4 +503,3 @@ from genFile;
 SELECT * FROM memberRole;
 
 SELECT * FROM CLIENT;
-

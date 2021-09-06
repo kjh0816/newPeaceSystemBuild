@@ -102,12 +102,29 @@ class VendorService(
 
     fun modifyOrderIntoDirectorMemberIdByDirectorId(memberId: Int, clientId: Int): ResultData{
         val client = clientRepository.getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
-        vendorRepository.modifyOrderIntoVendorMemberIdByDirectorMemberId(memberId, client.directorMemberId)
+
+        val order = vendorRepository.getOrderByClientId(clientId)
+
+        if(order == null){
+            return ResultData.from("F-2", "주문정보가 조회되지않습니다.")
+        }
+
+        if(order.orderStatus){
+            if(order.vendorMemberId == memberId){
+                return ResultData.from("F-3", "이미 수락하셨습니다. '내가받은 주문정보 보기' 에서 확인해주세요.")
+            }
+
+            if(order.vendorMemberId != 0){
+                return ResultData.from("F-4", "다른 업체에서 먼저 주문을 받았습니다.")
+            }
+        }
+
+        vendorRepository.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(memberId, client.directorMemberId, true)
 
         return ResultData.from("S-1", "주문접수가 완료되었습니다.", "client", client)
     }
 
-    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean): List<Order> {
-        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, orderStatus)
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completeionStatus: Boolean): List<Order> {
+        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, orderStatus, completeionStatus)
     }
 }

@@ -9,7 +9,8 @@ data class Order (
     val directorMemberId: Int,
     val roleCategoryId: Int,
     val standardId: Int,
-    var orderStatus: Boolean
+    var orderStatus: Boolean,
+    var completeionStatus: Boolean
 ) {
     var extra__clientId: Int? = null
     var extra__clientRegDate: String? = null

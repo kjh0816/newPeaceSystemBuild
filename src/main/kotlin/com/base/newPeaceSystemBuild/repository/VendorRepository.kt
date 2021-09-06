@@ -70,11 +70,12 @@ interface VendorRepository {
     @Update(
         """
             UPDATE `order` SET
-            vendorMemberId = #{vendorMemberId}
+            vendorMemberId = #{vendorMemberId},
+            orderStatus = #{orderStatus}
             WHERE directorMemberId = #{directorMemberId}
         """
     )
-    fun modifyOrderIntoVendorMemberIdByDirectorMemberId(vendorMemberId: Int, directorMemberId: Int)
+    fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(vendorMemberId: Int, directorMemberId: Int, orderStatus: Boolean)
 
     @Select(
         """
@@ -103,7 +104,17 @@ interface VendorRepository {
             ON O.standardId = F.id
             WHERE vendorMemberId = #{vendorMemberId}
             AND orderStatus = #{orderStatus}
+            AND completeionStatus = #{completeionStatus}
         """
     )
-    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean): List<Order>
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completeionStatus: Boolean): List<Order>
+
+    @Select(
+        """
+            SELECT * 
+            FROM `order`
+            WHERE clientId = #{clientId}
+        """
+    )
+    fun getOrderByClientId(clientId: Int): Order?
 }
