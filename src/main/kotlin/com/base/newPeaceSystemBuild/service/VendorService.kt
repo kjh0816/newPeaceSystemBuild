@@ -7,10 +7,10 @@ import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
-import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Member
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -53,7 +53,7 @@ class VendorService(
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 1
 
-        vendorRepository.insertIntoOrder(rq.getLoginedMember()!!.id, roleCategoryId, flowerId)
+        vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerId)
 
         val orderId = vendorRepository.getLastInsertId()
 
@@ -105,5 +105,9 @@ class VendorService(
         vendorRepository.modifyOrderIntoVendorMemberIdByDirectorMemberId(memberId, client.directorMemberId)
 
         return ResultData.from("S-1", "주문접수가 완료되었습니다.", "client", client)
+    }
+
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean): List<Order> {
+        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, orderStatus)
     }
 }

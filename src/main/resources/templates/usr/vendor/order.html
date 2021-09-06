@@ -10,7 +10,20 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    order
+    <th:block th:each="order : ${orders}">
+        <div>故 [[${order.extra__deceasedName}]]님의 장례</div>
+        <br>
+        <div>상주 성함 : [[${order.extra__relatedName}]]</div>
+        <br>
+        <div>장례지도사 성함 : [[${order.extra__directorName}]]</div>
+        <br>
+        <div>장례지도사 연락처 : [[${order.extra__directorCellphoneNo}]]</div>
+        <br>
+        <div>주문한 제단꽃 이름 : [[${order.extra__flowerName}]]</div>
+        <br>
+        <div>주문한 제단꽃 가격 : [[${order.extra__flowerRetailPrice}]]</div>
+        <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${order.standardId})}" alt="" width="300px" height="150px">
+    </th:block>
 </main>
 
 </html>

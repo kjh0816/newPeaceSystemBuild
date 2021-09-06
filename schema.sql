@@ -355,9 +355,11 @@ CREATE TABLE `order`(
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	vendorMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '상품 등록한 사업자 회원번호 0일경우 아직 미정',
+	clientId INT(10) UNSIGNED NOT NULL COMMENT 'client 테이블이랑 이어진 ID값',
 	directorMemberId INT(10) UNSIGNED NOT NULL COMMENT '주문을 넣은 장례지도사 회원번호',
-	goodsLevel SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
-	standardId INT(10) UNSIGNED NOT NULL COMMENT '스탠다드 상품의 번호'
+	roleCategoryId SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
+	standardId INT(10) UNSIGNED NOT NULL COMMENT '스탠다드 상품의 번호',
+	orderStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '주문을 받으면 기본적으로 0 배송완료 혹은 서비스 완료시 1'
 );
 
 SELECT * FROM `order`;

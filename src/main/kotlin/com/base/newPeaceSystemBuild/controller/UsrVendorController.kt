@@ -5,6 +5,7 @@ import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -57,7 +58,11 @@ class UsrVendorController(
     }
 
     @RequestMapping("/usr/vendor/order")
-    fun showOrder(): String {
+    fun showOrder(model: Model): String {
+        val orders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, false)
+
+        model.addAttribute("orders", orders)
+
         return "usr/vendor/order"
     }
 
