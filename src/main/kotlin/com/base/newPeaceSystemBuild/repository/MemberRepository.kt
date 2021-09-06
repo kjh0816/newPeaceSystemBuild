@@ -210,11 +210,20 @@ interface MemberRepository {
     @Update(
         """
             UPDATE `member` SET 
-            roleLevel = #{authenticationStatus}
+            roleLevel = #{roleLevel}
             WHERE id = #{memberId};
         """
     )
-    fun updateRoleLevel(memberId: Int, authenticationStatus: Int)
+    fun modifyMemberIntoRoleLevelByMemberId(memberId: Int, roleLevel: Int)
+
+    @Update(
+        """
+            UPDATE `member` SET 
+            requestStatus = #{requestStatus}
+            WHERE id = #{memberId}; 
+        """
+    )
+    fun modifyMemberIntoRequestStatusByMemberId(memberId: Int, requestStatus: Boolean)
 
     @Select(
         """

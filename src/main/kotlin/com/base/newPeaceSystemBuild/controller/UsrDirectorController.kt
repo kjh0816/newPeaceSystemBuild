@@ -102,14 +102,17 @@ class UsrDirectorController(
         }
 
         //  장례지도사의 roleLevel(roleId)는 3
-        //  승인 요청 시, roleLevel은 장례지도사가 되고, authenticationStatus로 구분된다.
 
-        memberRoleService.insertDataIntoMemberRole(introduce, rq.getLoginedMember()!!.id, 3)
+        // memberRole 테이블에 유저가 입력한 자기소개 및 회원번호, roleLevel(roleId) 을 3으로 데이터를 생성
+        memberRoleService.insertMemberRole(introduce, rq.getLoginedMember()!!.id, 3)
 
-        memberService.updateRoleLevel(rq.getLoginedMember()!!.id, 3)
+        // roleLevel을 3(장례지도사) 으로 변경
+        memberService.modifyMemberIntoRoleLevelByMemberId(rq.getLoginedMember()!!.id, 3)
 
-        // 장례지도사 신청은 회원데이터 수정이기 때문에 세션데이터를 수정된값으로 다시 넣어준다.
+        // requestStatus 칼럼을 true로 변경
+        memberService.modifyMemberIntoRequestStatusByMemberId(rq.getLoginedMember()!!.id, true)
 
+        // 장례지도사 신청되면 회원정보가 갱신됨으로 현재 로그인중인 사용자의 세션또한 갱신해준다
         rq.login(memberService.getMemberById(rq.getLoginedMember()!!.id)!!)
 
         return rq.replaceJs("장례지도사 영업신청이 완료되었습니다.", "../home/main")

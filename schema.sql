@@ -50,7 +50,6 @@ CREATE TABLE MEMBER(
     roleLevel SMALLINT(2) UNSIGNED NOT NULL DEFAULT 2 COMMENT 'role 테이블의 id와 연결',
     loginId CHAR(20) NOT NULL UNIQUE,
     loginPw CHAR(64) NOT NULL,
-    authKey CHAR(70) NOT NULL UNIQUE DEFAULT CONCAT('authKey__', UUID(), '__', RAND()) COMMENT '자동 로그인을 위한 칼럼',
     NAME CHAR(20) NOT NULL,
     cellphoneNo CHAR(20) NOT NULL,
     email CHAR(50) NOT NULL,
@@ -128,6 +127,19 @@ email = 'readshot2@gmail.com',
 location = '서울특별시',
 bank = '신한',
 accountNum = '110222014684';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+roleLevel = 2,
+loginId = 'user4',
+loginPw = SHA2('user3', 256),
+`name` = '강두현',
+cellphoneNo = '01012341234',
+email = 'rkdengus1208@gmail.com',
+location = '서울특별시',
+bank = '신한',
+accountNum = '12341234123';
 
 
 

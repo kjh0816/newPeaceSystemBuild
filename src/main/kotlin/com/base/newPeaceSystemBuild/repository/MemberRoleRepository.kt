@@ -16,5 +16,5 @@ interface MemberRoleRepository {
             introduce = #{introduce}
         """
     )
-    fun insertDataIntoMemberRole(introduce: String, memberId: Int, roleId: Int)
+    fun insertMemberRole(introduce: String, memberId: Int, roleId: Int)
 }

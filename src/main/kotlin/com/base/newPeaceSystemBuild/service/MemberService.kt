@@ -2,11 +2,8 @@ package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.util.Ut
-import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
-import com.base.newPeaceSystemBuild.vo.client.Client
-import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Bank
 import com.base.newPeaceSystemBuild.vo.member.Department
 import com.base.newPeaceSystemBuild.vo.member.Member
@@ -105,8 +102,12 @@ class MemberService(
         memberRepository.modifyMemberRoleIntoAuthenticationLevelAndRoleLevelByMemberId(memberId, authenticationLevel, roleLevel)
     }
 
-    fun updateRoleLevel(memberId: Int, authenticationStatus: Int) {
-        memberRepository.updateRoleLevel(memberId, authenticationStatus)
+    fun modifyMemberIntoRoleLevelByMemberId(memberId: Int, roleLevel: Int) {
+        memberRepository.modifyMemberIntoRoleLevelByMemberId(memberId, roleLevel)
+    }
+
+    fun modifyMemberIntoRequestStatusByMemberId(memberId: Int, requestStatus: Boolean){
+        memberRepository.modifyMemberIntoRequestStatusByMemberId(memberId, requestStatus)
     }
 
     fun getCellphoneNoFormatted(id: Int): String {

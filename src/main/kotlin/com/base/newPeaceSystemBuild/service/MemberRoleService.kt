@@ -10,8 +10,8 @@ class MemberRoleService(
 ) {
 
 
-    fun insertDataIntoMemberRole(introduce: String, memberId: Int, roleId: Int) {
-        memberRoleRepository.insertDataIntoMemberRole(introduce, memberId, roleId)
+    fun insertMemberRole(introduce: String, memberId: Int, roleId: Int) {
+        memberRoleRepository.insertMemberRole(introduce, memberId, roleId)
     }
 
 }
