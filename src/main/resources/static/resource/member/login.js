@@ -50,7 +50,6 @@ function MemberLogin__submit(form) {
            						res => {
            							if ( res.response.success ) {
                    //                      회원가입 성공일 경우, 로그인 페이지로 replace시킨다.
-                                            alert(autoLogin);
                                            window.location.replace(res.response.map.replaceUri);
            							}
            							else {

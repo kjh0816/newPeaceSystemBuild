@@ -56,16 +56,6 @@ class UsrMemberController(
 
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
 
-        println("autoLogin의 값: $autoLogin")
-        println("autoLogin의 값: $autoLogin")
-        println("autoLogin의 값: $autoLogin")
-        println("autoLogin의 값: $autoLogin")
-        println("autoLogin의 값: $autoLogin")
-        println("autoLogin의 값: $autoLogin")
-
-
-
-
 
 
         return Ut.getJsonStrFromObj(memberService.doLogin(loginId, loginPwInput, replaceUri))

@@ -39,7 +39,10 @@ roleName = '물품 공급업자';
 
 SELECT * FROM `role`;
 
+
+
 # 통합 회원 테이블 생성
+# authKey = 66자
 CREATE TABLE MEMBER(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
@@ -47,6 +50,7 @@ CREATE TABLE MEMBER(
     roleLevel SMALLINT(2) UNSIGNED NOT NULL DEFAULT 2 COMMENT 'role 테이블의 id와 연결',
     loginId CHAR(20) NOT NULL UNIQUE,
     loginPw CHAR(64) NOT NULL,
+    authKey CHAR(70) NOT NULL UNIQUE DEFAULT CONCAT('authKey__', UUID(), '__', RAND()) COMMENT '자동 로그인을 위한 칼럼',
     NAME CHAR(20) NOT NULL,
     cellphoneNo CHAR(20) NOT NULL,
     email CHAR(50) NOT NULL,
@@ -58,6 +62,7 @@ CREATE TABLE MEMBER(
     delDate DATETIME COMMENT '탈퇴 날짜'
 
 );
+
 
 
 
@@ -89,6 +94,7 @@ updateDate = NOW(),
 roleLevel = 2,
 loginId = 'user1',
 loginPw = SHA2('user1', 256),
+
 `name` = '홍길동',
 cellphoneNo = '01011111111',
 email = 'hong@gmail.com',
@@ -102,6 +108,7 @@ updateDate = NOW(),
 roleLevel = 2,
 loginId = 'user2',
 loginPw = SHA2('user2', 256),
+
 `name` = '윤길동',
 cellphoneNo = '01022222222',
 email = 'hong2@gmail.com',
@@ -122,7 +129,13 @@ location = '서울특별시',
 bank = '신한',
 accountNum = '110222014684';
 
+
+
+
+
 SELECT * FROM `member`;
+
+
 
 
 
@@ -343,7 +356,7 @@ CREATE TABLE `order`(
 	updateDate DATETIME NOT NULL,
 	vendorMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '상품 등록한 사업자 회원번호 0일경우 아직 미정',
 	directorMemberId INT(10) UNSIGNED NOT NULL COMMENT '주문을 넣은 장례지도사 회원번호',
-	roleCategoryId SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
+	goodsLevel SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
 	standardId INT(10) UNSIGNED NOT NULL COMMENT '스탠다드 상품의 번호'
 );
 
