@@ -141,7 +141,7 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/doDispatch", method = [RequestMethod.POST])
     @ResponseBody
     fun doDispatch(
-        @RequestParam(defaultValue = "") clientId: Int
+        @RequestParam(defaultValue = "0") clientId: Int
     ): String {
         return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }

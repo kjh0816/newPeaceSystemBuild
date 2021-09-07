@@ -112,20 +112,30 @@ class ClientService(
     }
 
     fun modifyClientIntoDirectorMemberIdByClientId(directorMemberId: Int, clientId: Int): ResultData {
+        // post 요청이라 사용자가 파라미터를 바꿀수 없어 clientId가 잘못들어오는 경우는 없겠지만, null 처리를 해줘야하기 때문에 !!는 불안정한 느낌이라 추가함
         val client = getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
 
-        val funeral = getProgressingFuneralByIdDirectorMemberId(rq.getLoginedMember()!!.id)
+        // funeral 테이블에서 progress 칼럼이 true 이고, directorMemberId 가 로그인한 회원 ID랑 같은 데이터를 조회해서 가져옴
+        val funeral = getProgressingFuneralByIdDirectorMemberId(directorMemberId)
 
-        if(funeral != null){
-            return ResultData.from("F-2", "이미 진행중이신 장례가 있습니다.")
+        // 조회된 데이터가 있고, 해당 데이터의 directorMemberId 칼럼이 directorMemberId(rq.getLoginedMember()!!.id) 랑 같을경우 본인이 이미 승낙한 장례라는걸 알려줌
+        if(funeral != null && funeral.directorMemberId == directorMemberId){
+            return ResultData.from("F-2", "이미 출동요청을 승낙하였습니다. 진행중인 장례 페이지를 확인해주세요.")
+        }
+        // 조회된 데이터가 있을경우 현재 해당 장례지도사가 이미 진행중인 장례가 있다는걸 알려줌.
+        else if(funeral != null){
+            return ResultData.from("F-3", "이미 진행중이신 장례가 있습니다.")
         }
 
+        // client 테이블에 directorMemberId가 0이 아니면 장례지도사 배정이 완료된상태
         if(client.directorMemberId != 0){
-            return ResultData.from("F-2", "다른 장례지도사님이 먼저 출동하셨습니다.")
+            return ResultData.from("F-4", "다른 장례지도사님이 먼저 출동하셨습니다.")
         }
 
+        // 위 조건을 모두 패스할 경우 client 테이블에 directorMemberId 를 본인의 ID 값으로 수정
         clientRepository.modifyClientIntoDirectorMemberIdByClientId(directorMemberId, clientId)
 
+        // 장레지도사 배정이 완료됬으니 funeral 테이블도 추가
         clientRepository.insertFuneral(client.memberId, directorMemberId, client.id)
 
         return ResultData.from("S-1", "출동요청을 승낙하였습니다.", "client", client)
