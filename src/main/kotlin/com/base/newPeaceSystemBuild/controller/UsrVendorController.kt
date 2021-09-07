@@ -67,7 +67,7 @@ class UsrVendorController(
         // 컴파일러가 추천하는 방식이라 매개변수 명도 넣어줌. Boolean 값이 두개라 헷갈릴까봐 이쪽을 추천하는듯?
         val orders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id,
             orderStatus = true,
-            completeionStatus = false
+            completionStatus = false
         )
 
         model.addAttribute("orders", orders)

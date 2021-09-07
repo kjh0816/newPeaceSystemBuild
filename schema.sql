@@ -373,7 +373,7 @@ CREATE TABLE `order`(
 	roleCategoryId SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
 	standardId INT(10) UNSIGNED NOT NULL COMMENT '스탠다드 상품의 번호',
 	orderStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '지도사가 오더를 넣으면 기본값 0 업자가 오더를 받으면 1로 변경',
-	completeionStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '기본값 0 업자가 오더를 받고 서비스를 완료하면 1로 변경',
+	completionStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '기본값 0 업자가 오더를 받고 서비스를 완료하면 1로 변경'
 );
 
 SELECT * FROM `order`;

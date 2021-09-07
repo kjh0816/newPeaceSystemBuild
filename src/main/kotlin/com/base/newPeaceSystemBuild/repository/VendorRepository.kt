@@ -104,10 +104,10 @@ interface VendorRepository {
             ON O.standardId = F.id
             WHERE vendorMemberId = #{vendorMemberId}
             AND orderStatus = #{orderStatus}
-            AND completeionStatus = #{completeionStatus}
+            AND completionStatus = #{completionStatus}
         """
     )
-    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completeionStatus: Boolean): List<Order>
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completionStatus: Boolean): List<Order>
 
     @Select(
         """
@@ -121,10 +121,10 @@ interface VendorRepository {
     @Select(
         """
             UPDATE `order`
-            SET completeionStatus = #{completeStatus}
+            SET completionStatus = #{completionStatus}
             WHERE vendorMemberId = #{vendorMemberId}
             AND clientId = #{clientId}
         """
     )
-    fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completeStatus: Boolean)
+    fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completionStatus: Boolean)
 }

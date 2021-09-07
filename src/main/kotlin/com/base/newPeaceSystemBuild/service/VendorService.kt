@@ -124,12 +124,12 @@ class VendorService(
         return ResultData.from("S-1", "주문접수가 완료되었습니다.", "client", client)
     }
 
-    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completeionStatus: Boolean): List<Order> {
-        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, orderStatus, completeionStatus)
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completionStatus: Boolean): List<Order> {
+        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, orderStatus, completionStatus)
     }
 
-    fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completeStatus: Boolean): ResultData {
-        vendorRepository.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId, clientId, completeStatus)
+    fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completionStatus: Boolean): ResultData {
+        vendorRepository.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId, clientId, completionStatus)
 
         return ResultData.from("S-1", "완료")
     }

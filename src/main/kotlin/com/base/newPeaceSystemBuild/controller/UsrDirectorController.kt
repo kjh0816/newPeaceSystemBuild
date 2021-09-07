@@ -46,11 +46,13 @@ class UsrDirectorController(
             return "redirect:/usr/home/main"
         }
 
+        //
         val client = clientService.getClientById(clientId)
 
         if(client == null){
             return "redirect:/usr/home/main"
         }
+        // 뷰페이지에서 선택된 스탠다드의 가격을 표기하기 위해 불러온다
         val flower = vendorService.getFlowerById(funeral.flowerId)
 
         model.addAttribute("client", client)
@@ -133,9 +135,7 @@ class UsrDirectorController(
     fun doMoveProgressPage(
         @RequestParam(defaultValue = "0") clientId: Int
     ): String {
-//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
         return Ut.getJsonStrFromObj(clientService.getClientByIdRd(clientId))
-
     }
 
     @RequestMapping("/usr/director/doDispatch", method = [RequestMethod.POST])
@@ -143,7 +143,6 @@ class UsrDirectorController(
     fun doDispatch(
         @RequestParam(defaultValue = "") clientId: Int
     ): String {
-//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
         return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }
 }
