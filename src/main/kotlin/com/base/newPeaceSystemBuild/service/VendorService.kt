@@ -127,4 +127,10 @@ class VendorService(
     fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completeionStatus: Boolean): List<Order> {
         return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, orderStatus, completeionStatus)
     }
+
+    fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completeStatus: Boolean): ResultData {
+        vendorRepository.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId, clientId, completeStatus)
+
+        return ResultData.from("S-1", "완료")
+    }
 }

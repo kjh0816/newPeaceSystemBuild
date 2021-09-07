@@ -117,4 +117,14 @@ interface VendorRepository {
         """
     )
     fun getOrderByClientId(clientId: Int): Order?
+
+    @Select(
+        """
+            UPDATE `order`
+            SET completeionStatus = #{completeStatus}
+            WHERE vendorMemberId = #{vendorMemberId}
+            AND clientId = #{clientId}
+        """
+    )
+    fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completeStatus: Boolean)
 }
