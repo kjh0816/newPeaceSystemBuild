@@ -128,7 +128,6 @@ class UsrDirectorController(
     ): String {
         return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoFlowerId(funeralId, flowerId))
     }
-    // VIEW 기능 함수 끝
 
     @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
     @ResponseBody
@@ -145,4 +144,5 @@ class UsrDirectorController(
     ): String {
         return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }
+    // VIEW 기능 함수 끝
 }

@@ -57,11 +57,6 @@ class GenFileService(
         // 해당 name 을 __ 기준으로 쪼개서 배열에 담음
         val fileInputNameBits = fileInputName.split("__").toTypedArray()
 
-        println(fileInputNameBits)
-        println(fileInputNameBits)
-        println(fileInputNameBits)
-        println(fileInputNameBits)
-
         if (fileInputNameBits[0] != "file") {
             return ResultData.from("F-1", "파라미터 명이 올바르지 않습니다.")
         }

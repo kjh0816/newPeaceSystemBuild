@@ -29,26 +29,18 @@ class VendorService(
         return vendorRepository.getFlowers()
     }
 
-    fun getFuneralById(funeralId: Int): Funeral{
+    fun getFuneralById(funeralId: Int): Funeral?{
         return vendorRepository.getFuneralById(funeralId)
     }
 
     fun modifyFuneralIntoFlowerId(funeralId:Int, flowerId: Int): ResultData {
-        val funeral = getFuneralById(funeralId)
-
-        if(funeral == null){
-            return ResultData.from("F-1", "올바르지 않은 접근입니다.")
-        }
+        val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
         if(funeral.flowerId != 0){
             return ResultData.from("F-3", "이미 제단꽃을 신청하였습니다.")
         }
 
-        val client = clientRepository.getClientById(funeral.clientId)
-
-        if(client == null){
-            return ResultData.from("F-1", "올바르지 않은 접근입니다.")
-        }
+        val client = clientRepository.getClientById(funeral.clientId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 1

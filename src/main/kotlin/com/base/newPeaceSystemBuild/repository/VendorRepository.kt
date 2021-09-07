@@ -36,7 +36,7 @@ interface VendorRepository {
             WHERE id = #{funeralId};
         """
     )
-    fun getFuneralById(funeralId: Int): Funeral
+    fun getFuneralById(funeralId: Int): Funeral?
 
     @Select(
         """
