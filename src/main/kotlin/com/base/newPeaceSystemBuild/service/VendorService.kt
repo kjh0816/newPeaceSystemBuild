@@ -92,20 +92,17 @@ class VendorService(
         return vendorRepository.getFlowerById(flowerId)
     }
 
-    fun modifyOrderIntoDirectorMemberIdByDirectorId(memberId: Int, clientId: Int): ResultData{
+    fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(memberId: Int, clientId: Int): ResultData{
         val client = clientRepository.getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
 
-        val order = vendorRepository.getOrderByClientId(clientId)
-
-        if(order == null){
-            return ResultData.from("F-2", "주문정보가 조회되지않습니다.")
-        }
+        val order = vendorRepository.getOrderByClientId(clientId) ?: return ResultData.from("F-2", "주문정보가 조회되지않습니다.")
 
         if(order.orderStatus){
+            // order 테이블에 vendorMemberId 칼럼값이 현재 로그인한 회원의 ID값이랑 같으면 로그인한 회원이 해당 주문을 받은것
             if(order.vendorMemberId == memberId){
-                return ResultData.from("F-3", "이미 수락하셨습니다. '내가받은 주문정보 보기' 에서 확인해주세요.")
+                return ResultData.from("F-3", "이미 수락하셨습니다. '주문내역 확인' 에서 확인해주세요.")
             }
-
+            // order 테이블에 vendorMemberId 칼럼은 default 값이 0이기때문에 0이면 아무도 주문을 받지않은상태다. 반대로 0이 아니란것은 누군가 주문을 받은상태
             if(order.vendorMemberId != 0){
                 return ResultData.from("F-4", "다른 업체에서 먼저 주문을 받았습니다.")
             }

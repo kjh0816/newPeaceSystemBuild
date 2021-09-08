@@ -110,7 +110,7 @@ class UsrVendorController(
         clientId: Int
     ): String {
 //      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
-        return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoDirectorMemberIdByDirectorId(rq.getLoginedMember()!!.id, clientId))
+        return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(rq.getLoginedMember()!!.id, clientId))
     }
 
     @RequestMapping("/usr/vendor/doComplete", method = [RequestMethod.POST])
