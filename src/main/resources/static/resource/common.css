@@ -64,7 +64,6 @@ a:hover{
 /* top-bar 끝 */
 /* bottom-bar 시작 */
 .bottom-bar{
-  background: rgba(0,0,0,0.1);
   min-width: 1240px;
 }
 /* bottom-bar 끝 */
