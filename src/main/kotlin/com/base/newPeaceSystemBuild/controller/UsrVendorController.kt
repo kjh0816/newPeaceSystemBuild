@@ -109,7 +109,6 @@ class UsrVendorController(
     fun doDispatch(
         clientId: Int
     ): String {
-//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
         return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(rq.getLoginedMember()!!.id, clientId))
     }
 
@@ -118,7 +117,6 @@ class UsrVendorController(
     fun doComplete(
         clientId: Int
     ): String {
-//      Ajax 요청을 ResultData 형식으로 응답한다.(Json 형식이므로, 값을 Ajax(JS)로 다룰 수 있다.)
         return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(rq.getLoginedMember()!!.id, clientId, true))
     }
 }
