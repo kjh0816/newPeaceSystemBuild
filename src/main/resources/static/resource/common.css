@@ -10,3 +10,59 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+a:hover{
+  cursor: pointer;
+}
+
+/* top-bar 시작 */
+.con{
+  width: 1240px;
+}
+.top-bar{
+  color: #323232;
+  font-weight: bold;
+  font-size: 20px;
+}
+.top-bar__nav > ul > li{
+  position: relative;
+}
+.top-bar__nav > ul > li > ul{
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  display: none;
+  z-index: 10;
+  background-color: white;
+}
+.top-bar__nav > ul > li:hover > ul{
+  display: block;
+  top: 100%;
+}
+.top-bar__nav > ul > li > ul > li > a{
+  display: block;
+  padding: 8px;
+}
+.top-bar__nav > ul > li > ul > li > form{
+  display: block;
+}
+.top-bar__nav > ul > li > ul > li > form > button{
+  padding: 8px;
+}
+.top-bar__nav > ul > li > ul > li > a:hover{
+  color: rgba(0,0,0,0.2);
+  text-decoration: underline;
+}
+.top-bar__nav > ul > li > ul > li > form:hover > button{
+  color: rgba(0,0,0,0.2);
+  text-decoration: underline;
+}
+/* top-bar 끝 */
+/* bottom-bar 시작 */
+.bottom-bar{
+  background: rgba(0,0,0,0.1)
+}
+/* bottom-bar 끝 */

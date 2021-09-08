@@ -2,7 +2,77 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
 
-<header th:fragment="header">
+<header th:fragment="header" class="top-bar shadow h-16">
+    <div class="flex h-full con mx-auto">
+        <div class="top-bar__logo h-full ml-4">
+            <a href="/usr/home/main" class="h-full flex items-center">LOGO</a>
+        </div>
+        <div class="flex-grow"></div>
+        <nav class="top-bar__nav h-full mx-4 flex justify-end">
+            <ul class="flex h-full">
+                <li>
+                    <a class="h-full flex items-center px-4">영업자 메뉴</a>
+                    <ul class="font-semibold shadow ">
+                        <li>
+                            <a href="/usr/member/call">장례지도사 출동 요청</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="h-full flex items-center px-4">사업자 메뉴</a>
+                    <ul class="font-semibold shadow">
+                        <li>
+                            <a href="/usr/vendor/order">주문내역 확인</a>
+                        </li>
+                        <li>
+                            <a href="/usr/vendor/explain">제단꽃 제작업체 등록</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="h-full flex items-center px-4">장례지도사 메뉴</a>
+                    <ul class="font-semibold shadow">
+                        <li>
+                            <form onsubmit="DirectorMoveProgress__submit(this); return false;">
+                                <input type="hidden" name="clientId" th:value="${progressingFuneralClientId}">
+                                <button class="font-semibold" type="submit">내가맡은 장례 진행현황</button>
+                            </form>
+                        </li>
+                        <li>
+                            <a href="/usr/director/request">장례지도사 등록</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="h-full flex items-center px-4">고객센터</a>
+                </li>
+                <li>
+                    <form class="h-full flex items-center px-4" onsubmit="pagination(this); return false;">
+                        <input type="hidden" name="authenticationLevel" value="0">
+                        <input type="hidden" name="roleLevel" value="3">
+                        <input type="hidden" name="page" value="1">
+                        <button class="font-bold" type="submit">관리자페이지</button>
+                    </form>
+                </li>
+                <th:block th:if="${session.loginedMemberJsonStr == null}">
+                    <li>
+                        <a href="/usr/member/join" class="h-full flex items-center px-4">회원가입</a>
+                    </li>
+                    <li>
+                        <a href="/usr/member/login" class="h-full flex items-center px-4">로그인</a>
+                    </li>
+                </th:block>
+                <th:block th:unless="${session.loginedMemberJsonStr == null}">
+                    <li>
+                        <a href="/usr/member/info" class="h-full flex items-center px-4">마이페이지</a>
+                    </li>
+                    <li>
+                        <button class="h-full flex items-center px-4 font-bold" onclick="MemberLogout__submit(this); return false;">로그아웃</button>
+                    </li>
+                </th:block>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 </html>
