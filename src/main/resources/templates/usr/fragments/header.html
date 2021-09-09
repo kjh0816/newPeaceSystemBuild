@@ -33,8 +33,7 @@
                     <a class="h-full flex items-center px-4">장례지도사 메뉴</a>
                     <ul class="font-semibold shadow">
                         <li>
-                            <form onsubmit="DirectorMoveProgress__submit(this); return false;">
-                                <input type="hidden" name="clientId" th:value="${progressingFuneralClientId}">
+                            <form onsubmit="DirectorMoveProgress__submit(this);">
                                 <button class="font-semibold" type="submit">내가맡은 장례 진행현황</button>
                             </form>
                         </li>
