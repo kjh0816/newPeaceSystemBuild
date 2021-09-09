@@ -161,5 +161,14 @@ class UsrDirectorController(
     ): String {
         return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }
+
+    @RequestMapping("/usr/director/doSelectPortrait", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doSelectPortrait(
+        funeralId: Int,
+        portraitId: Int
+    ): String {
+        return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoPoltraitId(funeralId, portraitId))
+    }
     // VIEW 기능 함수 끝
 }

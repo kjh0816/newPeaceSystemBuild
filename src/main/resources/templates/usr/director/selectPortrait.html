@@ -6,11 +6,11 @@
 <head>
     <title>영정사진 선택</title>
     <th:block layout:fragment="js">
-        <script type="text/javascript" src="/resource/director/selectFlower.js" charset="utf-8" defer></script>
+        <script type="text/javascript" src="/resource/director/selectPortrait.js" charset="utf-8" defer></script>
     </th:block>
 </head>
 <main layout:fragment="main">
-    <form onsubmit="SelectFlower__submit(this); return false;">
+    <form onsubmit="SelectPortrait__submit(this); return false;">
         <input type="hidden" name="funeralId" th:value="${funeral.id}">
         <div th:each="portrait : ${portraits}">
             <label>

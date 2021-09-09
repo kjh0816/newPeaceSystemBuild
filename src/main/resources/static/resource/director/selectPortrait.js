@@ -1,9 +1,9 @@
-let SelectFlower__submitDone = false;
+let SelectPortrait__submitDone = false;
 
-function SelectFlower__submit(form) {
-    if (form.flowerId.value.length == 0) {
+function SelectPortrait__submit(form) {
+    if (form.portraitId.value.length == 0) {
         swal({
-            title: "제단꽃을 선택해주세요.",
+            title: "영정액자를 선택해주세요.",
             icon: "info",
             button: "확인",
         });
@@ -11,9 +11,8 @@ function SelectFlower__submit(form) {
         return;
     }
 
-
     const post$ = rxjs.ajax.ajax.post(
-        '/usr/director/doSelectFlower',
+        '/usr/director/doSelectPortrait',
         new FormData(form)
     );
     post$.subscribe(

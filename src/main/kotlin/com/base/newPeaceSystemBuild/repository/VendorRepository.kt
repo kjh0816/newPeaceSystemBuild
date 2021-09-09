@@ -145,4 +145,13 @@ interface VendorRepository {
         """
     )
     fun getPortraitById(portraitId: Int): Portrait
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET portraitId = #{portraitId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoPortraitId(funeralId: Int, portraitId: Int)
 }
