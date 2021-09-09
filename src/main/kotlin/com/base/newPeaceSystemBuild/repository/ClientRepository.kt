@@ -51,19 +51,14 @@ interface ClientRepository {
 
     @Select(
         """
-            SELECT 
-            F.*
-            FROM `funeral` AS F
-            INNER JOIN `client` AS C
-            ON F.clientId = C.id
-            INNER JOIN `member` AS M
-            ON F.`directorMemberId` = M.id
-            WHERE F.progress = 1
-            AND F.directorMemberId = #{directorMemberId}
+            SELECT * 
+            FROM `funeral` 
+            WHERE progress = 1 
+            AND directorMemberId = #{directorMemberId}
             
         """
     )
-    fun getProgressingFuneral(directorMemberId: Int): Funeral?
+    fun getFuneralByDirectorMemberIdAndProgress(directorMemberId: Int): Funeral?
 
     @Update(
         """

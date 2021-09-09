@@ -37,17 +37,16 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/progress")
     fun showProgress(
-        model: Model,
-        clientId: Int
+        model: Model
     ): String {
-        val funeral = clientService.getProgressingFuneral(rq.getLoginedMember()!!.id)
+        val funeral = clientService.getFuneralByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id)
 
         if(funeral == null){
             return "redirect:/usr/home/main"
         }
 
         //
-        val client = clientService.getClientById(clientId)
+        val client = clientService.getClientById(funeral.clientId)
 
         if(client == null){
             return "redirect:/usr/home/main"
@@ -64,7 +63,7 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/selectFlower")
     fun showSelectFlower(model: Model): String {
-        val funeral = clientService.getProgressingFuneral(rq.getLoginedMember()!!.id)
+        val funeral = clientService.getFuneralByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id)
         val flowers = vendorService.getFlowers()
 
         model.addAttribute("flowers", flowers)
@@ -132,9 +131,14 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
     @ResponseBody
     fun doMoveProgressPage(
-        @RequestParam(defaultValue = "0") clientId: Int
     ): String {
-        return Ut.getJsonStrFromObj(clientService.getClientByIdRd(clientId))
+        val funeral = clientService.getFuneralByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id)
+
+        if(funeral == null){
+            return Ut.getJsonStrFromObj(clientService.moveProgressRd(0))
+        }
+
+        return Ut.getJsonStrFromObj(clientService.moveProgressRd(funeral.clientId))
     }
 
     @RequestMapping("/usr/director/doDispatch", method = [RequestMethod.POST])

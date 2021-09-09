@@ -8,10 +8,7 @@ import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.client.Funeral
-import com.base.newPeaceSystemBuild.vo.member.Bank
-import com.base.newPeaceSystemBuild.vo.member.Department
 import com.base.newPeaceSystemBuild.vo.member.Member
-import com.base.newPeaceSystemBuild.vo.member.Role
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -97,7 +94,7 @@ class ClientService(
         return clientRepository.getClientById(clientId)
     }
 
-    fun getClientByIdRd(clientId: Int): ResultData {
+    fun moveProgressRd(clientId: Int): ResultData {
         val client = clientRepository.getClientById(clientId) ?: return ResultData.from("F-1", "현재 지도사님이 진행중인 장례가 없습니다.")
 
         return ResultData.from("S-1", "성공", "client", client)
@@ -107,8 +104,8 @@ class ClientService(
         return clientRepository.getFuneralByClientId(clientId)
     }
 
-    fun getProgressingFuneral(directorMemberId: Int): Funeral? {
-        return clientRepository.getProgressingFuneral(directorMemberId)
+    fun getFuneralByDirectorMemberIdAndProgress(directorMemberId: Int): Funeral? {
+        return clientRepository.getFuneralByDirectorMemberIdAndProgress(directorMemberId)
     }
 
     fun modifyClientIntoDirectorMemberIdByClientId(directorMemberId: Int, clientId: Int): ResultData {
