@@ -58,7 +58,7 @@ interface ClientRepository {
             
         """
     )
-    fun getFuneralByDirectorMemberIdAndProgress(directorMemberId: Int): Funeral?
+    fun getProgressingFuneralByDirectorMemberId(directorMemberId: Int): Funeral?
 
     @Update(
         """

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+<head>
+    <title>영정사진 선택</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/selectFlower.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+<main layout:fragment="main">
+    <form onsubmit="SelectFlower__submit(this); return false;">
+        <input type="hidden" name="funeralId" th:value="${funeral.id}">
+        <div th:each="portrait : ${portraits}">
+            <label>
+                <div>영정 액자 : [[${portrait.name}]]</div>
+                <div>소매가 : [[${portrait.retailPrice}]]</div>
+                <input type="radio" name="portraitId" th:value="${portrait.id}">
+                <img th:src="@{../../../resource/img/portrait/portrait{portraitId}.png(portraitId = ${portrait.id})}" alt="" width="300px" height="150px">
+            </label>
+            <hr>
+        </div>
+        <input type="submit" value="선택 완료">
+    </form>
+</main>
+
+</html>

@@ -39,7 +39,7 @@ class UsrDirectorController(
     fun showProgress(
         model: Model
     ): String {
-        val funeral = clientService.getFuneralByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id)
+        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
 
         if(funeral == null){
             return "redirect:/usr/home/main"
@@ -53,17 +53,19 @@ class UsrDirectorController(
         }
         // 뷰페이지에서 선택된 스탠다드의 가격을 표기하기 위해 불러온다
         val flower = vendorService.getFlowerById(funeral.flowerId)
+        val portrait = vendorService.getPortraitById(funeral.portraitId)
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("flower", flower)
+        model.addAttribute("portrait", portrait)
 
         return "usr/director/progress"
     }
 
     @RequestMapping("/usr/director/selectFlower")
     fun showSelectFlower(model: Model): String {
-        val funeral = clientService.getFuneralByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id)
+        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
         val flowers = vendorService.getFlowers()
 
         model.addAttribute("flowers", flowers)
@@ -79,6 +81,17 @@ class UsrDirectorController(
         model.addAttribute("client", client)
 
         return "usr/director/dispatch"
+    }
+
+    @RequestMapping("/usr/director/selectPortrait")
+    fun showSelectPortrait(model: Model): String {
+        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+        val portraits = vendorService.getPortraits()
+
+        model.addAttribute("portraits", portraits)
+        model.addAttribute("funeral", funeral)
+
+        return "usr/director/selectPortrait"
     }
     // VIEW Mapping 함수 끝
 
@@ -132,7 +145,7 @@ class UsrDirectorController(
     @ResponseBody
     fun doMoveProgressPage(
     ): String {
-        val funeral = clientService.getFuneralByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id)
+        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
 
         if(funeral == null){
             return Ut.getJsonStrFromObj(clientService.moveProgressRd(0))

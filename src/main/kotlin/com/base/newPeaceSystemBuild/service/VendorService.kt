@@ -10,6 +10,7 @@ import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Member
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.standard.Portrait
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -121,5 +122,13 @@ class VendorService(
         vendorRepository.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId, clientId, completionStatus)
 
         return ResultData.from("S-1", "완료")
+    }
+
+    fun getPortraits(): List<Portrait> {
+        return vendorRepository.getPortraits()
+    }
+
+    fun getPortraitById(portraitId: Int): Portrait {
+        return vendorRepository.getPortraitById(portraitId)
     }
 }

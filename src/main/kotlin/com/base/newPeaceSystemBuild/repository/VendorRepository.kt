@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.repository
 
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.standard.Portrait
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
@@ -127,4 +128,21 @@ interface VendorRepository {
         """
     )
     fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completionStatus: Boolean)
+
+    @Select(
+        """
+            SELECT * 
+            FROM portrait
+        """
+    )
+    fun getPortraits(): List<Portrait>
+
+    @Select(
+        """
+            SELECT * 
+            FROM portrait
+            WHERE id = #{portraitId}
+        """
+    )
+    fun getPortraitById(portraitId: Int): Portrait
 }

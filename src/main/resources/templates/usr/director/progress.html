@@ -34,9 +34,14 @@
         <br>
         <div>가격 : [[${flower.retailPrice}]] 원</div>
     </div>
-
-    <div>
-
+    <br><br>
+    <form action="./selectPortrait">
+        <button type="submit">영정사진 선택하기</button>
+    </form>
+    <div th:if="${funeral.portraitId != 0}">
+        <img th:src="@{../../../resource/img/portrait/portrait{portraitId}.png(portraitId = ${portrait.id})}" alt="" width="300px" height="150px">
+        <br>
+        <div>가격 : [[${portrait.retailPrice}]] 원</div>
     </div>
 </main>
 

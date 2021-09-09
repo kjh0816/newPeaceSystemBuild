@@ -104,8 +104,8 @@ class ClientService(
         return clientRepository.getFuneralByClientId(clientId)
     }
 
-    fun getFuneralByDirectorMemberIdAndProgress(directorMemberId: Int): Funeral? {
-        return clientRepository.getFuneralByDirectorMemberIdAndProgress(directorMemberId)
+    fun getProgressingFuneralByDirectorMemberId(directorMemberId: Int): Funeral? {
+        return clientRepository.getProgressingFuneralByDirectorMemberId(directorMemberId)
     }
 
     fun modifyClientIntoDirectorMemberIdByClientId(directorMemberId: Int, clientId: Int): ResultData {
