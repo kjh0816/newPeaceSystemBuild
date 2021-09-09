@@ -6,7 +6,7 @@ function DirectorMoveProgress__submit(form) {
     post$.subscribe(
         res => {
             if ( res.response.success ) {
-                   window.location.href="/usr/director/progress?clientId="+res.response.map.client.id;
+                   window.location.href="/usr/director/progress";
             }
             else {
                    alert(res.response.msg);
