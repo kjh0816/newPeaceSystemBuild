@@ -245,4 +245,21 @@ class MemberService(
         return ResultData.from("S-1", "${rq.getLoginedMember()!!.name}님의 정보가 수정되었습니다.")
 
     }
+
+    fun findIdByNameAndEmail(name: String, email: String): ResultData {
+
+        if(name.isEmpty()){
+            return ResultData.from("F-2", "성함을 입력해주세요.")
+        }
+        if(email.isEmpty()){
+            return ResultData.from("F-2", "이메일을 입력해주세요.")
+        }
+
+        val member = memberRepository.getMemberByNameAndEmail(name, email)
+                ?: return ResultData.from("F-3", "입력하신 정보와 일치하는 회원이 존재하지 않습니다.")
+
+        return ResultData.from("S-1", "회원님의 아이디를 찾았습니다. 이제 비밀번호만 입력하시면 됩니다.", "member", member)
+
+
+    }
 }

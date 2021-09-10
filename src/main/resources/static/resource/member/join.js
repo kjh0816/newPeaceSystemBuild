@@ -127,22 +127,15 @@ function MemberJoin__submit(form) {
     						new FormData(form)
     					);
 
-
-
-
-
     					post$.subscribe(
     						res => {
     							if ( res.response.success ) {
             //                      회원가입 성공일 경우, 로그인 페이지로 replace시킨다.
                                     alert(res.response.msg);
                                     window.location.replace('/usr/member/login');
-
-
     							}
     							else {
         //                                    회원가입 실패일 경우, 실패 원인 메시지를 띠워준다.
-
                                     alert(res.response.msg);
     							}
     						}

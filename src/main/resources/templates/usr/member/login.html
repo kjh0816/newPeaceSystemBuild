@@ -18,8 +18,9 @@
             <input type="hidden" name="replaceUri" th:value="${param.afterLoginUri}">
         </th:block>
         <div>
-            <input type="text" name="loginId" placeholder="아이디를 입력해주세요.">
+            <input type="text" name="loginId" placeholder="아이디를 입력해주세요." th:value="${param?.loginId}">
         </div>
+
         <div>
             <input type="password" name="loginPw" placeholder="비밀번호를 입력해주세요.">
         </div>
@@ -27,6 +28,8 @@
         <div>
             <button>로그인</button>
         </div>
+        <br>
+        <a style="font-weight: bold;" href="/usr/member/findId">아이디</a> / <a style="font-weight: bold;" href="/usr/member/findPw">비밀번호</a> 찾기
     </form>
 </main>
 

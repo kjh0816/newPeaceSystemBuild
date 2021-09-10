@@ -169,6 +169,24 @@ class UsrMemberController(
         return Ut.getJsonStrFromObj(memberService.modifyInfo(cellphoneNo, email, location, bank, accountNum))
     }
 
+    @RequestMapping("/usr/member/findId")
+    fun showFindId():String {
+        // 아이디 찾기 페이지로 이동
+        return "usr/member/findId"
+    }
+
+
+    @RequestMapping("/usr/member/doFindId")
+    @ResponseBody
+    fun doFindId(
+            @RequestParam(defaultValue = "") name: String,
+            @RequestParam(defaultValue = "") email: String
+    ):String {
+
+        return Ut.getJsonStrFromObj(memberService.findIdByNameAndEmail(name, email))
+    }
+
+
 
     @RequestMapping("/usr/member/call")
     fun showCall(model: Model): String{

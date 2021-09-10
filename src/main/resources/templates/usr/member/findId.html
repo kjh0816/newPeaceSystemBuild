@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>아이디 찾기</title>
+
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/member/findId.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+<main layout:fragment="main">
+    <form action="./doFindId" method="POST" onsubmit="MemberFindId__submit(this); return false;">
+        <input type="hidden" name="loginId">
+
+        <div class="label">성함</div>
+        <div class="input">
+            <input type="text" id="name" name="name" maxlength="20" placeholder="성함을 입력해주세요." autocomplete="off"/>
+            <div id="nameCheckMsg" style="color : red;"></div>
+        </div>
+        <div class="label">이메일</div>
+        <div class="input">
+            <input type="text" id="email" name="email" placeholder="이메일 입력해주세요." autocomplete="off"/>
+            <div id="emailCheckMsg" style="color : red;"></div>
+        </div>
+        <br>
+        <div>
+            <button id="findId-submit">완료</button>
+        </div>
+    </form>
+</main>
+
+</html>

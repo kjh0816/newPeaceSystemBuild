@@ -35,6 +35,6 @@ data class Member(
     val extra__roleName: String?
 ) {
     // MyBatis 통해 DB에서 값을 할당받는것이 아닌 추후에 썸네일 표시할때 주입받기때문에 매개변수가 아닌 필드에 선언
-    // 기본적으로 썸네일로 표실될 때 주입받지 않으면 null
+    // 기본적으로 썸네일로 표시될 때 주입받지 않으면 null
     var extra__thumbnailImgUrl: String? = null
 }

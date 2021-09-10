@@ -345,4 +345,26 @@ interface MemberRepository {
         """
     )
     fun modifyInfo(cellphoneNo: String, email: String, location: String, bank: String, accountNum: String, id: Int)
+
+    @Select(
+            """
+                SELECT 
+            M.*,
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationLevel AS `authenticationLevel`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
+            R.roleName AS `extra__roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE `name` = #{name}
+            AND email = #{email}
+            """
+    )
+    fun getMemberByNameAndEmail(name: String, email: String): Member?
 }

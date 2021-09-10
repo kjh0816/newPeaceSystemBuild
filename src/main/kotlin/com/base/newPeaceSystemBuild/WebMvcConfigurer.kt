@@ -38,6 +38,10 @@ class WebMvcConfigurer(
             .excludePathPatterns("/usr/member/doJoin")
             .excludePathPatterns("/usr/member/loginIdCheck")
             .excludePathPatterns("/usr/member/emailCheck")
+            .excludePathPatterns("/usr/member/findId")
+            .excludePathPatterns("/usr/member/doFindId")
+            .excludePathPatterns("/usr/member/findPw")
+            .excludePathPatterns("/usr/member/doFindPw")
         registry.addInterceptor(needAdminInterceptor)
             //          화이트 리스트 방식
             .addPathPatterns("/adm/**")
