@@ -11,6 +11,7 @@ import com.base.newPeaceSystemBuild.vo.member.Role
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import java.util.concurrent.CompletableFuture as CompletableFuture
 
 @Service
 class MemberService(
@@ -292,9 +293,13 @@ class MemberService(
         val title = "${member.name}님의 newPeace 사이트 임시 비밀번호"
         val body = """${member.name}님의 임시 비밀번호는 $tempPw 입니다.<br>비밀번호를 변경해주십시오."""
 
-        emailService.send(member.email, title, body)
+        // 이메일 발송을 다른 쓰레드에서 실행(발송하는데 시간이 10초 정도 걸림)
+        val asyncSendEmail = CompletableFuture.runAsync {
+            emailService.send(member.email, title, body)
+        }
 
-        return ResultData.from("S-1", "${member.email}로 임시 비밀번호가 발송되었습니다.")
+
+        return ResultData.from("S-1", "${member.email}로 임시 비밀번호를 발송합니다. 수신하시기까지 시간이 다소 소요될 수 있습니다.")
 
     }
 }
