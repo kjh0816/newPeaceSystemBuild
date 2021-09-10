@@ -9,14 +9,18 @@ import com.base.newPeaceSystemBuild.vo.member.Department
 import com.base.newPeaceSystemBuild.vo.member.Member
 import com.base.newPeaceSystemBuild.vo.member.Role
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
 class MemberService(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val emailService: EmailService
 ) {
     @Autowired
     private lateinit var rq: Rq;
+
+
 
     fun getMemberByLoginId(loginId: String): Member? {
         return memberRepository.getMemberByLoginId(loginId)
@@ -260,6 +264,37 @@ class MemberService(
 
         return ResultData.from("S-1", "회원님의 아이디를 찾았습니다. 이제 비밀번호만 입력하시면 됩니다.", "member", member)
 
+
+    }
+
+    fun findPwByLoginIdAndEmail(loginId: String, email: String): ResultData {
+        if(loginId.isEmpty()){
+            return ResultData.from("F-1", "로그인 아이디를 입력해주세요.")
+        }
+        if(email.isEmpty()){
+            return ResultData.from("F-2", "이메일을 입력해주세요.")
+        }
+
+        val member = memberRepository.getMemberByLoginId(loginId)
+        if(member == null){
+            return ResultData.from("F-3", "입력하신 정보와 일치하는 회원이 존재하지 않습니다.")
+        }
+
+        // 로그인 아이디로 조회된 회원은 존재하나, 이메일이 일치하지 않는 경우에 대한 예외처리
+        if(member.email != email){
+            return ResultData.from("F-4", "입력하신 정보와 일치하는 회원이 존재하지 않습니다.")
+        }
+
+        // 조회된 회원의 비밀번호를 변경한다.
+        val tempPw = Ut.getTempPassword(8)
+        memberRepository.changeLoginPwToTempPw(member.id, tempPw)
+
+        val title = "${member.name}님의 newPeace 사이트 임시 비밀번호"
+        val body = """${member.name}님의 임시 비밀번호는 $tempPw 입니다.<br>비밀번호를 변경해주십시오."""
+
+        emailService.send(member.email, title, body)
+
+        return ResultData.from("S-1", "${member.email}로 임시 비밀번호가 발송되었습니다.")
 
     }
 }

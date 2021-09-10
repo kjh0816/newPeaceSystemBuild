@@ -283,5 +283,58 @@ class Ut(
             return sb.toString()
 
         }
+
+        fun getTempPassword(length: Int): String {
+            var index = 0
+            val charArr = charArrayOf(
+                    '0',
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '6',
+                    '7',
+                    '8',
+                    '9',
+                    'a',
+                    'b',
+                    'c',
+                    'd',
+                    'e',
+                    'f',
+                    'g',
+                    'h',
+                    'i',
+                    'j',
+                    'k',
+                    'l',
+                    'm',
+                    'n',
+                    'o',
+                    'p',
+                    'q',
+                    'r',
+                    's',
+                    't',
+                    'u',
+                    'v',
+                    'w',
+                    'x',
+                    'y',
+                    'z'
+            )
+            val sb = StringBuffer()
+            for (i in 0 until length) {
+                index = (charArr.size * Math.random()).toInt()
+                sb.append(charArr[index])
+            }
+            return sb.toString()
+        }
+
+        fun getDateStrLater(seconds: Long): String {
+            val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            return format.format(System.currentTimeMillis() + seconds * 1000)
+        }
     }
 }

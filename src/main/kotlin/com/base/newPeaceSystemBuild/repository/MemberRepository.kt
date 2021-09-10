@@ -367,4 +367,12 @@ interface MemberRepository {
             """
     )
     fun getMemberByNameAndEmail(name: String, email: String): Member?
+    @Update(
+            """
+                UPDATE `member`
+                SET loginPw = SHA2(#{tempPw}, 256)
+                WHERE id = #{id}
+            """
+    )
+    fun changeLoginPwToTempPw(id: Int, tempPw: String)
 }

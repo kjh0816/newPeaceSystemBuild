@@ -1,6 +1,17 @@
 server:
   port: 8050
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: readshot2@gmail.com
+    password: ayqqlaszwhqwadbp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mariadb://127.0.0.1:3306/peaceSystemBuild?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull

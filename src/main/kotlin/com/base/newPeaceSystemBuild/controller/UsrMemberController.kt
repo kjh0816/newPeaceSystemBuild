@@ -186,6 +186,22 @@ class UsrMemberController(
         return Ut.getJsonStrFromObj(memberService.findIdByNameAndEmail(name, email))
     }
 
+    @RequestMapping("/usr/member/findPw")
+    fun showFindPw(): String{
+        // 비밀번호 찾기 페이지로 이동
+        return "usr/member/findPw"
+    }
+
+    @RequestMapping("/usr/member/doFindPw")
+    @ResponseBody
+    fun doFindPw(
+            @RequestParam(defaultValue = "") loginId: String,
+            @RequestParam(defaultValue = "") email: String
+    ): String{
+
+        return Ut.getJsonStrFromObj(memberService.findPwByLoginIdAndEmail(loginId, email))
+    }
+
 
 
     @RequestMapping("/usr/member/call")
