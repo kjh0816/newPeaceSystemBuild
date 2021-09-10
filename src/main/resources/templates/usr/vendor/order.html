@@ -19,11 +19,18 @@
         <br>
         <div>장례지도사 연락처 : [[${order.extra__directorCellphoneNo}]]</div>
         <br>
-        <div>주문한 제단꽃 이름 : [[${order.extra__flowerName}]]</div>
+        <!-- 상품 이름과 가격은 리포지터리에서 MyBatis 동적 sql 통해서 roleCategoryId 값에따라 바뀌게 설정 -->
+        <div>주문한 상품 이름 : [[${order.extra__name}]]</div>
         <br>
-        <div>주문한 제단꽃 가격 : [[${order.extra__flowerRetailPrice}]]</div>
+        <div>주문한 상품 가격 : [[${order.extra__retailPrice}]]</div>
 
-        <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${order.standardId})}" alt="" width="300px" height="150px">
+        <!-- roleCategoryId 값에따라 출력할 이미지 변경 -->
+        <th:block th:if="${order.roleCategoryId == 1}">
+            <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${order.standardId})}" alt="" width="300px" height="150px">
+        </th:block>
+        <th:block th:if="${order.roleCategoryId == 2}">
+            <img th:src="@{../../../resource/img/portrait/portrait{portraitId}.png(portraitId = ${order.standardId})}" alt="" width="300px" height="150px">
+        </th:block>
 
         <form onsubmit="if(!confirm('제단꽃 배송이 완료되었습니까?')) return false; Complete__submit(this);">
             <input type="hidden" name="clientId" th:value="${order.clientId}">

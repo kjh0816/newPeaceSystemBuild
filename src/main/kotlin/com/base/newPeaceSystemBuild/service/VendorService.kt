@@ -96,7 +96,10 @@ class VendorService(
     fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(memberId: Int, clientId: Int): ResultData{
         val client = clientRepository.getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
 
-        val order = vendorRepository.getOrderByClientId(clientId) ?: return ResultData.from("F-2", "주문정보가 조회되지않습니다.")
+        // 해당 페이지에 들어올 수 있으면, 이미 vendor 로 등록된 상태이기때문에 vendor 등록시 선택된 extra__roleCategoryId를 가져온다. 어떤 물품의 공급자인지에 관한 칼럼이다.
+        val roleCategoryId = rq.getLoginedMember()!!.extra__roleCategoryId!!
+
+        val order = vendorRepository.getOrderByClientIdAndRoleCategoryId(clientId, roleCategoryId) ?: return ResultData.from("F-2", "주문정보가 조회되지않습니다.")
 
         if(order.orderStatus){
             // order 테이블에 vendorMemberId 칼럼값이 현재 로그인한 회원의 ID값이랑 같으면 로그인한 회원이 해당 주문을 받은것
@@ -108,14 +111,16 @@ class VendorService(
                 return ResultData.from("F-4", "다른 업체에서 먼저 주문을 받았습니다.")
             }
         }
-
-        vendorRepository.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(memberId, client.directorMemberId, true)
+        // 장례지도사가 상품을 주문하면 order 테이블에 데이터가 추가된다. 이때 vendorMemberId는 기본값 0인상태, orderStatus = false 인 상태이다.
+        // 사업자가 주문을 받으면 테이블의 데이터를 수정한다 vendorMemberId 는 로그인 정보의 ID로 바꿔주고 orderStatus 는 true 로 바꿔준다.
+        // 바꿔줄 데이터는 where 절을 통해 directorMemberId 와 roleCategoryId가 일치하는 데이터의 정보만 바꿔준다.
+        vendorRepository.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberIdAndRoleCategoryId(memberId, client.directorMemberId, roleCategoryId, true)
 
         return ResultData.from("S-1", "주문접수가 완료되었습니다.", "client", client)
     }
 
-    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completionStatus: Boolean): List<Order> {
-        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, orderStatus, completionStatus)
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, roleCategoryId: Int, orderStatus: Boolean, completionStatus: Boolean): List<Order> {
+        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, roleCategoryId, orderStatus, completionStatus)
     }
 
     fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completionStatus: Boolean): ResultData {

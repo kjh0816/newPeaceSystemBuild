@@ -4,6 +4,7 @@ import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.standard.Portrait
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -43,6 +44,16 @@ class UsrVendorController(
         return "usr/vendor/request"
     }
 
+    @RequestMapping("/usr/vendor/portraitRequest")
+    fun showPortraitRequest(model: Model): String{
+
+        val portraits: List<Portrait> = vendorService.getPortraits()
+
+        model.addAttribute("portraits", portraits)
+
+        return "usr/vendor/portraitRequest"
+    }
+
     @RequestMapping("/usr/vendor/dispatch")
     fun showDispatch(model: Model, clientId: Int, funeralId: Int): String {
         val client = clientService.getClientById(clientId)
@@ -62,10 +73,29 @@ class UsrVendorController(
         return "usr/vendor/dispatch"
     }
 
+    @RequestMapping("/usr/vendor/portraitDispatch")
+    fun showPortraitDispatch(model: Model, clientId: Int, funeralId: Int): String {
+        val client = clientService.getClientById(clientId)
+        val funeral = clientService.getFuneralById(funeralId)
+
+        if(funeral == null){
+            return "redirect:/usr/home/main"
+        }
+
+        val portrait = vendorService.getPortraitById(funeral.portraitId)
+
+
+        model.addAttribute("client", client)
+        model.addAttribute("funeral", funeral)
+        model.addAttribute("portrait", portrait)
+
+        return "usr/vendor/portraitDispatch"
+    }
+
     @RequestMapping("/usr/vendor/order")
     fun showOrder(model: Model): String {
         // 컴파일러가 추천하는 방식이라 매개변수 명도 넣어줌. Boolean 값이 두개라 헷갈릴까봐 이쪽을 추천하는듯?
-        val orders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id,
+        val orders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
             orderStatus = true,
             completionStatus = false
         )
@@ -80,28 +110,18 @@ class UsrVendorController(
     fun doRequest(
         multipartRequest: MultipartRequest
     ): String {
-
-
-        val fileMap = multipartRequest.fileMap
-        for (fileInputName in fileMap.keys) {
-            val multipartFile = fileMap[fileInputName]
-
-            if (multipartFile != null) {
-                // 파일을 저장야
-                genFileService.save(multipartFile, rq.getLoginedMember()!!.id)
-            }
-
-//      제단꽃 공급업자는 자기소개(introduce)가 필요없어서 공백을 넣는다.
-//      물품 공급업자의 roleLevel(roleId)는 4
-            val introduce = ""
-            memberRoleService.insertMemberRole(introduce, rq.getLoginedMember()!!.id, 4)
-            memberService.modifyMemberIntoRoleLevelByMemberId(rq.getLoginedMember()!!.id, 4)
-        }
-
-        // 물품 공급업자 등록 승인 요청 시, 로그인 세션 데이터를 바꿔줘야한다.
-        rq.login(memberService.getMemberById(rq.getLoginedMember()!!.id)!!)
+        vendorRequest(multipartRequest, 1)
 
         return rq.replaceJs("제단꽃 공급업자 등록 신청이 완료되었습니다.", "../home/main")
+    }
+    @RequestMapping("/usr/vendor/doPortraitRequest", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doPortraitRequest(
+        multipartRequest: MultipartRequest
+    ): String {
+        vendorRequest(multipartRequest, 2)
+
+        return rq.replaceJs("영정액자 공급업자 등록 신청이 완료되었습니다.", "../home/main")
     }
 
     @RequestMapping("/usr/vendor/doDispatch", method = [RequestMethod.POST])
@@ -118,5 +138,26 @@ class UsrVendorController(
         clientId: Int
     ): String {
         return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(rq.getLoginedMember()!!.id, clientId, true))
+    }
+
+    fun vendorRequest(multipartRequest: MultipartRequest, roleCategoryId: Int){
+        val fileMap = multipartRequest.fileMap
+        for (fileInputName in fileMap.keys) {
+            val multipartFile = fileMap[fileInputName]
+
+            if (multipartFile != null) {
+                // 파일을 저장야
+                genFileService.save(multipartFile, rq.getLoginedMember()!!.id)
+            }
+
+//      제단꽃 공급업자는 자기소개(introduce)가 필요없어서 공백을 넣는다.
+//      물품 공급업자의 roleLevel(roleId)는 4
+            val introduce = ""
+            memberRoleService.insertMemberRole(introduce, rq.getLoginedMember()!!.id, 4, roleCategoryId)
+            memberService.modifyMemberIntoRoleLevelByMemberId(rq.getLoginedMember()!!.id, 4)
+        }
+
+        // 물품 공급업자 등록 승인 요청 시, 로그인 세션 데이터를 바꿔줘야한다.
+        rq.login(memberService.getMemberById(rq.getLoginedMember()!!.id)!!)
     }
 }

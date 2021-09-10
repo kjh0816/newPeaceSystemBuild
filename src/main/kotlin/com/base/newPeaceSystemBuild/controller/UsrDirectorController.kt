@@ -118,7 +118,7 @@ class UsrDirectorController(
         //  장례지도사의 roleLevel(roleId)는 3
 
         // memberRole 테이블에 유저가 입력한 자기소개 및 회원번호, roleLevel(roleId) 을 3으로 데이터를 생성
-        memberRoleService.insertMemberRole(introduce, rq.getLoginedMember()!!.id, 3)
+        memberRoleService.insertMemberRole(introduce, rq.getLoginedMember()!!.id, 3, 0)
 
         // roleLevel을 3(장례지도사) 으로 변경
         memberService.modifyMemberIntoRoleLevelByMemberId(rq.getLoginedMember()!!.id, 3)

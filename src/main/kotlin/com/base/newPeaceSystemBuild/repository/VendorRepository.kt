@@ -74,12 +74,14 @@ interface VendorRepository {
             vendorMemberId = #{vendorMemberId},
             orderStatus = #{orderStatus}
             WHERE directorMemberId = #{directorMemberId}
+            AND roleCategoryId = #{roleCategoryId}
         """
     )
-    fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(vendorMemberId: Int, directorMemberId: Int, orderStatus: Boolean)
+    fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberIdAndRoleCategoryId(vendorMemberId: Int, directorMemberId: Int, roleCategoryId: Int, orderStatus: Boolean)
 
     @Select(
         """
+            <script>
             SELECT 
             O.*,
             C.id AS `extra__clientId`,
@@ -94,21 +96,35 @@ interface VendorRepository {
             C.accountNum AS `extra__accountNum`,
             M.name AS `extra__directorName`,
             M.cellphoneNo AS `extra__directorCellphoneNo`,
-            F.name AS `extra__flowerName`,
-            F.retailPrice AS `extra__flowerRetailPrice`
+            <if test="roleCategoryId == 1">
+                F.name AS `extra__name`,
+                F.retailPrice AS `extra__retailPrice`
+            </if>
+            <if test="roleCategoryId == 2">
+                P.name AS `extra__name`,
+                P.retailPrice AS `extra__retailPrice`
+            </if>
             FROM `order` AS O
             LEFT JOIN `client` AS C
             ON O.clientId = C.id
             LEFT JOIN `member` AS M
             ON O.directorMemberId = M.id
-            LEFT JOIN `flower` AS F
-            ON O.standardId = F.id
+            <if test="roleCategoryId == 1">
+                LEFT JOIN `flower` AS F
+                ON O.standardId = F.id
+            </if>
+            <if test="roleCategoryId == 2">
+                LEFT JOIN `portrait` AS P
+                ON O.standardId = P.id
+            </if>
             WHERE vendorMemberId = #{vendorMemberId}
             AND orderStatus = #{orderStatus}
             AND completionStatus = #{completionStatus}
+            AND roleCategoryId = #{roleCategoryId}
+            </script>
         """
     )
-    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, orderStatus: Boolean, completionStatus: Boolean): List<Order>
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, roleCategoryId: Int, orderStatus: Boolean, completionStatus: Boolean): List<Order>
 
     @Select(
         """
@@ -118,6 +134,16 @@ interface VendorRepository {
         """
     )
     fun getOrderByClientId(clientId: Int): Order?
+
+    @Select(
+        """
+            SELECT * 
+            FROM `order`
+            WHERE clientId = #{clientId}
+            AND roleCategoryId = #{roleCategoryId}
+        """
+    )
+    fun getOrderByClientIdAndRoleCategoryId(clientId: Int, roleCategoryId: Int): Order?
 
     @Select(
         """

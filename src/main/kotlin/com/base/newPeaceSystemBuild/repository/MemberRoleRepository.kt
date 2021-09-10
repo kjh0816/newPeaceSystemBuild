@@ -8,13 +8,20 @@ interface MemberRoleRepository {
 
     @Insert(
         """
+            <script>
             INSERT INTO memberRole
-            SET regDate = NOW(),
+            <set>
+            regDate = NOW(),
             updateDate = NOW(),
             memberId = #{memberId},
             roleId = #{roleId},
-            introduce = #{introduce}
+            introduce = #{introduce},
+            <if test="roleId == 4">
+            roleCategoryId = #{roleCategoryId},
+            </if>
+            </set>
+            </script>
         """
     )
-    fun insertMemberRole(introduce: String, memberId: Int, roleId: Int)
+    fun insertMemberRole(introduce: String, memberId: Int, roleId: Int, roleCategoryId: Int)
 }

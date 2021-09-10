@@ -24,6 +24,6 @@ data class Order (
     var extra__accountNum: String? = null
     var extra__directorName: String? = null
     var extra__directorCellphoneNo: String? = null
-    var extra__flowerName: String? = null
-    var extra__flowerRetailPrice: String? = null
+    var extra__name: String? = null
+    var extra__retailPrice: String? = null
 }
