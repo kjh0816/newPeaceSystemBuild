@@ -46,7 +46,7 @@ interface VendorRepository {
             WHERE id = #{flowerId}
         """
     )
-    fun getFlowerById(flowerId: Int): Flower
+    fun getFlowerById(flowerId: Int): Flower?
 
     @Select(
         """
@@ -170,7 +170,7 @@ interface VendorRepository {
             WHERE id = #{portraitId}
         """
     )
-    fun getPortraitById(portraitId: Int): Portrait
+    fun getPortraitById(portraitId: Int): Portrait?
 
     @Update(
         """

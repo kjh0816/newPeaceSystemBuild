@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.controller
 
 import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
+import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -48,6 +49,7 @@ class UsrDirectorController(
         //
         val client = clientService.getClientById(funeral.clientId)
 
+
         if(client == null){
             return "redirect:/usr/home/main"
         }
@@ -55,14 +57,26 @@ class UsrDirectorController(
         val flower = vendorService.getFlowerById(funeral.flowerId)
         val portrait = vendorService.getPortraitById(funeral.portraitId)
 
-        // 뷰페이지에서 총액을 표기해주기 위한 변수
-        val sum = flower.retailPrice.toInt() + portrait.retailPrice.toInt()
+        // 뷰페이지에서 총액을 표기해주기 위한 변수들
+        // 선택하지 않은상태에선 해당 변수(flower, portrait 등) 들이 null값을 가지고있다.
+        // null 값을 허용하면서 null 일경우 해당 상품의 가격을 0으로 측정해서 넣어줌.
+        var flowerPrice = flower?.retailPrice?.toInt()
+
+        if(flower == null){
+            flowerPrice = 0
+        }
+
+        var portraitPrice = portrait?.retailPrice?.toInt()
+
+        if(portrait == null){
+            portraitPrice = 0
+        }
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("flower", flower)
         model.addAttribute("portrait", portrait)
-        model.addAttribute("sum", sum)
+        model.addAttribute("sum", flowerPrice!! + portraitPrice!!)
 
         return "usr/director/progress"
     }
