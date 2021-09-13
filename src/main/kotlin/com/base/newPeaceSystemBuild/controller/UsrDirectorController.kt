@@ -79,8 +79,19 @@ class UsrDirectorController(
     }
 
     @RequestMapping("/usr/director/dispatch")
-    fun showDispatch(model: Model, clientId: Int): String {
+    fun showDispatch(
+            model: Model,
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String {
         val client = clientService.getClientById(clientId)
+        
+        
+        // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
+        if(client == null){
+            return "usr/home/main"
+        }
+
+
 
         model.addAttribute("client", client)
 
