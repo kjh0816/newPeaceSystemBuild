@@ -10,39 +10,77 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    <a href="/usr/home/main">메인 페이지</a>
-    <script th:inline="javascript">
-        var flowerId = [[${funeral.flowerId}]];
-        var flowers = [[${flowers}]];
-    </script>
-    <div>故 [[${client.deceasedName}]]님의 장례</div>
-    <br>
-    <div>상주 성함: [[${client.relatedName}]]</div>
-    <br>
-    <div>상주 전화번호: [[${client.cellphoneNo}]]</div>
-    <br>
-    <div>위치: [[${client.location}]] [[${client.address}]]</div>
-    <br>
-    <div>부조금을 받을 유족의 계좌번호: [[${client.bank}]] [[${client.accountNum}]]</div>
-    <br>
-    <div>합계 : [[${sum}]] 원</div>
-    <br>
-    <form action="./selectFlower">
-        <button type="submit">제단꽃 선택하기</button>
-    </form>
-    <div th:if="${funeral.flowerId != 0}">
-        <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}" alt="" width="300px" height="150px">
-        <br>
-        <div>가격 : [[${flower.retailPrice}]] 원</div>
+    <!--  장례  -->
+    <div class="card card-side shadow my-2">
+        <div class="card-body">
+            <h2 class="card-title">故 [[${client.deceasedName}]]님의 장례</h2>
+            <div class="flex items-center">
+                <div class="badge badge-md">상주 성함</div>
+                <p class="pl-2">[[${client.relatedName}]]</p>
+            </div>
+            <div class="flex items-center">
+                <div class="badge badge-md">상주 전화번호</div>
+                <p class="pl-2">[[${client.cellphoneNo}]]</p>
+            </div>
+            <div class="flex items-center">
+                <div class="badge badge-md">위치</div>
+                <p class="pl-2">[[${client.location}]] [[${client.address}]]</p>
+            </div>
+            <div class="flex items-center">
+                <div class="badge badge-md">부조금을 받을 유족의 계좌번호</div>
+                <p class="pl-2">[[${client.bank}]] [[${client.accountNum}]]</p>
+            </div>
+            <div class="flex items-center">
+                <div class="badge badge-md">합계</div>
+                <p class="pl-2">[[${sum}]] 원</p>
+            </div>
+        </div>
     </div>
-    <br><br>
-    <form action="./selectPortrait">
-        <button type="submit">영정사진 선택하기</button>
-    </form>
-    <div th:if="${funeral.portraitId != 0}">
-        <img th:src="@{../../../resource/img/portrait/portrait{portraitId}.png(portraitId = ${portrait.id})}" alt="" width="300px" height="150px">
-        <br>
-        <div>가격 : [[${portrait.retailPrice}]] 원</div>
+    <!--  제단꽃  -->
+    <div class="card card-side shadow mb-2">
+        <figure>
+            <div th:if="${funeral.flowerId != 0}">
+                <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}" alt="" style="width: 400px; height: 250px;">
+            </div>
+        </figure>
+        <div class="card-body">
+            <h2 class="card-title">제단꽃</h2>
+            <th:block th:if="${flower == null}">
+                <p>상품을 선택해주세요</p>
+            </th:block>
+            <th:block th:unless="${flower == null}">
+                <p>상품명 : [[${flower.name}]]</p>
+                <p>가격 : [[${flower.retailPrice}]] 원</p>
+            </th:block>
+            <div class="card-actions">
+                <form action="./selectFlower">
+                    <button class="btn btn-ghost" type="submit">제단꽃 선택하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--  영정 액자  -->
+    <div class="card card-side shadow mb-2">
+        <figure>
+            <div th:if="${funeral.portraitId != 0}">
+                <img th:src="@{../../../resource/img/portrait/portrait{portraitId}.png(portraitId = ${portrait.id})}" alt="" style="width: 400px; height: 250px;">
+            </div>
+        </figure>
+        <div class="card-body">
+            <h2 class="card-title">영정 액자</h2>
+            <th:block th:if="${portrait == null}">
+                <p>상품을 선택해주세요</p>
+            </th:block>
+            <th:block th:unless="${portrait == null}">
+                <p>상품명 : [[${portrait.name}]]</p>
+                <p>가격 : [[${portrait.retailPrice}]] 원</p>
+            </th:block>
+            <div class="card-actions">
+                <form action="./selectPortrait">
+                    <button class="btn btn-ghost" type="submit">영정액자 선택하기</button>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 

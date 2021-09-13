@@ -89,7 +89,7 @@ class VendorService(
         return ResultData.from("S-1", "${directorsCount}곳의 업체에게 제작 요청했습니다.", "from", from, "to", to, "msg", msg, "rb", rb, "orderId", orderId, "funeral", funeral)
     }
 
-    fun getFlowerById(flowerId: Int): Flower {
+    fun getFlowerById(flowerId: Int): Flower? {
         return vendorRepository.getFlowerById(flowerId)
     }
 
@@ -133,7 +133,7 @@ class VendorService(
         return vendorRepository.getPortraits()
     }
 
-    fun getPortraitById(portraitId: Int): Portrait {
+    fun getPortraitById(portraitId: Int): Portrait? {
         return vendorRepository.getPortraitById(portraitId)
     }
 
