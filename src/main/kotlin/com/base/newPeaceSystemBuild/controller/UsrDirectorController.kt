@@ -55,10 +55,14 @@ class UsrDirectorController(
         val flower = vendorService.getFlowerById(funeral.flowerId)
         val portrait = vendorService.getPortraitById(funeral.portraitId)
 
+        // 뷰페이지에서 총액을 표기해주기 위한 변수
+        val sum = flower.retailPrice.toInt() + portrait.retailPrice.toInt()
+
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("flower", flower)
         model.addAttribute("portrait", portrait)
+        model.addAttribute("sum", sum)
 
         return "usr/director/progress"
     }
