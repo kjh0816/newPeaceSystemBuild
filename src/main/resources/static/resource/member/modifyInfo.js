@@ -98,8 +98,8 @@ $('#email').blur(function(){
         success: function(result){
 //   (2) ResultData에 따른 결과값 표시
             // 기존 이메일인 경우
-            if(result.resultCode.startsWith('F-') && email == result.map.email){
-                $("#emailCheckMsg").html('기존 이메일을 유지합니다.');
+            if(result.resultCode.startsWith('S-') && email == result.map.email){
+                $("#emailCheckMsg").html(result.msg);
                 $("#emailCheckMsg").css("color", "green");
                 $("#modifyInfo-submit").attr("disabled", false);
                 return;

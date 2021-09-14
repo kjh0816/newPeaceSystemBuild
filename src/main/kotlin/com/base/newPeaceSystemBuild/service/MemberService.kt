@@ -80,13 +80,21 @@ class MemberService(
 
 
         // rq.getLoginedMember()!!.email 를 map으로 반환하는 것은 수정 페이지에서 기존 이메일인 경우에 대응하기 위함.
-
+        // 기존 방식처럼 S-1 일 경우에 rq.getLoginedMember()!!.email 를 return 해버릴경우 정보수정은 문제없지만
+        // 회원 가입할땐 rq.getLoginedMember()가 null이기 때문에 에러가난다. 회원가입, 정보수정 모두 에러나지 않게 새로운 if문추가
         val member = getMemberByEmail(email)
         if(member != null){
-            return ResultData.from("F-2", "해당 이메일로 가입된 회원이 이미 존재합니다.", "email", rq.getLoginedMember()!!.email)
+            if(rq.getLoginedMember() == null){
+                return ResultData.from("F-2", "해당 이메일로 가입된 회원이 이미 존재합니다.")
+            }
+            if(email == rq.getLoginedMember()!!.email){
+                return ResultData.from("S-2", "기존 이메일을 유지합니다.", "email", rq.getLoginedMember()!!.email)
+            }
+
+            return ResultData.from("F-2", "해당 이메일로 가입된 회원이 이미 존재합니다.")
         }
 
-        return ResultData.from("S-1", "사용 가능한 이메일입니다.", "email", rq.getLoginedMember()!!.email)
+        return ResultData.from("S-1", "사용 가능한 이메일입니다.")
 
     }
 
