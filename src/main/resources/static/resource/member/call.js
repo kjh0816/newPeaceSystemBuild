@@ -141,7 +141,7 @@ $('#cellphoneNo').blur(function(){
     if(cellphoneNo.length == 0){
         $("#cellphoneNoCheckMsg").html("핸드폰 번호를 입력해주세요.");
         $("#cellphoneNoCheckMsg").css("color", "red");
-        $("#join-submit").attr("disabled", true);
+        $("#call-submit").attr("disabled", true);
         return;
     }
 //  (2) 입력값에 대한 정규표현식 적용 (시작)
@@ -149,12 +149,12 @@ $('#cellphoneNo').blur(function(){
     if(!regex.test(cellphoneNo)){
         $("#cellphoneNoCheckMsg").html('핸드폰 번호가 올바른지 확인해주세요.');
         $("#cellphoneNoCheckMsg").css("color", "red");
-        $("#join-submit").attr("disabled", true);
+        $("#call-submit").attr("disabled", true);
         return;
     }
 //  (2) 입력값에 대한 정규표현식 적용 (끝)
         $("#cellphoneNoCheckMsg").html("");
         $("#cellphoneNoCheckMsg").css("color", "green");
-        $("#join-submit").attr("disabled", false);
+        $("#call-submit").attr("disabled", false);
         return;
 });
