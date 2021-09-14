@@ -30,7 +30,7 @@
                     <p>가격 : [[${flower.retailPrice}]] 원</p>
                     <div class="card-actions">
                         <div class="form-control flex">
-                            <span class="flowerIdSelectBox stop-dragging label-text border-2 rounded px-4 py-2 bg-white font-bold   " style="cursor: pointer;" th:id="${flower.id}">선택하기</span>
+                            <span class="flowerIdSelectBox btn btn-ghost" th:id="${flower.id}">선택하기</span>
                             <input id="flowerId" type="radio" name="flowerId" class="radio" th:value="${flower.id}" style="display: none;">
                         </div>
                     </div>
@@ -38,7 +38,7 @@
             </div>
         <div class="divider" th:if="${flowers.size != flower.id}">OR</div>
         </div>
-        <input class="btn btn-ghost" type="submit" value="선택 완료">
+        <input class="btn btn-ghost" type="submit" value="주문하기">
     </form>
 </main>
 
