@@ -27,3 +27,20 @@ function SelectPortrait__submit(form) {
         }
     );
 }
+
+$('.portraitIdSelectBox').click(function () {
+    var portraitId = $(this).attr('id');
+
+    if($(this).hasClass('active')){
+        $('.portraitIdSelectBox').text('선택하기');
+        $(this).removeClass('active');
+        $("input[value='" + portraitId + "']").prop('checked', false);
+    }
+    else{
+        $('.portraitIdSelectBox').removeClass('active');
+        $('.portraitIdSelectBox').text('선택하기');
+        $(this).addClass('active');
+        $(this).text("선택완료");
+        $("input[value='" + portraitId + "']").prop('checked', true);
+    }
+});

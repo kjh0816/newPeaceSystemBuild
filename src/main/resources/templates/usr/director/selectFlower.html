@@ -13,11 +13,6 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-
-    <style>
-
-    </style>
-
     <form onsubmit="SelectFlower__submit(this); return false;">
         <div class="flex flex-col w-full" th:each="flower : ${flowers}">
         <input type="hidden" name="funeralId" th:value="${funeral.id}">
