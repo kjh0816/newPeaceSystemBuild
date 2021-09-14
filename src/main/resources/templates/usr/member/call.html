@@ -4,60 +4,58 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{usr/layout/default}">
 <head>
-  <title>장례지도사 출동 요청</title>
-  <th:block layout:fragment="js">
-    <script type="text/javascript" src="/resource/member/call.js" charset="utf-8" defer></script>
-  </th:block>
+    <title>장례지도사 출동 요청</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/member/call.js" charset="utf-8" defer></script>
+    </th:block>
 </head>
 <main layout:fragment="main">
-  <div style="font-weight: bold; font-size: 18px;">신청인: [[${@rq.loginedMember.name}]]</div>
-  <br>
-  <form action="./doCall" method="POST" onsubmit="MemberCall__submit(this); return false;">
-    <div class="label" style="font-weight: bold; font-size: 18px;">고인의 성함</div>
-    <div class="input">
-      <input type="text" id="deceasedName" name="deceasedName" maxlength="30" placeholder="고인의 성함을 입력해주세요." autocomplete="off"/>
-      <div id="deceasedNameCheckMsg" style="color : red;"></div>
-    </div>
-    <br>
+    <form action="./doCall" method="POST" onsubmit="MemberCall__submit(this); return false;">
+        <div class="p-10 card bg-base-200">
+            <div class="form-control">
+                <div class="card card-side bordered bg-white">
+                    <div class="card-body text-sm">
+                        <h2 class="card-title">신청인: [[${@rq.loginedMember.name}]]</h2>
 
-    <div class="label" style="font-weight: bold; font-size: 18px;">상주님의 성함</div>
-    <div class="relatedNameInfo">장례지도사가 고인의 장례를 같이 모실 수 있도록 유족 중 한 분의 정보를 입력해주십시오.</div>
-    <div class="input">
-      <input type="text" id="relatedName" name="relatedName" maxlength="30" placeholder="상주의 성함을 입력해주세요." autocomplete="off"/>
-      <div id="relatedNameCheckMsg" style="color : red;"></div>
-    </div>
-    <br>
+                        <h2 class="font-bold">고인의 성함</h2>
+                        <input type="text" id="deceasedName" name="deceasedName" placeholder="고인의 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2">
+                        <div id="deceasedNameCheckMsg" style="color : red;"></div>
 
-    <div class="label" style="font-weight: bold; font-size: 18px;">상주님의 연락처</div>
-    <div class="cellphoneNoInfo">아래 입력하신 연락처를 통해 장례지도사가 연락하게 됩니다.</div>
-    <div class="input">
-      <input type="text"  id="cellphoneNo" name="cellphoneNo" maxlength="12" placeholder="상주의 연락처를 입력해주세요." autocomplete="off"/>
-      <div id="cellphoneNoCheckMsg" style="color : red;"></div>
-    </div>
-    <br>
+                        <h2 class="font-bold">상주님의 성함</h2>
+                        <label class="label">
+                            <span class="label-text">장례지도사가 고인의 장례를 같이 모실 수 있도록 유족 중 한 분의 정보를 입력해주십시오.</span>
+                        </label>
+                        <input type="text" id="relatedName" name="relatedName" placeholder="상주님의 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2">
+                        <div id="relatedNameCheckMsg" style="color : red;"></div>
 
-    <div class="label" style="font-weight: bold; font-size: 18px;">장례를 치르시는 지역</div>
-    <div class="locationInfo">대개, 고인이 계신 지역에서 장례를 치루지만, 고향 등에서 장례를 치루시는 분들도 계십니다.
-      <br>
-    유족분들과 상의해서 장례를 어디서 치루시는지 입력해주십시오. 주소가 상세할수록 빨리 도움을 드릴 수 있는 장례지도사가 연결될 수 있습니다.
-      <br>
-    혹은, 고인이 계시는 병원 또는 장례식장의 지역과 이름을 입력해주세요.
-    </div>
-    <div class="input">
-      <select id="location" name="location">
-        <option value="" disabled selected>지역 선택</option>
-        <div th:each="department : ${departments}" th:object="${department}">
-          <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                        <h2 class="font-bold">상주님의 연락처</h2>
+                        <input type="text" id="cellphoneNo" name="cellphoneNo" maxlength="11" placeholder="상주의 연락처를 입력해주세요." autocomplete="off" class="input input-bordered my-2">
+                        <div id="cellphoneNoCheckMsg" style="color : red;"></div>
+
+                        <h2 class="font-bold">장례를 치르시는 지역</h2>
+                        <label class="label">
+                            <span class="label-text">
+                                대개, 고인이 계신 지역에서 장례를 치루지만, 고향 등에서 장례를 치루시는 분들도 계십니다.
+                                <br>
+                                유족분들과 상의해서 장례를 어디서 치루시는지 입력해주십시오. 주소가 상세할수록 빨리 도움을 드릴 수 있는 장례지도사가 연결될 수 있습니다.
+                                <br>
+                                혹은, 고인이 계시는 병원 또는 장례식장의 지역과 이름을 입력해주세요.
+                            </span>
+                        </label>
+                        <select id="location" name="location" class="select select-bordered select-sm w-full max-w-xs">
+                            <option value="" disabled selected>지역 선택</option>
+                            <th:block th:each="department : ${departments}" th:object="${department}">
+                                <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                            </th:block>
+                        </select>
+                        <input type="text" id="address" name="address" placeholder="나머지 상세 주소를 입력해주세요." autocomplete="off" class="input input-bordered my-2">
+                    </div>
+                </div>
+                <br>
+            </div>
+            <button type="submit" id="call-submit" class="btn btn-ghost">출동 요청</button>
         </div>
-      </select>
-      <br>
-      <input type="text" id="address" name="address" style="width: 200px;" placeholder="나머지 상세 주소를 입력해주세요." autocomplete="off"/>
-    </div>
-    <br>
-    <div>
-      <button id="call-submit">출동 요청</button>
-    </div>
-  </form>
+    </form>
 </main>
 
 </html>
