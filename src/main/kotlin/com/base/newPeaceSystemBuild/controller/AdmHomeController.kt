@@ -79,6 +79,9 @@ class AdmHomeController(
         memberService.modifyMemberRoleIntoAuthenticationLevelAndRoleLevelByMemberId(memberId, authenticationLevel, roleLevel)
 
         var replaceUri =  "main?authenticationLevel=0&roleLevel=3&page=1"
+        // authenticationLevel이 0인 상태: 기본값 (requestStatus가 1인 경우, 승인 대기 리스트 / requestStatus가 0인 경우는 등록 신청을 안 한 상태)
+        // authenticationLevel이 1인 상태: 승인된 상태
+        // authenticationLevel이 2인 상태: 보류된 상태
         if(authenticationLevel == 1){
             if(roleLevel == 3){
                 replaceUri = "main?authenticationLevel=$authenticationLevel&roleLevel=$roleLevel&page=1"

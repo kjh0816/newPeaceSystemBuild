@@ -53,8 +53,7 @@
                 <hr>
             </form>
         </th:block>
-        <nav
-                th:with="
+        <nav th:with="
                         pageMenuArmSize = 4,
                         startPage = ${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1},
                         endPage = ${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}
