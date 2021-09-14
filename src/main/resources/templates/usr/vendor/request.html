@@ -12,30 +12,50 @@
 </head>
 
 <main layout:fragment="main">
-    <div class="label" style="font-weight: bold; font-size: 24px;">취급해야할 꽃 규격</div>
-
-    <div class="output">
-<hr>
-        <div th:each="flower : ${flowers}" th:object="${flower}">
-            <div th:value="${flower.name}" th:text="${flower.name}"></div>
-            <div th:value="${flower.retailPrice}" th:text="|소비자가: ${flower.retailPrice}원|"></div>
-            <div th:value="${flower.standardPrice}" th:text="|기준가: ${flower.standardPrice}원|"></div>
-            <div th:value="${flower.costPrice}" th:text="|원가: ${flower.costPrice}원|"></div>
-            <hr>
-        </div>
-    </div>
-
-
+    <style>
+        #file-input {  /* 파일 필드 숨기기 */
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip:rect(0,0,0,0);
+            border: 0;
+        }
+    </style>
     <form action="./doRequest" method="POST" enctype="multipart/form-data" onsubmit="VendorRequest__submit(this); return false;">
-        <div class="label" style="font-weight: bold; font-size: 20px;">사업자 등록증 사진을 등록해주세요.</div>
-        <!-- attachment__1 일 경우, 허가에 관련된 장례지도사 자격증, 사업자 등록증 사진 -->
-        <!-- attachment__2 일 경우, 프로필 사진 -->
-        <!-- attachment 카테고리는 추후 부가적으로 카테고리로 활용할 수 있음 -->
-        <!-- accept="image/*" input 창에서 이미지파일만 노출됨 -->
-        <input type="file" name="file__member__0__vendor__attachment__1" accept="image/*">
-        <br>
-        <br>
-        <button type="submit">위 규격을 취급할 수 있음에 동의합니다.</button>
+        <div class="p-10 card bg-base-200">
+            <div class="form-control">
+                <div class="card card-side bordered bg-white">
+                    <div class="card-body">
+                        <h2 class="card-title">취급해야할 제단꽃 규격</h2>
+                        <div th:each="flower : ${flowers}" th:object="${flower}">
+                            <div th:value="${flower.name}" th:text="|상품명: ${flower.name}|"></div>
+                            <div th:value="${flower.retailPrice}" th:text="|소비자가: ${flower.retailPrice}원|"></div>
+                            <div th:value="${flower.standardPrice}" th:text="|기준가: ${flower.standardPrice}원|"></div>
+                            <div th:value="${flower.costPrice}" th:text="|원가: ${flower.costPrice}원|"></div>
+                            <div th:if="${flowers.size != flower.id}" class="divider">OR</div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <label class="label">
+                    <span class="label-text">사업자 등록증 사진 파일 첨부</span>
+                </label>
+                <div class="file-box flex">
+                    <input type="text" placeholder="선택된 파일 없음." disabled="disabled" class="upload-name bg-transparent w-36 py-2 px-4 text-sm">
+                    <label class="btn btn-ghost w-24" for="file-input">첨부 파일</label>
+                    <!-- file__{relTypeCode}__{relId}__{typeCode}__{type2Code}__{fileNo} -->
+                    <!-- 이런식으로 입력받는게 관례라고 함 -->
+                    <!-- attachment__1 일 경우, 허가에 관련된 장례지도사 자격증, 사업자 등록증 사진 -->
+                    <!-- attachment__2 일 경우, 프로필 사진 -->
+                    <!-- attachment 카테고리는 추후 부가적으로 카테고리로 활용할 수 있음 -->
+                    <!-- accept="image/*" input 창에서 이미지파일만 노출됨 -->
+                    <input class="upload-hidden" type="file" id="file-input" name="file__member__0__vendor__attachment__1" accept="image/*">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-ghost">위 규격을 취급할 수 있음에 동의합니다</button>
         </div>
     </form>
 </main>
