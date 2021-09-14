@@ -12,23 +12,46 @@
 </head>
 
 <main layout:fragment="main">
+    <style>
+        #file-input {  /* 파일 필드 숨기기 */
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip:rect(0,0,0,0);
+            border: 0;
+        }
+        #file-input:hover{
+            background: black;
+        }
+    </style>
     <form action="./doRequest" method="POST" enctype="multipart/form-data" onsubmit="DirectorRequest__submit(this); return false;">
-        <div class="label">본인 소개</div>
-        <div class="input">
-            <textarea name="introduce" placeholder="본인 소개를 입력해주세요." cols="20" rows="5"></textarea>
-        </div>
-        <div class="label">장례지도사 자격증명서 파일 첨부</div>
-        <div class="input">
-            <!-- file__{relTypeCode}__{relId}__{typeCode}__{type2Code}__{fileNo} -->
-            <!-- 이런식으로 입력받는게 관례라고 함 -->
-            <!-- attachment__1 일 경우, 허가에 관련된 장례지도사 자격증, 사업자 등록증 사진 -->
-            <!-- attachment__2 일 경우, 프로필 사진 -->
-            <!-- attachment 카테고리는 추후 부가적으로 카테고리로 활용할 수 있음 -->
-            <!-- accept="image/*" input 창에서 이미지파일만 노출됨 -->
-            <input type="file" name="file__member__0__director__attachment__1" accept="image/*">
-        </div>
-        <div>
-            <button type="submit">신청하기</button>
+
+        <div class="p-10 card bg-base-200">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">본인 소개</span>
+                </label>
+                <textarea class="textarea h-24" name="introduce" placeholder="본인 소개를 입력해주세요."></textarea>
+                <br>
+                <label class="label">
+                    <span class="label-text">장례지도사 자격증명서 파일 첨부</span>
+                </label>
+                <div class="file-box flex">
+                    <input type="text" placeholder="선택된 파일 없음." disabled="disabled" class="upload-name bg-transparent w-36 py-2 px-4 text-sm">
+                    <label class="btn btn-ghost w-24" for="file-input">첨부 파일</label>
+                    <!-- file__{relTypeCode}__{relId}__{typeCode}__{type2Code}__{fileNo} -->
+                    <!-- 이런식으로 입력받는게 관례라고 함 -->
+                    <!-- attachment__1 일 경우, 허가에 관련된 장례지도사 자격증, 사업자 등록증 사진 -->
+                    <!-- attachment__2 일 경우, 프로필 사진 -->
+                    <!-- attachment 카테고리는 추후 부가적으로 카테고리로 활용할 수 있음 -->
+                    <!-- accept="image/*" input 창에서 이미지파일만 노출됨 -->
+                    <input class="upload-hidden" type="file" id="file-input" name="file__member__0__director__attachment__1" accept="image/*">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-ghost w-24">신청하기</button>
         </div>
     </form>
 </main>
