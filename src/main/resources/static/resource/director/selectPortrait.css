@@ -1,0 +1,4 @@
+/* active 처리 */
+.portraitIdSelectBox.active{
+    background: #ddd;
+}

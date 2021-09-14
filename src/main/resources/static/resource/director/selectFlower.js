@@ -28,3 +28,20 @@ function SelectFlower__submit(form) {
         }
     );
 }
+// radio 버튼 대신 사용할 버튼 디자인
+$('.flowerIdSelectBox').click(function () {
+    var flowerId = $(this).attr('id');
+
+    if($(this).hasClass('active')){
+        $('.flowerIdSelectBox').text('선택하기');
+        $(this).removeClass('active');
+        $("input[value='" + flowerId + "']").prop('checked', false);
+    }
+    else{
+        $('.flowerIdSelectBox').removeClass('active');
+        $('.flowerIdSelectBox').text('선택하기');
+        $(this).addClass('active');
+        $(this).text("선택완료");
+        $("input[value='" + flowerId + "']").prop('checked', true);
+    }
+});
