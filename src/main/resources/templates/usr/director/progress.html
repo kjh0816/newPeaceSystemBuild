@@ -59,29 +59,6 @@
             </div>
         </div>
     </div>
-    <!--  영정 액자  -->
-    <div class="card card-side shadow mb-2">
-        <figure>
-            <div th:if="${funeral.portraitId != 0}">
-                <img th:src="@{../../../resource/img/portrait/portrait{portraitId}.png(portraitId = ${portrait.id})}" alt="" style="width: 400px; height: 250px;">
-            </div>
-        </figure>
-        <div class="card-body">
-            <h2 class="card-title">영정 액자</h2>
-            <th:block th:if="${portrait == null}">
-                <p>상품을 선택해주세요</p>
-            </th:block>
-            <th:block th:unless="${portrait == null}">
-                <p>상품명 : [[${portrait.name}]]</p>
-                <p>가격 : [[${portrait.retailPrice}]] 원</p>
-            </th:block>
-            <div class="card-actions">
-                <form action="./selectPortrait">
-                    <button class="btn btn-ghost" type="submit">영정액자 선택하기</button>
-                </form>
-            </div>
-        </div>
-    </div>
 </main>
 
 </html>

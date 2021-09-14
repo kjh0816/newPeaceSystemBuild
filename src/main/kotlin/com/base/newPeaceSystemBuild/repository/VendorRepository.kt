@@ -2,7 +2,6 @@ package com.base.newPeaceSystemBuild.repository
 
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.standard.Flower
-import com.base.newPeaceSystemBuild.vo.standard.Portrait
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
@@ -113,10 +112,6 @@ interface VendorRepository {
                 LEFT JOIN `flower` AS F
                 ON O.standardId = F.id
             </if>
-            <if test="roleCategoryId == 2">
-                LEFT JOIN `portrait` AS P
-                ON O.standardId = P.id
-            </if>
             WHERE vendorMemberId = #{vendorMemberId}
             AND orderStatus = #{orderStatus}
             AND completionStatus = #{completionStatus}
@@ -155,29 +150,7 @@ interface VendorRepository {
     )
     fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completionStatus: Boolean)
 
-    @Select(
-        """
-            SELECT * 
-            FROM portrait
-        """
-    )
-    fun getPortraits(): List<Portrait>
 
-    @Select(
-        """
-            SELECT * 
-            FROM portrait
-            WHERE id = #{portraitId}
-        """
-    )
-    fun getPortraitById(portraitId: Int): Portrait?
 
-    @Update(
-        """
-            UPDATE funeral 
-            SET portraitId = #{portraitId} 
-            WHERE id = #{funeralId};
-        """
-    )
-    fun modifyFuneralIntoPortraitId(funeralId: Int, portraitId: Int)
+
 }

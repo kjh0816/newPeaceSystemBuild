@@ -4,7 +4,6 @@ import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.standard.Flower
-import com.base.newPeaceSystemBuild.vo.standard.Portrait
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -44,15 +43,6 @@ class UsrVendorController(
         return "usr/vendor/request"
     }
 
-    @RequestMapping("/usr/vendor/portraitRequest")
-    fun showPortraitRequest(model: Model): String{
-
-        val portraits: List<Portrait> = vendorService.getPortraits()
-
-        model.addAttribute("portraits", portraits)
-
-        return "usr/vendor/portraitRequest"
-    }
 
     @RequestMapping("/usr/vendor/dispatch")
     fun showDispatch(model: Model, clientId: Int, funeralId: Int): String {
@@ -73,24 +63,7 @@ class UsrVendorController(
         return "usr/vendor/dispatch"
     }
 
-    @RequestMapping("/usr/vendor/portraitDispatch")
-    fun showPortraitDispatch(model: Model, clientId: Int, funeralId: Int): String {
-        val client = clientService.getClientById(clientId)
-        val funeral = clientService.getFuneralById(funeralId)
 
-        if(funeral == null){
-            return "redirect:/usr/home/main"
-        }
-
-        val portrait = vendorService.getPortraitById(funeral.portraitId)
-
-
-        model.addAttribute("client", client)
-        model.addAttribute("funeral", funeral)
-        model.addAttribute("portrait", portrait)
-
-        return "usr/vendor/portraitDispatch"
-    }
 
     @RequestMapping("/usr/vendor/order")
     fun showOrder(model: Model): String {
@@ -114,15 +87,7 @@ class UsrVendorController(
 
         return rq.replaceJs("제단꽃 공급업자 등록 신청이 완료되었습니다.", "../home/main")
     }
-    @RequestMapping("/usr/vendor/doPortraitRequest", method = [RequestMethod.POST])
-    @ResponseBody
-    fun doPortraitRequest(
-        multipartRequest: MultipartRequest
-    ): String {
-        vendorRequest(multipartRequest, 2)
 
-        return rq.replaceJs("영정액자 공급업자 등록 신청이 완료되었습니다.", "../home/main")
-    }
 
     @RequestMapping("/usr/vendor/doDispatch", method = [RequestMethod.POST])
     @ResponseBody

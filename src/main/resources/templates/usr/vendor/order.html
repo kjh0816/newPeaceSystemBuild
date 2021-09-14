@@ -28,9 +28,6 @@
         <th:block th:if="${order.roleCategoryId == 1}">
             <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${order.standardId})}" alt="" width="300px" height="150px">
         </th:block>
-        <th:block th:if="${order.roleCategoryId == 2}">
-            <img th:src="@{../../../resource/img/portrait/portrait{portraitId}.png(portraitId = ${order.standardId})}" alt="" width="300px" height="150px">
-        </th:block>
 
         <form onsubmit="if(!confirm('서비스(배송) 이(가) 완료되었습니까?')) return false; Complete__submit(this);">
             <input type="hidden" name="clientId" th:value="${order.clientId}">

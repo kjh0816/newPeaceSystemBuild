@@ -179,6 +179,12 @@ CREATE TABLE `department` (
 
 
 
+SELECT * FROM funeral;
+
+UPDATE funeral
+SET flowerId = 0
+WHERE id = 1;
+
 
 INSERT  INTO `department`(`id`,`name`) VALUES
 (1,'서울특별시'),
@@ -350,7 +356,7 @@ CREATE TABLE funeral(
 	progress SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '장례 진행 상태'
 );
 
-ALTER TABLE funeral ADD COLUMN portraitId INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER flowerId;
+
 
 /*
 insert into funeral
@@ -378,33 +384,7 @@ CREATE TABLE `order`(
 
 SELECT * FROM `order`;
 
-CREATE TABLE `portrait` (
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	regDate DATETIME NOT NULL,
-	updateDate DATETIME NOT NULL,
-	`name` CHAR(15) UNIQUE NOT NULL,
-	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
-	standardPrice CHAR(10) NOT NULL COMMENT '기준가',
-	costPrice CHAR(10) NOT NULL COMMENT '원가'
-);
 
-INSERT INTO portrait
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '실버 라인',
-retailPrice = '220000',
-standardPrice = '200000',
-costPrice = '1700000';
-
-INSERT INTO portrait
-SET regDate = NOW(),
-updateDate = NOW(),
-`name` = '황실 골드',
-retailPrice = '290000',
-standardPrice = '270000',
-costPrice = '2300000';
-
-SELECT * FROM portrait;
 
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터

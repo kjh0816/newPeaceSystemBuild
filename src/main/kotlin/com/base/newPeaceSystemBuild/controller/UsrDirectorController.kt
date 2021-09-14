@@ -55,7 +55,7 @@ class UsrDirectorController(
         }
         // 뷰페이지에서 선택된 스탠다드의 가격을 표기하기 위해 불러온다
         val flower = vendorService.getFlowerById(funeral.flowerId)
-        val portrait = vendorService.getPortraitById(funeral.portraitId)
+
 
         // 뷰페이지에서 총액을 표기해주기 위한 변수들
         // 선택하지 않은상태에선 해당 변수(flower, portrait 등) 들이 null값을 가지고있다.
@@ -66,17 +66,12 @@ class UsrDirectorController(
             flowerPrice = 0
         }
 
-        var portraitPrice = portrait?.retailPrice?.toInt()
 
-        if(portrait == null){
-            portraitPrice = 0
-        }
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("flower", flower)
-        model.addAttribute("portrait", portrait)
-        model.addAttribute("sum", flowerPrice!! + portraitPrice!!)
+        model.addAttribute("sum", flowerPrice!!)
 
         return "usr/director/progress"
     }
@@ -112,16 +107,7 @@ class UsrDirectorController(
         return "usr/director/dispatch"
     }
 
-    @RequestMapping("/usr/director/selectPortrait")
-    fun showSelectPortrait(model: Model): String {
-        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
-        val portraits = vendorService.getPortraits()
 
-        model.addAttribute("portraits", portraits)
-        model.addAttribute("funeral", funeral)
-
-        return "usr/director/selectPortrait"
-    }
     // VIEW Mapping 함수 끝
 
     // VIEW 기능 함수 시작
@@ -191,13 +177,6 @@ class UsrDirectorController(
         return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }
 
-    @RequestMapping("/usr/director/doSelectPortrait", method = [RequestMethod.POST])
-    @ResponseBody
-    fun doSelectPortrait(
-        funeralId: Int,
-        portraitId: Int
-    ): String {
-        return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoPoltraitId(funeralId, portraitId))
-    }
+
     // VIEW 기능 함수 끝
 }
