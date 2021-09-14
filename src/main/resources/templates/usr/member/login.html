@@ -13,23 +13,34 @@
 
 <main layout:fragment="main">
     <form onsubmit="MemberLogin__submit(this); return false;">
-        <input type="hidden" name="loginPwInput">
-        <th:block th:if="${param.afterLoginUri != null}">
-            <input type="hidden" name="replaceUri" th:value="${param.afterLoginUri}">
-        </th:block>
-        <div>
-            <input type="text" name="loginId" placeholder="아이디를 입력해주세요." th:value="${param?.loginId}">
+        <div class="p-10 card bg-base-200">
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <th:block th:if="${param.afterLoginUri != null}">
+                        <input type="hidden" name="replaceUri" th:value="${param.afterLoginUri}">
+                    </th:block>
+                    <input type="hidden" name="loginPwInput">
+                    <label class="label">
+                        <span class="label-text">
+                            아이디
+                        </span>
+                    </label>
+                    <input type="text" name="loginId" placeholder="아이디를 입력해주세요." th:value="${param?.loginId}" class="input input-bordered my-2">
+                    <label class="label">
+                        <span class="label-text">
+                            비밀번호
+                        </span>
+                    </label>
+                    <input type="password" name="loginPw" placeholder="비밀번호를 입력해주세요." class="input input-bordered my-2">
+                </div>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-ghost">로그인</button>
+            <div class="flex">
+                <a href="/usr/member/findId" class="btn btn-ghost w-1/2">아이디 찾기</a>
+                <a href="/usr/member/findPw" class="btn btn-ghost w-1/2">비밀번호 찾기</a>
+            </div>
         </div>
-
-        <div>
-            <input type="password" name="loginPw" placeholder="비밀번호를 입력해주세요.">
-        </div>
-
-        <div>
-            <button>로그인</button>
-        </div>
-        <br>
-        <a style="font-weight: bold;" href="/usr/member/findId">아이디</a> / <a style="font-weight: bold;" href="/usr/member/findPw">비밀번호</a> 찾기
     </form>
 </main>
 
