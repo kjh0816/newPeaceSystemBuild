@@ -8,20 +8,37 @@
     <th:block layout:fragment="js">
         <script type="text/javascript" src="/resource/director/selectFlower.js" charset="utf-8" defer></script>
     </th:block>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="/resource/director/selectFlower.css">
+    </th:block>
 </head>
 <main layout:fragment="main">
+
+    <style>
+
+    </style>
+
     <form onsubmit="SelectFlower__submit(this); return false;">
+        <div class="flex flex-col w-full" th:each="flower : ${flowers}">
         <input type="hidden" name="funeralId" th:value="${funeral.id}">
-        <div th:each="flower : ${flowers}">
-            <label>
-                <div>제단꽃 : [[${flower.name}]]</div>
-                <div>소매가 : [[${flower.retailPrice}]]</div>
-                <input type="radio" name="flowerId" th:value="${flower.id}">
-                <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" width="300px" height="150px">
-            </label>
-            <hr>
+            <div class="card card-side mb-2 w-full bg-base-200">
+                <figure>
+                    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" style="width: 400px; height: 250px;">
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title">[[${flower.name}]]</h2>
+                    <p>가격 : [[${flower.retailPrice}]] 원</p>
+                    <div class="card-actions">
+                        <div class="form-control flex">
+                            <span class="flowerIdSelectBox stop-dragging label-text border-2 rounded px-4 py-2 bg-white font-bold   " style="cursor: pointer;" th:id="${flower.id}">선택하기</span>
+                            <input id="flowerId" type="radio" name="flowerId" class="radio" th:value="${flower.id}" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="divider" th:if="${flowers.size != flower.id}">OR</div>
         </div>
-        <input type="submit" value="선택 완료">
+        <input class="btn btn-ghost" type="submit" value="선택 완료">
     </form>
 </main>
 
