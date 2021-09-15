@@ -15,7 +15,6 @@ data class Funeral(
 //  flowerId = 어떤 꽃을 선택했는지
     val flowerId: Int,
 //  portraitId = 어떤 영정을 선택했는지
-    val portraitId: Int,
 // progress = 장례 진행 상태(장례지도사 연결 여부 ~ 장례식 종료) default = 0(장례지도사 연결 안 됨)
     val progress: Int
 )
