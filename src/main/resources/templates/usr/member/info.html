@@ -12,61 +12,93 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    <input type="hidden" name="loginPwInput">
-    <br>
+    <div class="p-10 card bg-base-200">
+        <div class="form-control">
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <h2 class="card-title">[[${@rq.loginedMember.name}]] 님</h2>
 
-    <div style="font-weight: bold; font-size: 20px;">[[${@rq.loginedMember.name}]] 님</div>
-    <a href="./requirePw?action=modifyPw">비밀번호 변경</a>
-    <br>
-    <a href="./requirePw?action=modifyInfo">정보 수정</a>
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            연락처
+                        </span>
+                    </label>
+                    <div class="flex items-center">
+                        <p class="px-2 py-4">[[${cellphoneNo}]]</p>
+                        <button class="btn btn-ghost">연락처 변경</button>
+                    </div>
 
-    <br>
-<!-- SQL문에서 핸드폰 번호 양식에 맞춰서 불러온 값 출력(현재는 010-XXXX-XXXX에 대한 양식만 존재함) -->
-    <div class="label">연락처</div>
-    <div style="font-weight: bold; font-size: 18px;">[[${cellphoneNo}]]</div>
-    <button>연락처 변경</button>
-    <br>
-    <br>
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            이메일 주소
+                        </span>
+                    </label>
+                    <div class="flex items-center">
+                        <p class="px-2 py-4">[[${@rq.loginedMember.email}]]</p>
+                        <button class="btn btn-ghost">이메일 변경</button>
+                    </div>
 
-    <div class="label">이메일</div>
-    <div style="font-weight: bold; font-size: 18px;">[[${@rq.loginedMember.email}]]</div>
-    <button>이메일 변경</button>
-    <br>
-    <br>
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            근무지
+                        </span>
+                    </label>
+                    <div class="flex items-center">
+                        <p class="px-2 py-4">[[${@rq.loginedMember.location}]]</p>
+                        <button class="btn btn-ghost">근무지 변경</button>
+                    </div>
 
-    <div class="label">근무하시는 지역</div>
-    <div style="font-weight: bold; font-size: 18px;">[[${@rq.loginedMember.location}]]</div>
-    <button>근무지 변경</button>
-    <br>
-    <br>
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            계좌번호
+                        </span>
+                        <span class="label-text font-bold">
+                            아래 계좌로 영업비가 입금됩니다.
+                        </span>
+                    </label>
+                    <div class="flex items-center">
+                        <p class="px-2 py-4">[[${@rq.loginedMember.bank}]] / [[${@rq.loginedMember.accountNum}]]</p>
+                        <button class="btn btn-ghost">계좌번호 변경</button>
+                    </div>
 
-    <div class="label">아래 계좌로 영업비가 입금됩니다.</div>
-    <div style="font-weight: bold; font-size: 18px;">[[${@rq.loginedMember.bank}]]은행 /
-        [[${@rq.loginedMember.accountNum}]]
-    </div>
-    <button>계좌 변경</button>
-
-    <br>
-    <br>
-    <!-- 관리자나 영업자가 아닐 경우, -->
-    <div th:if="${@rq.loginedMember.roleLevel != 1 && @rq.loginedMember.roleLevel != 2}">
-        <!-- authenticationStatus가 0(미승인)일 경우, 직업명 + 상태 -->
-        <div th:if="${@rq.loginedMember.extra__authenticationLevel == 0}" style="font-weight: bold; font-size: 18px;">
-            [[${@rq.loginedMember.extra__roleName}]]: 승인 대기 중입니다.</div>
-        <!-- authenticationStatus가 1(승인) 상태일 경우, 직업명 + 승인날짜 -->
-        <div th:if="${@rq.loginedMember.extra__authenticationLevel == 1}" style="font-weight: bold; font-size: 18px;">
-            [[${@rq.loginedMember.extra__roleName}]]
-            <br></div><div>(승인된 날짜: [[${@rq.loginedMember.extra__authenticationDate}]])
+                    <!-- 관리자나 영업자가 아닐 경우, -->
+                    <div th:if="${@rq.loginedMember.roleLevel != 1 && @rq.loginedMember.roleLevel != 2}">
+                        <!-- authenticationStatus가 0(미승인)일 경우, 직업명 + 상태 -->
+                        <th:block th:if="${@rq.loginedMember.extra__authenticationLevel == 0}">
+                            <label class="label">
+                                <span class="label-text font-bold">
+                                    [[${@rq.loginedMember.extra__roleName}]]
+                                </span>
+                            </label>
+                            <p class="px-2 py-4">승인 대기 중입니다.</p>
+                        </th:block>
+                        <!-- authenticationStatus가 1(승인) 상태일 경우, 직업명 + 승인날짜 -->
+                        <th:block th:if="${@rq.loginedMember.extra__authenticationLevel == 1}">
+                            <label class="label">
+                                <span class="label-text font-bold">
+                                    [[${@rq.loginedMember.extra__roleName}]]
+                                </span>
+                            </label>
+                            <p class="px-2 py-4">승인된 날짜: [[${@rq.loginedMember.extra__authenticationDate}]]</p>
+                        </th:block>
+                        <!-- authenticationStatus가 2(승인 보류)일 경우, 직업명 + 상태 -->
+                        <th:block th:if="${@rq.loginedMember.extra__authenticationLevel == 2}">
+                            <label class="label">
+                                <span class="label-text font-bold">
+                                    [[${@rq.loginedMember.extra__roleName}]]
+                                </span>
+                            </label>
+                            <p class="px-2 py-4">승인 임시 보류 중입니다.</p>
+                        </th:block>
+                    </div>
+                </div>
             </div>
-        <!-- authenticationStatus가 2(승인 보류)일 경우, 직업명 + 상태 -->
-        <div th:if="${@rq.loginedMember.extra__authenticationLevel == 2}" style="font-weight: bold; font-size: 18px;">
-            [[${@rq.loginedMember.extra__roleName}]]: 승인 임시 보류 중입니다.</div>
-
-    </div>
-
-
-    <div>
-        <a href="../home/main">돌아가기</a>
+            <br>
+        </div>
+        <div class="flex">
+            <a href="./requirePw?action=modifyPw" class="btn btn-ghost w-1/2">비밀번호 변경</a>
+            <a href="./requirePw?action=modifyInfo" class="btn btn-ghost w-1/2">정보 수정</a>
+        </div>
     </div>
 </main>
 
