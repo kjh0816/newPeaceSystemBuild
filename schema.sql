@@ -93,7 +93,6 @@ updateDate = NOW(),
 roleLevel = 2,
 loginId = 'user1',
 loginPw = SHA2('user1', 256),
-
 `name` = '홍길동',
 cellphoneNo = '01011111111',
 email = 'hong@gmail.com',
@@ -107,7 +106,6 @@ updateDate = NOW(),
 roleLevel = 2,
 loginId = 'user2',
 loginPw = SHA2('user2', 256),
-
 `name` = '윤길동',
 cellphoneNo = '01022222222',
 email = 'hong2@gmail.com',
@@ -179,11 +177,9 @@ CREATE TABLE `department` (
 
 
 
-SELECT * FROM funeral;
 
-UPDATE funeral
-SET flowerId = 0
-WHERE id = 1;
+
+
 
 
 INSERT  INTO `department`(`id`,`name`) VALUES
