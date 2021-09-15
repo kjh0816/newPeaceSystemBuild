@@ -13,23 +13,37 @@
 </head>
 <main layout:fragment="main">
     <form action="./doModifyPw" method="POST" onsubmit="MemberModifyPw__submit(this); return false;">
-        <input type="hidden" name="loginPwInput">
-        <div class="label">비밀번호</div>
-        <div class="input">
-            <input type="password" id="loginPw" name="loginPw" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
-            <div id="loginPwCheckMsg" style="color : red;"></div>
-        </div>
-        <br>
 
-        <div class="label">비밀번호 재입력</div>
-        <div class="input">
-            <input type="password"  id="loginPwConfirm" name="loginPwConfirm" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off"/>
-            <div id="loginPwConfirmCheckMsg" style="color : red;"></div>
+        <input type="hidden" name="loginPwInput">
+
+        <div class="p-10 card bg-base-200">
+            <div class="form-control">
+                <div class="card card-side bordered bg-white">
+                    <div class="card-body text-sm">
+                        <h2 class="card-title">비밀번호 변경</h2>
+
+                        <label class="label">
+                            <span class="label-text">
+                                비밀번호
+                            </span>
+                        </label>
+                        <input type="password" id="loginPw" name="loginPw" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2">
+                        <div id="loginPwCheckMsg" style="color : red;"></div>
+
+                        <label class="label">
+                            <span class="label-text">
+                                비밀번호 재입력
+                            </span>
+                        </label>
+                        <input type="password" id="loginPwConfirm" name="loginPw" maxlength="16" placeholder="비밀번호를 다시 입력해주세요." autocomplete="off" class="input input-bordered my-2">
+                        <div id="loginPwConfirmCheckMsg" style="color : red;"></div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <button id="modifyPw-submit" type="submit" class="btn btn-ghost">변경하기</button>
         </div>
-        <br>
-            <button id="modifyPw-submit">완료</button>
     </form>
-    <a href="/usr/member/info">돌아가기</a>
 </main>
 
 </html>
