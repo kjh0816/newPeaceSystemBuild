@@ -8,3 +8,6 @@
 .page-menu__list{
     padding: 0 8px;
 }
+input[name=page]{
+    color: #ddd;
+}

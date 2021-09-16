@@ -36,46 +36,57 @@
                     <h2 class="card-title" th:if="${param.roleLevel.toString().equals('4') && param.authenticationLevel.toString().equals('1')}">물품 공급업자 승인된 리스트</h2>
                     <h2 class="card-title" th:if="${param.roleLevel.toString().equals('4') && param.authenticationLevel.toString().equals('2')}">물품 공급업자 보류된 리스트</h2>
                     <br>
+
                     <th:block th:each="member : ${members}">
                         <form action="./doApproval" method="POST">
+
                             <input type="hidden" name="memberId" th:value="${member.id}">
                             <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">가입 날짜</div>
-                                <p class="pl-2">[[${member.regDate}]]</p>
-                            </div>
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">[[${member.extra__roleName}]] 신청 날짜</div>
-                                <p class="pl-2">[[${member.extra__regDate}]]</p>
-                            </div>
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">이름</div>
-                                <p class="pl-2">[[${member.name}]]</p>
-                            </div>
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">전화번호</div>
-                                <p class="pl-2">[[${member.cellphoneNo}]]</p>
-                            </div>
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">이메일</div>
-                                <p class="pl-2">[[${member.email}]]</p>
-                            </div>
-                            <!--                <div th:if="${member.extra__thumbnailImgUrl != null}">-->
-                            <!--                    <img th:src="${member.extra__thumbnailImgUrl}" width="500" height="300" alt="" />-->
-                            <!--                </div>-->
 
-                            <!-- 타임리프 th:href Adding Parameter URL 형식 -->
-                            <a th:href="@{./detail(memberId=${member.id}, roleLevel=${param.roleLevel})}" class="btn btn-ghost">상세페이지</a>
-                            <div>
-                                <label class="btn btn-ghost">
-                                    <input type="radio" id="approval" name="authenticationLevel" value="1">
-                                    <span>승인</span>
-                                </label>
-                                <label class="btn btn-ghost">
-                                    <input type="radio" id="hold" name="authenticationLevel" value="2">
-                                    <span>보류</span>
-                                </label>
-                                <input type="submit" value="선택완료" class="btn btn-ghost">
+                            <div class="card card-side bordered">
+                                <figure>
+                                    <div th:if="${member.extra__thumbnailImgUrl != null}">
+                                        <img th:src="${member.extra__thumbnailImgUrl}" alt="" style="width: 400px; height: 250px;"/>
+                                    </div>
+                                </figure>
+                                <div class="card-body">
+                                    <div class="flex items-center mb-1">
+                                        <div class="badge badge-md">가입 날짜</div>
+                                        <p class="pl-2">[[${member.regDate}]]</p>
+                                    </div>
+                                    <div class="flex items-center mb-1">
+                                        <div class="badge badge-md">[[${member.extra__roleName}]] 신청 날짜</div>
+                                        <p class="pl-2">[[${member.extra__regDate}]]</p>
+                                    </div>
+                                    <div class="flex items-center mb-1">
+                                        <div class="badge badge-md">이름</div>
+                                        <p class="pl-2">[[${member.name}]]</p>
+                                    </div>
+                                    <div class="flex items-center mb-1">
+                                        <div class="badge badge-md">전화번호</div>
+                                        <p class="pl-2">[[${member.cellphoneNo}]]</p>
+                                    </div>
+                                    <div class="flex items-center mb-1">
+                                        <div class="badge badge-md">이메일</div>
+                                        <p class="pl-2">[[${member.email}]]</p>
+                                    </div>
+                                    <div class="card-actions flex">
+                                        <!-- 타임리프 th:href Adding Parameter URL 형식 -->
+                                        <a th:href="@{./detail(memberId=${member.id}, roleLevel=${param.roleLevel})}" class="btn btn-ghost">상세페이지</a>
+                                        <div class="flex-grow"></div>
+                                        <div>
+                                            <label class="btn btn-ghost">
+                                                <input type="radio" id="approval" name="authenticationLevel" value="1">
+                                                <span>승인</span>
+                                            </label>
+                                            <label class="btn btn-ghost">
+                                                <input type="radio" id="hold" name="authenticationLevel" value="2">
+                                                <span>보류</span>
+                                            </label>
+                                            <input type="submit" value="선택완료" class="btn btn-ghost">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="divider">AND</div>
                         </form>
@@ -96,19 +107,13 @@
                         <input type="hidden" name="page" value="1">
                         <button type="submit" class="btn btn-ghost"><i class="fas fa-angle-double-left"></i></button>
                     </form>
-                    <th:block th:if="${page == 1}">
-                        <div>
-                            <button class="prev btn btn-ghost" disabled="disabled">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                        </div>
-                    </th:block>
+
                     <th:block th:unless="${page == 1}">
                         <form onsubmit="pagination(this); return false;">
                             <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
                             <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                             <input type="hidden" name="page" th:value="${page - 1}">
-                            <button type="submit" class="btn btn-ghost"><i class="fas fa-chevron-left"></i></button>
+                            <button type="submit" class="btn btn-ghost"><i class="fas fa-angle-left"></i></button>
                         </form>
                     </th:block>
 
@@ -118,24 +123,16 @@
                                 <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
                                 <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                                 <input type="hidden" name="page" th:value="${i}">
-                                <input type="submit" th:value="${i}" class="btn btn-ghost">
+                                <input name="page" type="submit" th:value="${i}" class="page btn btn-ghost">
                             </form>
                         </th:block>
-                    </th:block>
-
-                    <th:block th:if="${page >= endPage}">
-                        <div>
-                            <button class="next btn btn-ghost" disabled="disabled">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
                     </th:block>
                     <th:block th:unless="${page >= endPage}">
                         <form onsubmit="pagination(this); return false;">
                             <input type="hidden" name="authenticationLevel" th:value="${param.authenticationLevel}">
                             <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
                             <input type="hidden" name="page" th:value="${page + 1}">
-                            <button type="submit" class="btn btn-ghost"><i class="fas fa-chevron-right"></i></button>
+                            <button type="submit" class="btn btn-ghost"><i class="fas fa-angle-right"></i></button>
                         </form>
                     </th:block>
                     <form onsubmit="pagination(this); return false;">
