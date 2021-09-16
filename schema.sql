@@ -353,7 +353,9 @@ CREATE TABLE funeral(
 );
 
 
+ALTER TABLE funeral ADD COLUMN flowerTributeId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerId;
 
+SELECT * FROM funeral;
 /*
 insert into funeral
 set regDate = now(),
@@ -380,7 +382,56 @@ CREATE TABLE `order`(
 
 SELECT * FROM `order`;
 
+# 헌화 스텐다드 테이블
+CREATE TABLE flowerTribute(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가',
+	bunch INT(10) UNSIGNED NOT NULL COMMENT '한묶음당 몇송이인지',
+	packing TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '포장 여부 0 = 미포장, 1 = 포장'
+);
 
+INSERT INTO flowerTribute
+SET regDate = NOW(),
+updateDate = NOW(),
+retailPrice = "1500",
+costPrice = "1000",
+bunch = 30,
+packing = 0;
+
+INSERT INTO flowerTribute
+SET regDate = NOW(),
+updateDate = NOW(),
+retailPrice = "4500",
+costPrice = "3000",
+bunch = 30,
+packing = 1;
+
+SELECT * FROM flowerTribute;
+
+# order 테이블과 조인해서 사용할 헌화만의 스페셜한 정보를 가진 order 테이블
+# 차차 추가될 상품들에 각각 담길 주문정보들이 서로 많이 다를것 같아서 기본 order 테이블을 두고 서브 테이블로 조인하는 방식을 채택함.
+CREATE TABLE flowerTributeOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	bunchCnt INT(10) UNSIGNED NOT NULL COMMENT '몇묶음인지',
+	packing TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '포장 여부 0 = 미포장, 1 = 포장'
+);
+
+SELECT
+O.*,
+FTO.bunchCnt AS `extra__bunchCnt`,
+FTO.packing AS `extra__packing`
+FROM `order` AS O
+LEFT JOIN flowerTributeOrder AS FTO
+ON O.id = FTO.orderId
+WHERE O.directorMemberId = 2
+AND FTO.bunchCnt IS NOT NULL
+AND FTO.packing IS NOT NULL;
 
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
@@ -499,11 +550,3 @@ insert into genFile (regDate, updateDate, relTypeCode, relId, originFileName, fi
 select now(), now(), "member", @genMid := @genMid + 1, "제목없음.png", "png", "director", "attachment", 6180, "img", "png", 1, "2021_08"
 from genFile;
 */
-
-
-
-
-
-SELECT * FROM memberRole;
-
-SELECT * FROM CLIENT;
