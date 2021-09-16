@@ -27,12 +27,12 @@
                         <input type="text" id="cellphoneNo" name="cellphoneNo" th:value="${@rq.loginedMember.cellphoneNo}" maxlength="13" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
                         <div id="cellphoneNoCheckMsg" style="color : red;"></div>
 
-                        <label class="label">
-                            <span class="label-text">
+                        <label class="label flex flex-col">
+                            <span class="label-text self-start">
                                 이메일 주소
                             </span>
-                            <span class="label-text">
-                                아래 이메일로 분실하신 아이디와 비밀번호를 찾을 수 있습니다.
+                            <span class="label-text font-bold self-start">
+                                (아래 이메일로 분실하신 아이디와 비밀번호를 찾을 수 있습니다)
                             </span>
                         </label>
                         <input type="text" id="email" name="email" th:value="${@rq.loginedMember.email}" placeholder="이메일 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
@@ -50,12 +50,12 @@
                             </div>
                         </select>
 
-                        <label class="label">
-                            <span class="label-text">
+                        <label class="label flex flex-col">
+                            <span class="label-text self-start">
                                 계좌번호
                             </span>
-                            <span class="label-text">
-                                아래 계좌로 영업비가 입금됩니다.
+                            <span class="label-text font-bold self-start">
+                                (수익 발생 시, 아래 계좌로 입금됩니다)
                             </span>
                         </label>
                         <select id="bank" name="bank" class="select select-bordered select-sm w-full max-w-xs">
@@ -71,6 +71,7 @@
                 <br>
             </div>
             <button id="modifyInfo-submit" type="submit" class="btn btn-ghost">변경하기</button>
+            <a href="/usr/member/info" class="btn btn-ghost">취소</a>
         </div>
     </form>
 </main>
