@@ -67,6 +67,10 @@
                                         <div class="badge badge-md">이메일</div>
                                         <p class="pl-2">[[${member.email}]]</p>
                                     </div>
+                                    <div class="flex items-center mb-1">
+                                        <div class="badge badge-md">근무지</div>
+                                        <p class="pl-2">[[${member.location}]]</p>
+                                    </div>
                                     <div class="card-actions flex">
                                         <!-- 타임리프 th:href Adding Parameter URL 형식 -->
                                         <a th:href="@{./detail(memberId=${member.id}, roleLevel=${param.roleLevel})}" class="btn btn-ghost">상세페이지</a>
