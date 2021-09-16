@@ -31,10 +31,10 @@
                     </div>
                     <div class="flex items-center mb-1 flex-col">
                         <div class="badge badge-md whitespace-nowrap self-start">본인 소개</div>
-                        <p class="pl-2">[[${member.extra__introduce}]]</p>
+                        <p class="pt-2 self-start">[[${member.extra__introduce}]]</p>
                     </div>
                     <div th:if="${member.extra__thumbnailImgUrl != null}">
-                        <img class="w-1/2" th:src="${member.extra__thumbnailImgUrl}" alt="" />
+                        <img class="w-full" th:src="${member.extra__thumbnailImgUrl}" alt="" />
                     </div>
                     <div>
                         <form action="./doApproval" method="POST">
@@ -50,13 +50,40 @@
                                 <input type="radio" id="hold" name="authenticationLevel" value="2">
                                 <span>보류</span>
                             </label>
-                            <br>
                             <input type="submit" value="선택완료" class="btn btn-ghost">
                         </form>
                     </div>
                 </div>
             </div>
             <br>
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <div class="overflow-x-auto">
+                        <table class="table w-full table-zebra">
+                            <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>이름</th>
+                                <th>승인 여부</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="memberByRoleLevel : ${members}">
+                                <th>[[${memberByRoleLevel.id}]]</th>
+                                <td>
+                                    <a class="hover:underline" th:href="@{./detail(memberId=${memberByRoleLevel.id}, roleLevel=${memberByRoleLevel.roleLevel})}">
+                                        [[${memberByRoleLevel.name}]]
+                                    </a>
+                                </td>
+                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 0}">미승인</td>
+                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 1}">승인</td>
+                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 2}">보류</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
