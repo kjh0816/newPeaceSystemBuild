@@ -14,7 +14,15 @@ input[type=number] {
 a:hover{
   cursor: pointer;
 }
+/* 데이지 UI 커스텀 시작 */
+.btn-ghost.disabled{
+  color: #ddd;
+}
 
+.btn-ghost.disabled:hover{
+  background: transparent;
+}
+/* 데이지 UI 커스텀 끝 */
 /* top-bar 시작 */
 .con{
   width: 1240px;
