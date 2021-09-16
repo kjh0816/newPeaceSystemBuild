@@ -91,4 +91,19 @@ interface ClientRepository {
         """
     )
     fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral?
+
+    @Select(
+        """
+            SELECT CONCAT(
+            SUBSTR(cellphoneNo, 1, 3)
+            , '-'
+            , SUBSTR(cellphoneNo, 4, 4)
+            , '-'
+            , SUBSTR(cellphoneNo, 8, 4)
+            ) AS `cellphoneNo`
+            FROM `client`
+            WHERE id = #{id};
+        """
+    )
+    fun getCellphoneNoFormatted(id: Int): String
 }

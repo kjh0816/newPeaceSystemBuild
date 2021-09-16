@@ -141,4 +141,8 @@ class ClientService(
     fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral? {
         return clientRepository.getProgressingFuneralByIdDirectorMemberId(directorMemberId)
     }
+
+    fun getCellphoneNoFormatted(id: Int): String {
+        return clientRepository.getCellphoneNoFormatted(id)
+    }
 }

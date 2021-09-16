@@ -7,25 +7,44 @@
     <title>장례 진행 현황</title>
 </head>
 <main layout:fragment="main">
-    <div>故 [[${client.deceasedName}]]님의 장례</div>
-    <br>
-    <div>상주 성함: [[${client.relatedName}]]</div>
-    <br>
-    <div>
-        <span style="font-weight: bold; font-size: 18px;">진행 현황</span>
-        <!--  아직 장례지도사가 연결되지 않은 경우(directorMemberId = 0)  -->
-        <div th:if="${client.directorMemberId == 0}">
-            장례지도사를 연결 중입니다.
-        </div>
-        <!--  장례지도사가 연결된 경우, directorMemberId가 0이 아닌 시점부터 funeral 테이블을 조회한다.  -->
-        <!--  funeral 테이블은 장례지도사가 고인에 대한 추가적인 정보를 입력했을 때, 최초 row가 생성된다.  -->
-        <!--  아래처럼 funeral 테이블이 null인지 먼저 확인해야 NULL인 값을 조회하는 것에 대한 에러를 피할 수 있다. -->
-        <div th:if="${funeral != null}">
-            <!-- funeral 테이블의 progress가 1이면 장례지도사가 고인의 추가 정보를 입력한 경우 -->
-            <div th:if="funeral.progress == 1">
-                [[${member.name}]] 장례지도사님께서 장례를 진행 중입니다.
-                <br>
-                연락처: [[${member.cellphoneNo}]]
+    <div class="p-10 card bg-base-200">
+        <div class="card card-side bordered bg-white">
+            <div class="card-body text-sm">
+                <h2 class="card-title">故 [[${client.deceasedName}]]님의 장례</h2>
+
+                <div class="flex items-center mb-1">
+                    <div class="badge badge-md">상주 성함</div>
+                    <p class="pl-2">[[${client.relatedName}]]</p>
+                </div>
+                <div class="flex items-center mb-1">
+                    <div class="badge badge-md">상주 연락처</div>
+                    <p class="pl-2">[[${clientCellphoneNo}]]</p>
+                </div>
+
+                <label class="label flex flex-col">
+                    <span class="label-text font-bold self-start">
+                        진행 현황
+                    </span>
+                    <span class="label-text self-start">
+                        <!--  아직 장례지도사가 연결되지 않은 경우(directorMemberId = 0)  -->
+                        <span th:if="${client.directorMemberId == 0}">
+                            <span class="label-text py-2 block">장례지도사를 연결 중입니다.</span>
+                        </span>
+                        <!--  장례지도사가 연결된 경우, directorMemberId가 0이 아닌 시점부터 funeral 테이블을 조회한다.  -->
+                        <!--  funeral 테이블은 장례지도사가 고인에 대한 추가적인 정보를 입력했을 때, 최초 row가 생성된다.  -->
+                        <!--  아래처럼 funeral 테이블이 null인지 먼저 확인해야 NULL인 값을 조회하는 것에 대한 에러를 피할 수 있다. -->
+                        <th:block th:if="${funeral != null}">
+                            <!-- funeral 테이블의 progress가 1이면 장례지도사가 고인의 추가 정보를 입력한 경우 -->
+                            <th:block th:if="${funeral.progress == 1}">
+                                <span class="label-text py-2 block">[[${director.name}]] 장례지도사님께서 장례를 진행 중입니다.</span>
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">장례지도사 연락처</div>
+                                    <p class="pl-2">[[${directorCellphoneNo}]]</p>
+                                </div>
+                            </th:block>
+                        </th:block>
+                    </span>
+                </label>
             </div>
         </div>
     </div>

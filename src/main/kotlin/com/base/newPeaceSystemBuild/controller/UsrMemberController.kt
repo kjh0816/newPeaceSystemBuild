@@ -263,8 +263,18 @@ class UsrMemberController(
         // 장례지도사가 연결되지 않은 상태(funeral 테이블이 null)에서 director를 아래처럼 조회하면 NPE 발생.
         if(funeral != null) {
             val director = memberService.getMemberById(funeral.directorMemberId)
+            // 하이픈이 들어간 장례지도사의 전화번호
+            val directorCellphoneNo = memberService.getCellphoneNoFormatted(funeral.directorMemberId)
+
+            model.addAttribute("directorCellphoneNo", directorCellphoneNo)
             model.addAttribute("director", director)
         }
+
+        // 하이픈이 들어간 상주의 전화번호
+        val clientCellphoneNo = clientService.getCellphoneNoFormatted(client.id)
+
+        model.addAttribute("clientCellphoneNo", clientCellphoneNo)
+
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
 
