@@ -9,48 +9,81 @@
 </head>
 
 <main layout:fragment="main">
-    <div class="admin-detail-box">
-        <a href="./main?authenticationLevel=0&roleLevel=3">관리자 메인 페이지</a>
-        <a href="/usr/home/main">메인 페이지</a>
+    <div class="p-10 card bg-base-200">
+        <div class="form-control">
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가입 날짜</div>
+                        <p class="pl-2">[[${member.regDate}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">[[${member.extra__roleName}]] 신청 날짜</div>
+                        <p class="pl-2">[[${member.extra__regDate}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">이름</div>
+                        <p class="pl-2">[[${member.name}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">전화번호</div>
+                        <p class="pl-2">[[${member.cellphoneNo}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">이메일</div>
+                        <p class="pl-2">[[${member.email}]]</p>
+                    </div>
+                    <div th:if="${member.extra__thumbnailImgUrl != null}">
+                        <img class="w-full" th:src="${member.extra__thumbnailImgUrl}" alt="" />
+                    </div>
+                    <div>
+                        <form action="./doApproval" method="POST">
 
-        <div>
-            <span>번호 : [[${member.id}]]</span><br>
-            <span>가입 날짜 : [[${member.regDate}]]</span><br>
-            <span>[[${member.extra__roleName}]] 신청 날짜 : [[${member.extra__regDate}]]</span><br>
-            <span>이름 : [[${member.name}]]</span><br>
-            <span>전화번호 : [[${member.cellphoneNo}]]</span><br>
-            <span>권한 : [[${member.extra__authenticationLevel}]]</span><br>
-            <span>이메일 : [[${member.email}]]</span><br>
-        </div>
-        <div th:if="${member.extra__thumbnailImgUrl != null}">
-            <img th:src="${member.extra__thumbnailImgUrl}" width="500" height="300" alt="" />
-        </div>
-        <div>
-            <form action="./doApproval" method="POST">
-                <input type="hidden" name="memberId" th:value="${member.id}">
-                <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
-                <div>
-                    <input type="radio" id="approval" name="authenticationLevel" value="1">
-                    <label for="approval">승인</label>
-                    <input type="radio" id="hold" name="authenticationLevel" value="2">
-                    <label for="hold">보류</label>
+                            <input type="hidden" name="memberId" th:value="${member.id}">
+                            <input type="hidden" name="roleLevel" th:value="${param.roleLevel}">
+
+                            <label class="btn btn-ghost">
+                                <input type="radio" id="approval" name="authenticationLevel" value="1">
+                                <span>승인</span>
+                            </label>
+                            <label class="btn btn-ghost">
+                                <input type="radio" id="hold" name="authenticationLevel" value="2">
+                                <span>보류</span>
+                            </label>
+                            <input type="submit" value="선택완료" class="btn btn-ghost">
+                        </form>
+                    </div>
                 </div>
-                <input type="submit" value="선택완료" class="btn btn-ghost">
-            </form>
-        </div>
-        <div>
-            <th:block th:each="memberByRoleLevel : ${members}">
-                <!-- 열람중인 페이지를 제외시킴 -->
-                <th:block th:if="${memberByRoleLevel.id != member.id}">
-                    <a th:href="@{./detail(memberId=${memberByRoleLevel.id}, roleLevel=${memberByRoleLevel.roleLevel})}">
-                        <span>이름 : [[${memberByRoleLevel.name}]]</span>
-                        <span th:if="${memberByRoleLevel.extra__authenticationLevel == 0}">미승인</span>
-                        <span th:if="${memberByRoleLevel.extra__authenticationLevel == 1}">승인</span>
-                        <span th:if="${memberByRoleLevel.extra__authenticationLevel == 2}">보류</span>
-                        <br>
-                    </a>
-                </th:block>
-            </th:block>
+            </div>
+            <br>
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <div class="overflow-x-auto">
+                        <table class="table w-full table-zebra">
+                            <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>이름</th>
+                                <th>승인 여부</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="memberByRoleLevel : ${members}">
+                                <th>[[${memberByRoleLevel.id}]]</th>
+                                <td>
+                                    <a class="hover:underline" th:href="@{./detail(memberId=${memberByRoleLevel.id}, roleLevel=${memberByRoleLevel.roleLevel})}">
+                                        [[${memberByRoleLevel.name}]]
+                                    </a>
+                                </td>
+                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 0}">미승인</td>
+                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 1}">승인</td>
+                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 2}">보류</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
