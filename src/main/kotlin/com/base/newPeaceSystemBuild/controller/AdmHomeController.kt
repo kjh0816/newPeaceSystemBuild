@@ -44,6 +44,10 @@ class AdmHomeController(
             member.cellphoneNo = memberService.getCellphoneNoFormatted(member.id)
         }
 
+        // 총 회원수는 관리자(1명)을 제외한 나머지
+        val totalMembersCount = memberService.getMembers()?.size?.minus(1)
+
+        model.addAttribute("totalMembersCount", totalMembersCount)
         model.addAttribute("members", filteredMembers)
         model.addAttribute("page", page)
         model.addAttribute("totalPage", totalPage)
