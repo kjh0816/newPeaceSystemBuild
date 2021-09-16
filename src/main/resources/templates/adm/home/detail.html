@@ -56,34 +56,6 @@
                 </div>
             </div>
             <br>
-            <div class="card card-side bordered bg-white">
-                <div class="card-body text-sm">
-                    <div class="overflow-x-auto">
-                        <table class="table w-full table-zebra">
-                            <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>이름</th>
-                                <th>승인 여부</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="memberByRoleLevel : ${members}">
-                                <th>[[${memberByRoleLevel.id}]]</th>
-                                <td>
-                                    <a class="hover:underline" th:href="@{./detail(memberId=${memberByRoleLevel.id}, roleLevel=${memberByRoleLevel.roleLevel})}">
-                                        [[${memberByRoleLevel.name}]]
-                                    </a>
-                                </td>
-                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 0}">미승인</td>
-                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 1}">승인</td>
-                                <td th:if="${memberByRoleLevel.extra__authenticationLevel == 2}">보류</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </main>
