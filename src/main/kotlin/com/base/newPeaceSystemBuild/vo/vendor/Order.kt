@@ -26,4 +26,7 @@ data class Order (
     var extra__directorCellphoneNo: String? = null
     var extra__name: String? = null
     var extra__retailPrice: String? = null
+    // 헌화 주문정보 관련 데이터
+    var extra__bunchCnt: Int? = null
+    var extra__packing: Boolean? = null
 }

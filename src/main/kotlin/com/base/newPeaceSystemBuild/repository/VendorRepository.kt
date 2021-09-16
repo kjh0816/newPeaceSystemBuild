@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.repository
 
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.standard.FlowerTribute
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
@@ -150,7 +151,59 @@ interface VendorRepository {
     )
     fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completionStatus: Boolean)
 
+    @Select(
+        """
+            SELECT * 
+            FROM flowerTribute
+        """
+    )
+    fun getFlowerTributes(): List<FlowerTribute>
 
+    @Insert(
+        """
+            INSERT INTO flowerTributeOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            bunchCnt = #{bunchCnt},
+            packing = #{packing}
+        """
+    )
+    fun insertIntoFlowerTributeOrder(orderId: Int, bunchCnt: Int, packing: Boolean)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET flowerTributeId = #{flowerTributeId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoFlowerTributeId(funeralId: Int, flowerTributeId: Int)
+
+    @Select(
+        """
+            SELECT *
+            FROM `flowerTribute`
+            WHERE id = #{flowerTributeId} 
+        """
+    )
+    fun getFlowerTributeById(flowerTributeId: Int): FlowerTribute?
+
+    @Select(
+        """
+            SELECT 
+            O.*,
+            FTO.bunchCnt AS `extra__bunchCnt`,
+            FTO.packing AS `extra__packing`
+            FROM `order` AS O
+            LEFT JOIN flowerTributeOrder AS FTO
+            ON O.id = FTO.orderId
+            WHERE O.directorMemberId = #{directorMemberId}
+            AND FTO.bunchCnt IS NOT NULL
+            AND FTO.packing IS NOT NULL
+        """
+    )
+    fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order
 
 
 }

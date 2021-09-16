@@ -51,12 +51,51 @@
                     <p>상품을 선택해주세요</p>
                 </th:block>
                 <th:block th:unless="${flower == null}">
-                    <p>상품명 : [[${flower.name}]]</p>
-                    <p>가격 : [[${flower.retailPrice}]] 원</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상품명</div>
+                        <p class="pl-2">[[${flower.name}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2">[[${flower.retailPrice}]]</p>
+                    </div>
                 </th:block>
                 <div class="card-actions">
                     <form action="./selectFlower">
                         <button class="btn btn-ghost" type="submit">제단꽃 선택하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- 헌화 -->
+        <div class="card card-side shadow mb-2 bg-white">
+            <figure>
+                <div th:if="${funeral.flowerTributeId != 0}">
+                    <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${funeral.flowerTributeId})}" alt="" style="width: 400px; height: 250px;">
+                </div>
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">헌화</h2>
+                <th:block th:if="${flowerTribute == null}">
+                    <p>상품을 선택해주세요</p>
+                </th:block>
+                <th:block th:unless="${flowerTribute == null}">
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2">[[${flowerTribute.retailPrice}]] 원 (단품)</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">세트</div>
+                        <p class="pl-2">[[${flowerTributeOrder.extra__bunchCnt}]] 세트 ([[${flowerTribute.bunch * flowerTributeOrder.extra__bunchCnt}]] 개)</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2">[[${flowerTributePrice}]] 원</p>
+                    </div>
+                </th:block>
+                <div class="card-actions">
+                    <form action="./selectFlowerTribute">
+                        <button class="btn btn-ghost" type="submit">헌화 선택하기</button>
                     </form>
                 </div>
             </div>

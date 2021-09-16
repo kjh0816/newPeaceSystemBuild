@@ -53,25 +53,34 @@ class UsrDirectorController(
         if(client == null){
             return "redirect:/usr/home/main"
         }
+        // 헌화의 주문정보를 장례지도사 회원정보로 조회한 결과를 가져온다
+        val flowerTributeOrder = vendorService.getFlowerTributeOrderByDirectorMemberId(rq.getLoginedMember()!!.id)
+
         // 뷰페이지에서 선택된 스탠다드의 가격을 표기하기 위해 불러온다
         val flower = vendorService.getFlowerById(funeral.flowerId)
-
+        val flowerTribute = vendorService.getFlowerTributeById(funeral.flowerTributeId)
 
         // 뷰페이지에서 총액을 표기해주기 위한 변수들
         // 선택하지 않은상태에선 해당 변수(flower, portrait 등) 들이 null값을 가지고있다.
         // null 값을 허용하면서 null 일경우 해당 상품의 가격을 0으로 측정해서 넣어줌.
-        var flowerPrice = flower?.retailPrice?.toInt()
+        var flowerPrice = 0
+        var flowerTributePrice = 0
 
-        if(flower == null){
-            flowerPrice = 0
+        if(flower != null){
+            flowerPrice = flower.retailPrice.toInt()
         }
-
+        if(flowerTribute != null){
+            flowerTributePrice = (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder.extra__bunchCnt!!.toInt()
+        }
 
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("flower", flower)
-        model.addAttribute("sum", flowerPrice!!)
+        model.addAttribute("flowerTribute", flowerTribute)
+        model.addAttribute("flowerTributePrice", flowerTributePrice)
+        model.addAttribute("flowerTributeOrder", flowerTributeOrder)
+        model.addAttribute("sum", flowerPrice + flowerTributePrice)
 
         return "usr/director/progress"
     }
@@ -85,6 +94,17 @@ class UsrDirectorController(
         model.addAttribute("funeral", funeral)
 
         return "usr/director/selectFlower"
+    }
+
+    @RequestMapping("/usr/director/selectFlowerTribute")
+    fun showSelectFlowerTribute(model: Model): String {
+        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+        val flowerTributes = vendorService.getFlowerTributes()
+
+        model.addAttribute("flowerTributes", flowerTributes)
+        model.addAttribute("funeral", funeral)
+
+        return "usr/director/selectFlowerTribute"
     }
 
     @RequestMapping("/usr/director/dispatch")
@@ -145,6 +165,16 @@ class UsrDirectorController(
         rq.login(memberService.getMemberById(rq.getLoginedMember()!!.id)!!)
 
         return rq.replaceJs("장례지도사 영업신청이 완료되었습니다.", "../home/main")
+    }
+
+    @RequestMapping("/usr/director/doSelectFlowerTribute", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doSelectFlowerTribute(
+        funeralId: Int,
+        flowerTributeId: Int,
+        bunchCnt: Int
+    ): String {
+        return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoFlowerTributeId(funeralId, flowerTributeId, bunchCnt))
     }
 
     @RequestMapping("/usr/director/doSelectFlower", method = [RequestMethod.POST])

@@ -28,6 +28,44 @@ function SelectFlower__submit(form) {
         }
     );
 }
+function SelectFlowerTribute__submit(form) {
+    if (form.flowerTributeId.value.length == 0) {
+        swal({
+            title: "헌화를 선택해주세요.",
+            icon: "info",
+            button: "확인",
+        });
+
+        return;
+    }
+
+    if (form.bunchCnt.value.length == 0) {
+        swal({
+            title: "주문하실 묶음갯수를 입력해주세요.",
+            icon: "info",
+            button: "확인",
+        });
+
+        return;
+    }
+
+
+    const post$ = rxjs.ajax.ajax.post(
+        '/usr/director/doSelectFlowerTribute',
+        new FormData(form)
+    );
+    post$.subscribe(
+        res => {
+            if ( res.response.success ) {
+                   if ( !confirm(res.response.msg) ) return false;
+                   window.location.href="/usr/director/progress";
+            }
+            else {
+                   alert(res.response.msg);
+            }
+        }
+    );
+}
 // radio 버튼 대신 사용할 버튼 디자인
 $('.flowerIdSelectBox').click(function () {
     var flowerId = $(this).attr('id');
