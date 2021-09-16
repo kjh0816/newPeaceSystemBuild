@@ -41,6 +41,7 @@ class AdmHomeController(
         for (member in filteredMembers) {
             // 중복코드 발생으로 인한 객체화
             setExtra__thumbnailImgUrl(member, roleLevel)
+            member.cellphoneNo = memberService.getCellphoneNoFormatted(member.id)
         }
 
         model.addAttribute("members", filteredMembers)
@@ -58,6 +59,7 @@ class AdmHomeController(
         if(member != null){
             // 중복코드 발생으로 인한 객체화
             setExtra__thumbnailImgUrl(member, roleLevel)
+            member.cellphoneNo = memberService.getCellphoneNoFormatted(member.id)
         }
         model.addAttribute("member", member)
         model.addAttribute("members", members)

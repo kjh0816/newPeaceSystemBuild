@@ -79,7 +79,7 @@
                                     [[${@rq.loginedMember.extra__roleName}]]
                                 </span>
                             </label>
-                            <p class="px-2 py-4">승인된 날짜: [[${@rq.loginedMember.extra__authenticationDate}]]</p>
+                            <p class="px-2 py-4">승인된 날짜: [[${authenticatedDate}]]</p>
                         </th:block>
                         <!-- authenticationStatus가 2(승인 보류)일 경우, 직업명 + 상태 -->
                         <th:block th:if="${@rq.loginedMember.extra__authenticationLevel == 2}">
@@ -99,6 +99,9 @@
             <a href="./requirePw?action=modifyPw" class="btn btn-ghost w-1/2">비밀번호 변경</a>
             <a href="./requirePw?action=modifyInfo" class="btn btn-ghost w-1/2">정보 수정</a>
         </div>
+        <br>
+        <br>
+        <a href="/usr/home/main" class="btn btn-ghost">홈으로 이동</a>
     </div>
 </main>
 

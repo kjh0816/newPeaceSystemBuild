@@ -13,7 +13,7 @@ data class Member(
     val loginPw: String,
 
     val name: String,
-    val cellphoneNo: String,
+    var cellphoneNo: String,
     val email: String,
 
     val location: String,
