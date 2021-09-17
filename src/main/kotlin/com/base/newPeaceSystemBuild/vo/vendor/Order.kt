@@ -10,23 +10,21 @@ data class Order (
     val roleCategoryId: Int,
     val standardId: Int,
     var orderStatus: Boolean,
-    var completionStatus: Boolean
+    var completionStatus: Boolean,
+    val detail: String
 ) {
-    var extra__clientId: Int? = null
-    var extra__clientRegDate: String? = null
-    var extra__clientUpdateDate: String? = null
-    var extra__deceasedName: String? = null
-    var extra__relatedName: String? = null
-    var extra__cellphoneNo: String? = null
-    var extra__location: String? = null
-    var extra__address: String? = null
-    var extra__bank: String? = null
-    var extra__accountNum: String? = null
-    var extra__directorName: String? = null
-    var extra__directorCellphoneNo: String? = null
-    var extra__name: String? = null
-    var extra__retailPrice: String? = null
+    var extra__retailPrice: Int? = null
     // 헌화 주문정보 관련 데이터
     var extra__bunchCnt: Int? = null
+    var extra__bunch: Int? = null
     var extra__packing: Boolean? = null
+
+    val retailPriceMulBunchPrice: Int
+        get() {
+            return (extra__retailPrice ?: 0) * (extra__bunch ?: 0)
+        }
+    val retailPriceMulBunchPriceMulBunchCnt: Int
+        get() {
+            return (extra__retailPrice ?: 0) * (extra__bunch ?: 0) * (extra__bunchCnt ?: 0)
+        }
 }

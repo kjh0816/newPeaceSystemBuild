@@ -45,10 +45,13 @@ class VendorService(
 
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 1
+        val detail = "flower"
 
-        vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerId)
+        vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerId, detail)
 
         val orderId = vendorRepository.getLastInsertId()
+
+        vendorRepository.insertIntoFlowerOrder(orderId)
 
         // 문자 메세지 전달 (시작)
         // client 정보 중, location을 반영해서 해당하는 물품 등록업자들에 문자 메세지 전달
@@ -93,13 +96,13 @@ class VendorService(
         return vendorRepository.getFlowerById(flowerId)
     }
 
-    fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(memberId: Int, clientId: Int): ResultData{
+    fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberIdAndDetail(memberId: Int, clientId: Int, detail: String): ResultData{
         val client = clientRepository.getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
 
         // 해당 페이지에 들어올 수 있으면, 이미 vendor 로 등록된 상태이기때문에 vendor 등록시 선택된 extra__roleCategoryId를 가져온다. 어떤 물품의 공급자인지에 관한 칼럼이다.
         val roleCategoryId = rq.getLoginedMember()!!.extra__roleCategoryId!!
 
-        val order = vendorRepository.getOrderByClientIdAndRoleCategoryId(clientId, roleCategoryId) ?: return ResultData.from("F-2", "주문정보가 조회되지않습니다.")
+        val order = vendorRepository.getOrderByClientIdAndRoleCategoryIdAndDetail(clientId, roleCategoryId, detail) ?: return ResultData.from("F-2", "주문정보가 조회되지않습니다.")
 
         if(order.orderStatus){
             // order 테이블에 vendorMemberId 칼럼값이 현재 로그인한 회원의 ID값이랑 같으면 로그인한 회원이 해당 주문을 받은것
@@ -119,8 +122,8 @@ class VendorService(
         return ResultData.from("S-1", "주문접수가 완료되었습니다.", "client", client)
     }
 
-    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, roleCategoryId: Int, orderStatus: Boolean, completionStatus: Boolean): List<Order> {
-        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, roleCategoryId, orderStatus, completionStatus)
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, roleCategoryId: Int, orderStatus: Boolean, completionStatus: Boolean, detail: String): List<Order> {
+        return vendorRepository.getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId, roleCategoryId, orderStatus, completionStatus, detail)
     }
 
     fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completionStatus: Boolean): ResultData {
@@ -144,8 +147,9 @@ class VendorService(
 
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 1
+        val detail = "flowerTribute"
 
-        vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerTributeId)
+        vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerTributeId, detail)
 
         val orderId = vendorRepository.getLastInsertId()
 

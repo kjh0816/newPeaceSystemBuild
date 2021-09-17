@@ -4,6 +4,7 @@ import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -68,12 +69,21 @@ class UsrVendorController(
     @RequestMapping("/usr/vendor/order")
     fun showOrder(model: Model): String {
         // 컴파일러가 추천하는 방식이라 매개변수 명도 넣어줌. Boolean 값이 두개라 헷갈릴까봐 이쪽을 추천하는듯?
-        val orders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
-            orderStatus = true,
-            completionStatus = false
-        )
+        val details = mutableListOf<String>()
 
-        model.addAttribute("orders", orders)
+        if(rq.getLoginedMember()!!.extra__roleCategoryId == 1){
+            details.add("flower")
+            details.add("flowerTribute")
+        }
+
+        for (i in 0 until details.size){
+            val orders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
+                orderStatus = true,
+                completionStatus = false,
+                details[i]
+            )
+            model.addAttribute("${details[i]}Orders", orders)
+        }
 
         return "usr/vendor/order"
     }
@@ -94,7 +104,8 @@ class UsrVendorController(
     fun doDispatch(
         clientId: Int
     ): String {
-        return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberId(rq.getLoginedMember()!!.id, clientId))
+        val detail = "flower"
+        return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberIdAndDetail(rq.getLoginedMember()!!.id, clientId, detail))
     }
 
     @RequestMapping("/usr/vendor/doComplete", method = [RequestMethod.POST])

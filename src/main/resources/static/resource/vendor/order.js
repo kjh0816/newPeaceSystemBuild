@@ -14,3 +14,12 @@ function Complete__submit(form) {
         }
     );
 }
+
+$('#flowerOrdersBtn').click(function(){
+    $('#flowerOrders').css('display', 'block');
+    $('#flowerTributeOrders').css('display', 'none');
+});
+$('#flowerTributeOrdersBtn').click(function(){
+    $('#flowerTributeOrders').css('display', 'block');
+    $('#flowerOrders').css('display', 'none');
+});

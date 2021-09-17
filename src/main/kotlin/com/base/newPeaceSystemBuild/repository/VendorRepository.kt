@@ -63,10 +63,11 @@ interface VendorRepository {
             clientId = #{clientId},
             directorMemberId = #{directorMemberId},
             roleCategoryId = #{roleCategoryId},
-            standardId = #{flowerId}
+            standardId = #{flowerId},
+            detail = #{detail}
         """
     )
-    fun insertIntoOrder(clientId:Int, directorMemberId: Int, roleCategoryId: Int, flowerId: Int)
+    fun insertIntoOrder(clientId:Int, directorMemberId: Int, roleCategoryId: Int, flowerId: Int, detail: String)
 
     @Update(
         """
@@ -83,44 +84,38 @@ interface VendorRepository {
         """
             <script>
             SELECT 
-            O.*,
-            C.id AS `extra__clientId`,
-            C.regDate AS `extra__clientRegDate`,
-            C.updateDate AS `extra__clientUpdateDate`,
-            C.deceasedName AS `extra__deceasedName`,
-            C.relatedName AS `extra__relatedName`,
-            C.cellphoneNo AS `extra__cellphoneNo`,
-            C.location AS `extra__location`,
-            C.address AS `extra__address`,
-            C.bank AS `extra__bank`,
-            C.accountNum AS `extra__accountNum`,
-            M.name AS `extra__directorName`,
-            M.cellphoneNo AS `extra__directorCellphoneNo`,
-            <if test="roleCategoryId == 1">
-                F.name AS `extra__name`,
-                F.retailPrice AS `extra__retailPrice`
+            O.*
+            <if test="detail == 'flower'">
+                , F.retailPrice AS `extra__retailPrice`
             </if>
-            <if test="roleCategoryId == 2">
-                P.name AS `extra__name`,
-                P.retailPrice AS `extra__retailPrice`
+            <if test="detail == 'flowerTribute'">
+                , FT.retailPrice AS `extra__retailPrice`
+                , FT.bunch AS `extra__bunch`
+                , FTO.bunchCnt AS `extra__bunchCnt`
+                , FTO.packing AS `extra__packing`
             </if>
             FROM `order` AS O
-            LEFT JOIN `client` AS C
-            ON O.clientId = C.id
-            LEFT JOIN `member` AS M
-            ON O.directorMemberId = M.id
-            <if test="roleCategoryId == 1">
-                LEFT JOIN `flower` AS F
+            <if test="detail == 'flower'">
+                LEFT JOIN flowerOrder AS FO
+                ON O.id = FO.orderId
+                LEFT JOIN flower AS F
                 ON O.standardId = F.id
             </if>
-            WHERE vendorMemberId = #{vendorMemberId}
-            AND orderStatus = #{orderStatus}
-            AND completionStatus = #{completionStatus}
-            AND roleCategoryId = #{roleCategoryId}
+            <if test="detail == 'flowerTribute'">
+                LEFT JOIN flowerTributeOrder AS FTO
+                ON O.id = FTO.orderId
+                LEFT JOIN flowerTribute AS FT
+                ON O.standardId = FT.id
+            </if>
+            WHERE O.vendorMemberId = #{vendorMemberId}
+            AND O.orderStatus = #{orderStatus}
+            AND O.completionStatus = #{completionStatus}
+            AND O.roleCategoryId = #{roleCategoryId}
+            AND O.detail = #{detail}
             </script>
         """
     )
-    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, roleCategoryId: Int, orderStatus: Boolean, completionStatus: Boolean): List<Order>
+    fun getOrdersByVendorMemberIdAndOrderStatus(vendorMemberId: Int, roleCategoryId: Int, orderStatus: Boolean, completionStatus: Boolean, detail: String): List<Order>
 
     @Select(
         """
@@ -137,9 +132,10 @@ interface VendorRepository {
             FROM `order`
             WHERE clientId = #{clientId}
             AND roleCategoryId = #{roleCategoryId}
+            AND detail = #{detail}
         """
     )
-    fun getOrderByClientIdAndRoleCategoryId(clientId: Int, roleCategoryId: Int): Order?
+    fun getOrderByClientIdAndRoleCategoryIdAndDetail(clientId: Int, roleCategoryId: Int, detail: String): Order?
 
     @Select(
         """
@@ -204,6 +200,16 @@ interface VendorRepository {
         """
     )
     fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order
+
+    @Insert(
+        """
+            INSERT INTO flowerOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId}
+        """
+    )
+    fun insertIntoFlowerOrder(orderId: Int)
 
 
 }
