@@ -63,11 +63,11 @@ interface VendorRepository {
             clientId = #{clientId},
             directorMemberId = #{directorMemberId},
             roleCategoryId = #{roleCategoryId},
-            standardId = #{flowerId},
+            standardId = #{standardId},
             detail = #{detail}
         """
     )
-    fun insertIntoOrder(clientId:Int, directorMemberId: Int, roleCategoryId: Int, flowerId: Int, detail: String)
+    fun insertIntoOrder(clientId:Int, directorMemberId: Int, roleCategoryId: Int, standardId: Int, detail: String)
 
     @Update(
         """

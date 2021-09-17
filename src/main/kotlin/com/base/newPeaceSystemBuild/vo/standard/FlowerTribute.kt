@@ -6,6 +6,5 @@ data class FlowerTribute(
     var updateDate: String,
     var retailPrice: String,
     var costPrice: String,
-    val bunch: Int,
-    val packing: Boolean
+    val bunch: Int
 )

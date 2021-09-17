@@ -1,9 +1,9 @@
 let SelectFlower__submitDone = false;
 
 function SelectFlower__submit(form) {
-    if (form.flowerId.value.length == 0) {
+    if (form.flowerId.value.length == 0 && form.flowerTributeId.value.length == 0) {
         swal({
-            title: "제단꽃을 선택해주세요.",
+            title: "제단꽃, 헌화 둘중 하나는 선택하셔야 주문이 가능합니다.",
             icon: "info",
             button: "확인",
         });
@@ -73,13 +73,29 @@ $('.flowerIdSelectBox').click(function () {
     if($(this).hasClass('active')){
         $('.flowerIdSelectBox').text('선택하기');
         $(this).removeClass('active');
-        $("input[value='" + flowerId + "']").prop('checked', false);
+        $("input[value='" + flowerId + "']#flowerId").prop('checked', false);
     }
     else{
         $('.flowerIdSelectBox').removeClass('active');
         $('.flowerIdSelectBox').text('선택하기');
         $(this).addClass('active');
         $(this).text("선택완료");
-        $("input[value='" + flowerId + "']").prop('checked', true);
+        $("input[value='" + flowerId + "']#flowerId").prop('checked', true);
+    }
+});
+$('.flowerTributeIdSelectBox').click(function () {
+    var flowerTributeId = $(this).attr('id');
+
+    if($(this).hasClass('active')){
+        $('.flowerTributeIdSelectBox').text('선택하기');
+        $(this).removeClass('active');
+        $("input[value='" + flowerTributeId + "']#flowerTributeId").prop('checked', false);
+    }
+    else{
+        $('.flowerTributeIdSelectBox').removeClass('active');
+        $('.flowerTributeIdSelectBox').text('선택하기');
+        $(this).addClass('active');
+        $(this).text("선택완료");
+        $("input[value='" + flowerTributeId + "']#flowerTributeId").prop('checked', true);
     }
 });

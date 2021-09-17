@@ -89,22 +89,13 @@ class UsrDirectorController(
     fun showSelectFlower(model: Model): String {
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
         val flowers = vendorService.getFlowers()
+        val flowerTributes = vendorService.getFlowerTributes()
 
+        model.addAttribute("flowerTributes", flowerTributes)
         model.addAttribute("flowers", flowers)
         model.addAttribute("funeral", funeral)
 
         return "usr/director/selectFlower"
-    }
-
-    @RequestMapping("/usr/director/selectFlowerTribute")
-    fun showSelectFlowerTribute(model: Model): String {
-        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
-        val flowerTributes = vendorService.getFlowerTributes()
-
-        model.addAttribute("flowerTributes", flowerTributes)
-        model.addAttribute("funeral", funeral)
-
-        return "usr/director/selectFlowerTribute"
     }
 
     @RequestMapping("/usr/director/dispatch")
@@ -113,8 +104,8 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "0") clientId: Int
     ): String {
         val client = clientService.getClientById(clientId)
-        
-        
+
+
         // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
         if(client == null){
             return "usr/home/main"
@@ -167,23 +158,16 @@ class UsrDirectorController(
         return rq.replaceJs("장례지도사 영업신청이 완료되었습니다.", "../home/main")
     }
 
-    @RequestMapping("/usr/director/doSelectFlowerTribute", method = [RequestMethod.POST])
-    @ResponseBody
-    fun doSelectFlowerTribute(
-        funeralId: Int,
-        flowerTributeId: Int,
-        bunchCnt: Int
-    ): String {
-        return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoFlowerTributeId(funeralId, flowerTributeId, bunchCnt))
-    }
-
     @RequestMapping("/usr/director/doSelectFlower", method = [RequestMethod.POST])
     @ResponseBody
     fun doSelectFlower(
         funeralId: Int,
-        flowerId: Int
+        @RequestParam(defaultValue = "0") flowerId: Int,
+        @RequestParam(defaultValue = "0") flowerTributeId: Int,
+        @RequestParam(defaultValue = "0") bunchCnt: Int,
+        @RequestParam(defaultValue = "N") packing: Char
     ): String {
-        return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoFlowerId(funeralId, flowerId))
+        return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoFlowerId(funeralId, flowerId, flowerTributeId, bunchCnt, packing))
     }
 
     @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
