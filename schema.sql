@@ -377,7 +377,8 @@ CREATE TABLE `order`(
 	roleCategoryId SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
 	standardId INT(10) UNSIGNED NOT NULL COMMENT '스탠다드 상품의 번호',
 	orderStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '지도사가 오더를 넣으면 기본값 0 업자가 오더를 받으면 1로 변경',
-	completionStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '기본값 0 업자가 오더를 받고 서비스를 완료하면 1로 변경'
+	completionStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '기본값 0 업자가 오더를 받고 서비스를 완료하면 1로 변경',
+	detail CHAR(30) NOT NULL
 );
 
 SELECT * FROM `order`;
@@ -389,8 +390,7 @@ CREATE TABLE flowerTribute(
 	updateDate DATETIME NOT NULL,
 	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
 	costPrice CHAR(10) NOT NULL COMMENT '원가',
-	bunch INT(10) UNSIGNED NOT NULL COMMENT '한묶음당 몇송이인지',
-	packing TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '포장 여부 0 = 미포장, 1 = 포장'
+	bunch INT(10) UNSIGNED NOT NULL COMMENT '한묶음당 몇송이인지'
 );
 
 INSERT INTO flowerTribute
@@ -398,16 +398,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 retailPrice = "1500",
 costPrice = "1000",
-bunch = 30,
-packing = 0;
-
-INSERT INTO flowerTribute
-SET regDate = NOW(),
-updateDate = NOW(),
-retailPrice = "4500",
-costPrice = "3000",
-bunch = 30,
-packing = 1;
+bunch = 30;
 
 SELECT * FROM flowerTribute;
 
@@ -432,6 +423,13 @@ ON O.id = FTO.orderId
 WHERE O.directorMemberId = 2
 AND FTO.bunchCnt IS NOT NULL
 AND FTO.packing IS NOT NULL;
+
+CREATE TABLE flowerOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL
+);
 
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
