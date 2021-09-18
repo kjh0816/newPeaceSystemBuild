@@ -74,13 +74,13 @@ class ClientService(
         // 다른 직업에 대해서도 재사용 가능
         val to = Ut.getCellphoneNosFromMembers(directors)
         // 문자 내용
-        val msg = "ㅎㅇ"
+        val msg = "https://webroot/usr/director/dispatch?clientId=${clientId} \n위 링크를 통해 유족의 위치를 확인하시고, 수락해주십시오."
 
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
         val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
 
 
-        return ResultData.from("S-1", "${directorsCount}명의 장례지도사 출동을 요청했습니다..", "from", from, "to", to, "msg", msg, "rb", rb, "clientId", clientId)
+        return ResultData.from("S-1", "요청이 완료되었습니다. 입력하신 연락처로 장례지도사가 연락합니다.", "from", from, "to", to, "msg", msg, "rb", rb, "clientId", clientId)
 
 
         // 문자 메세지 전달 (끝)
