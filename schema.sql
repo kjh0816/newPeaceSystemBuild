@@ -349,11 +349,11 @@ CREATE TABLE funeral(
 	directorMemberId INT(10) UNSIGNED NOT NULL,
 	memberId INT(10) UNSIGNED NOT NULL,
 	flowerId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음. 선택된 flower의 id',
+	flowerTributeId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음',
 	progress SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '장례 진행 상태'
 );
 
 
-ALTER TABLE funeral ADD COLUMN flowerTributeId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerId;
 
 SELECT * FROM funeral;
 /*
