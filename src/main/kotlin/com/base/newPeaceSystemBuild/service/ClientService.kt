@@ -113,7 +113,7 @@ class ClientService(
 
 
         // clientId로 장례를 조회한다. (clientId는 중복이 없다.)
-        var funeral = getFuneralByClientId(clientId)
+        val funeral = getFuneralByClientId(clientId)
 
         // 조회된 데이터가 있고, 해당 데이터의 directorMemberId 칼럼이 directorMemberId(rq.getLoginedMember()!!.id) 랑 같을경우 본인이 이미 승낙한 장례라는걸 알려줌
         if(funeral != null && funeral.directorMemberId == directorMemberId){
