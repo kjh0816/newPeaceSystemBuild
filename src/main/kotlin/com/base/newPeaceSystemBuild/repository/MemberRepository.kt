@@ -368,4 +368,25 @@ interface MemberRepository {
             """
     )
     fun changeLoginPwToTempPw(id: Int, tempPw: String)
+
+    @Select(
+            """
+            SELECT 
+            M.*,
+            MR.regDate AS `extra__regDate`,
+            MR.updateDate AS `extra__updateDate`,
+            MR.introduce AS `extra__introduce`,
+            MR.authenticationLevel AS `extra__authenticationLevel`,
+            MR.authenticationDate AS `extra__authenticationDate`,
+            MR.roleCategoryId AS `extra__roleCategoryId`,
+            R.roleName AS `extra__roleName`
+            FROM `member` AS M
+            LEFT JOIN memberRole AS MR
+            ON M.id = MR.memberId
+            LEFT JOIN `role` AS R
+            ON M.roleLevel = R.id
+            WHERE M.id = #{memberId}
+            """
+    )
+    fun getMemberByIdForMsg(memberId: Int): List<Member>
 }

@@ -113,7 +113,7 @@ class ClientService(
 
 
         // clientId로 장례를 조회한다. (clientId는 중복이 없다.)
-        val funeral = getFuneralByClientId(clientId)
+        var funeral = getFuneralByClientId(clientId)
 
         // 조회된 데이터가 있고, 해당 데이터의 directorMemberId 칼럼이 directorMemberId(rq.getLoginedMember()!!.id) 랑 같을경우 본인이 이미 승낙한 장례라는걸 알려줌
         if(funeral != null && funeral.directorMemberId == directorMemberId){
@@ -138,7 +138,51 @@ class ClientService(
         clientRepository.insertFuneral(client.memberId, directorMemberId, client.id)
 
         // 영업자와 장례지도사에게 장례지도사가 배정된 것에 대한 정보를 문자로 알림(시작)
-        //
+
+        // 장례지도사에게 문자 메세지 전달
+
+        val directorRoleLevel = 3
+
+        val director: List<Member> = memberRepository.getMemberByIdForMsg(directorMemberId)
+
+        // 발신자 전화번호
+        val from = "01049219810"
+        // 1명 이상의 수신자 전화번호 ( 알리고 API에서 수신인(receiver)로써 인식 가능한 상태로 넣어주는 함수 )
+        // 다른 직업에 대해서도 재사용 가능
+        val to = Ut.getCellphoneNosFromMembers(director)
+        // 문자 내용
+        val msg = "${rq.getLoginedMember()!!.name} 장례지도사님께서 故 ${client.deceasedName}님의 장례에 배정되었습니다. " +
+                "\n아래 링크를 통해 유족과 연락해주시고, 장례를 진행해주십시오." +
+                "\nhttps://webroot/usr/director/progress?clientId=${clientId}"
+
+        // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
+
+
+        // 영업자에게 문자 메세지 전달
+
+        val memberRoleLevel = 2
+
+
+        // 수신자를 넣어주는 함수가 List<Member>를 받으므로, 아래 함수를 통해 List<Member> 형태로 불러오는 함수
+        // 중복 데이터가 없이 1개의 row만을 얻도록 clientId와 함께 조회
+
+        val member = memberRepository.getMemberByIdForMsg(client.memberId)
+
+        // 발신자 전화번호
+        val from2 = "01049219810"
+        // 1명 이상의 수신자 전화번호 ( 알리고 API에서 수신인(receiver)로써 인식 가능한 상태로 넣어주는 함수 )
+        // 다른 직업에 대해서도 재사용 가능
+        val to2 = Ut.getCellphoneNosFromMembers(member)
+        // 문자 내용
+        val msg2 = "故 ${client.deceasedName}님의 장례를 위한 장례지도사가 배정되었습니다. " +
+                "\n진행 상황은 아래 링크를 통해서 확인해주십시오." +
+                "\nhttps://webroot/usr/member/progress?clientId=${clientId}"
+
+        // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
+        val rb2: Aligo__send__ResponseBody = Ut.sendSms(from2, to2.toString(), msg2, true)
+
+
         // 영업자와 장례지도사에게 장례지도사가 배정된 것에 대한 정보를 문자로 알림(끝)
 
         return ResultData.from("S-1", "출동 요청을 승낙하였습니다.", "client", client)
