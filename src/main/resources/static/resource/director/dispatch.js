@@ -11,6 +11,7 @@ function Dispatch__submit(form) {
             }
             else {
                    alert(res.response.msg);
+                   window.location.replace(res.response.map.replaceUrl);
             }
         }
     );

@@ -103,19 +103,26 @@ class UsrDirectorController(
             model: Model,
             @RequestParam(defaultValue = "0") clientId: Int
     ): String {
-        val client = clientService.getClientById(clientId)
-
 
         // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
+        val client = clientService.getClientById(clientId)
+
         if(client == null){
             return "usr/home/main"
         }
 
-
-
         model.addAttribute("client", client)
 
         return "usr/director/dispatch"
+    }
+
+
+    @RequestMapping("/usr/director/doDispatch", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doDispatch(
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String {
+        return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
     }
 
 
@@ -183,13 +190,7 @@ class UsrDirectorController(
         return Ut.getJsonStrFromObj(clientService.moveProgressRd(funeral.clientId))
     }
 
-    @RequestMapping("/usr/director/doDispatch", method = [RequestMethod.POST])
-    @ResponseBody
-    fun doDispatch(
-        @RequestParam(defaultValue = "0") clientId: Int
-    ): String {
-        return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
-    }
+
 
 
     // VIEW 기능 함수 끝

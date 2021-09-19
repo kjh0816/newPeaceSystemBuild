@@ -61,8 +61,6 @@ class ClientService(
         // 반대로, vendor의 경우, roleCategoryId 값을 넣으면 내부적으로 적용된다.
         val directors: List<Member> = memberRepository.getMembersByLocationAndRole(location, roleLevel, 0)
 
-        // 몇 명의 장례지도사가 조회되었고, 문자가 갈 것인지를 알려주기 위한 변수
-        val directorsCount = directors.size
         // location으로 조회했을 때, 해당 지역에 한 명도 없는 경우에 대한 예외처리
         if(directors.isEmpty()){
             return ResultData.from("F-6", "${location}에 등록된 장례지도사가 없습니다.")
@@ -100,7 +98,7 @@ class ClientService(
         return ResultData.from("S-1", "성공", "client", client)
     }
 
-    fun getFuneralById(clientId: Int): Funeral? {
+    fun getFuneralByClientId(clientId: Int): Funeral? {
         return clientRepository.getFuneralByClientId(clientId)
     }
 
@@ -110,32 +108,40 @@ class ClientService(
 
     fun modifyClientIntoDirectorMemberIdByClientId(directorMemberId: Int, clientId: Int): ResultData {
         // post 요청이라 사용자가 파라미터를 바꿀수 없어 clientId가 잘못들어오는 경우는 없겠지만, null 처리를 해줘야하기 때문에 !!는 불안정한 느낌이라 추가함
-        val client = getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
+        // 영업자가 client 정보를 입력한 시점에서 client 데이터가 누락되는 경우는 없으므로, clientId가 일치하지 않는 경우, 잘못된 URL 접근이므로 예외처리
+        val client = getClientById(clientId) ?: return ResultData.from("F-1", "잘못된 접근입니다.")
 
-        // funeral 테이블에서 progress 칼럼이 true 이고, directorMemberId 가 로그인한 회원 ID랑 같은 데이터를 조회해서 가져옴
-        val funeral = getProgressingFuneralByIdDirectorMemberId(directorMemberId)
+
+        // clientId로 장례를 조회한다. (clientId는 중복이 없다.)
+        val funeral = getFuneralByClientId(clientId)
 
         // 조회된 데이터가 있고, 해당 데이터의 directorMemberId 칼럼이 directorMemberId(rq.getLoginedMember()!!.id) 랑 같을경우 본인이 이미 승낙한 장례라는걸 알려줌
         if(funeral != null && funeral.directorMemberId == directorMemberId){
-            return ResultData.from("F-2", "이미 출동요청을 승낙하였습니다. 진행중인 장례 페이지를 확인해주세요.")
-        }
-        // 조회된 데이터가 있을경우 현재 해당 장례지도사가 이미 진행중인 장례가 있다는걸 알려줌.
-        else if(funeral != null){
-            return ResultData.from("F-3", "이미 진행중이신 장례가 있습니다.")
+
+            val replaceUrl = "/usr/director/progress?clientId=$clientId"
+
+            return ResultData.from("F-2", "이미 출동 요청을 승락하셨습니다. 진행 중인 장례 페이지를 확인해주세요.", "replaceUrl", replaceUrl)
         }
 
         // client 테이블에 directorMemberId가 0이 아니면 장례지도사 배정이 완료된상태
         if(client.directorMemberId != 0){
-            return ResultData.from("F-4", "다른 장례지도사님이 먼저 출동하셨습니다.")
-        }
 
-        // 위 조건을 모두 패스할 경우 client 테이블에 directorMemberId 를 본인의 ID 값으로 수정
+            val replaceUrl = "/usr/home/main"
+
+            return ResultData.from("F-3", "이미 장례지도사가 배정되었습니다.", "replaceUrl", replaceUrl)
+        }
+        
+        // 위 조건을 만족한 경우, 장례지도사가 등록되지 않은 시점이므로, 해당 client에게 장례지도사 배정
         clientRepository.modifyClientIntoDirectorMemberIdByClientId(directorMemberId, clientId)
 
-        // 장레지도사 배정이 완료됬으니 funeral 테이블도 추가
+        // 장레지도사 배정이 완료된 시점으로, funeral 테이블에 데이터 삽입
         clientRepository.insertFuneral(client.memberId, directorMemberId, client.id)
 
-        return ResultData.from("S-1", "출동요청을 승낙하였습니다.", "client", client)
+        // 영업자와 장례지도사에게 장례지도사가 배정된 것에 대한 정보를 문자로 알림(시작)
+        //
+        // 영업자와 장례지도사에게 장례지도사가 배정된 것에 대한 정보를 문자로 알림(끝)
+
+        return ResultData.from("S-1", "출동 요청을 승낙하였습니다.", "client", client)
     }
 
     fun getProgressingFuneralByIdDirectorMemberId(directorMemberId: Int): Funeral? {
