@@ -79,7 +79,7 @@ $('.flowerIdSelectBox').click(function () {
         $('.flowerIdSelectBox').removeClass('active');
         $('.flowerIdSelectBox').text('선택하기');
         $(this).addClass('active');
-        $(this).text("선택완료");
+        $(this).text("선택 됨");
         $("input[value='" + flowerId + "']#flowerId").prop('checked', true);
     }
 });
@@ -95,7 +95,7 @@ $('.flowerTributeIdSelectBox').click(function () {
         $('.flowerTributeIdSelectBox').removeClass('active');
         $('.flowerTributeIdSelectBox').text('선택하기');
         $(this).addClass('active');
-        $(this).text("선택완료");
+        $(this).text("선택 됨");
         $("input[value='" + flowerTributeId + "']#flowerTributeId").prop('checked', true);
     }
 });
