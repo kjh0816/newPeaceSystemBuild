@@ -70,6 +70,8 @@ function MemberCall__submit(form) {
 
     post$.subscribe(
         res => {
+
+
             if ( res.response.success ) {
 
 //          doCall에서 return된 clientId를 URL 파라미터로 넘겨준다.

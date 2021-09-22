@@ -31,9 +31,8 @@
                     <div class="card-body">
                         <h2 class="card-title">취급해야할 제단꽃 규격</h2>
                         <div class="text-sm" th:each="flower : ${flowers}" th:object="${flower}">
-                            <div th:value="${flower.name}" th:text="|상품명: ${flower.name}|"></div>
+                            <div th:value="${flower.id}" th:text="|상품명: ${flower.id}호|"></div>
                             <div th:value="${flower.retailPrice}" th:text="|소비자가: ${flower.retailPrice}원|"></div>
-                            <div th:value="${flower.standardPrice}" th:text="|기준가: ${flower.standardPrice}원|"></div>
                             <div th:value="${flower.costPrice}" th:text="|원가: ${flower.costPrice}원|"></div>
                             <div th:if="${flowers.size != flower.id}" class="divider">AND</div>
                         </div>
@@ -41,7 +40,7 @@
                 </div>
                 <br>
                 <label class="label">
-                    <span class="label-text">사업자 등록증 사진 파일 첨부</span>
+                    <span class="label-text font-bold">사업자 등록증 사진 파일 첨부</span>
                 </label>
                 <div class="file-box flex">
                     <input type="text" placeholder="선택된 파일 없음." disabled="disabled" class="upload-name bg-transparent w-36 py-2 px-4 text-sm">

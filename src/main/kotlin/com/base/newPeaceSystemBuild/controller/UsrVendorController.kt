@@ -46,7 +46,11 @@ class UsrVendorController(
 
 
     @RequestMapping("/usr/vendor/dispatch")
-    fun showDispatch(model: Model, clientId: Int, funeralId: Int): String {
+    fun showDispatch(
+            model: Model,
+            clientId: Int,
+            funeralId: Int
+    ): String {
         val client = clientService.getClientById(clientId)
         // clientId로 funeral을 조회하는 SQL인데, funeralId로 조회하는 것이 문제가 있음.
         val funeral = clientService.getFuneralByClientId(funeralId)

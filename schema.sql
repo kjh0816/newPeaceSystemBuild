@@ -285,44 +285,28 @@ CREATE TABLE flower(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
-	`name` CHAR(15) UNIQUE NOT NULL,
 	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
-	standardPrice CHAR(10) NOT NULL COMMENT '기준가',
-	costPrice CHAR(10) NOT NULL COMMENT '원가',
-	height CHAR(10) NOT NULL COMMENT '세로 길이 (단위: mm)',
-	width CHAR(10) NOT NULL COMMENT '가로 길이 (단위: mm)'
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
 );
 
 
 INSERT INTO flower
 SET regDate = NOW(),
 updateDate = NOW(),
-`name` = '1호',
 retailPrice = '150000',
-standardPrice = '130000',
-costPrice = '100000',
-height = '1500',
-width = '600';
+costPrice = '100000';
 
 
 INSERT INTO flower
 SET regDate = NOW(),
 updateDate = NOW(),
-`name` = '2호',
 retailPrice = '160000',
-standardPrice = '140000',
-costPrice = '110000',
-height = '1650',
-width = '999';
+costPrice = '110000';
 
 
 SELECT
-`name`,
 FORMAT(`retailPrice` , 0) AS `retailPrice`,
-FORMAT(`standardPrice` , 0) AS `standardPrice`,
-FORMAT(`costPrice` , 0) AS `costPrice`,
-height,
-width
+FORMAT(`costPrice` , 0) AS `costPrice`
 FROM flower;
 
 
