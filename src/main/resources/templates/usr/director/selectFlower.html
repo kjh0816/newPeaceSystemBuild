@@ -51,12 +51,12 @@
                             <p class="pl-2">[[${flowerTribute.retailPrice}]] 원</p>
                         </div>
                         <div class="flex items-center mb-1">
-                            <div class="badge badge-md">헌화 세트</div>
-                            <p class="pl-2">헌화는 한 세트당 [[${flowerTribute.bunch}]]개이며, 세트로만 주문받고있습니다.</p>
+                            <div class="badge badge-md">헌화</div>
+                            <p class="pl-2">헌화는 한 세트당 [[${flowerTribute.bunch}]]송이이며, 세트 단위로만 주문할 수 있습니다.</p>
                         </div>
                         <label class="cursor-pointer label flex">
                             <input type="checkbox" class="checkbox" name="packing" value="Y">
-                            <span class="label-text w-full pl-2">헌화를 포장하시려면 체크해주세요.</span>
+                            <span class="label-text w-full pl-2">헌화(특)을 주문하시려면 체크해주세요.</span>
                         </label>
                         <div class="card-actions">
                             <div class="form-control flex">
@@ -74,11 +74,10 @@
             <div class="form-control">
                 <input type="text" id="bunchCnt" name="bunchCnt" placeholder="한 세트당 30개이며 몇 세트를 원하시는지 입력해 주세요." class="input input-bordered my-2">
             </div>
-            <div class="flex">
-                <input class="btn btn-ghost w-1/2" type="button" value="저장하기">
-                <input class="btn btn-ghost w-1/2" type="button" value="뒤로가기">
-            </div>
-            <input class="btn btn-ghost w-full" type="submit" value="주문하기">
+            <input class="btn btn-ghost w-full" type="submit" value="완료">
+            <br>
+            <br>
+            <input class="btn btn-ghost w-full" type="button" value="돌아가기">
         </form>
     </div>
 </main>
