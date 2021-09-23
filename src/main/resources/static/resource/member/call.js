@@ -1,3 +1,6 @@
+
+var once = true;
+
 function MemberCall__submit(form) {
 
 
@@ -60,6 +63,9 @@ function MemberCall__submit(form) {
 
             return;
     }
+    if(once){
+
+    once = false;
 
     const post$ = rxjs.ajax.ajax.post(
     //              고인의 정보를 올바르게 입력했을 경우, client 테이블에 row가 추가된다.
@@ -86,6 +92,7 @@ function MemberCall__submit(form) {
             }
         }
     );
+    }
 
 }
 
