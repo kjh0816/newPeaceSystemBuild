@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartRequest
+import java.text.DecimalFormat
 
 
 @Controller
@@ -49,7 +50,6 @@ class UsrDirectorController(
         //
         val client = clientService.getClientById(funeral.clientId)
 
-
         if(client == null){
             return "redirect:/usr/home/main"
         }
@@ -66,21 +66,30 @@ class UsrDirectorController(
         var flowerPrice = 0
         var flowerTributePrice = 0
 
+        val formatter = DecimalFormat("###,###")
+        // 합계
+        var sum = 0
+
         if(flower != null){
             flowerPrice = flower.retailPrice.toInt()
+            sum += flowerPrice
         }
         if(flowerTribute != null){
-            flowerTributePrice = (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder.extra__bunchCnt!!.toInt()
+            flowerTributePrice = (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
+            sum += flowerTributePrice
         }
+
+        val flowerTributePriceFormat = formatter.format(flowerTributePrice)
+        val sumFormat = formatter.format(sum)
 
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("flower", flower)
         model.addAttribute("flowerTribute", flowerTribute)
-        model.addAttribute("flowerTributePrice", flowerTributePrice)
+        model.addAttribute("flowerTributePriceFormat", flowerTributePriceFormat)
         model.addAttribute("flowerTributeOrder", flowerTributeOrder)
-        model.addAttribute("sum", flowerPrice + flowerTributePrice)
+        model.addAttribute("sumFormat", sumFormat)
 
         return "usr/director/progress"
     }

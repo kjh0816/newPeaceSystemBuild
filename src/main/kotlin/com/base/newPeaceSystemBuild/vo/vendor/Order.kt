@@ -1,5 +1,7 @@
 package com.base.newPeaceSystemBuild.vo.vendor
 
+import java.text.DecimalFormat
+
 data class Order (
     val id: Int,
     val regDate: String,
@@ -19,12 +21,14 @@ data class Order (
     var extra__bunch: Int? = null
     var extra__packing: Boolean? = null
 
-    val retailPriceMulBunchPrice: Int
+    private val formatter = DecimalFormat("###,###")
+
+    val retailPriceMulBunchPrice: String
         get() {
-            return (extra__retailPrice ?: 0) * (extra__bunch ?: 0)
+            return formatter.format((extra__retailPrice ?: 0) * (extra__bunch ?: 0))
         }
-    val retailPriceMulBunchPriceMulBunchCnt: Int
+    val retailPriceMulBunchPriceMulBunchCnt: String
         get() {
-            return (extra__retailPrice ?: 0) * (extra__bunch ?: 0) * (extra__bunchCnt ?: 0)
+            return formatter.format((extra__retailPrice ?: 0) * (extra__bunch ?: 0) * (extra__bunchCnt ?: 0))
         }
 }

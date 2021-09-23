@@ -188,10 +188,14 @@ interface VendorRepository {
     @Select(
         """
             SELECT 
-            O.*,
-            FTO.bunchCnt AS `extra__bunchCnt`,
-            FTO.packing AS `extra__packing`
+            O.*
+            , FT.retailPrice AS `extra__retailPrice`
+            , FT.bunch AS `extra__bunch`
+            , FTO.bunchCnt AS `extra__bunchCnt`
+            , FTO.packing AS `extra__packing`
             FROM `order` AS O
+            LEFT JOIN flowerTribute AS FT
+            ON O.standardId = FT.id
             LEFT JOIN flowerTributeOrder AS FTO
             ON O.id = FTO.orderId
             WHERE O.directorMemberId = #{directorMemberId}
@@ -199,7 +203,7 @@ interface VendorRepository {
             AND FTO.packing IS NOT NULL
         """
     )
-    fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order
+    fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order?
 
     @Insert(
         """

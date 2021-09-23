@@ -133,7 +133,7 @@ class VendorService(
         return vendorRepository.getFlowerTributeById(flowerTributeId)
     }
 
-    fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order {
+    fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order? {
         return vendorRepository.getFlowerTributeOrderByDirectorMemberId(directorMemberId)
     }
 

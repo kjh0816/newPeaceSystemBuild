@@ -1,5 +1,7 @@
 package com.base.newPeaceSystemBuild.vo.standard
 
+import java.text.DecimalFormat
+
 data class FlowerTribute(
     val id: Int,
     val regDate: String,
@@ -8,3 +10,11 @@ data class FlowerTribute(
     var costPrice: String,
     val bunch: Int
 )
+{
+    private val formatter = DecimalFormat("###,###")
+
+    val retailPriceFormat: String
+        get() {
+            return formatter.format(retailPrice.toInt())
+        }
+}
