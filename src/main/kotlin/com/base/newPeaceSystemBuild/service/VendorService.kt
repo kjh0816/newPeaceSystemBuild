@@ -37,43 +37,47 @@ class VendorService(
     fun modifyFuneralIntoFlowerId(funeralId:Int, flowerId: Int, flowerTributeId: Int, bunchCnt: Int, packing: Char): ResultData {
         val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
-        if(funeral.flowerId != 0){
-            return ResultData.from("F-3", "이미 제단꽃을 신청하였습니다.")
-        }
-
-        if(funeral.flowerTributeId != 0){
-            return ResultData.from("F-3", "이미 헌화를 신청하였습니다.")
-        }
-
         val client = clientRepository.getClientById(funeral.clientId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 1
 
         var detail = ""
+        // flower Order Insert
+        detail = "flower"
+        // Insert 전에 해당 정보로 이미 정보를 입력한적이 있다면, insert가 아닌 modify 로직으로 적용
+        val flowerOrder = vendorRepository.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(client.id, rq.getLoginedMember()!!.id, false, detail)
 
-        if(flowerId != 0){
-            detail = "flower"
+        if(flowerOrder == null){
             vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerId, detail)
 
             val flowerOrderId = vendorRepository.getLastInsertId()
             vendorRepository.insertIntoFlowerOrder(flowerOrderId)
         }
+        else{
+            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(flowerId, client.id, rq.getLoginedMember()!!.id, roleCategoryId, detail, false)
+        }
 
-        if(flowerTributeId != 0){
-            detail = "flowerTribute"
+        // flowerTribute Order Insert
+        detail = "flowerTribute"
+        val flowerTributeOrder = vendorRepository.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(client.id, rq.getLoginedMember()!!.id, false, detail)
+
+        var packingBool = false
+
+        if(packing == 'Y'){
+            packingBool = true
+        }
+
+        if(flowerTributeOrder == null){
             vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerTributeId, detail)
-
-            var packingBool = false
-
-            if(packing == 'Y'){
-                packingBool = true
-            }
 
             val flowerTributeOrderId = vendorRepository.getLastInsertId()
             vendorRepository.insertIntoFlowerTributeOrder(flowerTributeOrderId, bunchCnt, packingBool)
         }
-
+        else{
+            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(flowerTributeId, client.id, rq.getLoginedMember()!!.id, roleCategoryId, detail, false)
+            vendorRepository.modifyFlowerTributeOrderIntoBunchCntAndPackingByOrderId(bunchCnt, packingBool, flowerTributeOrder.id)
+        }
 
         // funeral 테이블에 flowerId 를 업데이트 한다.
         vendorRepository.modifyFuneralIntoFlowerId(funeralId, flowerId)

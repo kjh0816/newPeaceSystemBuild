@@ -215,5 +215,54 @@ interface VendorRepository {
     )
     fun insertIntoFlowerOrder(orderId: Int)
 
+    @Select(
+        """
+            SELECT * 
+            FROM `order` 
+            WHERE clientId = #{clientId}
+            AND directorMemberId = #{directorMemberId}
+            AND completionStatus = #{completionStatus}
+            AND detail = #{detail};
+        """
+    )
+    fun getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        clientId: Int,
+        directorMemberId: Int,
+        completionStatus: Boolean,
+        detail: String
+    ): Order?
+
+    @Update(
+        """
+            UPDATE `order`
+            SET updateDate = NOW(),
+            standardId = #{standardId}
+            WHERE clientId = #{clientId}
+            AND directorMemberId = #{directorMemberId}
+            AND roleCategoryId = #{roleCategoryId}
+            AND detail = #{detail}
+            AND completionStatus = #{completionStatus}
+        """
+    )
+    fun modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+        standardId: Int,
+        clientId: Int,
+        directorMemberId: Int,
+        roleCategoryId: Int,
+        detail: String,
+        completionStatus: Boolean
+    )
+
+    @Update(
+        """
+            UPDATE flowerTributeOrder
+            SET updateDate = NOW(),
+            bunchCnt = #{bunchCnt},
+            packing = #{packing}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyFlowerTributeOrderIntoBunchCntAndPackingByOrderId(bunchCnt: Int, packing: Boolean, orderId: Int)
+
 
 }
