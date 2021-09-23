@@ -249,21 +249,39 @@ SELECT * FROM genFile;
 
 
 
-# 고인에 대한 정보를 담는 테이블
-
+# 고인에 대한 정보를 담는 client 테이블
+# 고인 정보 입력을 최초에 영업자가 입력하는데, 모든 정보가 담기지 않으므로, 
+# 최초 생성 단계에서 채워지지 않는 칼럼은 default 값을 준다.
 CREATE TABLE `client`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	memberId INT(10) UNSIGNED NOT NULL COMMENT '현재 로그인한 회원 id(장례지도사를 연결해준 영업자)',
 	directorMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0일 경우, 장례지도사가 아직 미정, 정해지면 장례지도사 id를 넣는다.',
-	deceasedName CHAR(20) NOT NULL COMMENT '고인의 성함',
-	relatedName CHAR(20) NOT NULL COMMENT '상주 또는 유족의 성함',
-	cellphoneNo CHAR(20) NOT NULL COMMENT '위 성함분의 연락처',
 	location CHAR(30) NOT NULL,
-	address CHAR(30) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록',
+	# 상주 관련 정보
+	cellphoneNo CHAR(20) NOT NULL COMMENT '상주 또는 유족의 연락처',
+	relatedName CHAR(20) NOT NULL COMMENT '상주 또는 유족의 성함',
+	relatedAddress CHAR(50) NOT NULL DEFAULT '' COMMENT '상주의 거주지 주소',
 	bank CHAR(20) NOT NULL DEFAULT '' COMMENT '유족이 부조금을 받을 수 있는 계좌',
-	accountNum CHAR(20) NOT NULL DEFAULT ''
+	accountNum CHAR(20) NOT NULL DEFAULT '',
+	# 고인 관련 정보
+	deceasedName CHAR(20) NOT NULL COMMENT '고인의 성함',
+	deceasedAddress CHAR(50) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록',
+	deceasedDate CHAR(20) NOT NULL DEFAULT '' COMMENT '사망일',
+	deceasedTime CHAR(20) NOT NULL DEFAULT '' COMMENT '사망시각 (분 단위까지 받는다.)',	
+	sex TINYINT(1) NOT NULL DEFAULT 0 COMMENT '고인 성별 (0 = 남자, 1 = 여자)',
+	birth CHAR(20) NOT NULL DEFAULT '' COMMENT '고인의 생년월일',
+	lunar TINYINT(1) NOT NULL DEFAULT 0 COMMENT '음력인지 아닌지(0(false) = 양력, 1(true) = 음력)',
+	funeralHall CHAR(50) NOT NULL DEFAULT '' COMMENT '장례식장 이름',
+	funeralHallRoom CHAR(20) NOT NULL DEFAULT '' COMMENT '장례식장 호실',
+	familyClan CHAR(20) NOT NULL DEFAULT '' COMMENT '고인의 본관(시조의 고향)',
+	religion CHAR(20) NOT NULL DEFAULT '' COMMENT '종교',
+	duty CHAR(30) NOT NULL DEFAULT '' COMMENT '직분',
+	funeralMethod TINYINT(1) NOT NULL DEFAULT 0 COMMENT '장법(매장인지, 화장인지) 0 = 매장, 1 = 화장',
+	cause SMALLINT(1) NOT NULL DEFAULT 0 COMMENT '사망 원인(병사 = 0, 사고사 = 1, 기타 = 2)',
+	papers TINYINT(1) NOT NULL DEFAULT 0 COMMENT '사망 서류(진단서 = 0, 사체검안서 = 1)',
+	autopsyCheck TINYINT(1) NOT NULL DEFAULT 0 COMMENT '검시필증(사체검안서에 대해 추가로 필요할 수 있음) 0 = 없음, 1 = 있음'
 );
 
 
