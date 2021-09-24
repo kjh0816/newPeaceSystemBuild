@@ -43,14 +43,14 @@ class UsrDirectorController(
     ): String {
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
 
-        if(funeral == null){
+        if (funeral == null) {
             return "redirect:/usr/home/main"
         }
 
         //
         val client = clientService.getClientById(funeral.clientId)
 
-        if(client == null){
+        if (client == null) {
             return "redirect:/usr/home/main"
         }
         // 헌화의 주문정보를 장례지도사 회원정보로 조회한 결과를 가져온다
@@ -70,12 +70,13 @@ class UsrDirectorController(
         // 합계
         var sum = 0
 
-        if(flower != null){
+        if (flower != null) {
             flowerPrice = flower.retailPrice.toInt()
             sum += flowerPrice
         }
-        if(flowerTribute != null){
-            flowerTributePrice = (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
+        if (flowerTribute != null) {
+            flowerTributePrice =
+                (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
             sum += flowerTributePrice
         }
 
@@ -100,6 +101,25 @@ class UsrDirectorController(
         val flowers = vendorService.getFlowers()
         val flowerTributes = vendorService.getFlowerTributes()
 
+        if (funeral != null) {
+            val flowerOrder = vendorService.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+                funeral.clientId,
+                rq.getLoginedMember()!!.id,
+                false,
+                "flower"
+            )
+            val flowerTributeOrder = vendorService.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+                funeral.clientId,
+                rq.getLoginedMember()!!.id,
+                false,
+                "flowerTribute"
+            )
+
+            model.addAttribute("flowerOrder", flowerOrder)
+            model.addAttribute("flowerTributeOrder", flowerTributeOrder)
+        }
+
+
         model.addAttribute("flowerTributes", flowerTributes)
         model.addAttribute("flowers", flowers)
         model.addAttribute("funeral", funeral)
@@ -109,14 +129,14 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/dispatch")
     fun showDispatch(
-            model: Model,
-            @RequestParam(defaultValue = "0") clientId: Int
+        model: Model,
+        @RequestParam(defaultValue = "0") clientId: Int
     ): String {
 
         // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
         val client = clientService.getClientById(clientId)
 
-        if(client == null){
+        if (client == null) {
             return "usr/home/main"
         }
 
@@ -129,9 +149,14 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/doDispatch", method = [RequestMethod.POST])
     @ResponseBody
     fun doDispatch(
-            @RequestParam(defaultValue = "0") clientId: Int
+        @RequestParam(defaultValue = "0") clientId: Int
     ): String {
-        return Ut.getJsonStrFromObj(clientService.modifyClientIntoDirectorMemberIdByClientId(rq.getLoginedMember()!!.id, clientId))
+        return Ut.getJsonStrFromObj(
+            clientService.modifyClientIntoDirectorMemberIdByClientId(
+                rq.getLoginedMember()!!.id,
+                clientId
+            )
+        )
     }
 
 
@@ -183,7 +208,15 @@ class UsrDirectorController(
         @RequestParam(defaultValue = "0") bunchCnt: Int,
         @RequestParam(defaultValue = "N") packing: Char
     ): String {
-        return Ut.getJsonStrFromObj(vendorService.modifyFuneralIntoFlowerId(funeralId, flowerId, flowerTributeId, bunchCnt, packing))
+        return Ut.getJsonStrFromObj(
+            vendorService.modifyFuneralIntoFlowerId(
+                funeralId,
+                flowerId,
+                flowerTributeId,
+                bunchCnt,
+                packing
+            )
+        )
     }
 
     @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
@@ -192,14 +225,12 @@ class UsrDirectorController(
     ): String {
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
 
-        if(funeral == null){
+        if (funeral == null) {
             return Ut.getJsonStrFromObj(clientService.moveProgressRd(0))
         }
 
         return Ut.getJsonStrFromObj(clientService.moveProgressRd(funeral.clientId))
     }
-
-
 
 
     // VIEW 기능 함수 끝

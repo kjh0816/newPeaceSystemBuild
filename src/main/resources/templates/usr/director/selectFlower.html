@@ -13,6 +13,7 @@
     </th:block>
 </head>
 <main layout:fragment="main">
+
     <div class="p-10 card bg-base-200">
         <form onsubmit="SelectFlower__submit(this); return false;">
             <h2 class="card-title">제단꽃 선택</h2>
@@ -29,7 +30,7 @@
                         </div>
                         <div class="card-actions">
                             <div class="form-control flex">
-                                <span class="flowerIdSelectBox btn btn-ghost" th:id="${flower.id}">선택하기</span>
+                                <span class="flowerIdSelectBox btn btn-ghost" th:id="|flower${flower.id}|" th:value="${flower.id}">선택하기</span>
                                 <input id="flowerId" type="radio" name="flowerId" class="radio" th:value="${flower.id}" style="display: none;">
                             </div>
                         </div>
@@ -37,6 +38,12 @@
                 </div>
                 <div class="divider" th:if="${flowers.size != flower.id}">OR</div>
             </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${flowerOrder != null}">
+                $(".flowerIdSelectBox#flower[[${flowerOrder.standardId}]]").addClass('active');
+                $(".flowerIdSelectBox#flower[[${flowerOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${flowerOrder.standardId}]]']#flowerId").prop('checked', true);
+            </script>
             <br>
             <h2 class="card-title">헌화 선택</h2>
             <div class="flex flex-col w-full" th:each="flowerTribute : ${flowerTributes}">
@@ -60,19 +67,29 @@
                         </label>
                         <div class="card-actions">
                             <div class="form-control flex">
-                                <span class="flowerTributeIdSelectBox btn btn-ghost" th:id="${flowerTribute.id}">선택하기</span>
+                                <span class="flowerTributeIdSelectBox btn btn-ghost" th:id="|flowerTribute${flowerTribute.id}|" th:value="${flowerTribute.id}">선택하기</span>
                                 <input id="flowerTributeId" type="radio" name="flowerTributeId" class="radio" th:value="${flowerTribute.id}" style="display: none;">
                                 <!-- radio는 하나만있으면 velue가 무조건 selected 가되는 현상이 발생 -->
-                                <input type="radio" name="flowerTributeId" class="radio" th:value="${flowerTribute.id}" style="display: none;">
+                                <input type="radio" name="flowerTributeId" class="radio" value="0" style="display: none;">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="divider" th:if="${flowerTributes.size != flowerTribute.id}">OR</div>
             </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${flowerTributeOrder != null}">
+                $(".flowerTributeIdSelectBox#flowerTribute[[${flowerTributeOrder.standardId}]]").addClass('active');
+                $(".flowerTributeIdSelectBox#flowerTribute[[${flowerTributeOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${flowerTributeOrder.standardId}]]']#flowerTributeId").prop('checked', true);
+
+                if([[${flowerTributeOrder.extra__packing}]] == true){
+                    $("input[name='packing']").prop('checked', true);
+                }
+            </script>
             <br>
             <div class="form-control">
-                <input type="text" id="bunchCnt" name="bunchCnt" placeholder="한 세트당 30개이며 몇 세트를 원하시는지 입력해 주세요." class="input input-bordered my-2">
+                <input type="text" id="bunchCnt" name="bunchCnt" placeholder="한 세트당 30개이며 몇 세트를 원하시는지 입력해 주세요." class="input input-bordered my-2" th:value="${flowerTributeOrder != null} ? ${flowerTributeOrder.extra__bunchCnt} : ''">
             </div>
             <input class="btn btn-ghost w-full" type="submit" value="완료">
             <br>

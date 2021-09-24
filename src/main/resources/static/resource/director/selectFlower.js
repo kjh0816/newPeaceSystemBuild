@@ -68,7 +68,7 @@ function SelectFlowerTribute__submit(form) {
 }
 // radio 버튼 대신 사용할 버튼 디자인
 $('.flowerIdSelectBox').click(function () {
-    var flowerId = $(this).attr('id');
+    var flowerId = $(this).attr('value');
 
     if($(this).hasClass('active')){
         $('.flowerIdSelectBox').text('선택하기');
@@ -84,7 +84,7 @@ $('.flowerIdSelectBox').click(function () {
     }
 });
 $('.flowerTributeIdSelectBox').click(function () {
-    var flowerTributeId = $(this).attr('id');
+    var flowerTributeId = $(this).attr('value');
 
     if($(this).hasClass('active')){
         $('.flowerTributeIdSelectBox').text('선택하기');
