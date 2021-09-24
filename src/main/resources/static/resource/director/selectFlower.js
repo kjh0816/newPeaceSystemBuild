@@ -90,6 +90,7 @@ $('.flowerTributeIdSelectBox').click(function () {
         $('.flowerTributeIdSelectBox').text('선택하기');
         $(this).removeClass('active');
         $("input[value='" + flowerTributeId + "']#flowerTributeId").prop('checked', false);
+        $("input[name='bunchCnt']").val('');
     }
     else{
         $('.flowerTributeIdSelectBox').removeClass('active');
