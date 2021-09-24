@@ -415,6 +415,64 @@ CREATE TABLE flowerOrder(
 	orderId INT(10) UNSIGNED NOT NULL
 );
 
+CREATE TABLE mourningClothOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	femaleClosthCnt INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	femaleClosthColor CHAR(10) NOT NULL,
+	maleClosthCnt INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	shirtCnt INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	necktieCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
+CREATE TABLE mourningCloth(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(10) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO mourningCloth
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = "여성상복(흑)",
+retailPrice = "20000",
+costPrice = "5000";
+
+INSERT INTO mourningCloth
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = "여성상복(백)",
+retailPrice = "20000",
+costPrice = "8000";
+
+INSERT INTO mourningCloth
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = "남성상복",
+retailPrice = "30000",
+costPrice = "15000";
+
+INSERT INTO mourningCloth
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = "와이셔츠",
+retailPrice = "15000",
+costPrice = "10000";
+
+INSERT INTO mourningCloth
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = "넥타이",
+retailPrice = "5000",
+costPrice = "1000";
+
+SELECT * FROM mourningCloth;
+
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
 /*
