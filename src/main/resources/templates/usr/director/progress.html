@@ -33,7 +33,7 @@
                 </div>
                 <div class="flex items-center">
                     <div class="badge badge-md">합계</div>
-                    <p class="pl-2">[[${sum}]] 원</p>
+                    <p class="pl-2">[[${sumFormat}]] 원</p>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                     <p class="font-bold">제단꽃</p>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">가격</div>
-                        <p class="pl-2">[[${flower.retailPrice}]]</p>
+                        <p class="pl-2">[[${flower.retailPriceFormat}]]</p>
                     </div>
                 </th:block>
                 <th:block th:if="${flowerTribute == null}">
@@ -67,7 +67,7 @@
                     <p class="font-bold">헌화</p>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">가격</div>
-                        <p class="pl-2">[[${flowerTribute.retailPrice}]] 원 (단품)</p>
+                        <p class="pl-2">[[${flowerTribute.retailPriceFormat}]] 원 (단품)</p>
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">세트</div>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>
-                        <p class="pl-2">[[${flowerTributePrice}]] 원</p>
+                        <p class="pl-2">[[${flowerTributeOrder.retailPriceMulBunchPriceMulBunchCnt}]] 원</p>
                     </div>
                 </th:block>
                 <div class="card-actions">

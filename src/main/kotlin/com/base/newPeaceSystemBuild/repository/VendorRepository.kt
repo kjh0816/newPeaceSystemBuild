@@ -188,10 +188,14 @@ interface VendorRepository {
     @Select(
         """
             SELECT 
-            O.*,
-            FTO.bunchCnt AS `extra__bunchCnt`,
-            FTO.packing AS `extra__packing`
+            O.*
+            , FT.retailPrice AS `extra__retailPrice`
+            , FT.bunch AS `extra__bunch`
+            , FTO.bunchCnt AS `extra__bunchCnt`
+            , FTO.packing AS `extra__packing`
             FROM `order` AS O
+            LEFT JOIN flowerTribute AS FT
+            ON O.standardId = FT.id
             LEFT JOIN flowerTributeOrder AS FTO
             ON O.id = FTO.orderId
             WHERE O.directorMemberId = #{directorMemberId}
@@ -199,7 +203,7 @@ interface VendorRepository {
             AND FTO.packing IS NOT NULL
         """
     )
-    fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order
+    fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order?
 
     @Insert(
         """
@@ -210,6 +214,55 @@ interface VendorRepository {
         """
     )
     fun insertIntoFlowerOrder(orderId: Int)
+
+    @Select(
+        """
+            SELECT * 
+            FROM `order` 
+            WHERE clientId = #{clientId}
+            AND directorMemberId = #{directorMemberId}
+            AND completionStatus = #{completionStatus}
+            AND detail = #{detail};
+        """
+    )
+    fun getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        clientId: Int,
+        directorMemberId: Int,
+        completionStatus: Boolean,
+        detail: String
+    ): Order?
+
+    @Update(
+        """
+            UPDATE `order`
+            SET updateDate = NOW(),
+            standardId = #{standardId}
+            WHERE clientId = #{clientId}
+            AND directorMemberId = #{directorMemberId}
+            AND roleCategoryId = #{roleCategoryId}
+            AND detail = #{detail}
+            AND completionStatus = #{completionStatus}
+        """
+    )
+    fun modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+        standardId: Int,
+        clientId: Int,
+        directorMemberId: Int,
+        roleCategoryId: Int,
+        detail: String,
+        completionStatus: Boolean
+    )
+
+    @Update(
+        """
+            UPDATE flowerTributeOrder
+            SET updateDate = NOW(),
+            bunchCnt = #{bunchCnt},
+            packing = #{packing}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyFlowerTributeOrderIntoBunchCntAndPackingByOrderId(bunchCnt: Int, packing: Boolean, orderId: Int)
 
 
 }
