@@ -265,6 +265,7 @@ CREATE TABLE `client`(
 	relatedAddress CHAR(50) NOT NULL DEFAULT '' COMMENT '상주의 거주지 주소',
 	bank CHAR(20) NOT NULL DEFAULT '' COMMENT '유족이 부조금을 받을 수 있는 계좌',
 	accountNum CHAR(20) NOT NULL DEFAULT '',
+	accountOwner CHAR(20) NOT NULL DEFAULT '',
 	# 고인 관련 정보
 	deceasedName CHAR(20) NOT NULL COMMENT '고인의 성함',
 	deceasedAddress CHAR(50) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록',
@@ -287,6 +288,21 @@ CREATE TABLE `client`(
 
 
 SELECT * FROM CLIENT;
+
+
+# client(고인)에 대한 유족 family 테이블
+# 상주인 경우에만 address를 FRONT에 받는다.
+# 상주는 id가 1인 row
+CREATE TABLE family(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	clinetId INT(10) UNSIGNED NOT NULL,
+	`name` CHAR(20) NOT NULL,
+	relation CHAR(30) NOT NULL COMMENT '고인과의 관계(고인으로부터 누구인지 ex) 아들)',
+	cellphoneNo CHAR(20) NOT NULL,
+	addresse CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.' 
+);
 
 
 
