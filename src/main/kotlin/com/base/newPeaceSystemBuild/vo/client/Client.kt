@@ -13,6 +13,7 @@ data class Client(
     val relatedAddress: String,
     val bank: String,
     val accountNum: String,
+    val accountOwner: String,
     // 고인 관련 정보
     val deceasedName: String,
     val deceasedAddress: String,
