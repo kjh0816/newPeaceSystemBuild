@@ -46,7 +46,7 @@ class VendorService(
         // flower Order Insert
         detail = "flower"
         // Insert 전에 해당 정보로 이미 정보를 입력한적이 있다면, insert가 아닌 modify 로직으로 적용
-        val flowerOrder = vendorRepository.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(client.id, rq.getLoginedMember()!!.id, false, detail)
+        val flowerOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(client.id, rq.getLoginedMember()!!.id, false, detail)
 
         if(flowerOrder == null){
             vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerId, detail)
@@ -60,7 +60,7 @@ class VendorService(
 
         // flowerTribute Order Insert
         detail = "flowerTribute"
-        val flowerTributeOrder = vendorRepository.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(client.id, rq.getLoginedMember()!!.id, false, detail)
+        val flowerTributeOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(client.id, rq.getLoginedMember()!!.id, false, detail)
 
         var packingBool = false
 
@@ -139,6 +139,10 @@ class VendorService(
 
     fun getFlowerTributeOrderByDirectorMemberId(directorMemberId: Int): Order? {
         return vendorRepository.getFlowerTributeOrderByDirectorMemberId(directorMemberId)
+    }
+
+    fun getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail( clientId: Int, directorMemberId: Int, completionStatus: Boolean, detail: String): Order? {
+        return vendorRepository.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(clientId, directorMemberId, completionStatus, detail)
     }
 
 }

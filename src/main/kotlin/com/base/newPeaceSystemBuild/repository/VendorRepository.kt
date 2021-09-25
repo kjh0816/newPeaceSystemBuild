@@ -217,12 +217,36 @@ interface VendorRepository {
 
     @Select(
         """
-            SELECT * 
-            FROM `order` 
-            WHERE clientId = #{clientId}
-            AND directorMemberId = #{directorMemberId}
-            AND completionStatus = #{completionStatus}
-            AND detail = #{detail};
+            <script>
+            SELECT 
+            O.*
+            <if test="detail == 'flower'">
+                , F.retailPrice AS `extra__retailPrice`
+            </if>
+            <if test="detail == 'flowerTribute'">
+                , FT.retailPrice AS `extra__retailPrice`
+                , FT.bunch AS `extra__bunch`
+                , FTO.bunchCnt AS `extra__bunchCnt`
+                , FTO.packing AS `extra__packing`
+            </if>
+            FROM `order` AS O
+            <if test="detail == 'flower'">
+                LEFT JOIN flower AS F
+                ON O.standardId = F.id
+                LEFT JOIN flowerOrder AS FO
+                ON O.id = FO.orderId
+            </if>
+            <if test="detail == 'flowerTribute'">
+                LEFT JOIN flowerTribute AS FT
+                ON O.standardId = FT.id
+                LEFT JOIN flowerTributeOrder AS FTO
+                ON O.id = FTO.orderId
+            </if>
+            WHERE O.clientId = #{clientId}
+            AND O.directorMemberId = #{directorMemberId}
+            AND O.completionStatus = #{completionStatus}
+            AND O.detail = #{detail};
+            </script>
         """
     )
     fun getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
