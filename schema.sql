@@ -84,7 +84,7 @@ roleLevel = 2,
 loginId = 'user1',
 loginPw = SHA2('user1', 256),
 `name` = '홍길동',
-cellphoneNo = '01011111111',
+cellphoneNo = '01049219810',
 email = 'hong@gmail.com',
 location = '서울특별시',
 bank = '신한',
@@ -97,7 +97,7 @@ roleLevel = 2,
 loginId = 'user2',
 loginPw = SHA2('user2', 256),
 `name` = '윤길동',
-cellphoneNo = '01022222222',
+cellphoneNo = '01049219810',
 email = 'hong2@gmail.com',
 location = '서울특별시',
 bank = '신한',
@@ -110,7 +110,7 @@ roleLevel = 2,
 loginId = 'user3',
 loginPw = SHA2('user3', 256),
 `name` = '김지후',
-cellphoneNo = '01012341234',
+cellphoneNo = '01049219810',
 email = 'readshot2@gmail.com',
 location = '서울특별시',
 bank = '신한',
@@ -284,7 +284,19 @@ SELECT * FROM `client`;
 
 
 
-
+# client(고인)에 대한 유족 family 테이블
+# 상주인 경우에만 address를 FRONT에 받는다.
+# 상주는 id가 1인 row
+CREATE TABLE family(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	clinetId INT(10) UNSIGNED NOT NULL,
+	`name` CHAR(20) NOT NULL,
+	relation CHAR(30) NOT NULL COMMENT '고인과의 관계(고인으로부터 누구인지 ex) 아들)',
+	cellphoneNo CHAR(20) NOT NULL,
+	addresse CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.'
+);
 
 
 
