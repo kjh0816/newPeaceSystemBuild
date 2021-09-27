@@ -282,7 +282,11 @@ CREATE TABLE `client`(
 	funeralMethod TINYINT(1) NOT NULL DEFAULT 0 COMMENT '장법(매장인지, 화장인지) 0 = 매장, 1 = 화장',
 	cause SMALLINT(1) NOT NULL DEFAULT 0 COMMENT '사망 원인(병사 = 0, 사고사 = 1, 기타 = 2)',
 	papers TINYINT(1) NOT NULL DEFAULT 0 COMMENT '사망 서류(진단서 = 0, 사체검안서 = 1)',
-	autopsyCheck TINYINT(1) NOT NULL DEFAULT 0 COMMENT '검시필증(사체검안서에 대해 추가로 필요할 수 있음) 0 = 없음, 1 = 있음'
+	autopsyCheck TINYINT(1) NOT NULL DEFAULT 0 COMMENT '검시필증(사체검안서에 대해 추가로 필요할 수 있음) 0 = 없음, 1 = 있음',
+	casketDate CHAR(20) NOT NULL DEFAULT '' COMMENT '입관날짜',
+	casketTime CHAR(20) NOT NULL DEFAULT '' COMMENT '입관시간(분까지)',
+	leavingDate CHAR(20) NOT NULL DEFAULT '' COMMENT '발인날짜',
+	leavingTime CHAR(20) NOT NULL DEFAULT '' COMMENT '발인시간(분까지)'
 );
 
 
