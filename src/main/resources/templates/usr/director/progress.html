@@ -102,10 +102,10 @@
             </figure>
             <div class="card-body">
                 <h2 class="card-title">상복</h2>
-                <th:block th:if="${flower == null}">
-                    <p>상복을 선택할 수 있습니다.</p>
+                <th:block th:if="${femaleMourningCloth == null}">
+                    <p>상복(여)을 선택할 수 있습니다.</p>
                 </th:block>
-                <th:block th:unless="${flower == null}">
+                <th:block th:unless="${femaleMourningCloth == null}">
                     <p class="font-bold">상복(여)</p>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">가격</div>
@@ -119,6 +119,11 @@
                         <div class="badge badge-md">합계</div>
                         <p class="pl-2">[[${femaleMourningClothPriceFormat}]] 원</p>
                     </div>
+                </th:block>
+                <th:block th:if="${maleMourningCloth == null}">
+                    <p>상복(남)을 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${maleMourningCloth == null}">
                     <p class="font-bold">상복(남)</p>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">가격</div>
