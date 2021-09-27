@@ -27,7 +27,7 @@ interface ClientRepository {
             relatedName = #{relatedName},
             cellphoneNo = #{cellphoneNo},
             location = #{location},
-            address = #{address}
+            deceasedAddress = #{address}
         """
     )
     fun insertIntoClient(memberId: Int, deceasedName: String, relatedName: String, cellphoneNo: String, location: String, address: String)

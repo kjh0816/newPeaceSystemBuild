@@ -24,17 +24,24 @@
                     <p class="pl-2">[[${client.cellphoneNo}]]</p>
                 </div>
                 <div class="flex items-center">
-                    <div class="badge badge-md">위치</div>
-                    <p class="pl-2">[[${client.location}]] [[${client.address}]]</p>
+                    <div class="badge badge-md">고인의 위치</div>
+                    <p class="pl-2">[[${client.location}]] [[${client.deceasedAddress}]]</p>
                 </div>
-                <div class="flex items-center">
-                    <div class="badge badge-md">부조금을 받을 유족의 계좌번호</div>
-                    <p class="pl-2">[[${client.bank}]] [[${client.accountNum}]]</p>
+                <!-- 계좌 정보가 empty가 아닌 경우에만 보여준다. -->
+                <div th:if="${client.bank != '' && client.accountNum != '' && client.accountOwner != ''}">
+                    <div class="flex items-center">
+                        <div class="badge badge-md">부조금을 받을 유족의 계좌번호</div>
+                        <p class="pl-2">[[${client.bank}]] [[${client.accountNum}]] ([[${client.accountOwner}]])</p>
+                    </div>
                 </div>
                 <div class="flex items-center">
                     <div class="badge badge-md">합계</div>
                     <p class="pl-2">[[${sumFormat}]] 원</p>
                 </div>
+                <br>
+                <br>
+                <br>
+                <a th:href="@{./modifyFuneral(clientId=1)}" class="btn btn-ghost w-1/2" type="submit">고인과 장례 관련 정보 입력 및 수정</a>
             </div>
         </div>
         <br>
@@ -42,10 +49,12 @@
         <div class="card card-side shadow mb-2 bg-white">
             <figure>
                 <div th:if="${funeral.flowerId != 0}">
-                    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}" alt="" style="width: 400px; height: 250px;">
+                    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}"
+                         alt="" style="width: 400px; height: 250px;">
                 </div>
                 <div th:if="${funeral.flowerTributeId != 0}">
-                    <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${funeral.flowerTributeId})}" alt="" style="width: 400px; height: 250px;">
+                    <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${funeral.flowerTributeId})}"
+                         alt="" style="width: 400px; height: 250px;">
                 </div>
             </figure>
             <div class="card-body">
@@ -71,7 +80,8 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">세트</div>
-                        <p class="pl-2">[[${flowerTributeOrder.extra__bunchCnt}]] 세트 ([[${flowerTribute.bunch * flowerTributeOrder.extra__bunchCnt}]] 개)</p>
+                        <p class="pl-2">[[${flowerTributeOrder.extra__bunchCnt}]] 세트 ([[${flowerTribute.bunch *
+                            flowerTributeOrder.extra__bunchCnt}]] 개)</p>
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>

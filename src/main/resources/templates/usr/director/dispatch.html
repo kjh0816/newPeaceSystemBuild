@@ -16,7 +16,7 @@
     <br>
     <div>지역: [[${client.location}]]</div>
     <br>
-    <div>상세 주소: [[${client.address}]]</div>
+    <div>상세 주소: [[${client.deceasedAddress}]]</div>
     <br>
     <form onsubmit="Dispatch__submit(this); return false;">
         <input type="hidden" name="clientId" th:value="${client.id}">

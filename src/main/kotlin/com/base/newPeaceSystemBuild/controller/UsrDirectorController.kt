@@ -121,6 +121,34 @@ class UsrDirectorController(
         return "usr/director/progress"
     }
 
+    @RequestMapping("/usr/director/modifyFuneral")
+    fun showModifyFuneral(
+            model: Model,
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String{
+
+
+        // 파라미터가 자동으로 입력되는 정상적인 접근이 아닌 경우에 대한 예외처리
+        if(clientId == 0 ){
+            return "usr/home/main"
+        }
+
+        val funeral = clientService.getFuneralByClientId(clientId)
+        // 잘못된 clientId 파라미터로 접근하는 경우에 대한 예외처리
+        if(funeral == null){
+            return "usr/home/main"
+        }
+
+        val client = clientService.getClientById(clientId)
+
+        // 해당 페이지에 접근한 장례지도사가 조회한 장례를 진행하는 장례지도사가 아닌 경우에 대한 예외처리
+        if(rq.getLoginedMember()!!.id != funeral.directorMemberId || client == null){
+            return "usr/home/main"
+        }
+
+        return "usr/director/modifyFuneral"
+    }
+
     @RequestMapping("/usr/director/selectFlower")
     fun showSelectFlower(model: Model): String {
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
