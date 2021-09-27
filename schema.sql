@@ -63,16 +63,6 @@ CREATE TABLE MEMBER(
 );
 
 
-
-
-
-
-
-
-
-
-
-
 # 회원 테스트용 더미데이터
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -94,7 +84,7 @@ roleLevel = 2,
 loginId = 'user1',
 loginPw = SHA2('user1', 256),
 `name` = '홍길동',
-cellphoneNo = '01049219810',
+cellphoneNo = '01011111111',
 email = 'hong@gmail.com',
 location = '서울특별시',
 bank = '신한',
@@ -107,7 +97,7 @@ roleLevel = 2,
 loginId = 'user2',
 loginPw = SHA2('user2', 256),
 `name` = '윤길동',
-cellphoneNo = '01049219810',
+cellphoneNo = '01022222222',
 email = 'hong2@gmail.com',
 location = '서울특별시',
 bank = '신한',
@@ -120,7 +110,7 @@ roleLevel = 2,
 loginId = 'user3',
 loginPw = SHA2('user3', 256),
 `name` = '김지후',
-cellphoneNo = '01049219810',
+cellphoneNo = '01012341234',
 email = 'readshot2@gmail.com',
 location = '서울특별시',
 bank = '신한',
@@ -249,9 +239,8 @@ SELECT * FROM genFile;
 
 
 
-# 고인에 대한 정보를 담는 client 테이블
-# 고인 정보 입력을 최초에 영업자가 입력하는데, 모든 정보가 담기지 않으므로, 
-# 최초 생성 단계에서 채워지지 않는 칼럼은 default 값을 준다.
+# 고인에 대한 정보를 담는 테이블
+
 CREATE TABLE `client`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
@@ -270,7 +259,7 @@ CREATE TABLE `client`(
 	deceasedName CHAR(20) NOT NULL COMMENT '고인의 성함',
 	deceasedAddress CHAR(50) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록',
 	deceasedDate CHAR(20) NOT NULL DEFAULT '' COMMENT '사망일',
-	deceasedTime CHAR(20) NOT NULL DEFAULT '' COMMENT '사망시각 (분 단위까지 받는다.)',	
+	deceasedTime CHAR(20) NOT NULL DEFAULT '' COMMENT '사망시각 (분 단위까지 받는다.)',
 	sex TINYINT(1) NOT NULL DEFAULT 0 COMMENT '고인 성별 (0 = 남자, 1 = 여자)',
 	birth CHAR(20) NOT NULL DEFAULT '' COMMENT '고인의 생년월일',
 	lunar TINYINT(1) NOT NULL DEFAULT 0 COMMENT '음력인지 아닌지(0(false) = 양력, 1(true) = 음력)',
@@ -291,22 +280,7 @@ CREATE TABLE `client`(
 
 
 
-SELECT * FROM CLIENT;
-
-
-# client(고인)에 대한 유족 family 테이블
-# 상주인 경우에만 address를 FRONT에 받는다.
-# 상주는 id가 1인 row
-CREATE TABLE family(
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	regDate DATETIME NOT NULL,
-	updateDate DATETIME NOT NULL,
-	clinetId INT(10) UNSIGNED NOT NULL,
-	`name` CHAR(20) NOT NULL,
-	relation CHAR(30) NOT NULL COMMENT '고인과의 관계(고인으로부터 누구인지 ex) 아들)',
-	cellphoneNo CHAR(20) NOT NULL,
-	addresse CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.' 
-);
+SELECT * FROM `client`;
 
 
 
@@ -323,28 +297,44 @@ CREATE TABLE flower(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
+	`name` CHAR(15) UNIQUE NOT NULL,
 	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
-	costPrice CHAR(10) NOT NULL COMMENT '원가'
+	standardPrice CHAR(10) NOT NULL COMMENT '기준가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가',
+	height CHAR(10) NOT NULL COMMENT '세로 길이 (단위: mm)',
+	width CHAR(10) NOT NULL COMMENT '가로 길이 (단위: mm)'
 );
 
 
 INSERT INTO flower
 SET regDate = NOW(),
 updateDate = NOW(),
+`name` = '1호',
 retailPrice = '150000',
-costPrice = '100000';
+standardPrice = '130000',
+costPrice = '100000',
+height = '1500',
+width = '600';
 
 
 INSERT INTO flower
 SET regDate = NOW(),
 updateDate = NOW(),
+`name` = '2호',
 retailPrice = '160000',
-costPrice = '110000';
+standardPrice = '140000',
+costPrice = '110000',
+height = '1650',
+width = '999';
 
 
 SELECT
+`name`,
 FORMAT(`retailPrice` , 0) AS `retailPrice`,
-FORMAT(`costPrice` , 0) AS `costPrice`
+FORMAT(`standardPrice` , 0) AS `standardPrice`,
+FORMAT(`costPrice` , 0) AS `costPrice`,
+height,
+width
 FROM flower;
 
 
@@ -371,11 +361,13 @@ CREATE TABLE funeral(
 	directorMemberId INT(10) UNSIGNED NOT NULL,
 	memberId INT(10) UNSIGNED NOT NULL,
 	flowerId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음. 선택된 flower의 id',
-	flowerTributeId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음',
 	progress SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '장례 진행 상태'
 );
 
 
+ALTER TABLE funeral ADD COLUMN flowerTributeId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerId;
+ALTER TABLE funeral ADD COLUMN femaleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerTributeId;
+ALTER TABLE funeral ADD COLUMN maleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER femaleMourningClothId;
 
 SELECT * FROM funeral;
 /*
@@ -453,19 +445,42 @@ CREATE TABLE flowerOrder(
 	orderId INT(10) UNSIGNED NOT NULL
 );
 
-CREATE TABLE mourningClothOrder(
+CREATE TABLE femaleMourningClothOrder(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	orderId INT(10) UNSIGNED NOT NULL,
-	femaleClosthCnt INT(10) UNSIGNED NOT NULL DEFAULT 0,
-	femaleClosthColor CHAR(10) NOT NULL,
-	maleClosthCnt INT(10) UNSIGNED NOT NULL DEFAULT 0,
-	shirtCnt INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	femaleClothCnt INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	femaleClothColor CHAR(10) NOT NULL
+);
+
+CREATE TABLE maleMourningClothOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	maleClothCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
+CREATE TABLE shirtOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	shirtCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
+CREATE TABLE nacktieOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
 	necktieCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
 );
 
-CREATE TABLE mourningCloth(
+SELECT * FROM `order`;
+
+CREATE TABLE femaleMourningCloth(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
@@ -474,42 +489,72 @@ CREATE TABLE mourningCloth(
 	costPrice CHAR(10) NOT NULL COMMENT '원가'
 );
 
-INSERT INTO mourningCloth
+CREATE TABLE maleMourningCloth(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(10) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+CREATE TABLE shirt(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(10) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+CREATE TABLE nacktie(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(10) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO femaleMourningCloth
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = "여성상복(흑)",
 retailPrice = "20000",
 costPrice = "5000";
 
-INSERT INTO mourningCloth
+INSERT INTO femaleMourningCloth
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = "여성상복(백)",
 retailPrice = "20000",
 costPrice = "8000";
 
-INSERT INTO mourningCloth
+INSERT INTO maleMourningCloth
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = "남성상복",
 retailPrice = "30000",
 costPrice = "15000";
 
-INSERT INTO mourningCloth
+INSERT INTO shirt
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = "와이셔츠",
 retailPrice = "15000",
 costPrice = "10000";
 
-INSERT INTO mourningCloth
+INSERT INTO nacktie
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = "넥타이",
 retailPrice = "5000",
 costPrice = "1000";
 
-SELECT * FROM mourningCloth;
+SELECT * FROM femaleMourningCloth;
+SELECT * FROM maleMourningCloth;
+SELECT * FROM shirt;
+SELECT * FROM nacktie;
 
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
@@ -627,4 +672,19 @@ from memberRole;
 insert into genFile (regDate, updateDate, relTypeCode, relId, originFileName, fileExt, typeCode, type2Code, fileSize, fileExtTypeCode, fileExtType2Code, fileNo, fileDir)
 select now(), now(), "member", @genMid := @genMid + 1, "제목없음.png", "png", "director", "attachment", 6180, "img", "png", 1, "2021_08"
 from genFile;
+*/
+
+# Progress 페이지 Order 정보 초기화
+/*
+UPDATE funeral SET flowerId = 0;
+UPDATE funeral SET flowerTributeId = 0;
+UPDATE funeral SET femaleMourningClothId = 0;
+UPDATE funeral SET maleMourningClothId = 0;
+
+DELETE FROM `order`;
+DELETE FROM `flowerTributeOrder`;
+DELETE FROM `flowerOrder`;
+DELETE FROM `femaleMourningClothOrder`;
+DELETE FROM `maleMourningClothOrder`;
+
 */
