@@ -17,8 +17,8 @@
     <div class="p-10 card bg-base-200">
         <form onsubmit="SelectFlower__submit(this); return false;">
             <h2 class="card-title">제단꽃 선택</h2>
-            <div class="flex flex-col w-full" th:each="flower : ${flowers}">
             <input type="hidden" name="funeralId" th:value="${funeral.id}">
+            <div class="flex flex-col w-full" th:each="flower : ${flowers}">
                 <div class="card card-side mb-2 w-full bg-white shadow">
                     <figure>
                         <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" style="width: 400px; height: 250px;">

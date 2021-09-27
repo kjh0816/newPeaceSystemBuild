@@ -20,6 +20,11 @@ data class Order (
     var extra__bunchCnt: Int? = null
     var extra__bunch: Int? = null
     var extra__packing: Boolean? = null
+    // 상복(여) 주문정보 관련 데이터
+    var extra__femaleClothCnt: Int? = null
+    var extra__femaleClothColor: String? = null
+    // 상복(남) 주문정보 관련 데이터
+    var extra__maleClothCnt: Int? = null
 
     private val formatter = DecimalFormat("###,###")
 

@@ -54,17 +54,23 @@ class UsrDirectorController(
             return "redirect:/usr/home/main"
         }
         // 헌화의 주문정보를 장례지도사 회원정보로 조회한 결과를 가져온다
-        val flowerTributeOrder = vendorService.getFlowerTributeOrderByDirectorMemberId(rq.getLoginedMember()!!.id)
+        val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(rq.getLoginedMember()!!.id, false, "flowerTribute")
+        val femaleMourningClothOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(rq.getLoginedMember()!!.id, false, "femaleMourningCloth")
+        val maleMourningClothOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(rq.getLoginedMember()!!.id, false, "maleMourningCloth")
 
         // 뷰페이지에서 선택된 스탠다드의 가격을 표기하기 위해 불러온다
         val flower = vendorService.getFlowerById(funeral.flowerId)
         val flowerTribute = vendorService.getFlowerTributeById(funeral.flowerTributeId)
+        val femaleMourningCloth = vendorService.getFemaleMourningClothById(funeral.femaleMourningClothId)
+        val maleMourningCloth = vendorService.getMaleMourningClothById(funeral.maleMourningClothId)
 
         // 뷰페이지에서 총액을 표기해주기 위한 변수들
         // 선택하지 않은상태에선 해당 변수(flower, portrait 등) 들이 null값을 가지고있다.
         // null 값을 허용하면서 null 일경우 해당 상품의 가격을 0으로 측정해서 넣어줌.
         var flowerPrice = 0
         var flowerTributePrice = 0
+        var femaleMourningClothPrice = 0
+        var maleMourningClothPrice = 0
 
         val formatter = DecimalFormat("###,###")
         // 합계
@@ -79,17 +85,37 @@ class UsrDirectorController(
                 (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
             sum += flowerTributePrice
         }
+        if (femaleMourningCloth != null) {
+            femaleMourningClothPrice = femaleMourningCloth.retailPrice.toInt() * femaleMourningClothOrder!!.extra__femaleClothCnt!!
+            sum += femaleMourningClothPrice
+        }
+        if (maleMourningCloth != null) {
+            maleMourningClothPrice = maleMourningCloth.retailPrice.toInt() * maleMourningClothOrder!!.extra__maleClothCnt!!
+            sum += maleMourningClothPrice
+        }
 
         val flowerTributePriceFormat = formatter.format(flowerTributePrice)
+        val femaleMourningClothPriceFormat = formatter.format(femaleMourningClothPrice)
+        val maleMourningClothPriceFormat = formatter.format(maleMourningClothPrice)
         val sumFormat = formatter.format(sum)
 
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
+//      선택된 스탠다드 종류
         model.addAttribute("flower", flower)
         model.addAttribute("flowerTribute", flowerTribute)
+        model.addAttribute("femaleMourningCloth", femaleMourningCloth)
+        model.addAttribute("maleMourningCloth", maleMourningCloth)
+//      단품이 아닌 세트 혹은 다수의 상품을 선택해야하는것들, 선택한 갯수랑 개당가격을 계산한가격
         model.addAttribute("flowerTributePriceFormat", flowerTributePriceFormat)
+        model.addAttribute("femaleMourningClothPriceFormat", femaleMourningClothPriceFormat)
+        model.addAttribute("maleMourningClothPriceFormat", maleMourningClothPriceFormat)
+//      상품별 Order 상세정보
         model.addAttribute("flowerTributeOrder", flowerTributeOrder)
+        model.addAttribute("femaleMourningClothOrder", femaleMourningClothOrder)
+        model.addAttribute("maleMourningClothOrder", maleMourningClothOrder)
+//      합계
         model.addAttribute("sumFormat", sumFormat)
 
         return "usr/director/progress"
@@ -125,6 +151,38 @@ class UsrDirectorController(
         model.addAttribute("funeral", funeral)
 
         return "usr/director/selectFlower"
+    }
+
+    @RequestMapping("/usr/director/selectMourningCloth")
+    fun showSelectMourningCloth(model: Model): String {
+        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+        val femaleMourningCloths = vendorService.getFemaleMourningCloths()
+        val maleMourningCloths = vendorService.getMaleMourningCloths()
+
+        if (funeral != null) {
+            val femaleMourningClothOrder = vendorService.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+                funeral.clientId,
+                rq.getLoginedMember()!!.id,
+                false,
+                "femaleMourningCloth"
+            )
+            val maleMourningClothOrder = vendorService.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+                funeral.clientId,
+                rq.getLoginedMember()!!.id,
+                false,
+                "maleMourningCloth"
+            )
+
+            model.addAttribute("femaleMourningClothOrder", femaleMourningClothOrder)
+            model.addAttribute("maleMourningClothOrder", maleMourningClothOrder)
+        }
+
+
+        model.addAttribute("maleMourningCloths", maleMourningCloths)
+        model.addAttribute("femaleMourningCloths", femaleMourningCloths)
+        model.addAttribute("funeral", funeral)
+
+        return "usr/director/selectMourningCloth"
     }
 
     @RequestMapping("/usr/director/dispatch")
@@ -197,6 +255,36 @@ class UsrDirectorController(
         rq.login(memberService.getMemberById(rq.getLoginedMember()!!.id)!!)
 
         return rq.replaceJs("장례지도사 영업신청이 완료되었습니다.", "../home/main")
+    }
+
+    @RequestMapping("/usr/director/doSelectMourningCloth", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doSelectMourningCloth(
+        funeralId: Int,
+        @RequestParam(defaultValue = "0") femaleMourningClothId: Int,
+        @RequestParam(defaultValue = "0") femaleClothCnt: Int,
+        @RequestParam(defaultValue = "0") maleMourningClothId: Int,
+        @RequestParam(defaultValue = "0") maleClothCnt: Int,
+    ): String {
+        var femaleClothColor = ""
+
+        if (femaleMourningClothId == 1) {
+            femaleClothColor = "흑"
+        }
+        else if(femaleMourningClothId == 2){
+            femaleClothColor = "백"
+        }
+
+        return Ut.getJsonStrFromObj(
+            vendorService.modifyFuneralIntoFemaleMourningClothId(
+                funeralId,
+                femaleMourningClothId,
+                femaleClothCnt,
+                femaleClothColor,
+                maleMourningClothId,
+                maleClothCnt
+            )
+        )
     }
 
     @RequestMapping("/usr/director/doSelectFlower", method = [RequestMethod.POST])

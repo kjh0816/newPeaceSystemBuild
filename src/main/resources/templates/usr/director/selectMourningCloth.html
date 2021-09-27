@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+<head>
+    <title>제단꽃 선택</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/selectMourningCloth.js" charset="utf-8" defer></script>
+    </th:block>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="/resource/director/selectMourningCloth.css">
+    </th:block>
+</head>
+<main layout:fragment="main">
+    <div class="p-10 card bg-base-200">
+        <form onsubmit="SelectMourningCloth__submit(this); return false;">
+            <h2 class="card-title">상복(여) 선택</h2>
+            <input type="hidden" name="funeralId" th:value="${funeral.id}">
+            <div class="flex flex-col w-full" th:each="femaleMourningCloth : ${femaleMourningCloths}">
+                <div class="card card-side mb-2 w-full bg-white shadow">
+                    <figure>
+
+                    </figure>
+                    <div class="card-body">
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">가격</div>
+                            <p class="pl-2">[[${femaleMourningCloth.retailPriceFormat}]] 원</p>
+                        </div>
+                        <div class="card-actions">
+                            <div class="form-control flex">
+                                <span class="femaleMourningClothIdSelectBox btn btn-ghost" th:id="|femaleMourningCloth${femaleMourningCloth.id}|" th:value="${femaleMourningCloth.id}">선택하기</span>
+                                <input id="femaleMourningClothId" type="radio" name="femaleMourningClothId" class="radio" th:value="${femaleMourningCloth.id}" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider" th:if="${femaleMourningCloths.size != femaleMourningCloth.id}">OR</div>
+            </div>
+            <div class="form-control">
+                <input type="text" id="femaleClothCnt" name="femaleClothCnt" placeholder="필요한 상복(여) 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${femaleMourningClothOrder != null} ? ${femaleMourningClothOrder.extra__femaleClothCnt} : ''">
+            </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${femaleMourningClothOrder != null}">
+                $(".femaleMourningClothIdSelectBox#femaleMourningCloth[[${femaleMourningClothOrder.standardId}]]").addClass('active');
+                $(".femaleMourningClothIdSelectBox#femaleMourningCloth[[${femaleMourningClothOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${femaleMourningClothOrder.standardId}]]']#femaleMourningClothId").prop('checked', true);
+            </script>
+            <h2 class="card-title">상복(남) 선택</h2>
+            <div class="flex flex-col w-full" th:each="maleMourningCloth : ${maleMourningCloths}">
+                <div class="card card-side mb-2 w-full bg-white shadow">
+                    <figure>
+
+                    </figure>
+                    <div class="card-body">
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">가격</div>
+                            <p class="pl-2">[[${maleMourningCloth.retailPriceFormat}]] 원</p>
+                        </div>
+                        <div class="card-actions">
+                            <div class="form-control flex">
+                                <span class="maleMourningClothIdSelectBox btn btn-ghost" th:id="|maleMourningCloth${maleMourningCloth.id}|" th:value="${maleMourningCloth.id}">선택하기</span>
+                                <input id="maleMourningClothId" type="radio" name="maleMourningClothId" class="radio" th:value="${maleMourningCloth.id}" style="display: none;">
+                                <input type="radio" name="maleMourningClothId" class="radio" value="0" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider" th:if="${maleMourningCloths.size != maleMourningCloth.id}">OR</div>
+            </div>
+            <div class="form-control">
+                <input type="text" id="maleClothCnt" name="maleClothCnt" placeholder="필요한 상복(남) 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${maleMourningClothOrder != null} ? ${maleMourningClothOrder.extra__maleClothCnt} : ''">
+            </div>
+            <script th:if="${femaleMourningClothOrder != null}">
+                $(".maleMourningClothIdSelectBox#maleMourningCloth[[${maleMourningClothOrder.standardId}]]").addClass('active');
+                $(".maleMourningClothIdSelectBox#maleMourningCloth[[${maleMourningClothOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${maleMourningClothOrder.standardId}]]']#maleMourningClothId").prop('checked', true);
+            </script>
+            <br>
+            <input class="btn btn-ghost w-full" type="submit" value="완료">
+            <br>
+            <br>
+            <input class="btn btn-ghost w-full" type="button" value="돌아가기">
+        </form>
+    </div>
+</main>
+
+</html>

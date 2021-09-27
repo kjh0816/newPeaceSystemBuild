@@ -16,6 +16,11 @@ data class Funeral(
     val flowerId: Int,
 //  flowerTributeId = 어떤 헌화를 선택했는지
     val flowerTributeId: Int,
+//  femaleMourningClothId = 여자 상복 스탠다드 번호
+    val femaleMourningClothId: Int,
+//  maleMourningClothId = 남자 상복 스탠다드 번호
+    val maleMourningClothId: Int,
+
 // progress = 장례 진행 상태(장례지도사 연결 여부 ~ 장례식 종료) default = 0(장례지도사 연결 안 됨)
     val progress: Int
 )
