@@ -13,22 +13,31 @@
 </head>
 <main layout:fragment="main">
     <form action="./doFindId" method="POST" onsubmit="MemberFindId__submit(this); return false;">
-        <input type="hidden" name="loginId">
+        <div class="p-10 card bg-base-200">
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <input type="hidden" name="loginId">
 
-        <div class="label">성함</div>
-        <div class="input">
-            <input type="text" id="name" name="name" maxlength="20" placeholder="성함을 입력해주세요." autocomplete="off"/>
-            <div id="nameCheckMsg" style="color : red;"></div>
+                    <label class="label flex flex-col">
+                        <span class="label-text self-start">
+                            성함
+                        </span>
+                    </label>
+                    <input type="text" id="name" name="name" maxlength="20" placeholder="성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
+                    <div class="pl-1 pt-2 text-sm" id="nameCheckMsg" style="color : red;"></div>
+                    <label class="label flex flex-col">
+                        <span class="label-text self-start">
+                            이메일
+                        </span>
+                    </label>
+                    <input type="text" id="email" name="email" placeholder="이메일 입력해주세요." class="input input-bordered my-2" autocomplete="off"/>
+                    <div class="pl-1 pt-2 text-sm" id="emailCheckMsg" style="color : red;"></div>
+                    <br>
+                    <button class="btn btn-ghost" id="findId-submit">아이디 찾기</button>
+                </div>
+            </div>
         </div>
-        <div class="label">이메일</div>
-        <div class="input">
-            <input type="text" id="email" name="email" placeholder="이메일 입력해주세요." autocomplete="off"/>
-            <div id="emailCheckMsg" style="color : red;"></div>
-        </div>
-        <br>
-        <div>
-            <button id="findId-submit">완료</button>
-        </div>
+
     </form>
 </main>
 
