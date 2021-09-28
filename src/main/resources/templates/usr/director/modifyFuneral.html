@@ -5,6 +5,9 @@
       layout:decorate="~{usr/layout/default}">
 <head>
     <title>고인과 장례 관련 정보 입력 및 수정</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/modifyFuneral.js" charset="utf-8" defer></script>
+    </th:block>
 </head>
 <main layout:fragment="main">
     <form action="./doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
@@ -21,7 +24,6 @@
                         </span>
                     </label>
                     <input th:value="${client?.deceasedName}" type="text" id="deceasedName" name="deceasedName" maxlength="20" placeholder="고인 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
-
                     <br>
                     <br>
                     <label class="label">
@@ -29,7 +31,13 @@
                             장례식장
                         </span>
                     </label>
-                    <input type="text" id="funeralHall" name="funeralHall" maxlength="20" placeholder="장례식장명을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                    <select id="department" name="department" class="select select-bordered select-sm w-full max-w-xs">
+                        <option value="" disabled selected>시/도</option>
+                        <div th:each="department : ${departments}" th:object="${department}">
+                            <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                        </div>
+                    </select>
+
 
                     <label class="label">
                         <span class="label-text">
@@ -41,21 +49,6 @@
                     <br>
                     <br>
 
-
-
-
-
-                    <label class="label">
-                        <span class="label-text">
-                            근무하시는 지역
-                        </span>
-                    </label>
-                    <select id="location" name="location" class="select select-bordered select-sm w-full max-w-xs">
-                        <option value="" disabled selected>지역 선택</option>
-                        <div th:each="department : ${departments}" th:object="${department}">
-                            <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
-                        </div>
-                    </select>
                 </div>
             </div>
 
