@@ -75,3 +75,38 @@ $('.maleMourningClothIdSelectBox').click(function () {
         $("input[value='" + maleMourningClothId + "']#maleMourningClothId").prop('checked', true);
     }
 });
+$('.shirtIdSelectBox').click(function () {
+    var shirtId = $(this).attr('value');
+
+    if($(this).hasClass('active')){
+        $('.shirtIdSelectBox').text('선택하기');
+        $(this).removeClass('active');
+        $("input[value='" + shirtId + "']#shirtId").prop('checked', false);
+        $("input[name='shirtCnt']").val('');
+    }
+    else{
+        $('.shirtIdSelectBox').removeClass('active');
+        $('.shirtIdSelectBox').text('선택하기');
+        $(this).addClass('active');
+        $(this).text("선택 됨");
+        $("input[value='" + shirtId + "']#shirtId").prop('checked', true);
+    }
+});
+
+$('.necktieIdSelectBox').click(function () {
+    var necktieId = $(this).attr('value');
+
+    if($(this).hasClass('active')){
+        $('.necktieIdSelectBox').text('선택하기');
+        $(this).removeClass('active');
+        $("input[value='" + necktieId + "']#necktieId").prop('checked', false);
+        $("input[name='necktieCnt']").val('');
+    }
+    else{
+        $('.necktieIdSelectBox').removeClass('active');
+        $('.necktieIdSelectBox').text('선택하기');
+        $(this).addClass('active');
+        $(this).text("선택 됨");
+        $("input[value='" + necktieId + "']#necktieId").prop('checked', true);
+    }
+});

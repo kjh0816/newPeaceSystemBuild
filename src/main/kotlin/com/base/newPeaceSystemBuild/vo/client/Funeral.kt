@@ -20,6 +20,10 @@ data class Funeral(
     val femaleMourningClothId: Int,
 //  maleMourningClothId = 남자 상복 스탠다드 번호
     val maleMourningClothId: Int,
+//  shirtId = 와이셔츠 스탠다드 번호
+    val shirtId: Int,
+//  necktieId = 넥타이 스탠다드 번호
+    val necktieId: Int,
 
 // progress = 장례 진행 상태(장례지도사 연결 여부 ~ 장례식 종료) default = 0(장례지도사 연결 안 됨)
     val progress: Int
