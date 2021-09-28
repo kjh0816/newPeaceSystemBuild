@@ -54,6 +54,10 @@ class UsrDirectorController(
         }
         // 상주의 정보
         val chief = clientService.getFamilyByClientId(funeral.clientId)
+
+        // 장례식장 선택을 위해 최초 로딩 시, 시/도 정보를 넘겨준다.
+
+
         // 헌화의 주문정보를 장례지도사 회원정보로 조회한 결과를 가져온다
         val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
             rq.getLoginedMember()!!.id,
@@ -191,12 +195,27 @@ class UsrDirectorController(
             return "usr/home/main"
         }
 
+
+
+        @RequestMapping("/usr/member/departmentDetail", method = [RequestMethod.POST])
+        @ResponseBody
+        fun departmentDetail(
+                @RequestParam(defaultValue = "") department: String
+        ): String {
+
+            return Ut.getJsonStrFromObj(memberRoleService.getFuneralHallsByDepartment(department.trim()))
+
+        }
+
         // 상주 정보 불러옴
         val chief = clientService.getFamilyByClientId(clientId)
+
+        val departments = memberService.getDepartments()
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
+        model.addAttribute("departments", departments)
 
         return "usr/director/modifyFuneral"
     }
