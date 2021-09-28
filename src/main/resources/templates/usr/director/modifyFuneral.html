@@ -11,31 +11,7 @@
         <div class="p-10 card bg-base-200">
             <div class="card card-side bordered bg-white">
                 <div class="card-body text-sm">
-                    <input type="hidden" name="loginPwInput">
-                    <label class="label">
-                        <span class="label-text">
-                            아이디
-                        </span>
-                    </label>
-                    <input type="text" id="loginId" name="loginId" maxlength="16" placeholder="아이디를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
-                    <div id="loginIdCheckMsg" style="color : red;"></div>
-
-                    <label class="label">
-                        <span class="label-text">
-                            비밀번호
-                        </span>
-                    </label>
-                    <input type="password" id="loginPw" name="loginPw" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
-                    <div id="loginPwCheckMsg" style="color : red;"></div>
-
-                    <label class="label">
-                        <span class="label-text">
-                            비밀번호 재입력
-                        </span>
-                    </label>
-                    <input type="password"  id="loginPwConfirm" name="loginPwConfirm" maxlength="16" placeholder="비밀번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
-                    <div id="loginPwConfirmCheckMsg" style="color : red;"></div>
-
+                    <span class="w-1/2 text-center">고인</span>
                     <label class="label">
                         <span class="label-text">
                             성함
@@ -52,16 +28,6 @@
                     <input type="text" id="cellphoneNo" name="cellphoneNo" maxlength="13" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
                     <div id="cellphoneNoCheckMsg" style="color : red;"></div>
 
-                    <label class="label flex flex-col">
-                        <span class="label-text self-start">
-                            이메일 주소
-                        </span>
-                        <span class="label-text font-bold self-start">
-                            (아래 이메일로 분실하신 아이디와 비밀번호를 찾을 수 있습니다)
-                        </span>
-                    </label>
-                    <input type="text" id="email" name="email" placeholder="이메일 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
-                    <div id="emailCheckMsg" style="color : red;"></div>
 
                     <label class="label">
                         <span class="label-text">
@@ -74,23 +40,6 @@
                             <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
                         </div>
                     </select>
-
-                    <label class="label flex flex-col">
-                        <span class="label-text self-start">
-                            계좌번호
-                        </span>
-                        <span class="label-text font-bold self-start">
-                            (아래 계좌로 영업비가 입금됩니다)
-                        </span>
-                    </label>
-                    <select id="bank" name="bank" class="select select-bordered select-sm w-full max-w-xs">
-                        <option value="" disabled selected>은행 선택</option>
-                        <div th:each="bank : ${banks}" th:object="${bank}">
-                            <option th:value="*{bankName}" th:text="*{bankName}"></option>
-                        </div>
-                    </select>
-                    <input type="text" id="accountNum" name="accountNum" maxlength="16" placeholder="계좌번호" autocomplete="off" class="input input-bordered my-2"/>
-                    <div class="pl-1 pt-2 text-sm" id="accountNumCheckMsg" style="color : red;"></div>
                 </div>
             </div>
             <br>
