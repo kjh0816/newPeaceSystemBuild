@@ -1,6 +1,7 @@
 package com.base.newPeaceSystemBuild.repository
 
 import com.base.newPeaceSystemBuild.vo.client.Client
+import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Bank
 import com.base.newPeaceSystemBuild.vo.member.Department
@@ -24,13 +25,11 @@ interface ClientRepository {
             updateDate = NOW(),
             memberId = #{memberId},
             deceasedName = #{deceasedName},
-            relatedName = #{relatedName},
-            cellphoneNo = #{cellphoneNo},
             location = #{location},
             deceasedAddress = #{address}
         """
     )
-    fun insertIntoClient(memberId: Int, deceasedName: String, relatedName: String, cellphoneNo: String, location: String, address: String)
+    fun insertIntoClient(memberId: Int, deceasedName: String, location: String, address: String)
 
     @Select(
         """
@@ -106,4 +105,26 @@ interface ClientRepository {
         """
     )
     fun getCellphoneNoFormatted(id: Int): String
+    @Insert(
+            """
+                INSERT INTO family
+                SET regDate = NOW(),
+                updateDate = NOW(),
+                clientId = #{clientId},
+                chiefStatus = 1,
+                `name` = #{relatedName},
+                cellphoneNo = #{cellphoneNo}
+            """
+    )
+    fun insertIntoFamily(clientId: Int, relatedName: String, cellphoneNo: String)
+
+    @Select(
+            """
+                SELECT *
+                FROM family
+                WHERE clientId = #{clientId}
+                AND chiefStatus = 1
+            """
+    )
+    fun getFamilyByClientId(clientId: Int): Family
 }

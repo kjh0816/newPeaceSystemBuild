@@ -264,6 +264,11 @@ class UsrMemberController(
 
             return "redirect:/usr/home/main"
         }
+
+        // family 테이블에서 상주와 관련된 정보를 불러온다.
+        // 현재 구조상, 값이 조회되지 않는 경우는 없기 때문에 null에 대한 예외처리는 하지 않는다.
+        val chief = clientService.getFamilyByClientId(clientId)
+
         // funeral 테이블의 값은 장례지도사가 유족과 연락한 후, 추가적인 정보를 입력했을 때 row가 생성된다.
         // 즉, 처음 funeral 테이블을 조회할 때, 값이 null이다.
         val funeral = clientService.getFuneralByClientId(clientId)
@@ -280,11 +285,12 @@ class UsrMemberController(
         }
 
         // 하이픈이 들어간 상주의 전화번호
-        val clientCellphoneNo = clientService.getCellphoneNoFormatted(client.id)
+        val clientCellphoneNo = Ut.getCellphoneNoFormatted(chief.cellphoneNo)
 
         model.addAttribute("clientCellphoneNo", clientCellphoneNo)
 
         model.addAttribute("client", client)
+        model.addAttribute("chief", chief)
         model.addAttribute("funeral", funeral)
 
 

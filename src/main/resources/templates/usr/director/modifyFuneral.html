@@ -10,23 +10,39 @@
     <form action="./doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
         <div class="p-10 card bg-base-200">
             <div class="card card-side bordered bg-white">
-                <div class="card-body text-sm">
-                    <span class="w-1/2 text-center">고인</span>
-                    <label class="label">
-                        <span class="label-text">
-                            성함
-                        </span>
-                    </label>
-                    <input type="text" id="name" name="name" maxlength="20" placeholder="성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
-                    <div id="nameCheckMsg" style="color : red;"></div>
+                <div class="card-body text-sm border border-base-300">
+                    <span class="w-1/2 text-center font-bold text-2xl">고인</span>
+                    <br>
+                    <br>
 
                     <label class="label">
                         <span class="label-text">
-                            핸드폰 번호
+                            고인 성함
                         </span>
                     </label>
-                    <input type="text" id="cellphoneNo" name="cellphoneNo" maxlength="13" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
-                    <div id="cellphoneNoCheckMsg" style="color : red;"></div>
+                    <input th:value="${client?.deceasedName}" type="text" id="deceasedName" name="deceasedName" maxlength="20" placeholder="고인 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <br>
+                    <br>
+                    <label class="label">
+                        <span class="label-text">
+                            장례식장
+                        </span>
+                    </label>
+                    <input type="text" id="funeralHall" name="funeralHall" maxlength="20" placeholder="장례식장명을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <label class="label">
+                        <span class="label-text">
+                            호실
+                        </span>
+                    </label>
+                    <input type="text" id="funeralHallRoom" name="funeralHallRoom" maxlength="20" placeholder="장례식장 호실을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <br>
+                    <br>
+
+
+
 
 
                     <label class="label">
@@ -42,8 +58,33 @@
                     </select>
                 </div>
             </div>
+
             <br>
-            <button id="join-submit" class="btn btn-ghost">회원가입</button>
+
+            <div class="card-body text-sm border border-base-300">
+                <span class="w-1/2 text-center font-bold text-2xl">상주</span>
+                <br>
+                <br>
+                <label class="label">
+                        <span class="label-text">
+                            상주 성함
+                        </span>
+                </label>
+                <input th:value="${chief?.name}" type="text" id="chiefName" name="chiefName" maxlength="20" placeholder="상주 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                <label class="label">
+                        <span class="label-text">
+                            핸드폰 번호
+                        </span>
+                </label>
+                <input th:value="${chief?.cellphoneNo}" type="text" id="chiefCellphoneNo" name="chiefCellphoneNo" maxlength="11" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
+
+            </div>
+
+            <br>
+            <br>
+
+            <button id="modify-submit" class="btn btn-ghost">입력 완료</button>
         </div>
     </form>
 </main>

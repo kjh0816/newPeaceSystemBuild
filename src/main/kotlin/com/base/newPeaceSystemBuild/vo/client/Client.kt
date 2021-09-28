@@ -7,13 +7,6 @@ data class Client(
     val memberId: Int,
     val directorMemberId: Int,
     val location: String,
-    // 상주 관련 정보
-    val cellphoneNo: String,
-    val relatedName: String,
-    val relatedAddress: String,
-    val bank: String,
-    val accountNum: String,
-    val accountOwner: String,
     // 고인 관련 정보
     val deceasedName: String,
     val deceasedAddress: String,
@@ -30,9 +23,9 @@ data class Client(
     val funeralMethod: Boolean,
     val cause: Int,
     val papers: Boolean,
-    val autopsyCheck: Boolean
-
-
-
-
+    val autopsyCheck: Boolean,
+    val casketDate: String,
+    val casketTime: String,
+    val leavingDate: String,
+    val leavingTime: String
 )

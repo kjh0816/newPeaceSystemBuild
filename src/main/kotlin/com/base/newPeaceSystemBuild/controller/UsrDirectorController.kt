@@ -17,11 +17,11 @@ import java.text.DecimalFormat
 
 @Controller
 class UsrDirectorController(
-    private val memberService: MemberService,
-    private val genFileService: GenFileService,
-    private val memberRoleService: MemberRoleService,
-    private val vendorService: VendorService,
-    private val clientService: ClientService
+        private val memberService: MemberService,
+        private val genFileService: GenFileService,
+        private val memberRoleService: MemberRoleService,
+        private val vendorService: VendorService,
+        private val clientService: ClientService
 ) {
     @Autowired
     private lateinit var rq: Rq;
@@ -39,7 +39,7 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/progress")
     fun showProgress(
-        model: Model
+            model: Model
     ): String {
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
 
@@ -53,6 +53,8 @@ class UsrDirectorController(
         if (client == null) {
             return "redirect:/usr/home/main"
         }
+        // 상주의 정보
+        val chief = clientService.getFamilyByClientId(funeral.clientId)
         // 헌화의 주문정보를 장례지도사 회원정보로 조회한 결과를 가져온다
         val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(rq.getLoginedMember()!!.id, false, "flowerTribute")
         val femaleMourningClothOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(rq.getLoginedMember()!!.id, false, "femaleMourningCloth")
@@ -82,7 +84,7 @@ class UsrDirectorController(
         }
         if (flowerTribute != null) {
             flowerTributePrice =
-                (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
+                    (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
             sum += flowerTributePrice
         }
         if (femaleMourningCloth != null) {
@@ -102,6 +104,7 @@ class UsrDirectorController(
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
+        model.addAttribute("chief", chief)
 //      선택된 스탠다드 종류
         model.addAttribute("flower", flower)
         model.addAttribute("flowerTribute", flowerTribute)
@@ -125,26 +128,33 @@ class UsrDirectorController(
     fun showModifyFuneral(
             model: Model,
             @RequestParam(defaultValue = "0") clientId: Int
-    ): String{
+    ): String {
 
 
         // 파라미터가 자동으로 입력되는 정상적인 접근이 아닌 경우에 대한 예외처리
-        if(clientId == 0 ){
+        if (clientId == 0) {
             return "usr/home/main"
         }
 
         val funeral = clientService.getFuneralByClientId(clientId)
         // 잘못된 clientId 파라미터로 접근하는 경우에 대한 예외처리
-        if(funeral == null){
+        if (funeral == null) {
             return "usr/home/main"
         }
 
         val client = clientService.getClientById(clientId)
 
         // 해당 페이지에 접근한 장례지도사가 조회한 장례를 진행하는 장례지도사가 아닌 경우에 대한 예외처리
-        if(rq.getLoginedMember()!!.id != funeral.directorMemberId || client == null){
+        if (rq.getLoginedMember()!!.id != funeral.directorMemberId || client == null) {
             return "usr/home/main"
         }
+
+        // 상주 정보 불러옴
+        val chief = clientService.getFamilyByClientId(clientId)
+
+        model.addAttribute("client", client)
+        model.addAttribute("funeral", funeral)
+        model.addAttribute("chief", chief)
 
         return "usr/director/modifyFuneral"
     }
@@ -157,16 +167,16 @@ class UsrDirectorController(
 
         if (funeral != null) {
             val flowerOrder = vendorService.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                funeral.clientId,
-                rq.getLoginedMember()!!.id,
-                false,
-                "flower"
+                    funeral.clientId,
+                    rq.getLoginedMember()!!.id,
+                    false,
+                    "flower"
             )
             val flowerTributeOrder = vendorService.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                funeral.clientId,
-                rq.getLoginedMember()!!.id,
-                false,
-                "flowerTribute"
+                    funeral.clientId,
+                    rq.getLoginedMember()!!.id,
+                    false,
+                    "flowerTribute"
             )
 
             model.addAttribute("flowerOrder", flowerOrder)
@@ -189,16 +199,16 @@ class UsrDirectorController(
 
         if (funeral != null) {
             val femaleMourningClothOrder = vendorService.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                funeral.clientId,
-                rq.getLoginedMember()!!.id,
-                false,
-                "femaleMourningCloth"
+                    funeral.clientId,
+                    rq.getLoginedMember()!!.id,
+                    false,
+                    "femaleMourningCloth"
             )
             val maleMourningClothOrder = vendorService.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                funeral.clientId,
-                rq.getLoginedMember()!!.id,
-                false,
-                "maleMourningCloth"
+                    funeral.clientId,
+                    rq.getLoginedMember()!!.id,
+                    false,
+                    "maleMourningCloth"
             )
 
             model.addAttribute("femaleMourningClothOrder", femaleMourningClothOrder)
@@ -215,8 +225,8 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/dispatch")
     fun showDispatch(
-        model: Model,
-        @RequestParam(defaultValue = "0") clientId: Int
+            model: Model,
+            @RequestParam(defaultValue = "0") clientId: Int
     ): String {
 
         // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
@@ -226,7 +236,11 @@ class UsrDirectorController(
             return "usr/home/main"
         }
 
+        val chief = clientService.getFamilyByClientId(clientId)
+
+        model.addAttribute("chief", chief)
         model.addAttribute("client", client)
+
 
         return "usr/director/dispatch"
     }
@@ -235,13 +249,13 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/doDispatch", method = [RequestMethod.POST])
     @ResponseBody
     fun doDispatch(
-        @RequestParam(defaultValue = "0") clientId: Int
+            @RequestParam(defaultValue = "0") clientId: Int
     ): String {
         return Ut.getJsonStrFromObj(
-            clientService.modifyClientIntoDirectorMemberIdByClientId(
-                rq.getLoginedMember()!!.id,
-                clientId
-            )
+                clientService.modifyClientIntoDirectorMemberIdByClientId(
+                        rq.getLoginedMember()!!.id,
+                        clientId
+                )
         )
     }
 
@@ -252,8 +266,8 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/doRequest", method = [RequestMethod.POST])
     @ResponseBody
     fun doRequest(
-        introduce: String,
-        multipartRequest: MultipartRequest
+            introduce: String,
+            multipartRequest: MultipartRequest
     ): String {
         // Request 페이지에서 넘어온 파라미터를 DB에 추가하는 과정
         // 장례지도사 승인 신청 시, roleLevel(=roleId)는 3(장례지도사)가 되고, authenticationStatus에 따라서 이후 구분된다.
@@ -288,50 +302,49 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/doSelectMourningCloth", method = [RequestMethod.POST])
     @ResponseBody
     fun doSelectMourningCloth(
-        funeralId: Int,
-        @RequestParam(defaultValue = "0") femaleMourningClothId: Int,
-        @RequestParam(defaultValue = "0") femaleClothCnt: Int,
-        @RequestParam(defaultValue = "0") maleMourningClothId: Int,
-        @RequestParam(defaultValue = "0") maleClothCnt: Int,
+            funeralId: Int,
+            @RequestParam(defaultValue = "0") femaleMourningClothId: Int,
+            @RequestParam(defaultValue = "0") femaleClothCnt: Int,
+            @RequestParam(defaultValue = "0") maleMourningClothId: Int,
+            @RequestParam(defaultValue = "0") maleClothCnt: Int,
     ): String {
         var femaleClothColor = ""
 
         if (femaleMourningClothId == 1) {
             femaleClothColor = "흑"
-        }
-        else if(femaleMourningClothId == 2){
+        } else if (femaleMourningClothId == 2) {
             femaleClothColor = "백"
         }
 
         return Ut.getJsonStrFromObj(
-            vendorService.modifyFuneralIntoFemaleMourningClothId(
-                funeralId,
-                femaleMourningClothId,
-                femaleClothCnt,
-                femaleClothColor,
-                maleMourningClothId,
-                maleClothCnt
-            )
+                vendorService.modifyFuneralIntoFemaleMourningClothId(
+                        funeralId,
+                        femaleMourningClothId,
+                        femaleClothCnt,
+                        femaleClothColor,
+                        maleMourningClothId,
+                        maleClothCnt
+                )
         )
     }
 
     @RequestMapping("/usr/director/doSelectFlower", method = [RequestMethod.POST])
     @ResponseBody
     fun doSelectFlower(
-        funeralId: Int,
-        @RequestParam(defaultValue = "0") flowerId: Int,
-        @RequestParam(defaultValue = "0") flowerTributeId: Int,
-        @RequestParam(defaultValue = "0") bunchCnt: Int,
-        @RequestParam(defaultValue = "N") packing: Char
+            funeralId: Int,
+            @RequestParam(defaultValue = "0") flowerId: Int,
+            @RequestParam(defaultValue = "0") flowerTributeId: Int,
+            @RequestParam(defaultValue = "0") bunchCnt: Int,
+            @RequestParam(defaultValue = "N") packing: Char
     ): String {
         return Ut.getJsonStrFromObj(
-            vendorService.modifyFuneralIntoFlowerId(
-                funeralId,
-                flowerId,
-                flowerTributeId,
-                bunchCnt,
-                packing
-            )
+                vendorService.modifyFuneralIntoFlowerId(
+                        funeralId,
+                        flowerId,
+                        flowerTributeId,
+                        bunchCnt,
+                        packing
+                )
         )
     }
 

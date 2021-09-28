@@ -7,6 +7,7 @@ import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
+import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Member
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,9 +46,18 @@ class ClientService(
             return ResultData.from("F-5", "상세 주소를 입력해주세요.")
         }
 
+        // 이후 cellphoneNo를 가공할 때, 번호가 잘못되면 format이 불가한 에러가 발생할 수 있다.
+        // 010으로 시작하는 11자리의 번호만 받는다.
+        if(cellphoneNo.length != 11){
+            return ResultData.from("F-6", "핸드폰 번호를 확인해주세요.")
+        }
+
         //  client에 대한 데이터를 DB에 저장
-        clientRepository.insertIntoClient(memberId, deceasedName, relatedName, cellphoneNo, location, address)
+        clientRepository.insertIntoClient(memberId, deceasedName, location, address)
         val clientId = clientRepository.getLastInsertId()
+
+        // 상주를 포함한 고인의 유가족과 관련된 데이터를 담는 테에블에 저장(여기서는 상주에 대한 정보만 들어간다.)
+        clientRepository.insertIntoFamily(clientId, relatedName, cellphoneNo)
 
         // 문자 메세지 전달 (시작)
         // client 정보 중, location을 반영해서 해당하는 장례지도사들에 문자 메세지 전달
@@ -194,5 +204,9 @@ class ClientService(
 
     fun getCellphoneNoFormatted(id: Int): String {
         return clientRepository.getCellphoneNoFormatted(id)
+    }
+
+    fun getFamilyByClientId(clientId: Int): Family {
+        return clientRepository.getFamilyByClientId(clientId)
     }
 }

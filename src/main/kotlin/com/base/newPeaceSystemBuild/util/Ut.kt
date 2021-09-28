@@ -332,6 +332,19 @@ class Ut(
             return sb.toString()
         }
 
+        fun getCellphoneNoFormatted(cellphoneNo: String): String{
+
+            val sb = StringBuilder()
+
+            sb.append(cellphoneNo.trim().substring(0, 3))
+            sb.append("-")
+            sb.append(cellphoneNo.substring(3, 7))
+            sb.append("-")
+            sb.append(cellphoneNo.substring(7, cellphoneNo.length))
+
+            return sb.toString()
+        }
+
         fun getDateStrLater(seconds: Long): String {
             val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             return format.format(System.currentTimeMillis() + seconds * 1000)

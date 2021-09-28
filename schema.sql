@@ -248,13 +248,6 @@ CREATE TABLE `client`(
 	memberId INT(10) UNSIGNED NOT NULL COMMENT '현재 로그인한 회원 id(장례지도사를 연결해준 영업자)',
 	directorMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0일 경우, 장례지도사가 아직 미정, 정해지면 장례지도사 id를 넣는다.',
 	location CHAR(30) NOT NULL,
-	# 상주 관련 정보
-	cellphoneNo CHAR(20) NOT NULL COMMENT '상주 또는 유족의 연락처',
-	relatedName CHAR(20) NOT NULL COMMENT '상주 또는 유족의 성함',
-	relatedAddress CHAR(50) NOT NULL DEFAULT '' COMMENT '상주의 거주지 주소',
-	bank CHAR(20) NOT NULL DEFAULT '' COMMENT '유족이 부조금을 받을 수 있는 계좌',
-	accountNum CHAR(20) NOT NULL DEFAULT '',
-	accountOwner CHAR(20) NOT NULL DEFAULT '',
 	# 고인 관련 정보
 	deceasedName CHAR(20) NOT NULL COMMENT '고인의 성함',
 	deceasedAddress CHAR(50) NOT NULL COMMENT '장례지도사가 찾아갈 수 있도록',
@@ -285,17 +278,21 @@ SELECT * FROM `client`;
 
 
 # client(고인)에 대한 유족 family 테이블
-# 상주인 경우에만 address를 FRONT에 받는다.
+# 상주인 경우에만 address, bank, accountNum, accoutOwner를 받는다.
 # 상주는 id가 1인 row
 CREATE TABLE family(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
-	clinetId INT(10) UNSIGNED NOT NULL,
+	clientId INT(10) UNSIGNED NOT NULL,
+	chiefStatus TINYINT(1) UNSIGNED DEFAULT 0 COMMENT '상주인지 아닌지(상주 = 1)',
 	`name` CHAR(20) NOT NULL,
-	relation CHAR(30) NOT NULL COMMENT '고인과의 관계(고인으로부터 누구인지 ex) 아들)',
+	relation CHAR(30) NOT NULL DEFAULT '' COMMENT '고인과의 관계(고인으로부터 누구인지 ex) 아들)',
 	cellphoneNo CHAR(20) NOT NULL,
-	addresse CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.'
+	addresse CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.',
+	bank CHAR(20) NOT NULL DEFAULT '' COMMENT '유족이 부조금을 받을 수 있는 계좌',
+	accountNum CHAR(20) NOT NULL DEFAULT '',
+	accountOwner CHAR(20) NOT NULL DEFAULT ''
 );
 
 
