@@ -212,6 +212,19 @@ INSERT  INTO `bank`(`id`,`name`) VALUES
 
 
 
+CREATE TABLE funeralHall(
+	id INT(10),
+	`name` CHAR(60) NOT NULL,
+	department CHAR(30) NOT NULL,
+	departmentDetail CHAR(40) NOT NULL,
+	addresse CHAR(120) NOT NULL,
+	cellphoneNo CHAR(20) NOT NULL
+);
+
+SELECT * FROM funeralHall;
+
+
+
 
 # 파일 테이블 추가
 CREATE TABLE genFile (
