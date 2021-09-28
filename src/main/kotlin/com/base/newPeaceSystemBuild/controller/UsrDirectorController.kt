@@ -154,6 +154,8 @@ class UsrDirectorController(
         model.addAttribute("flowerTribute", flowerTribute)
         model.addAttribute("femaleMourningCloth", femaleMourningCloth)
         model.addAttribute("maleMourningCloth", maleMourningCloth)
+        model.addAttribute("shirt", shirt)
+        model.addAttribute("necktie", necktie)
 //      단품이 아닌 세트 혹은 다수의 상품을 선택해야하는것들, 선택한 갯수랑 개당가격을 계산한가격
         model.addAttribute("flowerTributePriceFormat", flowerTributePriceFormat)
         model.addAttribute("femaleMourningClothPriceFormat", femaleMourningClothPriceFormat)
@@ -164,6 +166,8 @@ class UsrDirectorController(
         model.addAttribute("flowerTributeOrder", flowerTributeOrder)
         model.addAttribute("femaleMourningClothOrder", femaleMourningClothOrder)
         model.addAttribute("maleMourningClothOrder", maleMourningClothOrder)
+        model.addAttribute("shirtOrder", shirtOrder)
+        model.addAttribute("necktieOrder", necktieOrder)
 //      합계
         model.addAttribute("sumFormat", sumFormat)
 
