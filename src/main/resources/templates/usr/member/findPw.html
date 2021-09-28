@@ -12,23 +12,32 @@
 </head>
 <main layout:fragment="main">
     <form action="./doFindPw" method="POST" onsubmit="MemberFindPw__submit(this); return false;">
-        <div class="label">아이디</div>
-        <div class="input">
-            <input type="text" id="loginId" name="loginId" maxlength="16" placeholder="아이디를 입력해주세요." autocomplete="off"/>
-            <div id="loginIdCheckMsg" style="color : red;"></div>
-        </div>
-        <br>
+        <div class="p-10 card bg-base-200">
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <label class="label flex flex-col">
+                        <span class="label-text self-start">
+                            아이디
+                        </span>
+                    </label>
+                    <input type="text" id="loginId" name="loginId" maxlength="16" placeholder="아이디를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
+                    <div id="loginIdCheckMsg" style="color : red;"></div>
+                    <br>
 
-        <div class="label">이메일</div>
-        <div>아래 이메일로 임시 비밀번호가 발송됩니다.</div>
-        <div class="input">
-            <input type="text" id="email" name="email" placeholder="이메일 입력해주세요." autocomplete="off"/>
-            <div id="emailCheckMsg" style="color : red;"></div>
-        </div>
-        <br>
-
-        <div>
-            <button id="findPw-submit">완료</button>
+                    <label class="label flex flex-col">
+                        <span class="label-text self-start">
+                            이메일
+                        </span>
+                        <span class="label-text self-start">
+                            아래의 이메일로 임시 비밀번호가 발송됩니다.
+                        </span>
+                    </label>
+                    <input type="text" id="email" name="email" placeholder="이메일 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
+                    <div id="emailCheckMsg" style="color : red;"></div>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-ghost" id="findPw-submit" >임시 비밀번호 발송</button>
         </div>
     </form>
 </main>
