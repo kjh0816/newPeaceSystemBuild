@@ -10,17 +10,31 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    <div>故 [[${client.deceasedName}]]님의 장례</div>
-    <br>
-    <div>상주 성함: [[${client.relatedName}]]</div>
-    <br>
-    <div>지역: [[${client.location}]]</div>
-    <br>
-    <div>상세 주소: [[${client.deceasedAddress}]]</div>
-    <br>
     <form onsubmit="Dispatch__submit(this); return false;">
-        <input type="hidden" name="clientId" th:value="${client.id}">
+    <div class="p-10 card bg-base-200">
+        <div class="card card-side bordered bg-white">
+            <div class="card-body text-sm">
+                <input type="hidden" name="clientId" th:value="${client.id}">
+
+                <h2 class="card-title">故 [[${client.deceasedName}]]님의 장례</h2>
+
+                <div class="flex items-center mb-1">
+                    <div class="badge badge-md">상주 성함</div>
+                    <p class="pl-2">[[${client.relatedName}]]</p>
+                </div>
+                <div class="flex items-center mb-1">
+                    <div class="badge badge-md">지역</div>
+                    <p class="pl-2">[[${client.location}]]</p>
+                </div>
+                <div class="flex items-center mb-1">
+                    <div class="badge badge-md">상세 주소</div>
+                    <p class="pl-2">[[${client.deceasedAddress}]]</p>
+                </div>
+            </div>
+        </div>
+        <br>
         <input class="btn btn-ghost" type="submit" value="출동하기">
+    </div>
     </form>
 </main>
 
