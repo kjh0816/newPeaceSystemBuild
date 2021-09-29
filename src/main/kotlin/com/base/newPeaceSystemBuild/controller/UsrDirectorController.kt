@@ -221,12 +221,21 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/departmentDetail", method = [RequestMethod.POST])
     @ResponseBody
     fun departmentDetail(
-            @RequestParam(defaultValue = "서울특별시") department: String
+            @RequestParam(defaultValue = "") department: String
     ): String {
 
 
         return Ut.getJsonStrFromObj(memberRoleService.getFuneralHallsByDepartment(department.trim()))
 
+    }
+
+    @RequestMapping("/usr/director/funeralHallName", method = [RequestMethod.POST])
+    @ResponseBody
+    fun funeralHallName(
+            @RequestParam(defaultValue = "") departmentDetail: String
+    ): String{
+
+        return Ut.getJsonStrFromObj(memberRoleService.getFuneralHallsByDepartmentDetail(departmentDetail.trim()))
     }
 
     @RequestMapping("/usr/director/selectFlower")

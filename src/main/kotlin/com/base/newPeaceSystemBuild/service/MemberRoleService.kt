@@ -31,4 +31,15 @@ class MemberRoleService(
         return ResultData.from("S-1", "시군구를 불러오는데 성공했습니다.", "departmentDetails", departmentDetails.distinct())
     }
 
+    fun getFuneralHallsByDepartmentDetail(departmentDetail: String): ResultData {
+        val funeralHalls = memberRoleRepository.getFuneralHallsByDepartmentDetail(departmentDetail)
+
+        val funeralHallNames = mutableListOf<String>()
+        for(funeralHall in funeralHalls){
+            funeralHallNames.add(funeralHall.name)
+        }
+
+        return ResultData.from("S-1", "장레식장 이름을 불러오는데 성공했습니다.", "funeralHallNames", funeralHallNames.distinct())
+    }
+
 }
