@@ -24,6 +24,21 @@
                         </span>
                     </label>
                     <input th:value="${client?.deceasedName}" type="text" id="deceasedName" name="deceasedName" maxlength="20" placeholder="고인 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <label class="label">
+                        <span class="label-text">
+                            본관
+                        </span>
+                    </label>
+                    <input th:value="${client?.familyClan}" type="text" id="familyClan" name="familyClan" maxlength="20" placeholder="고인의 본관을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <label class="label">
+                        <span class="label-text">
+                            종교
+                        </span>
+                    </label>
+                    <input th:value="${client?.religion}" type="text" id="religion" name="religion" maxlength="20" placeholder="고인의 종교를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
                     <br>
                     <br>
                     <label class="label">
