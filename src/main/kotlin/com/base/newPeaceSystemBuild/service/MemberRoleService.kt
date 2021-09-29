@@ -17,16 +17,18 @@ class MemberRoleService(
     }
 
     fun getFuneralHallsByDepartment(department: String): ResultData {
-        val departmentDetails = memberRoleRepository.getFuneralHallsByDepartment(department)
+        val funeralHalls = memberRoleRepository.getFuneralHallsByDepartment(department)
 
-        println(departmentDetails)
-        println(departmentDetails)
-        println(departmentDetails)
-        println(departmentDetails)
-        println(departmentDetails)
+        val departmentDetails = mutableListOf<String>()
 
 
-        return ResultData.from("S-1", "시군구를 불러오는데 성공했습니다.", "departmentDetails", departmentDetails)
+        // departmentDetail을 담은 후, 중복 제거 (distinct)
+        for(funeralHall in funeralHalls){
+            departmentDetails.add(funeralHall.departmentDetail)
+        }
+
+        // departmentDetail 부분만 따로 리스트에 담은 후, 중복 제거된 상태의 Json 데이터로 넘김
+        return ResultData.from("S-1", "시군구를 불러오는데 성공했습니다.", "departmentDetails", departmentDetails.distinct())
     }
 
 }

@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.repository
 
+import com.base.newPeaceSystemBuild.vo.client.FuneralHall
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
@@ -28,10 +29,10 @@ interface MemberRoleRepository {
 
     @Select(
             """
-                SELECT DISTINCT(departmentDetail), *
+                SELECT *
                 FROM funeralHall
                 WHERE department = #{department}
             """
     )
-    fun getFuneralHallsByDepartment(department: String)
+    fun getFuneralHallsByDepartment(department: String): List<FuneralHall>
 }
