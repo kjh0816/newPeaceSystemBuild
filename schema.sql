@@ -302,7 +302,7 @@ CREATE TABLE family(
 	`name` CHAR(20) NOT NULL,
 	relation CHAR(30) NOT NULL DEFAULT '' COMMENT '고인과의 관계(고인으로부터 누구인지 ex) 아들)',
 	cellphoneNo CHAR(20) NOT NULL,
-	addresse CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.',
+	address CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.',
 	bank CHAR(20) NOT NULL DEFAULT '' COMMENT '유족이 부조금을 받을 수 있는 계좌',
 	accountNum CHAR(20) NOT NULL DEFAULT '',
 	accountOwner CHAR(20) NOT NULL DEFAULT ''

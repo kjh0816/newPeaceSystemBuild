@@ -70,14 +70,29 @@
                             상주 성함
                         </span>
                 </label>
-                <input th:value="${chief?.name}" type="text" id="chiefName" name="chiefName" maxlength="20" placeholder="상주 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                <input th:value="${chief?.name}" type="text" id="chiefName" name="chiefName" maxlength="20" placeholder="상주님의 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                 <label class="label">
                         <span class="label-text">
-                            핸드폰 번호
+                            고인과의 관계
                         </span>
                 </label>
-                <input th:value="${chief?.cellphoneNo}" type="text" id="chiefCellphoneNo" name="chiefCellphoneNo" maxlength="11" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2"/>
+                <input th:value="${chief?.relation}" type="text" id="chiefRelation" name="chiefRelation" maxlength="15" placeholder="고인과의 관계를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                <label class="label">
+                        <span class="label-text">
+                            상주 연락처
+                        </span>
+                </label>
+                <input th:value="${chief?.cellphoneNo}" type="text" id="chiefCellphoneNo" name="chiefCellphoneNo" maxlength="11" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                <label class="label">
+                        <span class="label-text">
+                            주소
+                        </span>
+                </label>
+                <input th:value="${chief?.address}" type="text" id="chiefAddress" name="chiefAddress" maxlength="30" placeholder="상주님의 주소를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
 
             </div>
 
