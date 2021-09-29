@@ -114,6 +114,11 @@ class UsrDirectorController(
         if (flowerTribute != null) {
             flowerTributePrice =
                 (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
+
+            // 포장이 선택되었다면 가격에 3을 곱한다.
+            if (flowerTributeOrder.extra__packing == true) {
+                flowerTributePrice *= 3
+            }
             sum += flowerTributePrice
         }
         if (femaleMourningCloth != null) {
@@ -204,7 +209,7 @@ class UsrDirectorController(
         @RequestMapping("/usr/member/departmentDetail", method = [RequestMethod.POST])
         @ResponseBody
         fun departmentDetail(
-                @RequestParam(defaultValue = "") department: String
+            @RequestParam(defaultValue = "") department: String
         ): String {
 
             return Ut.getJsonStrFromObj(memberRoleService.getFuneralHallsByDepartment(department.trim()))

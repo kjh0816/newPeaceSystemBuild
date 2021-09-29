@@ -49,7 +49,8 @@ class UsrVendorController(
     fun showDispatch(
             model: Model,
             clientId: Int,
-            funeralId: Int
+            funeralId: Int,
+            directorMemberId: Int
     ): String {
         val client = clientService.getClientById(clientId)
         // clientId로 funeral을 조회하는 SQL인데, funeralId로 조회하는 것이 문제가 있음.
@@ -60,11 +61,19 @@ class UsrVendorController(
         }
 
         val flower = vendorService.getFlowerById(funeral.flowerId)
+        val flowerTribute = vendorService.getFlowerTributeById(funeral.flowerTributeId)
+        val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(directorMemberId, false, "flowerTribute")
 
+        val chief = clientService.getFamilyByClientId(clientId)
 
+        model.addAttribute("chief", chief)
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
+        // 스탠다드 정보
         model.addAttribute("flower", flower)
+        model.addAttribute("flowerTribute", flowerTribute)
+        // 오더 정보
+        model.addAttribute("flowerTributeOrder", flowerTributeOrder)
 
         return "usr/vendor/dispatch"
     }
