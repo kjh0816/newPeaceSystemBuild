@@ -2,34 +2,24 @@
 $('#department').blur(function(){
 
 
-    var department = $('#department').val();
+    var department = $('#department').val().trim().toString();
+
+    alert(department);
 
 
 
 
 
-//    $.ajax({
-//                            type: 'POST',
-//                            url: './',
-//                            dataType: 'json',
-//                            data: {department:department},
-//                            success: function(result){
-//
-//
-//                            //   (2) ResultData에 따른 결과값 표시
-//                                if(result.resultCode.startsWith("F-")){
-//                                    $("#loginIdCheckMsg").html(result.msg);
-//                                    $("#loginIdCheckMsg").css("color", "red");
-//                                    $("#join-submit").attr("disabled", true);
-//                                    return;
-//                                }
-//                                if(result.resultCode.startsWith("S-")){
-//                                    $("#loginIdCheckMsg").html(result.msg);
-//                                    $("#loginIdCheckMsg").css("color", "green");
-//                                    $("#join-submit").attr("disabled", false);
-//                                    return;
-//                                }
-//                            }
-//
-//                        });
+     $.ajax({
+                            type: 'POST',
+                            url: './departmentDetail',
+                            dataType: 'json',
+                            data: {department:department},
+                            success: function(result){
+
+                                alert('그가 깨어났습니다.');
+                            }
+
+
+                        });
 });

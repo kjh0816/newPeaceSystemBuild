@@ -38,6 +38,13 @@
                         </div>
                     </select>
 
+                    <select id="departmentDetail" name="departmentDetail" class="select select-bordered select-sm w-full max-w-xs">
+                        <option value="" disabled selected>시/군/구</option>
+                        <div th:each="departmentDetail : ${departmentDetails}" th:object="${String}">
+                            <option th:value="*{departmentDetail}" th:text="*{departmentDetail}"></option>
+                        </div>
+                    </select>
+
 
                     <label class="label">
                         <span class="label-text">

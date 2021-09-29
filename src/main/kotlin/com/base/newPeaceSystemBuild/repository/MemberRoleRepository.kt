@@ -28,7 +28,7 @@ interface MemberRoleRepository {
 
     @Select(
             """
-                SELECT DISTINCT(departmentDetail)
+                SELECT DISTINCT(departmentDetail), *
                 FROM funeralHall
                 WHERE department = #{department}
             """

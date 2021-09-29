@@ -19,6 +19,13 @@ class MemberRoleService(
     fun getFuneralHallsByDepartment(department: String): ResultData {
         val departmentDetails = memberRoleRepository.getFuneralHallsByDepartment(department)
 
+        println(departmentDetails)
+        println(departmentDetails)
+        println(departmentDetails)
+        println(departmentDetails)
+        println(departmentDetails)
+
+
         return ResultData.from("S-1", "시군구를 불러오는데 성공했습니다.", "departmentDetails", departmentDetails)
     }
 

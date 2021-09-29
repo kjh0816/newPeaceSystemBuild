@@ -155,15 +155,7 @@ class UsrDirectorController(
 
 
 
-        @RequestMapping("/usr/member/departmentDetail", method = [RequestMethod.POST])
-        @ResponseBody
-        fun departmentDetail(
-                @RequestParam(defaultValue = "") department: String
-        ): String {
 
-            return Ut.getJsonStrFromObj(memberRoleService.getFuneralHallsByDepartment(department.trim()))
-
-        }
 
         // 상주 정보 불러옴
         val chief = clientService.getFamilyByClientId(clientId)
@@ -176,6 +168,17 @@ class UsrDirectorController(
         model.addAttribute("departments", departments)
 
         return "usr/director/modifyFuneral"
+    }
+
+    @RequestMapping("/usr/director/departmentDetail", method = [RequestMethod.POST])
+    @ResponseBody
+    fun departmentDetail(
+            @RequestParam(defaultValue = "서울특별시") department: String
+    ): String {
+
+
+        return Ut.getJsonStrFromObj(memberRoleService.getFuneralHallsByDepartment(department.trim()))
+
     }
 
     @RequestMapping("/usr/director/selectFlower")
