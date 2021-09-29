@@ -17,7 +17,15 @@ $('#department').blur(function(){
                             data: {department:department},
                             success: function(result){
 
-                                alert('그가 깨어났습니다.');
+
+                                // 1) SELECT BOX의 기존 내용을 지운다.
+                                // $('#departmentDetail').empty();
+                                // 2) SELECT BOX에 option을 추가한다.
+
+                                for(var count = 0; count < result.map.departmentDetails.length; count++){
+                                    var option = $("<option>" + result.map.departmentDetails[count] + "</option>");
+                                    $('#departmentDetail').append(option);
+                                }
                             }
 
 
