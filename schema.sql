@@ -706,3 +706,5 @@ DELETE FROM `necktieOrder`;
 
 SELECT * FROM `client`;
 SELECT * FROM funeral;
+
+SELECT * FROM funeralHall;

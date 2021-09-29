@@ -44,7 +44,7 @@ $('#departmentDetail').change(function(){
             // 2) SELECT BOX의 제목을 넣어준다. (선택 불가 option)
             $('#funeralHallName').append("<option disabled selected>장례식장</option>")
             // 3) SELECT BOX에 option을 추가한다.
-            for(var count = 0; count < result.map.funeralHallNames.size; count++){
+            for(var count = 0; count < result.map.funeralHallNames.length; count++){
                 var option = $("<option>" + result.map.funeralHallNames[count] + "</option>");
                 $('#funeralHallName').append(option);
             }
