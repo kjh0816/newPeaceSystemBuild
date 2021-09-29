@@ -125,13 +125,17 @@ class VendorService(
         // return ResultData.from("S-2", "제단꽃 및 헌화에 주문 정보를 수정했습니다.", "funeral", funeral)
     }
 
-    fun modifyFuneralIntoFemaleMourningClothId(
+    fun modifyFuneralIntoMourningClothId(
         funeralId: Int,
         femaleMourningClothId: Int,
         femaleClothCnt: Int,
         femaleClothColor: String,
         maleMourningClothId: Int,
-        maleClothCnt: Int
+        maleClothCnt: Int,
+        shirtId: Int,
+        shirtCnt: Int,
+        necktieId: Int,
+        necktieCnt: Int
     ): ResultData {
         val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
@@ -218,9 +222,84 @@ class VendorService(
             )
         }
 
+        // shirt Order Insert
+        detail = "shirt"
+        val shirtOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            client.id,
+            rq.getLoginedMember()!!.id,
+            false,
+            detail
+        )
+
+
+        if (shirtOrder == null) {
+            vendorRepository.insertIntoOrder(
+                client.id,
+                rq.getLoginedMember()!!.id,
+                roleCategoryId,
+                shirtId,
+                detail
+            )
+
+            val shirtOrderId = vendorRepository.getLastInsertId()
+            vendorRepository.insertIntoShirtOrder(shirtOrderId, shirtCnt)
+        } else {
+            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+                shirtId,
+                client.id,
+                rq.getLoginedMember()!!.id,
+                roleCategoryId,
+                detail,
+                false
+            )
+            vendorRepository.modifyShirtOrderIntoShirtCntByOrderId(
+                maleClothCnt,
+                shirtOrder.id
+            )
+        }
+
+        // necktie Order Insert
+        detail = "necktie"
+        val necktieOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            client.id,
+            rq.getLoginedMember()!!.id,
+            false,
+            detail
+        )
+
+
+        if (necktieOrder == null) {
+            vendorRepository.insertIntoOrder(
+                client.id,
+                rq.getLoginedMember()!!.id,
+                roleCategoryId,
+                necktieId,
+                detail
+            )
+
+            val necktieOrderId = vendorRepository.getLastInsertId()
+            vendorRepository.insertIntoNecktieOrder(necktieOrderId, necktieCnt)
+        } else {
+            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+                necktieId,
+                client.id,
+                rq.getLoginedMember()!!.id,
+                roleCategoryId,
+                detail,
+                false
+            )
+            vendorRepository.modifyNecktieOrderIntoNecktieCntByOrderId(
+                maleClothCnt,
+                necktieOrder.id
+            )
+        }
+
         // funeral 테이블에 flowerId 를 업데이트 한다.
         vendorRepository.modifyFuneralIntoFemaleMourningClothId(funeralId, femaleMourningClothId)
         vendorRepository.modifyFuneralIntoMaleMourningClothId(funeralId, maleMourningClothId)
+        vendorRepository.modifyFuneralIntoShirtId(funeralId, shirtId)
+        vendorRepository.modifyFuneralIntoNecktieId(funeralId, necktieId)
+
         // 연결된 물품 공급업자에게 주문 정보를 주기 위해 orderId를 성공 시, 같이 return
 
         return ResultData.from("S-1", "상복 주문 정보를 입력했습니다.", "funeral", funeral)
@@ -330,6 +409,14 @@ class VendorService(
         return vendorRepository.getMaleMourningCloths()
     }
 
+    fun getShirts(): List<MourningCloth> {
+        return vendorRepository.getShirts()
+    }
+
+    fun getNeckties(): List<MourningCloth> {
+        return vendorRepository.getNeckties()
+    }
+
     fun getFemaleMourningClothById(femaleMourningClothId: Int): MourningCloth? {
         return vendorRepository.getFemaleMourningClothById(femaleMourningClothId)
     }
@@ -338,4 +425,10 @@ class VendorService(
         return vendorRepository.getMaleMourningClothById(maleMourningClothId)
     }
 
+    fun getShirtById(shirtId: Int): MourningCloth? {
+        return vendorRepository.getShirtById(shirtId)
+    }
+    fun getNecktieById(necktieId: Int): MourningCloth? {
+        return vendorRepository.getNecktieById(necktieId)
+    }
 }

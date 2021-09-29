@@ -104,6 +104,14 @@ interface VendorRepository {
                 , MMC.retailPrice AS `extra__retailPrice`
                 , MMCO.maleClothCnt AS `extra__maleClothCnt`
             </if>
+            <if test="detail == 'shirt'">
+                , S.retailPrice AS `extra__retailPrice`
+                , SO.shirtCnt AS `extra__shirtCnt`
+            </if>
+            <if test="detail == 'necktie'">
+                , N.retailPrice AS `extra__retailPrice`
+                , NO.necktieCnt AS `extra__necktieCnt`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -128,6 +136,18 @@ interface VendorRepository {
                 ON O.standardId = MMC.id
                 LEFT JOIN maleMourningClothOrder AS MMCO
                 ON O.id = MMCO.orderId
+            </if>
+            <if test="detail == 'shirt'">
+                LEFT JOIN shirt AS S
+                ON O.standardId = S.id
+                LEFT JOIN shirtOrder AS SO
+                ON O.id = SO.orderId
+            </if>
+            <if test="detail == 'necktie'">
+                LEFT JOIN necktie AS N
+                ON O.standardId = N.id
+                LEFT JOIN necktieOrder AS NO
+                ON O.id = NO.orderId
             </if>
             WHERE O.vendorMemberId = #{vendorMemberId}
             AND O.orderStatus = #{orderStatus}
@@ -230,6 +250,14 @@ interface VendorRepository {
                 , MMC.retailPrice AS `extra__retailPrice`
                 , MMCO.maleClothCnt AS `extra__maleClothCnt`
             </if>
+            <if test="detail == 'shirt'">
+                , S.retailPrice AS `extra__retailPrice`
+                , SO.shirtCnt AS `extra__shirtCnt`
+            </if>
+            <if test="detail == 'necktie'">
+                , N.retailPrice AS `extra__retailPrice`
+                , NO.necktieCnt AS `extra__necktieCnt`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -254,6 +282,18 @@ interface VendorRepository {
                 ON O.standardId = MMC.id
                 LEFT JOIN maleMourningClothOrder AS MMCO
                 ON O.id = MMCO.orderId
+            </if>
+            <if test="detail == 'shirt'">
+                LEFT JOIN shirt AS S
+                ON O.standardId = S.id
+                LEFT JOIN shirtOrder AS SO
+                ON O.id = SO.orderId
+            </if>
+            <if test="detail == 'necktie'">
+                LEFT JOIN necktie AS N
+                ON O.standardId = N.id
+                LEFT JOIN necktieOrder AS NO
+                ON O.id = NO.orderId
             </if>
             WHERE O.directorMemberId = #{directorMemberId}
             AND completionStatus = #{completionStatus}
@@ -300,6 +340,14 @@ interface VendorRepository {
                 , MMC.retailPrice AS `extra__retailPrice`
                 , MMCO.maleClothCnt AS `extra__maleClothCnt`
             </if>
+            <if test="detail == 'shirt'">
+                , S.retailPrice AS `extra__retailPrice`
+                , SO.shirtCnt AS `extra__shirtCnt`
+            </if>
+            <if test="detail == 'necktie'">
+                , N.retailPrice AS `extra__retailPrice`
+                , NO.necktieCnt AS `extra__necktieCnt`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -324,6 +372,18 @@ interface VendorRepository {
                 ON O.standardId = MMC.id
                 LEFT JOIN maleMourningClothOrder AS MMCO
                 ON O.id = MMCO.orderId
+            </if>
+            <if test="detail == 'shirt'">
+                LEFT JOIN shirt AS S
+                ON O.standardId = S.id
+                LEFT JOIN shirtOrder AS SO
+                ON O.id = SO.orderId
+            </if>
+            <if test="detail == 'necktie'">
+                LEFT JOIN necktie AS N
+                ON O.standardId = N.id
+                LEFT JOIN necktieOrder AS NO
+                ON O.id = NO.orderId
             </if>
             WHERE O.clientId = #{clientId}
             AND O.directorMemberId = #{directorMemberId}
@@ -373,16 +433,31 @@ interface VendorRepository {
 
     @Select(
         """
-            SELECT * FROM femaleMourningCloth
+            SELECT * FROM `femaleMourningCloth`
         """
     )
     fun getFemaleMourningCloths(): List<MourningCloth>
+
     @Select(
         """
-            SELECT * FROM maleMourningCloth
+            SELECT * FROM `maleMourningCloth`
         """
     )
     fun getMaleMourningCloths(): List<MourningCloth>
+
+    @Select(
+        """
+            SELECT * FROM `shirt`
+        """
+    )
+    fun getShirts(): List<MourningCloth>
+
+    @Select(
+        """
+            SELECT * FROM `necktie`
+        """
+    )
+    fun getNeckties(): List<MourningCloth>
 
     @Insert(
         """
@@ -471,4 +546,82 @@ interface VendorRepository {
         """
     )
     fun getMaleMourningClothById(maleMourningClothId: Int): MourningCloth?
+
+    @Select(
+        """
+            SELECT *
+            FROM `shirt`
+            WHERE id = #{shirtId}
+        """
+    )
+    fun getShirtById(shirtId: Int): MourningCloth?
+
+    @Select(
+        """
+            SELECT *
+            FROM `necktie`
+            WHERE id = #{necktieId}
+        """
+    )
+    fun getNecktieById(necktieId: Int): MourningCloth?
+
+    @Insert(
+        """
+            INSERT INTO shirtOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            shirtCnt = #{shirtCnt}
+        """
+    )
+    fun insertIntoShirtOrder(orderId: Int, shirtCnt: Int)
+
+    @Update(
+        """
+            UPDATE shirtOrder
+            SET updateDate = NOW(),
+            shirtCnt = #{shirtCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyShirtOrderIntoShirtCntByOrderId(shirtCnt: Int, orderId: Int)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET shirtId = #{shirtId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoShirtId(funeralId: Int, shirtId: Int)
+
+    @Insert(
+        """
+            INSERT INTO necktieOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            necktieCnt = #{necktieCnt}
+        """
+    )
+    fun insertIntoNecktieOrder(orderId: Int, necktieCnt: Int)
+
+    @Update(
+        """
+            UPDATE necktieOrder
+            SET updateDate = NOW(),
+            necktieCnt = #{necktieCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyNecktieOrderIntoNecktieCntByOrderId(necktieCnt: Int, orderId: Int)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET necktieId = #{necktieId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoNecktieId(funeralId: Int, necktieId: Int)
 }

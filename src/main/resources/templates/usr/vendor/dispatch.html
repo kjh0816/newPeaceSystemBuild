@@ -10,22 +10,61 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    <div>故 [[${client.deceasedName}]]님의 장례</div>
-    <br>
-    <div>상주 성함: [[${client.relatedName}]]</div>
-    <br>
-    <div>지역: [[${client.location}]]</div>
-    <br>
-    <div>상세 주소: [[${client.address}]]</div>
-    <br>
-    <div>제단 꽃 : [[${flower.name}]]</div>
-    <br>
-    <div>제단 꽃 가격 : [[${flower.retailPrice}]]</div>
-    <br>
-    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}" alt="" width="300px" height="150px">
     <form onsubmit="Dispatch__submit(this); return false;">
-        <input type="hidden" name="clientId" th:value="${client.id}">
-        <input type="submit" value="주문받기">
+        <div class="p-10 card bg-base-200">
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <input type="hidden" name="clientId" th:value="${client.id}">
+                    <h2 class="card-title">故 [[${client.deceasedName}]]님의 장례</h2>
+
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상주 성함</div>
+                        <p class="pl-2">[[${chief.name}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">지역</div>
+                        <p class="pl-2">[[${client.location}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상세 주소</div>
+                        <p class="pl-2">[[${client.deceasedAddress}]]</p>
+                    </div>
+                    <p class="font-bold">제단꽃</p>
+                    <th:block th:if="${flower != null}">
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">제단 꽃 가격</div>
+                            <p class="pl-2">[[${flower.retailPriceFormat}]] 원</p>
+                        </div>
+                    </th:block>
+                    <p class="font-bold">헌화</p>
+                    <th:block th:if="${flowerTribute != null}">
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">헌화 개수</div>
+                            <p class="pl-2">[[${flowerTributeOrder.extra__bunch}]] 송이 [[${flowerTributeOrder.extra__bunchCnt}]] 세트 ([[${flowerTribute.bunch * flowerTributeOrder.extra__bunchCnt}]] 송이)</p>
+                        </div>
+                        <th:block th:if="${flowerTributeOrder.extra__packing == true}">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">포장 여부</div>
+                                <p class="pl-2">포장</p>
+                            </div>
+                        </th:block>
+                        <th:block th:unless="${flowerTributeOrder.extra__packing == true}">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">포장 여부</div>
+                                <p class="pl-2">미포장</p>
+                            </div>
+                        </th:block>
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">헌화 총 가격</div>
+                            <p class="pl-2">[[${flowerTributeOrder.retailPriceMulBunchPriceMulBunchCnt}]] 원</p>
+                        </div>
+                    </th:block>
+                    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funeral.flowerId})}" alt="">
+                </div>
+            </div>
+            <br>
+            <input class="btn btn-ghost" type="submit" value="주문받기">
+        </div>
     </form>
 </main>
 

@@ -390,6 +390,8 @@ CREATE TABLE funeral(
 ALTER TABLE funeral ADD COLUMN flowerTributeId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerId;
 ALTER TABLE funeral ADD COLUMN femaleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerTributeId;
 ALTER TABLE funeral ADD COLUMN maleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER femaleMourningClothId;
+ALTER TABLE funeral ADD COLUMN shirtId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER maleMourningClothId;
+ALTER TABLE funeral ADD COLUMN necktieId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER shirtId;
 
 SELECT * FROM funeral;
 /*
@@ -492,7 +494,7 @@ CREATE TABLE shirtOrder(
 	shirtCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
 );
 
-CREATE TABLE nacktieOrder(
+CREATE TABLE necktieOrder(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
@@ -529,7 +531,7 @@ CREATE TABLE shirt(
 	costPrice CHAR(10) NOT NULL COMMENT '원가'
 );
 
-CREATE TABLE nacktie(
+CREATE TABLE necktie(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
@@ -566,7 +568,7 @@ updateDate = NOW(),
 retailPrice = "15000",
 costPrice = "10000";
 
-INSERT INTO nacktie
+INSERT INTO necktie
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = "넥타이",
@@ -576,7 +578,7 @@ costPrice = "1000";
 SELECT * FROM femaleMourningCloth;
 SELECT * FROM maleMourningCloth;
 SELECT * FROM shirt;
-SELECT * FROM nacktie;
+SELECT * FROM necktie;
 
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
@@ -588,7 +590,6 @@ memberId = 1,
 roleId = 3,
 authenticationLevel = 0,
 authenticationDate = NOW();
-
 INSERT INTO memberRole
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -596,7 +597,6 @@ memberId = 2,
 roleId = 3,
 authenticationLevel = 0,
 authenticationDate = NOW();
-
 INSERT INTO memberRole
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -604,7 +604,6 @@ memberId = 3,
 roleId = 3,
 authenticationLevel = 0,
 authenticationDate = NOW();
-
 INSERT INTO memberRole
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -612,7 +611,6 @@ memberId = 4,
 roleId = 3,
 authenticationLevel = 0,
 authenticationDate = NOW();
-
 UPDATE `member` SET roleLevel = 3;
 UPDATE `member` SET roleLevel = 1 WHERE id = 1;
 */
@@ -631,8 +629,6 @@ fileExtTypeCode = "img",
 fileExtType2Code = "png",
 fileNo = 1,
 fileDir = "2021_08";
-
-
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -647,7 +643,6 @@ fileExtTypeCode = "img",
 fileExtType2Code = "png",
 fileNo = 1,
 fileDir = "2021_08";
-
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -662,7 +657,6 @@ fileExtTypeCode = "img",
 fileExtType2Code = "png",
 fileNo = 1,
 fileDir = "2021_08";
-
 INSERT INTO genFile
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -682,15 +676,12 @@ fileDir = "2021_08";
 # @mid, @genMid 변수는 한번만 실행
 SET @mid = 5;
 SET @genMid = @mid;
-
 INSERT INTO `member` (regDate, updateDate, roleLevel, loginId, loginPw, `name`, cellphoneNo, email, location, bank, accountNum, requestStatus)
 SELECT NOW(), NOW(), 3, CONCAT("user", RAND()), CONCAT("user", RAND()), CONCAT("user", RAND()), "01012312312", CONCAT("user", RAND(), "@naveer.com"), "대전", "신한", "123123123123", 1
 FROM `member`;
-
 insert into memberRole (regDate, updateDate, memberId, roleId, authenticationLevel, authenticationDate)
 select now(), now(), @mid := @mid + 1, 3, 0, now()
 from memberRole;
-
 insert into genFile (regDate, updateDate, relTypeCode, relId, originFileName, fileExt, typeCode, type2Code, fileSize, fileExtTypeCode, fileExtType2Code, fileNo, fileDir)
 select now(), now(), "member", @genMid := @genMid + 1, "제목없음.png", "png", "director", "attachment", 6180, "img", "png", 1, "2021_08"
 from genFile;
@@ -702,11 +693,16 @@ UPDATE funeral SET flowerId = 0;
 UPDATE funeral SET flowerTributeId = 0;
 UPDATE funeral SET femaleMourningClothId = 0;
 UPDATE funeral SET maleMourningClothId = 0;
-
+UPDATE funeral SET shirtId = 0;
+UPDATE funeral SET necktieId = 0;
 DELETE FROM `order`;
 DELETE FROM `flowerTributeOrder`;
 DELETE FROM `flowerOrder`;
 DELETE FROM `femaleMourningClothOrder`;
 DELETE FROM `maleMourningClothOrder`;
-
+DELETE FROM `shirtOrder`;
+DELETE FROM `necktieOrder`;
 */
+
+SELECT * FROM `client`;
+SELECT * FROM funeral;

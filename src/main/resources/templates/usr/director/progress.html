@@ -138,6 +138,42 @@
                         <p class="pl-2">[[${maleMourningClothPriceFormat}]] 원</p>
                     </div>
                 </th:block>
+                <th:block th:if="${shirt == null}">
+                    <p>와이셔츠를 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${shirt == null}">
+                    <p class="font-bold">와이셔츠</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2">[[${shirt.retailPriceFormat}]] 원 (단품)</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2">[[${shirtOrder.extra__shirtCnt}]] 벌</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2">[[${shirtPriceFormat}]] 원</p>
+                    </div>
+                </th:block>
+                <th:block th:if="${necktie == null}">
+                    <p>넥타이를 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${necktie == null}">
+                    <p class="font-bold">넥타이</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2">[[${necktie.retailPriceFormat}]] 원 (단품)</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2">[[${necktieOrder.extra__necktieCnt}]] 개</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2">[[${necktiePriceFormat}]] 원</p>
+                    </div>
+                </th:block>
                 <div class="card-actions">
                     <form action="./selectMourningCloth">
                         <button class="btn btn-ghost" type="submit">상복 선택하기</button>
