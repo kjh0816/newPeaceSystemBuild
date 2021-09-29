@@ -10,39 +10,65 @@
     </th:block>
 </head>
 <main layout:fragment="main">
+    <div class="p-10 card bg-base-200">
+        <div class="card card-side bordered bg-white">
+            <div class="card-body text-sm">
+                <!-- 제단꽃 -->
+                <div id="flowerOrders" th:each="order : ${flowerOrders}">
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2">[[${order.extra__retailPrice}]] 원</p>
+                    </div>
+
+                    <!-- roleCategoryId 값에따라 출력할 이미지 변경 -->
+                    <th:block th:if="${order.roleCategoryId == 1}">
+                        <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${order.standardId})}" alt="" width="300px" height="150px">
+                    </th:block>
+
+                    <form onsubmit="if(!confirm('서비스(배송) 이(가) 완료되었습니까?')) return false; Complete__submit(this);">
+                        <input type="hidden" name="clientId" th:value="${order.clientId}">
+                        <button class="btn btn-ghost" type="submit">배송 완료</button>
+                    </form>
+                </div>
+                <!-- 헌화 -->
+                <div id="flowerTributeOrders" th:each="order : ${flowerTributeOrders}">
+                    [[${clients[order.clientId - 1].deceasedName}]]
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">세트</div>
+                        <p class="pl-2">[[${order.extra__bunchCnt}]] 세트</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">개당 가격</div>
+                        <p class="pl-2">[[${order.extra__retailPrice}]] 원</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">세트당 가격</div>
+                        <p class="pl-2">[[${order.retailPriceMulBunchPrice}]] 원</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2">[[${order.retailPriceMulBunchPriceMulBunchCnt}]] 원</p>
+                    </div>
+
+                    <!-- roleCategoryId 값에따라 출력할 이미지 변경 -->
+                    <th:block th:if="${order.roleCategoryId == 1}">
+                        <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${order.standardId})}" alt="" width="300px" height="150px">
+                    </th:block>
+
+                    <form onsubmit="if(!confirm('서비스(배송) 이(가) 완료되었습니까?')) return false; Complete__submit(this);">
+                        <input type="hidden" name="clientId" th:value="${order.clientId}">
+                        <button class="btn btn-ghost" type="submit">배송 완료</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <button id="flowerOrdersBtn">제단꽃</button>
     <button id="flowerTributeOrdersBtn">헌화</button>
 
-    <div id="flowerOrders" th:each="order : ${flowerOrders}">
-        <div>가격 : [[${order.extra__retailPrice}]] 원</div>
 
-        <!-- roleCategoryId 값에따라 출력할 이미지 변경 -->
-        <th:block th:if="${order.roleCategoryId == 1}">
-            <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${order.standardId})}" alt="" width="300px" height="150px">
-        </th:block>
 
-        <form onsubmit="if(!confirm('서비스(배송) 이(가) 완료되었습니까?')) return false; Complete__submit(this);">
-            <input type="hidden" name="clientId" th:value="${order.clientId}">
-            <button type="submit">배송 완료</button>
-        </form>
-    </div>
 
-    <div class="hidden" id="flowerTributeOrders" th:each="order : ${flowerTributeOrders}">
-        <div>세트 : [[${order.extra__bunchCnt}]] 세트</div>
-        <div>개당 가격 : [[${order.extra__retailPrice}]] 원</div>
-        <div>세트당 가격 : [[${order.retailPriceMulBunchPrice}]] 원</div>
-        <div>합계 : [[${order.retailPriceMulBunchPriceMulBunchCnt}]] 원</div>
-
-        <!-- roleCategoryId 값에따라 출력할 이미지 변경 -->
-        <th:block th:if="${order.roleCategoryId == 1}">
-            <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${order.standardId})}" alt="" width="300px" height="150px">
-        </th:block>
-
-        <form onsubmit="if(!confirm('서비스(배송) 이(가) 완료되었습니까?')) return false; Complete__submit(this);">
-            <input type="hidden" name="clientId" th:value="${order.clientId}">
-            <button type="submit">배송 완료</button>
-        </form>
-    </div>
 </main>
 
 </html>

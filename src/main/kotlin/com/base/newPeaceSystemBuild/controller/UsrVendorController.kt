@@ -3,6 +3,7 @@ package com.base.newPeaceSystemBuild.controller
 import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
+import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.standard.Flower
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
@@ -96,7 +97,16 @@ class UsrVendorController(
                 completionStatus = false,
                 details[i]
             )
+
+            val clients = mutableListOf<Client>()
+
+            for (order in orders){
+                val client = clientService.getClientById(order.clientId)
+                clients.add(client!!)
+            }
+
             model.addAttribute("${details[i]}Orders", orders)
+            model.addAttribute("clients", clients)
         }
 
         return "usr/vendor/order"
