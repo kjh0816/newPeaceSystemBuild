@@ -27,7 +27,7 @@ class ClientService(
         relatedName: String,
         cellphoneNo: String,
         location: String,
-        address: String
+        briefAddress: String
     ): ResultData {
 
         if(deceasedName.isEmpty()){
@@ -42,7 +42,7 @@ class ClientService(
         if(location.isEmpty()){
             return ResultData.from("F-4", "지역을 선택해주세요.")
         }
-        if(address.isEmpty()){
+        if(briefAddress.isEmpty()){
             return ResultData.from("F-5", "상세 주소를 입력해주세요.")
         }
 
@@ -52,12 +52,7 @@ class ClientService(
             return ResultData.from("F-6", "핸드폰 번호를 확인해주세요.")
         }
 
-        //  client에 대한 데이터를 DB에 저장
-        clientRepository.insertIntoClient(memberId, deceasedName, location, address)
-        val clientId = clientRepository.getLastInsertId()
 
-        // 상주를 포함한 고인의 유가족과 관련된 데이터를 담는 테에블에 저장(여기서는 상주에 대한 정보만 들어간다.)
-        clientRepository.insertIntoFamily(clientId, relatedName, cellphoneNo)
 
         // 문자 메세지 전달 (시작)
         // client 정보 중, location을 반영해서 해당하는 장례지도사들에 문자 메세지 전달
@@ -75,6 +70,14 @@ class ClientService(
         if(directors.isEmpty()){
             return ResultData.from("F-6", "${location}에 등록된 장례지도사가 없습니다.")
         }
+
+
+        //  client에 대한 데이터를 DB에 저장
+        clientRepository.insertIntoClient(memberId, deceasedName, location, briefAddress)
+        val clientId = clientRepository.getLastInsertId()
+
+        // 상주를 포함한 고인의 유가족과 관련된 데이터를 담는 테에블에 저장(여기서는 상주에 대한 정보만 들어간다.)
+        clientRepository.insertIntoFamily(clientId, relatedName, cellphoneNo)
 
         // 발신자 전화번호
         val from = "01049219810"
