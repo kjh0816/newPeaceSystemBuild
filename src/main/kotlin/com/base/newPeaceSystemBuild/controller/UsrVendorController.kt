@@ -5,6 +5,7 @@ import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.standard.MourningCloth
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -45,6 +46,16 @@ class UsrVendorController(
         return "usr/vendor/request"
     }
 
+    @RequestMapping("/usr/vendor/mourningClothRequest")
+    fun showMourningClothRequest(model: Model): String{
+
+        val femaleMourningCloths: List<MourningCloth> = vendorService.getFemaleMourningCloths()
+
+
+        model.addAttribute("femaleMourningCloths", femaleMourningCloths)
+
+        return "usr/vendor/mourningClothRequest"
+    }
 
     @RequestMapping("/usr/vendor/dispatch")
     fun showDispatch(
@@ -84,25 +95,23 @@ class UsrVendorController(
     @RequestMapping("/usr/vendor/order")
     fun showOrder(model: Model): String {
         // 컴파일러가 추천하는 방식이라 매개변수 명도 넣어줌. Boolean 값이 두개라 헷갈릴까봐 이쪽을 추천하는듯?
-        val details = mutableListOf<String>()
-
         if(rq.getLoginedMember()!!.extra__roleCategoryId == 1){
-            details.add("flower")
-            details.add("flowerTribute")
-        }
-        val flowerOrders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
-            orderStatus = true,
-            completionStatus = false,
-            "flower"
-        )
-        val flowerTributeOrders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
-            orderStatus = true,
-            completionStatus = false,
-            "flowerTribute"
-        )
+            val flowerOrders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
+                orderStatus = true,
+                completionStatus = false,
+                "flower"
+            )
+            val flowerTributeOrders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
+                orderStatus = true,
+                completionStatus = false,
+                "flowerTribute"
+            )
 
-        model.addAttribute("flowerOrders", flowerOrders)
-        model.addAttribute("flowerTributeOrders", flowerTributeOrders)
+            model.addAttribute("flowerOrders", flowerOrders)
+            model.addAttribute("flowerTributeOrders", flowerTributeOrders)
+        }else if(rq.getLoginedMember()!!.extra__roleCategoryId == 2){
+
+        }
 
         return "usr/vendor/order"
     }
@@ -117,6 +126,15 @@ class UsrVendorController(
         return rq.replaceJs("제단꽃 공급업자 등록 신청이 완료되었습니다.", "../home/main")
     }
 
+    @RequestMapping("/usr/vendor/doMourningClothRequest", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doMourningClothRequest(
+        multipartRequest: MultipartRequest
+    ): String {
+        vendorRequest(multipartRequest, 2)
+
+        return rq.replaceJs("상복 공급업자 등록 신청이 완료되었습니다.", "../home/main")
+    }
 
     @RequestMapping("/usr/vendor/doDispatch", method = [RequestMethod.POST])
     @ResponseBody
