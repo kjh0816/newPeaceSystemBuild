@@ -27,6 +27,23 @@
 
                     <label class="label">
                         <span class="label-text">
+                            고인 성별
+                        </span>
+                    </label>
+                    <div class="flex">
+                    <div class="flex">
+                    <input th:value="${client?.sex}" type="radio" id="men" name="sex" class="radio"/>
+                    <span>&nbsp;남성</span>
+                    </div>
+                    &nbsp;
+                    <div class="flex">
+                    <input th:value="${client?.sex}" type="radio" id="women" name="sex" class="radio"/>
+                    <span>&nbsp;여성</span>
+                    </div>
+                    </div>
+
+                    <label class="label">
+                        <span class="label-text">
                             본관
                         </span>
                     </label>
@@ -38,6 +55,13 @@
                         </span>
                     </label>
                     <input th:value="${client?.religion}" type="text" id="religion" name="religion" maxlength="20" placeholder="고인의 종교를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <label class="label">
+                        <span class="label-text">
+                            직분
+                        </span>
+                    </label>
+                    <input th:value="${client?.duty}" type="text" id="duty" name="duty" maxlength="20" placeholder="고인의 직분을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                     <br>
                     <br>
