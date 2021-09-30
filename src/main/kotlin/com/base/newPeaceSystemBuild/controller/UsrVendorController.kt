@@ -90,24 +90,19 @@ class UsrVendorController(
             details.add("flower")
             details.add("flowerTribute")
         }
+        val flowerOrders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
+            orderStatus = true,
+            completionStatus = false,
+            "flower"
+        )
+        val flowerTributeOrders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
+            orderStatus = true,
+            completionStatus = false,
+            "flowerTribute"
+        )
 
-        for (i in 0 until details.size){
-            val orders = vendorService.getOrdersByVendorMemberIdAndOrderStatus(rq.getLoginedMember()!!.id, rq.getLoginedMember()!!.extra__roleCategoryId!!,
-                orderStatus = true,
-                completionStatus = false,
-                details[i]
-            )
-
-            val clients = mutableListOf<Client>()
-
-            for (order in orders){
-                val client = clientService.getClientById(order.clientId)
-                clients.add(client!!)
-            }
-
-            model.addAttribute("${details[i]}Orders", orders)
-            model.addAttribute("clients", clients)
-        }
+        model.addAttribute("flowerOrders", flowerOrders)
+        model.addAttribute("flowerTributeOrders", flowerTributeOrders)
 
         return "usr/vendor/order"
     }

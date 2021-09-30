@@ -33,6 +33,12 @@ data class Order (
     private val formatter = DecimalFormat("###,###")
 
     // 헌화 한 세트당 가격
+    val retailPriceFormat: String
+        get() {
+            return formatter.format(extra__retailPrice)
+        }
+
+    // 헌화 한 세트당 가격
     val retailPriceMulBunchPrice: String
         get() {
             if(extra__packing == true){
