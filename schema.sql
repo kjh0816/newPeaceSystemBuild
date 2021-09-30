@@ -290,6 +290,8 @@ CREATE TABLE `client`(
 
 SELECT * FROM `client`;
 
+SELECT * FROM funeral;
+
 
 
 # client(고인)에 대한 유족 family 테이블
