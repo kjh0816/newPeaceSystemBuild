@@ -52,14 +52,14 @@ function MemberCall__submit(form) {
             return;
     }
 
-    form.address.value = form.address.value.trim();
-    if (form.address.value.length == 0) {
+    form.briefAddress.value = form.briefAddress.value.trim();
+    if (form.briefAddress.value.length == 0) {
             swal({
                 title: "상세 주소를 입력해주세요.",
                 icon: "info",
                 button: "확인",
             });
-            form.address.focus();
+            form.briefAddress.focus();
 
             return;
     }

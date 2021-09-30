@@ -232,7 +232,7 @@ class UsrMemberController(
         @RequestParam(defaultValue = "") relatedName: String,
         @RequestParam(defaultValue = "") cellphoneNo: String,
         @RequestParam(defaultValue = "") location: String,
-        @RequestParam(defaultValue = "") address: String
+        @RequestParam(defaultValue = "") briefAddress: String
     ): String{
 
         val memberId = rq.getLoginedMember()!!.id
@@ -244,7 +244,7 @@ class UsrMemberController(
 //      장례지도사가 연결되면, 장례지도사 memberId 가 0을 대체한다.
 
         return Ut.getJsonStrFromObj(clientService.insertIntoClient(
-            memberId, deceasedName, relatedName, cellphoneNo, location, address))
+            memberId, deceasedName, relatedName, cellphoneNo, location, briefAddress))
 
     }
 

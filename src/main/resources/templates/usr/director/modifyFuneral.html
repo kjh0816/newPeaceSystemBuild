@@ -19,30 +19,62 @@
                     <br>
 
                     <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
                             고인 성함
                         </span>
                     </label>
                     <input th:value="${client?.deceasedName}" type="text" id="deceasedName" name="deceasedName" maxlength="20" placeholder="고인 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                     <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
+                            고인 성별
+                        </span>
+                    </label>
+                    <div class="flex">
+                    <div class="flex">
+                    <input th:value="${client?.sex}" type="radio" id="men" name="sex" class="radio"/>
+                    <span>&nbsp;남성</span>
+                    </div>
+                    &nbsp;
+                    <div class="flex">
+                    <input th:value="${client?.sex}" type="radio" id="women" name="sex" class="radio"/>
+                    <span>&nbsp;여성</span>
+                    </div>
+                    </div>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            고인이 사셨던 곳의 주소
+                        </span>
+                    </label>
+                    <button class="btn btn-outline w-20 h- whitespace-nowrap">주소 검색</button>
+                    <input th:value="${client?.deceasedHomeAddress}" type="text" id="deceasedHomeAddress" name="deceasedHomeAddress" placeholder="위 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2"/>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
                             본관
                         </span>
                     </label>
                     <input th:value="${client?.familyClan}" type="text" id="familyClan" name="familyClan" maxlength="20" placeholder="고인의 본관을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                     <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
                             종교
                         </span>
                     </label>
                     <input th:value="${client?.religion}" type="text" id="religion" name="religion" maxlength="20" placeholder="고인의 종교를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            직분
+                        </span>
+                    </label>
+                    <input th:value="${client?.duty}" type="text" id="duty" name="duty" maxlength="20" placeholder="고인의 직분을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
                     <br>
                     <br>
                     <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
                             장례식장
                         </span>
                     </label>
@@ -62,7 +94,7 @@
                     </select>
 
                     <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
                             호실
                         </span>
                     </label>
@@ -81,28 +113,28 @@
                 <br>
                 <br>
                 <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
                             상주 성함
                         </span>
                 </label>
                 <input th:value="${chief?.name}" type="text" id="chiefName" name="chiefName" maxlength="20" placeholder="상주님의 성함을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                 <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
                             고인과의 관계
                         </span>
                 </label>
                 <input th:value="${chief?.relation}" type="text" id="chiefRelation" name="chiefRelation" maxlength="15" placeholder="고인과의 관계를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                 <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
                             상주 연락처
                         </span>
                 </label>
                 <input th:value="${chief?.cellphoneNo}" type="text" id="chiefCellphoneNo" name="chiefCellphoneNo" maxlength="11" placeholder="핸드폰 번호를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                 <label class="label">
-                        <span class="label-text">
+                        <span class="label-text font-bold">
                             주소
                         </span>
                 </label>

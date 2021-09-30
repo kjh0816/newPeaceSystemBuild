@@ -26,10 +26,10 @@ interface ClientRepository {
             memberId = #{memberId},
             deceasedName = #{deceasedName},
             location = #{location},
-            deceasedAddress = #{address}
+            briefAddress = #{briefAddress}
         """
     )
-    fun insertIntoClient(memberId: Int, deceasedName: String, location: String, address: String)
+    fun insertIntoClient(memberId: Int, deceasedName: String, location: String, briefAddress: String)
 
     @Select(
         """

@@ -38,15 +38,18 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/progress")
     fun showProgress(
-        model: Model
+        model: Model,
+        @RequestParam(defaultValue = "0") clientId: Int
     ): String {
-        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+
+        val funeral = clientService.getFuneralByClientId(clientId)
+
 
         if (funeral == null) {
             return "redirect:/usr/home/main"
         }
 
-        //
+
         val client = clientService.getClientById(funeral.clientId)
 
         if (client == null) {
