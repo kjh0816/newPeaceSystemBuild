@@ -127,4 +127,14 @@ interface ClientRepository {
             """
     )
     fun getFamilyByClientId(clientId: Int): Family
+
+    @Select(
+        """
+            SELECT *
+            FROM funeral
+            WHERE directorMemberId = #{directorMemberId}
+            AND progress = #{progress}
+        """
+    )
+    fun getFuneralsByDirectorMemberIdAndProgress(directorMemberId: Int, progress: Boolean): List<Funeral>
 }
