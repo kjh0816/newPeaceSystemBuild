@@ -11,6 +11,8 @@
 </head>
 <body onload="init();">
     <form id="form" name="form" method="post">
+        <input type="hidden" id="inputYn" name="inputYn" th:value="${inputYn}">
+        <input type="hidden" id="roadFullAddr" name="roadFullAddr" th:value="${roadFullAddr}">
         <input type="hidden" id="confmKey" name="confmKey" value=""/>
         <input type="hidden" id="returnUrl" name="returnUrl" value=""/>
         <input type="hidden" id="resultType" name="resultType" value=""/>

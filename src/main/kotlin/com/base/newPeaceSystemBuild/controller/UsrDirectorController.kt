@@ -38,7 +38,16 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/jusoPopup")
     fun showJusoPopup(
+            model: Model,
+            @RequestParam(defaultValue = "") inputYn: String,
+            @RequestParam(defaultValue = "") roadFullAddr: String
     ): String{
+
+        if(inputYn.isNotBlank() && roadFullAddr.isNotBlank()){
+            model.addAttribute("inputYn", inputYn)
+            model.addAttribute("roadFullAddr", roadFullAddr)
+        }
+
         return "usr/director/jusoPopup"
     }
 
