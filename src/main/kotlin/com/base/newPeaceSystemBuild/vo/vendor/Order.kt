@@ -7,7 +7,7 @@ data class Order (
     val regDate: String,
     var updateDate: String,
     var vendorMemberId: Int,
-    val clientId: Int,
+    val funeralId: Int,
     val directorMemberId: Int,
     val roleCategoryId: Int,
     val standardId: Int,

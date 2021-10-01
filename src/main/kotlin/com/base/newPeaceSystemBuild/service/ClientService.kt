@@ -212,4 +212,8 @@ class ClientService(
     fun getFamilyByClientId(clientId: Int): Family {
         return clientRepository.getFamilyByClientId(clientId)
     }
+
+    fun getFuneralsByDirectorMemberIdAndProgress(directorMemberId: Int, progress: Boolean): List<Funeral> {
+        return clientRepository.getFuneralsByDirectorMemberIdAndProgress(directorMemberId, progress)
+    }
 }

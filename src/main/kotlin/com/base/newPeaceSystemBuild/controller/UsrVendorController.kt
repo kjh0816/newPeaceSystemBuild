@@ -157,9 +157,9 @@ class UsrVendorController(
     @RequestMapping("/usr/vendor/doComplete", method = [RequestMethod.POST])
     @ResponseBody
     fun doComplete(
-        clientId: Int
+        funeralId: Int
     ): String {
-        return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(rq.getLoginedMember()!!.id, clientId, true))
+        return Ut.getJsonStrFromObj(vendorService.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(rq.getLoginedMember()!!.id, funeralId, true))
     }
 
     fun vendorRequest(multipartRequest: MultipartRequest, roleCategoryId: Int){

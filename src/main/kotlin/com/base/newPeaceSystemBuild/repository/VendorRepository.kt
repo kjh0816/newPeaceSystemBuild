@@ -61,14 +61,14 @@ interface VendorRepository {
             INSERT INTO `order`
             SET regDate = NOW(),
             updateDate = NOW(),
-            clientId = #{clientId},
+            funeralId = #{funeralId},
             directorMemberId = #{directorMemberId},
             roleCategoryId = #{roleCategoryId},
             standardId = #{standardId},
             detail = #{detail}
         """
     )
-    fun insertIntoOrder(clientId:Int, directorMemberId: Int, roleCategoryId: Int, standardId: Int, detail: String)
+    fun insertIntoOrder(funeralId: Int, directorMemberId: Int, roleCategoryId: Int, standardId: Int, detail: String)
 
     @Update(
         """
@@ -163,31 +163,31 @@ interface VendorRepository {
         """
             SELECT * 
             FROM `order`
-            WHERE clientId = #{clientId}
+            WHERE funeralId = #{funeralId}
         """
     )
-    fun getOrderByClientId(clientId: Int): Order?
+    fun getOrderByFuneralId(funeralId: Int): Order?
 
     @Select(
         """
             SELECT * 
             FROM `order`
-            WHERE clientId = #{clientId}
+            WHERE funeralId = #{funeralId}
             AND roleCategoryId = #{roleCategoryId}
             AND detail = #{detail}
         """
     )
-    fun getOrderByClientIdAndRoleCategoryIdAndDetail(clientId: Int, roleCategoryId: Int, detail: String): Order?
+    fun getOrderByFuneralIdAndRoleCategoryIdAndDetail(funeralId: Int, roleCategoryId: Int, detail: String): Order?
 
     @Select(
         """
             UPDATE `order`
             SET completionStatus = #{completionStatus}
             WHERE vendorMemberId = #{vendorMemberId}
-            AND clientId = #{clientId}
+            AND funeralId = #{funeralId}
         """
     )
-    fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(vendorMemberId: Int, clientId: Int, completionStatus: Boolean)
+    fun modifyOrderIntoCompleteStatusByVendorMemberIdAndFuneralId(vendorMemberId: Int, funeralId: Int, completionStatus: Boolean)
 
     @Select(
         """
@@ -385,15 +385,15 @@ interface VendorRepository {
                 LEFT JOIN necktieOrder AS NO
                 ON O.id = NO.orderId
             </if>
-            WHERE O.clientId = #{clientId}
+            WHERE O.funeralId = #{funeralId}
             AND O.directorMemberId = #{directorMemberId}
             AND O.completionStatus = #{completionStatus}
             AND O.detail = #{detail};
             </script>
         """
     )
-    fun getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-        clientId: Int,
+    fun getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        funeralId: Int,
         directorMemberId: Int,
         completionStatus: Boolean,
         detail: String
@@ -404,16 +404,16 @@ interface VendorRepository {
             UPDATE `order`
             SET updateDate = NOW(),
             standardId = #{standardId}
-            WHERE clientId = #{clientId}
+            WHERE funeralId = #{funeralId}
             AND directorMemberId = #{directorMemberId}
             AND roleCategoryId = #{roleCategoryId}
             AND detail = #{detail}
             AND completionStatus = #{completionStatus}
         """
     )
-    fun modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+    fun modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
         standardId: Int,
-        clientId: Int,
+        funeralId: Int,
         directorMemberId: Int,
         roleCategoryId: Int,
         detail: String,

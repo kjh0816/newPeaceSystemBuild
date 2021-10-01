@@ -11,7 +11,7 @@
 </head>
 <main layout:fragment="main">
     <!--  장례  -->
-    <div class="p-10 card bg-base-200">
+    <div class="p-10 card bg-base-200" th:if="${funeral != null}">
         <div class="card card-side shadow my-2 bg-white">
             <div class="card-body">
                 <h2 class="card-title">故 [[${client.deceasedName}]]님의 장례</h2>
@@ -179,6 +179,14 @@
                         <button class="btn btn-ghost" type="submit">상복 선택하기</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- 진행중인 장례가 없을경우 -->
+    <div class="p-10 card bg-base-200" th:unless="${funeral != null}">
+        <div class="card card-side shadow mb-2 bg-white">
+            <div class="card-body">
+                진행중인 장례가 없습니다.
             </div>
         </div>
     </div>

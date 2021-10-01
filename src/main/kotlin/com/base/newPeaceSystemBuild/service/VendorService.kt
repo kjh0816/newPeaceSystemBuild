@@ -41,8 +41,6 @@ class VendorService(
     ): ResultData {
         val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
-        val client = clientRepository.getClientById(funeral.clientId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
-
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 1
 
@@ -50,22 +48,22 @@ class VendorService(
         // flower Order Insert
         detail = "flower"
         // Insert 전에 해당 정보로 이미 정보를 입력한적이 있다면, insert가 아닌 modify 로직으로 적용
-        val flowerOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-            client.id,
+        val flowerOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            funeral.id,
             rq.getLoginedMember()!!.id,
             false,
             detail
         )
 
         if (flowerOrder == null) {
-            vendorRepository.insertIntoOrder(client.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerId, detail)
+            vendorRepository.insertIntoOrder(funeral.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerId, detail)
 
             val flowerOrderId = vendorRepository.getLastInsertId()
             vendorRepository.insertIntoFlowerOrder(flowerOrderId)
         } else {
-            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
                 flowerId,
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 detail,
@@ -75,8 +73,8 @@ class VendorService(
 
         // flowerTribute Order Insert
         detail = "flowerTribute"
-        val flowerTributeOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-            client.id,
+        val flowerTributeOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            funeral.id,
             rq.getLoginedMember()!!.id,
             false,
             detail
@@ -90,7 +88,7 @@ class VendorService(
 
         if (flowerTributeOrder == null) {
             vendorRepository.insertIntoOrder(
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 flowerTributeId,
@@ -100,9 +98,9 @@ class VendorService(
             val flowerTributeOrderId = vendorRepository.getLastInsertId()
             vendorRepository.insertIntoFlowerTributeOrder(flowerTributeOrderId, bunchCnt, packingBool)
         } else {
-            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
                 flowerTributeId,
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 detail,
@@ -139,8 +137,6 @@ class VendorService(
     ): ResultData {
         val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
-        val client = clientRepository.getClientById(funeral.clientId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
-
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 2
 
@@ -148,8 +144,8 @@ class VendorService(
         // femaleMourningCloth Order Insert
         detail = "femaleMourningCloth"
         // Insert 전에 해당 정보로 이미 정보를 입력한적이 있다면, insert가 아닌 modify 로직으로 적용
-        val femaleMourningClothOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-            client.id,
+        val femaleMourningClothOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            funeral.id,
             rq.getLoginedMember()!!.id,
             false,
             detail
@@ -157,7 +153,7 @@ class VendorService(
 
         if (femaleMourningClothOrder == null) {
             vendorRepository.insertIntoOrder(
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 femaleMourningClothId,
@@ -171,9 +167,9 @@ class VendorService(
                 femaleClothColor
             )
         } else {
-            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
                 femaleMourningClothId,
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 detail,
@@ -188,8 +184,8 @@ class VendorService(
 
         // maleMourningCloth Order Insert
         detail = "maleMourningCloth"
-        val maleMourningClothOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-            client.id,
+        val maleMourningClothOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            funeral.id,
             rq.getLoginedMember()!!.id,
             false,
             detail
@@ -198,7 +194,7 @@ class VendorService(
 
         if (maleMourningClothOrder == null) {
             vendorRepository.insertIntoOrder(
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 maleMourningClothId,
@@ -208,9 +204,9 @@ class VendorService(
             val maleMourningClothOrderId = vendorRepository.getLastInsertId()
             vendorRepository.insertIntoMaleMourningClothOrder(maleMourningClothOrderId, maleClothCnt)
         } else {
-            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
                 maleMourningClothId,
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 detail,
@@ -224,8 +220,8 @@ class VendorService(
 
         // shirt Order Insert
         detail = "shirt"
-        val shirtOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-            client.id,
+        val shirtOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            funeral.id,
             rq.getLoginedMember()!!.id,
             false,
             detail
@@ -234,7 +230,7 @@ class VendorService(
 
         if (shirtOrder == null) {
             vendorRepository.insertIntoOrder(
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 shirtId,
@@ -244,9 +240,9 @@ class VendorService(
             val shirtOrderId = vendorRepository.getLastInsertId()
             vendorRepository.insertIntoShirtOrder(shirtOrderId, shirtCnt)
         } else {
-            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
                 shirtId,
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 detail,
@@ -260,8 +256,8 @@ class VendorService(
 
         // necktie Order Insert
         detail = "necktie"
-        val necktieOrder = getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-            client.id,
+        val necktieOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            funeral.id,
             rq.getLoginedMember()!!.id,
             false,
             detail
@@ -270,7 +266,7 @@ class VendorService(
 
         if (necktieOrder == null) {
             vendorRepository.insertIntoOrder(
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 necktieId,
@@ -280,9 +276,9 @@ class VendorService(
             val necktieOrderId = vendorRepository.getLastInsertId()
             vendorRepository.insertIntoNecktieOrder(necktieOrderId, necktieCnt)
         } else {
-            vendorRepository.modifyOrderIntoStandardIdByClientIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
                 necktieId,
-                client.id,
+                funeral.id,
                 rq.getLoginedMember()!!.id,
                 roleCategoryId,
                 detail,
@@ -311,15 +307,15 @@ class VendorService(
 
     fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberIdAndDetail(
         memberId: Int,
-        clientId: Int,
+        funeralId: Int,
         detail: String
     ): ResultData {
-        val client = clientRepository.getClientById(clientId) ?: return ResultData.from("F-1", "고인의 정보가 조회되지않습니다.")
+        val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "장례 정보가 조회되지 않습니다.")
 
         // 해당 페이지에 들어올 수 있으면, 이미 vendor 로 등록된 상태이기때문에 vendor 등록시 선택된 extra__roleCategoryId를 가져온다. 어떤 물품의 공급자인지에 관한 칼럼이다.
         val roleCategoryId = rq.getLoginedMember()!!.extra__roleCategoryId!!
 
-        val order = vendorRepository.getOrderByClientIdAndRoleCategoryIdAndDetail(clientId, roleCategoryId, detail)
+        val order = vendorRepository.getOrderByFuneralIdAndRoleCategoryIdAndDetail(funeralId, roleCategoryId, detail)
             ?: return ResultData.from("F-2", "주문정보가 조회되지않습니다.")
 
         if (order.orderStatus) {
@@ -337,12 +333,12 @@ class VendorService(
         // 바꿔줄 데이터는 where 절을 통해 directorMemberId 와 roleCategoryId가 일치하는 데이터의 정보만 바꿔준다.
         vendorRepository.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberIdAndRoleCategoryId(
             memberId,
-            client.directorMemberId,
+            funeral.directorMemberId,
             roleCategoryId,
             true
         )
 
-        return ResultData.from("S-1", "주문접수가 완료되었습니다.", "client", client)
+        return ResultData.from("S-1", "주문접수가 완료되었습니다.", "funeral", funeral)
     }
 
     fun getOrdersByVendorMemberIdAndOrderStatus(
@@ -363,12 +359,12 @@ class VendorService(
 
     fun modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(
         vendorMemberId: Int,
-        clientId: Int,
+        funeralId: Int,
         completionStatus: Boolean
     ): ResultData {
-        vendorRepository.modifyOrderIntoCompleteStatusByVendorMemberIdAndClientId(
+        vendorRepository.modifyOrderIntoCompleteStatusByVendorMemberIdAndFuneralId(
             vendorMemberId,
-            clientId,
+            funeralId,
             completionStatus
         )
 
@@ -387,14 +383,14 @@ class VendorService(
         return vendorRepository.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(directorMemberId, completionStatus, detail)
     }
 
-    fun getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-        clientId: Int,
+    fun getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        funeralId: Int,
         directorMemberId: Int,
         completionStatus: Boolean,
         detail: String
     ): Order? {
-        return vendorRepository.getOrderByClientIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-            clientId,
+        return vendorRepository.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+            funeralId,
             directorMemberId,
             completionStatus,
             detail

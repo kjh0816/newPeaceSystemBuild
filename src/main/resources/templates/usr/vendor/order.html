@@ -55,7 +55,7 @@
                         헌화 없음
                     </div>
                     <form onsubmit="if(!confirm('서비스(배송) 이(가) 완료되었습니까?')) return false; Complete__submit(this);">
-                        <input type="hidden" name="clientId" th:value="${flowerOrders[i].clientId}">
+                        <input type="hidden" name="funeralId" th:value="${flowerOrders[i].funeralId}">
                         <button class="btn btn-ghost" type="submit">배송 완료</button>
                     </form>
                     <div class="divider">AND</div>
