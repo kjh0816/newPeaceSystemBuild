@@ -47,10 +47,11 @@
                             고인의 주민등록 주소
                         </span>
                     </label>
+                    <div class="flex">
                     <button type="button" onclick="goPopup();" class="btn btn-outline w-20 whitespace-nowrap">주소 검색</button>
 <!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
-                    <input disabled th:value="${client?.deceasedHomeAddress}" type="text" id="deceasedHomeAddress" name="deceasedHomeAddress" placeholder="위 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2"/>
-
+                    <input disabled th:value="${client?.deceasedHomeAddress}" type="text" id="deceasedHomeAddress" name="deceasedHomeAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2 font-bold"/>
+                    </div>
                     <label class="label">
                         <span class="label-text font-bold">
                             본관
@@ -148,6 +149,9 @@
             <br>
 
             <button id="modify-submit" class="btn btn-ghost">입력 완료</button>
+            <br>
+            <br>
+            <a th:href="@{./progress(clientId=${client.id})}" class="btn btn-ghost w-1/4" onclick="if(!confirm(\'Are you sure you want to delete this item?\')) return false;">돌아가기</a>
         </div>
     </form>
 </main>

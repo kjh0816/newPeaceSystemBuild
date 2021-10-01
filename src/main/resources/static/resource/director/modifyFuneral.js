@@ -13,8 +13,10 @@ $('#department').change(function(){
 
                         // 1) SELECT BOX의 기존 내용을 지운다.
                         $('#departmentDetail').empty();
+                        $('#funeralHallName').empty();
                         // 2) SELECT BOX의 대표 기준값을 넣어준다. (선택 불가 option)
                         $('#departmentDetail').append("<option disabled selected>시/군/구</option>")
+                        $('#funeralHallName').append("<option disabled selected>장례식장</option>")
                         // 3) SELECT BOX에 option을 추가한다.
                         for(var count = 0; count < result.map.departmentDetails.length; count++){
                             var option = $("<option>" + result.map.departmentDetails[count] + "</option>");
