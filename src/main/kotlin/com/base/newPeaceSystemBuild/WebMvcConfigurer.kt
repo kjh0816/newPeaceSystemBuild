@@ -61,8 +61,8 @@ class WebMvcConfigurer(
             .addPathPatterns("/usr/vendor/**")
             .excludePathPatterns("/usr/vendor/request")
             .excludePathPatterns("/usr/vendor/doRequest")
-            .excludePathPatterns("/usr/vendor/portraitRequest")
-            .excludePathPatterns("/usr/vendor/doPortraitRequest")
+            .excludePathPatterns("/usr/vendor/mourningClothRequest")
+            .excludePathPatterns("/usr/vendor/doMourningClothRequest")
             .excludePathPatterns("/usr/vendor/explain")
         registry.addInterceptor(requestInterceptor)
             //          화이트 리스트 방식
@@ -70,8 +70,8 @@ class WebMvcConfigurer(
             .addPathPatterns("/usr/director/doRequest")
             .addPathPatterns("/usr/vendor/request")
             .addPathPatterns("/usr/vendor/doRequest")
-            .addPathPatterns("/usr/vendor/portraitRequest")
-            .addPathPatterns("/usr/vendor/doPortraitRequest")
+            .addPathPatterns("/usr/vendor/mourningClothRequest")
+            .addPathPatterns("/usr/vendor/doMourningClothRequest")
     }
 
     // 정적 리소스 로드

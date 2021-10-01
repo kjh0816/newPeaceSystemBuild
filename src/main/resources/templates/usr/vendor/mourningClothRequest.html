@@ -24,31 +24,57 @@
             border: 0;
         }
     </style>
-    <form action="./doRequest" method="POST" enctype="multipart/form-data" onsubmit="VendorRequest__submit(this); return false;">
+    <form action="./doMourningClothRequest" method="POST" enctype="multipart/form-data" onsubmit="VendorRequest__submit(this); return false;">
         <div class="p-10 card bg-base-200">
             <div class="form-control">
                 <div class="card card-side bordered bg-white">
                     <div class="card-body">
-                        <h2 class="card-title">취급해야할 제단꽃 규격</h2>
-                        <div class="text-sm" th:each="flower : ${flowers}" th:object="${flower}">
+                        <h2 class="card-title">취급해야할 상복(여) 규격</h2>
+                        <div class="text-sm" th:each="femaleMourningCloth : ${femaleMourningCloths}" th:object="${femaleMourningCloth}">
                             <div class="flex items-center mb-1">
                                 <div class="badge badge-md">소비자가</div>
-                                <p class="pl-2" th:text="|${flower.retailPrice} 원|"></p>
+                                <p class="pl-2" th:text="|${femaleMourningCloth.retailPrice} 원|"></p>
                             </div>
-                            <div th:if="${flowers.size != flower.id}" class="divider">AND</div>
+                            <div th:if="${femaleMourningCloths.size != femaleMourningCloth.id}" class="divider">AND</div>
                         </div>
                     </div>
                 </div>
                 <br>
                 <div class="card card-side bordered bg-white">
                     <div class="card-body">
-                        <h2 class="card-title">취급해야할 헌화 규격</h2>
-                        <div class="text-sm" th:each="flowerTribute : ${flowerTributes}" th:object="${flowerTribute}">
+                        <h2 class="card-title">취급해야할 상복(남) 규격</h2>
+                        <div class="text-sm" th:each="maleMourningCloth : ${maleMourningCloths}" th:object="${maleMourningCloth}">
                             <div class="flex items-center mb-1">
                                 <div class="badge badge-md">소비자가</div>
-                                <p class="pl-2" th:text="|${flowerTribute.retailPrice} 원|"></p>
+                                <p class="pl-2" th:text="|${maleMourningCloth.retailPrice} 원|"></p>
                             </div>
-                            <div th:if="${flowerTributes.size != flowerTribute.id}" class="divider">AND</div>
+                            <div th:if="${maleMourningCloths.size != maleMourningCloth.id}" class="divider">AND</div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card card-side bordered bg-white">
+                    <div class="card-body">
+                        <h2 class="card-title">취급해야할 와이셔츠 규격</h2>
+                        <div class="text-sm" th:each="shirt : ${shirts}" th:object="${shirt}">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">소비자가</div>
+                                <p class="pl-2" th:text="|${shirt.retailPrice} 원|"></p>
+                            </div>
+                            <div th:if="${shirts.size != shirt.id}" class="divider">AND</div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card card-side bordered bg-white">
+                    <div class="card-body">
+                        <h2 class="card-title">취급해야할 넥타이 규격</h2>
+                        <div class="text-sm" th:each="necktie : ${neckties}" th:object="${necktie}">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">소비자가</div>
+                                <p class="pl-2" th:text="|${necktie.retailPrice} 원|"></p>
+                            </div>
+                            <div th:if="${neckties.size != necktie.id}" class="divider">AND</div>
                         </div>
                     </div>
                 </div>
