@@ -290,8 +290,6 @@ CREATE TABLE `client`(
 
 SELECT * FROM `client`;
 
-SELECT * FROM funeral;
-
 
 
 # client(고인)에 대한 유족 family 테이블
@@ -306,7 +304,7 @@ CREATE TABLE family(
 	`name` CHAR(20) NOT NULL,
 	relation CHAR(30) NOT NULL DEFAULT '' COMMENT '고인과의 관계(고인으로부터 누구인지 ex) 아들)',
 	cellphoneNo CHAR(20) NOT NULL,
-	address CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.',
+	addresse CHAR(100) NOT NULL DEFAULT '' COMMENT '상주만 집주소를 입력 받고 저장한다.',
 	bank CHAR(20) NOT NULL DEFAULT '' COMMENT '유족이 부조금을 받을 수 있는 계좌',
 	accountNum CHAR(20) NOT NULL DEFAULT '',
 	accountOwner CHAR(20) NOT NULL DEFAULT ''
@@ -414,7 +412,7 @@ CREATE TABLE `order`(
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	vendorMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '상품 등록한 사업자 회원번호 0일경우 아직 미정',
-	clientId INT(10) UNSIGNED NOT NULL COMMENT 'client 테이블이랑 이어진 ID값',
+	funeralId INT(10) UNSIGNED NOT NULL COMMENT 'funeral 테이블이랑 이어진 ID값',
 	directorMemberId INT(10) UNSIGNED NOT NULL COMMENT '주문을 넣은 장례지도사 회원번호',
 	roleCategoryId SMALLINT(1) UNSIGNED NOT NULL COMMENT '어떤 상품인지 EX) 1 = 제단꽃',
 	standardId INT(10) UNSIGNED NOT NULL COMMENT '스탠다드 상품의 번호',
@@ -707,8 +705,3 @@ DELETE FROM `maleMourningClothOrder`;
 DELETE FROM `shirtOrder`;
 DELETE FROM `necktieOrder`;
 */
-
-SELECT * FROM `client`;
-SELECT * FROM funeral;
-
-SELECT * FROM funeralHall;
