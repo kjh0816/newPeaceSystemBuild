@@ -30,6 +30,7 @@
                             고인 성별
                         </span>
                     </label>
+                    <br>
                     <div class="flex">
                     <div class="flex">
                     <input th:value="${client?.sex}" type="radio" id="men" name="sex" class="radio"/>
@@ -41,6 +42,7 @@
                     <span>&nbsp;여성</span>
                     </div>
                     </div>
+                    <br>
 
                     <label class="label">
                         <span class="label-text font-bold">
@@ -95,6 +97,7 @@
                         <option value="" disabled selected>장례식장</option>
                     </select>
 
+                    <br>
                     <label class="label">
                         <span class="label-text font-bold">
                             호실
@@ -103,6 +106,25 @@
                     <input type="text" id="funeralHallRoom" name="funeralHallRoom" maxlength="20" placeholder="장례식장 호실을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                     <br>
+                    <br>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            장법
+                        </span>
+                    </label>
+                    <br>
+                    <div class="flex">
+                        <div class="flex">
+                            <input th:value="${client?.sex}" type="radio" id="bury" name="funeralMethod" class="radio"/>
+                            <span>&nbsp;매장</span>
+                        </div>
+                        &nbsp;
+                        <div class="flex">
+                            <input th:value="${client?.sex}" type="radio" id="cremation" name="funeralMethod" class="radio"/>
+                            <span>&nbsp;화장</span>
+                        </div>
+                    </div>
                     <br>
 
                 </div>
