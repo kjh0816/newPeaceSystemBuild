@@ -151,7 +151,7 @@
             <button id="modify-submit" class="btn btn-ghost">입력 완료</button>
             <br>
             <br>
-            <a th:href="@{./progress(clientId=${client.id})}" class="btn btn-ghost w-1/4" onclick="if(!confirm(\'Are you sure you want to delete this item?\')) return false;">돌아가기</a>
+            <a th:href="@{./progress(clientId=${client.id})}" class="btn btn-ghost w-1/4" onclick="if ( confirm('현재 페이지를 수정한 경우, 수정이 반영되지 않습니다.') == false ) return false;">돌아가기</a>
         </div>
     </form>
 </main>
