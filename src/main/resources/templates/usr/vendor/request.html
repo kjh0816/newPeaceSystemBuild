@@ -31,10 +31,24 @@
                     <div class="card-body">
                         <h2 class="card-title">취급해야할 제단꽃 규격</h2>
                         <div class="text-sm" th:each="flower : ${flowers}" th:object="${flower}">
-                            <div th:value="${flower.id}" th:text="|상품명: ${flower.id}호|"></div>
-                            <div th:value="${flower.retailPrice}" th:text="|소비자가: ${flower.retailPrice}원|"></div>
-                            <div th:value="${flower.costPrice}" th:text="|원가: ${flower.costPrice}원|"></div>
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">소비자가</div>
+                                <p class="pl-2" th:text="|${flower.retailPrice} 원|"></p>
+                            </div>
                             <div th:if="${flowers.size != flower.id}" class="divider">AND</div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card card-side bordered bg-white">
+                    <div class="card-body">
+                        <h2 class="card-title">취급해야할 헌화 규격</h2>
+                        <div class="text-sm" th:each="flowerTribute : ${flowerTributes}" th:object="${flowerTribute}">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">소비자가</div>
+                                <p class="pl-2" th:text="|${flowerTribute.retailPrice} 원|"></p>
+                            </div>
+                            <div th:if="${flowerTributes.size != flowerTribute.id}" class="divider">AND</div>
                         </div>
                     </div>
                 </div>

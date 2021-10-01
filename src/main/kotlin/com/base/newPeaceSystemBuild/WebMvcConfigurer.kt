@@ -70,8 +70,8 @@ class WebMvcConfigurer(
             .addPathPatterns("/usr/director/doRequest")
             .addPathPatterns("/usr/vendor/request")
             .addPathPatterns("/usr/vendor/doRequest")
-            .addPathPatterns("/usr/vendor/portraitRequest")
-            .addPathPatterns("/usr/vendor/doPortraitRequest")
+            .addPathPatterns("/usr/vendor/mourningClothRequest")
+            .addPathPatterns("/usr/vendor/doMourningClothRequest")
     }
 
     // 정적 리소스 로드

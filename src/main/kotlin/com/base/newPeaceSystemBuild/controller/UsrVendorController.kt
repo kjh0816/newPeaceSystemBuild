@@ -5,6 +5,7 @@ import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.standard.Flower
+import com.base.newPeaceSystemBuild.vo.standard.FlowerTribute
 import com.base.newPeaceSystemBuild.vo.standard.MourningCloth
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,9 +40,11 @@ class UsrVendorController(
     fun showRequest(model: Model): String{
 
         val flowers: List<Flower> = vendorService.getFlowers()
+        val flowerTributes: List<FlowerTribute> = vendorService.getFlowerTributes()
 
 
         model.addAttribute("flowers", flowers)
+        model.addAttribute("flowerTributes", flowerTributes)
 
         return "usr/vendor/request"
     }
