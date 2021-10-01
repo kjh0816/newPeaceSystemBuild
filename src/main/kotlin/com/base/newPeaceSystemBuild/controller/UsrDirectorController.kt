@@ -36,6 +36,12 @@ class UsrDirectorController(
         return "usr/director/modify"
     }
 
+    @RequestMapping("/usr/director/jusoPopup")
+    fun showJusoPopup(
+    ): String{
+        return "usr/director/jusoPopup"
+    }
+
     @RequestMapping("/usr/director/progress")
     fun showProgress(
         model: Model

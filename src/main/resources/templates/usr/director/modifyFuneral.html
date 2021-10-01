@@ -10,7 +10,7 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    <form action="./doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
+    <form action="" method="POST" onsubmit="MemberJoin__submit(this); return false;">
         <div class="p-10 card bg-base-200">
             <div class="card card-side bordered bg-white">
                 <div class="card-body text-sm border border-base-300">
@@ -44,10 +44,11 @@
 
                     <label class="label">
                         <span class="label-text font-bold">
-                            고인이 사셨던 곳의 주소
+                            고인의 주민등록 주소
                         </span>
                     </label>
-                    <button class="btn btn-outline w-20 h- whitespace-nowrap">주소 검색</button>
+                    <button type="button" onclick="goPopup();" class="btn btn-outline w-20 whitespace-nowrap">주소 검색</button>
+<!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
                     <input th:value="${client?.deceasedHomeAddress}" type="text" id="deceasedHomeAddress" name="deceasedHomeAddress" placeholder="위 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2"/>
 
                     <label class="label">

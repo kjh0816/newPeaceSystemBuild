@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <title>주소 검색</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/jusoPopup.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+<body onload="init();">
+    <form id="form" name="form" method="post">
+        <input type="hidden" id="confmKey" name="confmKey" value=""/>
+        <input type="hidden" id="returnUrl" name="returnUrl" value=""/>
+        <input type="hidden" id="resultType" name="resultType" value=""/>
+        <!-- 해당시스템의 인코딩타입이 EUC-KR일경우에만 추가 START-->
+        <!--
+        <input type="hidden" id="encodingType" name="encodingType" value="EUC-KR"/>
+         -->
+        <!-- 해당시스템의 인코딩타입이 EUC-KR일경우에만 추가 END-->
+    </form>
+</body>
+</html>
