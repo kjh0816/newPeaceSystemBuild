@@ -32,6 +32,8 @@ class WebMvcConfigurer(
             .addPathPatterns("/usr/member/**")
             .addPathPatterns("/usr/director/**")
             .addPathPatterns("/usr/vendor/**")
+            // 주소 팝업창 로그인 필요 없음
+            .excludePathPatterns("/usr/director/jusoPopup")
             .excludePathPatterns("/usr/member/login")
             .excludePathPatterns("/usr/member/doLogin")
             .excludePathPatterns("/usr/member/join")
@@ -56,6 +58,8 @@ class WebMvcConfigurer(
             .addPathPatterns("/usr/director/**")
             .excludePathPatterns("/usr/director/request")
             .excludePathPatterns("/usr/director/doRequest")
+            // 주소 팝업창 director 권한 필요없음
+            .excludePathPatterns("/usr/director/jusoPopup")
         registry.addInterceptor(vendorInterceptor)
             //          화이트 리스트 방식
             .addPathPatterns("/usr/vendor/**")
