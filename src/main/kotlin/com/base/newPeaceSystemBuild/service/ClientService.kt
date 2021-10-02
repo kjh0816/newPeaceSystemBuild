@@ -47,8 +47,8 @@ class ClientService(
         }
 
         // 이후 cellphoneNo를 가공할 때, 번호가 잘못되면 format이 불가한 에러가 발생할 수 있다.
-        // 010으로 시작하는 11자리의 번호만 받는다.
-        if(cellphoneNo.length != 11){
+        // 010으로 시작하는 11자리의 번호와 011 등 구번호(10자리)만 받을 수 있다.
+        if(cellphoneNo.length < 10 || cellphoneNo.length > 11){
             return ResultData.from("F-6", "핸드폰 번호를 확인해주세요.")
         }
 
