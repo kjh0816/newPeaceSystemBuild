@@ -88,7 +88,7 @@ class ClientService(
         val msg = "https://webroot/usr/director/dispatch?clientId=${clientId} \n위 링크를 통해 유족의 위치를 확인하시고, 수락해주십시오."
 
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
-        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
 
 
         return ResultData.from("S-1", "요청이 완료되었습니다. 입력하신 연락처로 장례지도사가 연락합니다.", "from", from, "to", to, "msg", msg, "rb", rb, "clientId", clientId)
@@ -169,7 +169,7 @@ class ClientService(
                 "\nhttps://webroot/usr/director/progress?clientId=${clientId}"
 
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
-        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
 
 
         // 영업자에게 문자 메세지 전달
@@ -193,7 +193,7 @@ class ClientService(
                 "\nhttps://webroot/usr/member/progress?clientId=${clientId}"
 
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
-        val rb2: Aligo__send__ResponseBody = Ut.sendSms(from2, to2.toString(), msg2, true)
+        val rb2: Aligo__send__ResponseBody = Ut.sendSms(from2, to2.toString(), msg2, false)
 
 
         // 영업자와 장례지도사에게 장례지도사가 배정된 것에 대한 정보를 문자로 알림(끝)
