@@ -13,53 +13,57 @@
     <div class="p-10 card bg-base-200">
         <div class="card card-side bordered bg-white">
             <div class="card-body text-sm">
-                <div th:each="i : ${#numbers.sequence(0, flowerOrders.size() - 1)}">
-                    <!-- 제단꽃 -->
-                    <h2 class="card-title">제단꽃</h2>
-                    <div th:if="${flowerOrders[i].standardId != 0}">
-                        <div class="flex items-center mb-1">
-                            <div class="badge badge-md">가격</div>
-                            <p class="pl-2" th:text="|${flowerOrders[i].retailPriceFormat} 원|"></p>
+                <th:block th:if="${flowerOrders} != null">
+                    <th:block th:if="${flowerOrders.size} != 0">
+                        <div th:each="i : ${#numbers.sequence(0, flowerOrders.size() - 1)}">
+                            <!-- 제단꽃 -->
+                            <h2 class="card-title">제단꽃</h2>
+                            <div th:if="${flowerOrders[i].standardId != 0}">
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">가격</div>
+                                    <p class="pl-2" th:text="|${flowerOrders[i].retailPriceFormat} 원|"></p>
+                                </div>
+                                <th:block th:if="${flowerOrders[i].roleCategoryId == 1}">
+                                    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flowerOrders[i].standardId})}" alt="" width="300px" height="150px">
+                                </th:block>
+                            </div>
+                            <div th:unless="${flowerOrders[i].standardId != 0}">
+                                제단꽃 없음
+                            </div>
+                            <!-- 헌화 -->
+                            <h2 class="card-title">헌화</h2>
+                            <div th:if="${flowerTributeOrders[i].standardId != 0}">
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">세트</div>
+                                    <p class="pl-2" th:text="|${flowerTributeOrders[i].extra__bunchCnt} 세트|"></p>
+                                </div>
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">개당 가격</div>
+                                    <p class="pl-2" th:text="|${flowerTributeOrders[i].retailPriceFormat} 원|"></p>
+                                </div>
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">세트당 가격</div>
+                                    <p class="pl-2" th:text="|${flowerTributeOrders[i].retailPriceMulBunchPrice} 원|"></p>
+                                </div>
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">합계</div>
+                                    <p class="pl-2" th:text="|${flowerTributeOrders[i].retailPriceMulBunchPriceMulBunchCnt} 원|"></p>
+                                </div>
+                                <th:block th:if="${flowerTributeOrders[i].roleCategoryId == 1}">
+                                    <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${flowerTributeOrders[i].standardId})}" alt="" width="300px" height="150px">
+                                </th:block>
+                            </div>
+                            <div th:unless="${flowerTributeOrders[i].standardId != 0}">
+                                헌화 없음
+                            </div>
+                            <form onsubmit="if(!confirm('서비스(배송) 이(가) 완료되었습니까?')) return false; Complete__submit(this);">
+                                <input type="hidden" name="funeralId" th:value="${flowerOrders[i].funeralId}">
+                                <button class="btn btn-ghost" type="submit">배송 완료</button>
+                            </form>
+                            <div class="divider">AND</div>
                         </div>
-                        <th:block th:if="${flowerOrders[i].roleCategoryId == 1}">
-                            <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flowerOrders[i].standardId})}" alt="" width="300px" height="150px">
-                        </th:block>
-                    </div>
-                    <div th:unless="${flowerOrders[i].standardId != 0}">
-                        제단꽃 없음
-                    </div>
-                    <!-- 헌화 -->
-                    <h2 class="card-title">헌화</h2>
-                    <div th:if="${flowerTributeOrders[i].standardId != 0}">
-                        <div class="flex items-center mb-1">
-                            <div class="badge badge-md">세트</div>
-                            <p class="pl-2" th:text="|${flowerTributeOrders[i].extra__bunchCnt} 세트|"></p>
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="badge badge-md">개당 가격</div>
-                            <p class="pl-2" th:text="|${flowerTributeOrders[i].retailPriceFormat} 원|"></p>
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="badge badge-md">세트당 가격</div>
-                            <p class="pl-2" th:text="|${flowerTributeOrders[i].retailPriceMulBunchPrice} 원|"></p>
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="badge badge-md">합계</div>
-                            <p class="pl-2" th:text="|${flowerTributeOrders[i].retailPriceMulBunchPriceMulBunchCnt} 원|"></p>
-                        </div>
-                        <th:block th:if="${flowerTributeOrders[i].roleCategoryId == 1}">
-                            <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${flowerTributeOrders[i].standardId})}" alt="" width="300px" height="150px">
-                        </th:block>
-                    </div>
-                    <div th:unless="${flowerTributeOrders[i].standardId != 0}">
-                        헌화 없음
-                    </div>
-                    <form onsubmit="if(!confirm('서비스(배송) 이(가) 완료되었습니까?')) return false; Complete__submit(this);">
-                        <input type="hidden" name="funeralId" th:value="${flowerOrders[i].funeralId}">
-                        <button class="btn btn-ghost" type="submit">배송 완료</button>
-                    </form>
-                    <div class="divider">AND</div>
-                </div>
+                    </th:block>
+                </th:block>
             </div>
         </div>
     </div>
