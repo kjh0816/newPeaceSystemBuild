@@ -107,7 +107,7 @@ INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 roleLevel = 2,
-loginId = 'user3',
+loginId = 'user3333',
 loginPw = SHA2('user3', 256),
 `name` = '김지후',
 cellphoneNo = '01049219810',

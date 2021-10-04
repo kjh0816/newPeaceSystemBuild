@@ -2,16 +2,21 @@ function MemberModifyPw__submit(form) {
 
 
     form.loginPw.value = form.loginPw.value.trim();
+
     if (form.loginPw.value.length == 0) {
+
         swal({
             title: "비밀번호를 입력해주세요.",
             icon: "info",
             button: "확인",
         });
+
         form.loginPw.focus();
+
 
         return;
     }
+
 
     form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
     if (form.loginPwConfirm.value.length == 0) {
@@ -24,6 +29,8 @@ function MemberModifyPw__submit(form) {
 
         return;
     }
+
+
 
     if (form.loginPw.value != form.loginPwConfirm.value) {
         swal({
@@ -41,6 +48,8 @@ function MemberModifyPw__submit(form) {
     form.loginPwInput.value = sha256(form.loginPw.value);
     form.loginPw.value = '';
     form.loginPwConfirm.value = '';
+
+
 
 
 
