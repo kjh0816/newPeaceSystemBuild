@@ -386,15 +386,13 @@ interface VendorRepository {
                 ON O.id = NO.orderId
             </if>
             WHERE O.funeralId = #{funeralId}
-            AND O.directorMemberId = #{directorMemberId}
             AND O.completionStatus = #{completionStatus}
             AND O.detail = #{detail};
             </script>
         """
     )
-    fun getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+    fun getOrderByFuneralIdAndCompletionStatusAndDetail(
         funeralId: Int,
-        directorMemberId: Int,
         completionStatus: Boolean,
         detail: String
     ): Order?

@@ -268,9 +268,8 @@ class UsrDirectorController(
             details.add("flowerTribute")
 
             for(detail in details){
-                val order = vendorService.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
                     funeral.id,
-                    rq.getLoginedMember()!!.id,
                     false,
                     detail
                 )
@@ -305,9 +304,8 @@ class UsrDirectorController(
             details.add("necktie")
 
             for(detail in details){
-                val order = vendorService.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
                     funeral.id,
-                    rq.getLoginedMember()!!.id,
                     false,
                     detail
                 )
