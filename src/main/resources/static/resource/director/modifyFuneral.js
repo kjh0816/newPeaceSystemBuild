@@ -75,13 +75,14 @@ function jusoCallBack(roadFullAddr){
 		document.getElementById("deceasedHomeAddress").value = roadFullAddr;
 }
 
-$('#bury').change(function() {
+$('input[type=radio][name=funeralMethod]').on('click', function() {
 
-    if($('#bury').prop('checked', true)){
-//    여기까진 들어옴 (change가 아닌, click으로 실행 트리거를 만들면 어떨까)
-        $('hideBuryInput').css('display', 'block');
-    }else if($('#bury').prop('checked', false)){
-        $('hideBuryInput').css('display', 'none');
+    var checkValue = $('input[type=radio][name=funeralMethod]:checked').val();
+
+    if(checkValue == '0'){
+        $('#hideBuryInput').css('display', 'block');
+    }else if(checkValue == '1'){
+        $('#hideBuryInput').css('display', 'none');
     }
 });
 
