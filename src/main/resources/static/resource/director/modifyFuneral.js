@@ -80,9 +80,13 @@ $('input[type=radio][name=funeralMethod]').on('click', function() {
     var checkValue = $('input[type=radio][name=funeralMethod]:checked').val();
 
     if(checkValue == '0'){
+        // 매장을 클릭했을 때
+        $('#hideCremationInput').css('display', 'none');
         $('#hideBuryInput').css('display', 'block');
     }else if(checkValue == '1'){
+        // 화장을 클릭했을 때
         $('#hideBuryInput').css('display', 'none');
+        $('#hideCremationInput').css('display', 'block');
     }
 });
 
