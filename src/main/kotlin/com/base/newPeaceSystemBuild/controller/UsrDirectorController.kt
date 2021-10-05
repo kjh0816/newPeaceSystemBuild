@@ -263,21 +263,19 @@ class UsrDirectorController(
         val flowerTributes = vendorService.getFlowerTributes()
 
         if (funeral != null) {
-            val flowerOrder = vendorService.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                false,
-                "flower"
-            )
-            val flowerTributeOrder = vendorService.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                false,
-                "flowerTribute"
-            )
+            val details = mutableListOf<String>()
+            details.add("flower")
+            details.add("flowerTribute")
 
-            model.addAttribute("flowerOrder", flowerOrder)
-            model.addAttribute("flowerTributeOrder", flowerTributeOrder)
+            for(detail in details){
+                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
+                    funeral.id,
+                    false,
+                    detail
+                )
+
+                model.addAttribute(detail + "Order", order)
+            }
         }
 
 
@@ -299,38 +297,21 @@ class UsrDirectorController(
         val neckties = vendorService.getNeckties()
 
         if (funeral != null) {
-            val femaleMourningClothOrder =
-                vendorService.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                    funeral.id,
-                    rq.getLoginedMember()!!.id,
-                    false,
-                    "femaleMourningCloth"
-                )
-            val maleMourningClothOrder =
-                vendorService.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                    funeral.id,
-                    rq.getLoginedMember()!!.id,
-                    false,
-                    "maleMourningCloth"
-                )
-            val shirtOrder = vendorService.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                false,
-                "shirt"
-            )
-            val necktieOrder = vendorService.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                false,
-                "necktie"
-            )
+            val details = mutableListOf<String>()
+            details.add("femaleMourningCloth")
+            details.add("maleMourningCloth")
+            details.add("shirt")
+            details.add("necktie")
 
+            for(detail in details){
+                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
+                    funeral.id,
+                    false,
+                    detail
+                )
 
-            model.addAttribute("femaleMourningClothOrder", femaleMourningClothOrder)
-            model.addAttribute("maleMourningClothOrder", maleMourningClothOrder)
-            model.addAttribute("shirtOrder", shirtOrder)
-            model.addAttribute("necktieOrder", necktieOrder)
+                model.addAttribute(detail + "Order", order)
+            }
         }
 
         model.addAttribute("maleMourningCloths", maleMourningCloths)

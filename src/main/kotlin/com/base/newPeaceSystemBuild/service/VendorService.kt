@@ -48,9 +48,8 @@ class VendorService(
         // flower Order Insert
         detail = "flower"
         // Insert 전에 해당 정보로 이미 정보를 입력한적이 있다면, insert가 아닌 modify 로직으로 적용
-        val flowerOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        val flowerOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
             funeral.id,
-            rq.getLoginedMember()!!.id,
             false,
             detail
         )
@@ -73,9 +72,8 @@ class VendorService(
 
         // flowerTribute Order Insert
         detail = "flowerTribute"
-        val flowerTributeOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        val flowerTributeOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
             funeral.id,
-            rq.getLoginedMember()!!.id,
             false,
             detail
         )
@@ -144,9 +142,8 @@ class VendorService(
         // femaleMourningCloth Order Insert
         detail = "femaleMourningCloth"
         // Insert 전에 해당 정보로 이미 정보를 입력한적이 있다면, insert가 아닌 modify 로직으로 적용
-        val femaleMourningClothOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        val femaleMourningClothOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
             funeral.id,
-            rq.getLoginedMember()!!.id,
             false,
             detail
         )
@@ -184,9 +181,8 @@ class VendorService(
 
         // maleMourningCloth Order Insert
         detail = "maleMourningCloth"
-        val maleMourningClothOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        val maleMourningClothOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
             funeral.id,
-            rq.getLoginedMember()!!.id,
             false,
             detail
         )
@@ -220,9 +216,8 @@ class VendorService(
 
         // shirt Order Insert
         detail = "shirt"
-        val shirtOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        val shirtOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
             funeral.id,
-            rq.getLoginedMember()!!.id,
             false,
             detail
         )
@@ -256,9 +251,8 @@ class VendorService(
 
         // necktie Order Insert
         detail = "necktie"
-        val necktieOrder = getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        val necktieOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
             funeral.id,
-            rq.getLoginedMember()!!.id,
             false,
             detail
         )
@@ -383,15 +377,13 @@ class VendorService(
         return vendorRepository.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(directorMemberId, completionStatus, detail)
     }
 
-    fun getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+    fun getOrderByFuneralIdAndCompletionStatusAndDetail(
         funeralId: Int,
-        directorMemberId: Int,
         completionStatus: Boolean,
         detail: String
     ): Order? {
-        return vendorRepository.getOrderByFuneralIdAndDirectorMemberIdAndCompletionStatusAndDetail(
+        return vendorRepository.getOrderByFuneralIdAndCompletionStatusAndDetail(
             funeralId,
-            directorMemberId,
             completionStatus,
             detail
         )
