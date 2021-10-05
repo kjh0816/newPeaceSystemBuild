@@ -74,3 +74,13 @@ function jusoCallBack(roadFullAddr){
 //		document.form.deceasedHomeAddress.value = roadFullAddr;
 		document.getElementById("deceasedHomeAddress").value = roadFullAddr;
 }
+
+$('#bury').change(function() {
+
+    if($('#bury').prop('checked', true)){
+        $('hideBuryInput').css('display', 'block');
+    }else if($('#bury').prop('checked', false)){
+        $('hideBuryInput').css('display', 'none');
+    }
+});
+
