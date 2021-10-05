@@ -78,6 +78,7 @@ function jusoCallBack(roadFullAddr){
 $('#bury').change(function() {
 
     if($('#bury').prop('checked', true)){
+//    여기까진 들어옴 (change가 아닌, click으로 실행 트리거를 만들면 어떨까)
         $('hideBuryInput').css('display', 'block');
     }else if($('#bury').prop('checked', false)){
         $('hideBuryInput').css('display', 'none');
