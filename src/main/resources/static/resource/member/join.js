@@ -330,7 +330,7 @@ $('#cellphoneNo').blur(function(){
         return;
     }
 //  (2) 입력값에 대한 정규표현식 적용 (시작)
-    var regex = /^[0-9]{9,13}$/;
+    var regex = /^[0-9]{10,11}$/;
     if(!regex.test(cellphoneNo)){
         $("#cellphoneNoCheckMsg").html('핸드폰 번호가 올바른지 확인해주세요.');
         $("#cellphoneNoCheckMsg").css("color", "red");

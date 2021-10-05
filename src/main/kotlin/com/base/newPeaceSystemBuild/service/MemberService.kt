@@ -180,6 +180,10 @@ class MemberService(
             return ResultData.from("F-6", "계좌번호를 입력해주세요.")
         }
 
+        if(cellphoneNo.trim().length < 10 || cellphoneNo.trim().length > 11){
+            return ResultData.from("F-7" ,"핸드폰 번호가 올바른지 확인해주세요.")
+        }
+
 
         val member = getMemberByLoginId(loginId)
 
@@ -250,6 +254,11 @@ class MemberService(
         if(accountNum.isEmpty()){
             return ResultData.from("F-5", "계좌번호를 입력해주세요.")
         }
+
+        if(cellphoneNo.trim().length < 10 || cellphoneNo.trim().length > 11){
+            return ResultData.from("F-6", "핸드폰 번호가 올바르지 않습니다.")
+        }
+
 
         // 회원정보를 변경해주고 현재 세션을 재설정한다.
         memberRepository.modifyInfo(cellphoneNo, email, location, bank, accountNum, rq.getLoginedMember()!!.id)
