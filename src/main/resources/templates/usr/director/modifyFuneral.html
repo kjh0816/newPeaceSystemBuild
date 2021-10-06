@@ -76,17 +76,17 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="checkbox" id="deathDiagnosis" name="cause" class="checkbox"/>
+                            <input th:value="${client?.cause}" type="checkbox" id="deathDiagnosis" name="papers" class="checkbox"/>
                             <span>&nbsp;사망진단서&nbsp;</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="checkbox" id="deathCertificate" name="cause" class="checkbox"/>
+                            <input th:value="${client?.cause}" type="checkbox" id="deathCertificate" name="papers" class="checkbox"/>
                             <span>&nbsp;사체검안서&nbsp;&nbsp;</span>
                         </div>
 
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="checkbox" id="autopsied" name="cause" class="checkbox"/>
+                            <input th:value="${client?.cause}" type="checkbox" id="autopsied" name="papers" class="checkbox"/>
                             <span>&nbsp;검시필증</span>
                         </div>
                     </div>
@@ -175,14 +175,6 @@
                     </div>
                     <br>
 
-                    <div id="hideBuryInput" class="hidden">
-                    <label class="label">
-                        <span class="label-text font-bold">
-                            장지
-                        </span>
-                    </label>
-                    <input type="text" id="buryInput" name="buryInput" maxlength="30" placeholder="장지를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
-                    </div>
 
                     <div id="hideCremationInput" class="hidden">
                         <a href="https://www.15774129.go.kr/new/esky_p/esky_index.do#MENU:M211000000" target='_blank' class="btn">화장장 예약하기</a>
@@ -192,6 +184,15 @@
                         </span>
                         </label>
                         <input type="text" id="cremationInput" name="buryInput" maxlength="30" placeholder="화장장를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                    </div>
+
+                    <div id="hideBuryInput" class="hidden">
+                        <label class="label">
+                        <span class="label-text font-bold">
+                            장지
+                        </span>
+                        </label>
+                        <input type="text" id="buryInput" name="buryInput" maxlength="30" placeholder="장지를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
                     </div>
 
                 </div>

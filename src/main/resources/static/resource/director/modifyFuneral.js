@@ -75,6 +75,7 @@ function jusoCallBack(roadFullAddr){
 		document.getElementById("deceasedHomeAddress").value = roadFullAddr;
 }
 
+
 $('input[type=radio][name=funeralMethod]').on('click', function() {
 
     var checkValue = $('input[type=radio][name=funeralMethod]:checked').val();
@@ -85,13 +86,19 @@ $('input[type=radio][name=funeralMethod]').on('click', function() {
         $('#hideBuryInput').css('display', 'block');
     }else if(checkValue == '1'){
         // 화장을 클릭했을 때
-        $('#hideBuryInput').css('display', 'none');
         $('#hideCremationInput').css('display', 'block');
+        $('#hideBuryInput').css('display', 'block');
     }
 });
 
-$('input[type=checkbox][name=cause]').on('click', function() {
 
+// 사망원인 또는 사망서류를 클릭했을 때
+$('input[type=checkbox][name=papers], input[type=radio][name=cause]').on('click', function() {
+
+    // 병사에 체크된 경우
+    var disease = $('input[type=radio][id=disease]:checked').val();
+    // 사고사에 체크된 경우
+    var accident = $('input[type=radio][id=accident]:checked').val();
 
     // 사망진단서가 체크된 경우
     var deathDiagnosis = $('input[type=checkbox][id=deathDiagnosis]:checked').val();
@@ -99,8 +106,44 @@ $('input[type=checkbox][name=cause]').on('click', function() {
     var deathCertificate = $('input[type=checkbox][id=deathCertificate]:checked').val();
     // 검시필증이 체크된 경우
     var autopsied = $('input[type=checkbox][id=autopsied]:checked').val();
-    // 1) 사망진단서가 있으면, 사체 검안서나 검시필증이 필요없다.
-    if(deathDiagnosis){
 
+    // 사망 원인과 사망 서류의 관계 ( 시작 )
+    // 1) 병사일 경우, 검시필증 체크 불가
+    if(disease && autopsied){
+        alert('병사일 경우, 검시필증이 필요없습니다.');
+        $(this).prop("checked", false);
     }
+
+    // 2) 사고사일 경우, 사망진단서 체크 불가
+    if(accident && deathDiagnosis){
+        alert('사고사일 경우, 사체검안서와 검시필증이 필요합니다.')
+        $(this).prop("checked", false);
+    }
+    // 사망 원인과 사망 서류의 관계 ( 끝 )
+
+
+    // 1) 사망진단서가 있으면, 사체 검안서나 검시필증이 필요없고, 사체검안서가 있으면 사망진단서가 필요없다.
+    if(deathDiagnosis && deathCertificate){
+        alert('사망진단서와 사체검안서 중 하나만 체크할 수 있습니다.');
+        $(this).prop("checked", false);
+    }
+
+    // 사체검안서와 검시필증과의 관계 ( 시작 )
+    if(autopsied && !deathCertificate){
+        // 사체검안서가 체크되지 않은 상태에서 검시필증을 체크했을 때
+        if($(this).attr('id') == 'autopsied'){
+            alert('사체검안서를 확인해주십시오.');
+            $(this).prop("checked", false);
+        }
+        // 사체검안서, 검시필증이 체크된 상태에서 사체검안서의 체크를 풀 때
+        if($(this).attr('id') == 'deathCertificate'){
+
+            // 아래 두 코드의 순서를 바꾸면, 체크박스가 깜빡거리는 게 보인다.
+            $(this).prop("checked", true);
+            alert('검시필증은 사체검안서가 필요합니다.')
+        }
+    }
+    // 사체검안서와 검시필증과의 관계 ( 끝 )
+
+
 });
