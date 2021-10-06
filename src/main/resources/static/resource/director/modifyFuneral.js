@@ -90,3 +90,17 @@ $('input[type=radio][name=funeralMethod]').on('click', function() {
     }
 });
 
+$('input[type=checkbox][name=cause]').on('click', function() {
+
+
+    // 사망진단서가 체크된 경우
+    var deathDiagnosis = $('input[type=checkbox][id=deathDiagnosis]:checked').val();
+    // 사체검안서가 체크된 경우
+    var deathCertificate = $('input[type=checkbox][id=deathCertificate]:checked').val();
+    // 검시필증이 체크된 경우
+    var autopsied = $('input[type=checkbox][id=autopsied]:checked').val();
+    // 1) 사망진단서가 있으면, 사체 검안서나 검시필증이 필요없다.
+    if(deathDiagnosis){
+
+    }
+});
