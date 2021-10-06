@@ -41,74 +41,84 @@ class VendorService(
     ): ResultData {
         val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
-        //  order에 대한 데이터를 DB에 저장
-        val roleCategoryId = 1
-
-        var detail = ""
-        // flower Order Insert
-        detail = "flower"
-        // Insert 전에 해당 정보로 이미 정보를 입력한적이 있다면, insert가 아닌 modify 로직으로 적용
-        val flowerOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
-            funeral.id,
-            false,
-            detail
-        )
-
-        if (flowerOrder == null) {
-            vendorRepository.insertIntoOrder(funeral.id, rq.getLoginedMember()!!.id, roleCategoryId, flowerId, detail)
-
-            val flowerOrderId = vendorRepository.getLastInsertId()
-            vendorRepository.insertIntoFlowerOrder(flowerOrderId)
-        } else {
-            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
-                flowerId,
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                detail,
-                false
-            )
-        }
-
-        // flowerTribute Order Insert
-        detail = "flowerTribute"
-        val flowerTributeOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
-            funeral.id,
-            false,
-            detail
-        )
-
         var packingBool = false
 
         if (packing == 'Y') {
             packingBool = true
         }
 
-        if (flowerTributeOrder == null) {
-            vendorRepository.insertIntoOrder(
+        //  order에 대한 데이터를 DB에 저장
+        val roleCategoryId = 1
+
+        // detail List
+        val details = mutableListOf<String>()
+        details.add("flower")
+        details.add("flowerTribute")
+
+        for(detail in details){
+            // detail 에 따라 standardId 값을 변경
+            val standardId = when (detail) {
+                "flower" -> {
+                    flowerId
+                }
+                "flowerTribute" -> {
+                    flowerTributeId
+                }
+                else -> {
+                    0
+                }
+            }
+
+            // order 정보 조회
+            val order = getOrderByFuneralIdAndCompletionStatusAndDetail(
                 funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                flowerTributeId,
+                false,
                 detail
             )
+            // order 정보 유무에따라 로직에 차별성을 줌
+            // DB에 order 정보가 없을경우엔 Insert 문으로 Order 를 추가
+            if (order == null) {
+                vendorRepository.insertIntoOrder(
+                    funeral.id,
+                    rq.getLoginedMember()!!.id,
+                    roleCategoryId,
+                    standardId,
+                    detail
+                )
 
-            val flowerTributeOrderId = vendorRepository.getLastInsertId()
-            vendorRepository.insertIntoFlowerTributeOrder(flowerTributeOrderId, bunchCnt, packingBool)
-        } else {
-            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
-                flowerTributeId,
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                detail,
-                false
-            )
-            vendorRepository.modifyFlowerTributeOrderIntoBunchCntAndPackingByOrderId(
-                bunchCnt,
-                packingBool,
-                flowerTributeOrder.id
-            )
+                val orderId = vendorRepository.getLastInsertId()
+
+                // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Insert 해줌
+                when (detail) {
+                    "flower" -> {
+                        vendorRepository.insertIntoFlowerOrder(orderId)
+                    }
+                    "flowerTribute" -> {
+                        vendorRepository.insertIntoFlowerTributeOrder(orderId, bunchCnt, packingBool)
+                    }
+                }
+            }
+            // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
+            else {
+                vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+                    standardId,
+                    funeral.id,
+                    rq.getLoginedMember()!!.id,
+                    roleCategoryId,
+                    detail,
+                    false
+                )
+                // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Update 해줌
+                when (detail) {
+                    "flowerTribute" -> {
+                        vendorRepository.modifyFlowerTributeOrderIntoBunchCntAndPackingByOrderId(
+                            bunchCnt,
+                            packingBool,
+                            order.id
+                        )
+                    }
+                }
+            }
         }
 
         // funeral 테이블에 flowerId 를 업데이트 한다.
@@ -138,153 +148,110 @@ class VendorService(
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 2
 
-        var detail = ""
-        // femaleMourningCloth Order Insert
-        detail = "femaleMourningCloth"
-        // Insert 전에 해당 정보로 이미 정보를 입력한적이 있다면, insert가 아닌 modify 로직으로 적용
-        val femaleMourningClothOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
-            funeral.id,
-            false,
-            detail
-        )
+        // detail List
+        val details = mutableListOf<String>()
+        details.add("femaleMourningCloth")
+        details.add("maleMourningCloth")
+        details.add("shirt")
+        details.add("necktie")
 
-        if (femaleMourningClothOrder == null) {
-            vendorRepository.insertIntoOrder(
+        for(detail in details){
+            // detail 에 따라 standardId 값을 변경
+            val standardId = when (detail) {
+                "femaleMourningCloth" -> {
+                    femaleMourningClothId
+                }
+                "maleMourningCloth" -> {
+                    maleMourningClothId
+                }
+                "shirt" -> {
+                    shirtId
+                }
+                "necktie" -> {
+                    necktieId
+                }
+                else -> {
+                    0
+                }
+            }
+
+            // order 정보 조회
+            val order = getOrderByFuneralIdAndCompletionStatusAndDetail(
                 funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                femaleMourningClothId,
+                false,
                 detail
             )
+            // order 정보 유무에따라 로직에 차별성을 줌
+            // DB에 order 정보가 없을경우엔 Insert 문으로 Order 를 추가
+            if (order == null) {
+                vendorRepository.insertIntoOrder(
+                    funeral.id,
+                    rq.getLoginedMember()!!.id,
+                    roleCategoryId,
+                    standardId,
+                    detail
+                )
 
-            val femaleMourningClothOrderId = vendorRepository.getLastInsertId()
-            vendorRepository.insertIntoFemaleMourningClothOrder(
-                femaleMourningClothOrderId,
-                femaleClothCnt,
-                femaleClothColor
-            )
-        } else {
-            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
-                femaleMourningClothId,
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                detail,
-                false
-            )
-            vendorRepository.modifyFemaleMourningClothOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
-                femaleClothCnt,
-                femaleClothColor,
-                femaleMourningClothOrder.id
-            )
+                val orderId = vendorRepository.getLastInsertId()
+
+                // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Insert 해줌
+                when (detail) {
+                    "femaleMourningCloth" -> {
+                        vendorRepository.insertIntoFemaleMourningClothOrder(orderId, femaleClothCnt, femaleClothColor)
+                    }
+                    "maleMourningCloth" -> {
+                        vendorRepository.insertIntoMaleMourningClothOrder(orderId, maleClothCnt)
+                    }
+                    "shirt" -> {
+                        vendorRepository.insertIntoShirtOrder(orderId, shirtCnt)
+                    }
+                    "necktie" -> {
+                        vendorRepository.insertIntoNecktieOrder(orderId, necktieCnt)
+                    }
+                }
+            }
+            // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
+            else {
+                vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+                    standardId,
+                    funeral.id,
+                    rq.getLoginedMember()!!.id,
+                    roleCategoryId,
+                    detail,
+                    false
+                )
+                // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Update 해줌
+                when (detail) {
+                    "femaleMourningCloth" -> {
+                        vendorRepository.modifyFemaleMourningClothOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+                            femaleClothCnt,
+                            femaleClothColor,
+                            order.id
+                        )
+                    }
+                    "maleMourningCloth" -> {
+                        vendorRepository.modifyMaleMourningClothOrderIntoMaleClothCntByOrderId(
+                            maleClothCnt,
+                            order.id
+                        )
+                    }
+                    "shirt" -> {
+                        vendorRepository.modifyShirtOrderIntoShirtCntByOrderId(
+                            shirtCnt,
+                            order.id
+                        )
+                    }
+                    "necktie" -> {
+                        vendorRepository.modifyNecktieOrderIntoNecktieCntByOrderId(
+                            necktieCnt,
+                            order.id
+                        )
+                    }
+                }
+            }
         }
 
-        // maleMourningCloth Order Insert
-        detail = "maleMourningCloth"
-        val maleMourningClothOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
-            funeral.id,
-            false,
-            detail
-        )
-
-
-        if (maleMourningClothOrder == null) {
-            vendorRepository.insertIntoOrder(
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                maleMourningClothId,
-                detail
-            )
-
-            val maleMourningClothOrderId = vendorRepository.getLastInsertId()
-            vendorRepository.insertIntoMaleMourningClothOrder(maleMourningClothOrderId, maleClothCnt)
-        } else {
-            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
-                maleMourningClothId,
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                detail,
-                false
-            )
-            vendorRepository.modifyMaleMourningClothOrderIntoMaleClothCntByOrderId(
-                maleClothCnt,
-                maleMourningClothOrder.id
-            )
-        }
-
-        // shirt Order Insert
-        detail = "shirt"
-        val shirtOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
-            funeral.id,
-            false,
-            detail
-        )
-
-
-        if (shirtOrder == null) {
-            vendorRepository.insertIntoOrder(
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                shirtId,
-                detail
-            )
-
-            val shirtOrderId = vendorRepository.getLastInsertId()
-            vendorRepository.insertIntoShirtOrder(shirtOrderId, shirtCnt)
-        } else {
-            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
-                shirtId,
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                detail,
-                false
-            )
-            vendorRepository.modifyShirtOrderIntoShirtCntByOrderId(
-                maleClothCnt,
-                shirtOrder.id
-            )
-        }
-
-        // necktie Order Insert
-        detail = "necktie"
-        val necktieOrder = getOrderByFuneralIdAndCompletionStatusAndDetail(
-            funeral.id,
-            false,
-            detail
-        )
-
-
-        if (necktieOrder == null) {
-            vendorRepository.insertIntoOrder(
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                necktieId,
-                detail
-            )
-
-            val necktieOrderId = vendorRepository.getLastInsertId()
-            vendorRepository.insertIntoNecktieOrder(necktieOrderId, necktieCnt)
-        } else {
-            vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
-                necktieId,
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                detail,
-                false
-            )
-            vendorRepository.modifyNecktieOrderIntoNecktieCntByOrderId(
-                maleClothCnt,
-                necktieOrder.id
-            )
-        }
-
-        // funeral 테이블에 flowerId 를 업데이트 한다.
+        // funeral 테이블에 standardId 들을 업데이트 한다.
         vendorRepository.modifyFuneralIntoFemaleMourningClothId(funeralId, femaleMourningClothId)
         vendorRepository.modifyFuneralIntoMaleMourningClothId(funeralId, maleMourningClothId)
         vendorRepository.modifyFuneralIntoShirtId(funeralId, shirtId)
