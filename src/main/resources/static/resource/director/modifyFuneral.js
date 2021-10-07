@@ -21,6 +21,16 @@ const post$ = rxjs.ajax.ajax.post(
 }
 // 제출  ( 끝 )
 
+// 오늘 날짜를 yyyy-mm-dd 형식으로 출력하는 함수
+function getToday(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+}
+
 // department(시/도)를 선택했을 때, Ajax 요청을 통해 조회 후 정보 반환
 $('#department').change(function(){
 
