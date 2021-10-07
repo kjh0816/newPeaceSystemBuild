@@ -44,6 +44,16 @@ function getNow(){
     return timeString;
 }
 
+// 유가족 추가 버튼을 눌렀을 때 실행될 함수
+function addFamily(){
+    var row1 =
+    "<li></li>";
+    var row2 = "<i class='fas fa-times'></i>";
+    var row3 = "<li>ㅎㅎ</li>";
+
+    $('#familyList').append(row1);
+}
+
 // department(시/도)를 선택했을 때, Ajax 요청을 통해 조회 후 정보 반환
 $('#department').change(function(){
 

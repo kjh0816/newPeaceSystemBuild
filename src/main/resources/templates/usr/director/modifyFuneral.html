@@ -259,7 +259,16 @@
                     <input readonly th:value="${chief?.address}" type="text" id="chiefAddress" name="chiefAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2 font-bold"/>
                 </div>
 
-
+                <label class="label">
+                        <span class="label-text font-bold">
+                            유가족
+                        </span>
+                </label>
+                <ul id="familyList">
+                </ul>
+                <span>
+                <i onclick="addFamily();" class="far fa-plus-square cursor-pointer text-3xl"></i>
+                </span>
             </div>
 
             <br>
