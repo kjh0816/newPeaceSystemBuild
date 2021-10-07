@@ -27,20 +27,13 @@
 
                     <label class="label">
                         <span class="label-text font-bold">
-                            고인 성별
+                            고인 주민등록번호
                         </span>
                     </label>
-                    <br>
                     <div class="flex">
-                    <div class="flex">
-                    <input th:value="${client?.sex}" type="radio" id="men" name="sex" class="radio"/>
-                    <span>&nbsp;남성</span>
-                    </div>
-                    &nbsp;
-                    <div class="flex">
-                    <input th:value="${client?.sex}" type="radio" id="women" name="sex" class="radio"/>
-                    <span>&nbsp;여성</span>
-                    </div>
+                    <input th:value="${client?.frontNum}" type="text" id="frontNum" name="frontNum" class="input input-bordered my-2 w-1/4"/>
+                    <span class="self-center text-2xl">&nbsp; - &nbsp;</span>
+                    <input th:value="${client?.backNum}" type="text" id="backNum" name="backNum" class="input input-bordered my-2 w-1/4"/>
                     </div>
                     <br>
 
