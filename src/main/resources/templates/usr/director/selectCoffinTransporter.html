@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+<head>
+    <title>운구차량 출동</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/selectCoffinTransporter.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+<main layout:fragment="main">
+    <div class="p-10 card bg-base-200">
+        <form onsubmit="selectCoffinTransporter__submit(this); return false;">
+            <input type="hidden" name="funeralId" th:value="${funeral.id}">
+            <div class="card card-side shadow my-2 bg-white">
+                <div class="card-body">
+                    <h2 class="card-title">운구차량</h2>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2">70,000 원</p>
+                    </div>
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            운구차량 출동 장소
+                        </span>
+                    </label>
+                    <div class="flex">
+                        <input disabled="disabled" type="text" id="deceasedHomeAddress" name="deceasedHomeAddress" placeholder="오른쪽 버튼을 통해 주소를 검색해주세요." class="py-2 px-4 mr-2 w-full text-sm bg-base-200 rounded-lg"/>
+                        <button type="button" onclick="goPopup();" class="btn btn-outline w-20 whitespace-nowrap">주소 검색</button>
+                    </div>
+                </div>
+            </div>
+            <input class="btn btn-ghost w-full" type="submit" value="출동 요청">
+        </form>
+    </div>
+</main>
+
+</html>

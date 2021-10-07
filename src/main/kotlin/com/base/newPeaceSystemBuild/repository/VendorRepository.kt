@@ -25,6 +25,15 @@ interface VendorRepository {
     @Update(
         """
             UPDATE funeral 
+            SET coffinTransporterUseStatus = #{coffinTransporterUseStatus} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoCoffinTransporterUseStatus(funeralId:Int, coffinTransporterUseStatus: Boolean)
+
+    @Update(
+        """
+            UPDATE funeral 
             SET flowerId = #{flowerId} 
             WHERE id = #{funeralId};
         """
@@ -112,6 +121,10 @@ interface VendorRepository {
                 , N.retailPrice AS `extra__retailPrice`
                 , NO.necktieCnt AS `extra__necktieCnt`
             </if>
+            <if test="detail == 'coffinTransporter'">
+                , CT.retailPrice AS `extra__retailPrice`
+                , CTO.deceasedHomeAddress AS `extra__deceasedHomeAddress`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -148,6 +161,12 @@ interface VendorRepository {
                 ON O.standardId = N.id
                 LEFT JOIN necktieOrder AS NO
                 ON O.id = NO.orderId
+            </if>
+            <if test="detail == 'coffinTransporter'">
+                LEFT JOIN coffinTransporter AS CT
+                ON O.standardId = CT.id
+                LEFT JOIN coffinTransporterOrder AS CTO
+                ON O.id = CTO.orderId
             </if>
             WHERE O.vendorMemberId = #{vendorMemberId}
             AND O.orderStatus = #{orderStatus}
@@ -258,6 +277,10 @@ interface VendorRepository {
                 , N.retailPrice AS `extra__retailPrice`
                 , NO.necktieCnt AS `extra__necktieCnt`
             </if>
+            <if test="detail == 'coffinTransporter'">
+                , CT.retailPrice AS `extra__retailPrice`
+                , CTO.deceasedHomeAddress AS `extra__deceasedHomeAddress`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -295,6 +318,12 @@ interface VendorRepository {
                 LEFT JOIN necktieOrder AS NO
                 ON O.id = NO.orderId
             </if>
+            <if test="detail == 'coffinTransporter'">
+                LEFT JOIN coffinTransporter AS CT
+                ON O.standardId = CT.id
+                LEFT JOIN coffinTransporterOrder AS CTO
+                ON O.id = CTO.orderId
+            </if>
             WHERE O.directorMemberId = #{directorMemberId}
             AND completionStatus = #{completionStatus}
             AND detail = #{detail}
@@ -306,6 +335,17 @@ interface VendorRepository {
         completionStatus: Boolean,
         detail: String
     ): Order?
+
+    @Insert(
+        """
+            INSERT INTO coffinTransporterOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            deceasedHomeAddress = #{deceasedHomeAddress},
+            orderId = #{orderId}
+        """
+    )
+    fun insertIntoCoffinTransporterOrder(orderId: Int, deceasedHomeAddress: String)
 
     @Insert(
         """
@@ -348,6 +388,10 @@ interface VendorRepository {
                 , N.retailPrice AS `extra__retailPrice`
                 , NO.necktieCnt AS `extra__necktieCnt`
             </if>
+            <if test="detail == 'coffinTransporter'">
+                , CT.retailPrice AS `extra__retailPrice`
+                , CTO.deceasedHomeAddress AS `extra__deceasedHomeAddress`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -384,6 +428,12 @@ interface VendorRepository {
                 ON O.standardId = N.id
                 LEFT JOIN necktieOrder AS NO
                 ON O.id = NO.orderId
+            </if>
+            <if test="detail == 'coffinTransporter'">
+                LEFT JOIN coffinTransporter AS CT
+                ON O.standardId = CT.id
+                LEFT JOIN coffinTransporterOrder AS CTO
+                ON O.id = CTO.orderId
             </if>
             WHERE O.funeralId = #{funeralId}
             AND O.completionStatus = #{completionStatus}
@@ -428,6 +478,16 @@ interface VendorRepository {
         """
     )
     fun modifyFlowerTributeOrderIntoBunchCntAndPackingByOrderId(bunchCnt: Int, packing: Boolean, orderId: Int)
+
+    @Update(
+        """
+            UPDATE coffinTransporterOrder
+            SET updateDate = NOW(),
+            deceasedHomeAddress = #{deceasedHomeAddress}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyCoffinTransporterOrderIntoDeceasedHomeAddressByOrderId(orderId: Int, deceasedHomeAddress: String)
 
     @Select(
         """
