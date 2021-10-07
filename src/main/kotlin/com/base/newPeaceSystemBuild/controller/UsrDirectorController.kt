@@ -257,6 +257,15 @@ class UsrDirectorController(
         return "usr/director/modifyFuneral"
     }
 
+    @RequestMapping("/usr/director/doModifyFuneral")
+    @ResponseBody
+    fun doModifyFuneral(
+
+    ): String{
+
+        return ""
+    }
+
     @RequestMapping("/usr/director/departmentDetail", method = [RequestMethod.POST])
     @ResponseBody
     fun departmentDetail(
