@@ -6,6 +6,7 @@ import com.base.newPeaceSystemBuild.repository.VendorRepository
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Funeral
+import com.base.newPeaceSystemBuild.vo.standard.CoffinTransporter
 import com.base.newPeaceSystemBuild.vo.standard.MourningCloth
 import com.base.newPeaceSystemBuild.vo.standard.Flower
 import com.base.newPeaceSystemBuild.vo.standard.FlowerTribute
@@ -22,6 +23,10 @@ class VendorService(
 ) {
     @Autowired
     private lateinit var rq: Rq;
+
+    fun getCoffinTransporters(): List<CoffinTransporter> {
+        return vendorRepository.getCoffinTransporters()
+    }
 
     fun getFlowers(): List<Flower> {
         // 취급할 제단꽃 standard를 불러온다.
