@@ -1,3 +1,26 @@
+// 제출 ( 시작 )
+function DirectorModifyFuneral__submit(form){
+
+const post$ = rxjs.ajax.ajax.post(
+        '/usr/director/doModifyFuneral',
+        new FormData(form)
+    );
+    post$.subscribe(
+        res => {
+            if (res.response.success) {
+                    // 성공 시, 입력 및 수정을 끝내고 progress 페이지로 이동한다.
+                   alert(res.response.msg);
+                   window.location.href="/usr/director/progress?clientId=" + res.response.map.client.id;
+            }
+            else {
+                   alert(res.response.msg);
+                   window.location.replace(res.response.map.replaceUrl);
+            }
+        }
+    );
+}
+// 제출  ( 끝 )
+
 // department(시/도)를 선택했을 때, Ajax 요청을 통해 조회 후 정보 반환
 $('#department').change(function(){
 
