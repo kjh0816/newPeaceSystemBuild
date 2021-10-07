@@ -6,21 +6,115 @@
 <head>
     <title>주소 검색</title>
     <th:block layout:fragment="js">
-        <script type="text/javascript" src="/resource/director/jusoPopup.js" charset="utf-8" defer></script>
+        <script type="text/javascript" src="/resource/director/jusoPopup.js" charsetㅣ="utf-8" defer></script>
+        <!-- 주소 관련 부가 JS -->
+        <script type="text/javascript" src="/resource/director/addrlink.js" charset="utf-8" defer></script>
+        <!-- 제이쿼리 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- 주소 페이지 CSS -->
+        <link rel="stylesheet" type="text/css" href="/resource/director/addrlink.css"></link>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </th:block>
 </head>
-<body onload="init();">
-    <form id="form" name="form" method="post">
-        <input type="hidden" id="inputYn" name="inputYn" th:value="${inputYn}">
-        <input type="hidden" id="roadFullAddr" name="roadFullAddr" th:value="${roadFullAddr}">
-        <input type="hidden" id="confmKey" name="confmKey" value=""/>
-        <input type="hidden" id="returnUrl" name="returnUrl" value=""/>
-        <input type="hidden" id="resultType" name="resultType" value=""/>
-        <!-- 해당시스템의 인코딩타입이 EUC-KR일경우에만 추가 START-->
-        <!--
-        <input type="hidden" id="encodingType" name="encodingType" value="EUC-KR"/>
-         -->
-        <!-- 해당시스템의 인코딩타입이 EUC-KR일경우에만 추가 END-->
-    </form>
+<body onload="init();" class ="visualSection">
+<form name="rtForm" id="rtForm" method="post">
+    <input type="hidden" name="inputYn" id="inputYn" value="Y"/>
+    <input type="hidden" name="roadFullAddr" id="roadFullAddr"/>
+</form>
+
+<form name="AKCFrm" id="AKCFrm" method="post">
+    <input type="hidden" name="iframe"  value=""/>
+    <input type="hidden" name="confmKey" th:value="${confmKey}" />
+    <input type="hidden" name="encodingType"   value=""/>
+    <input type="hidden" name="cssUrl" value="" />
+    <input type="hidden" id="resultType" name="resultType" th:value="${resultType}" />
+    <input type="hidden" name="currentPage" id="currentPage" value="1" />
+    <input type="hidden" name="countPerPage" value="5" />
+    <input type="hidden" name="rtRoadAddr"  id="rtRoadAddr"  />
+    <input type="hidden" name="rtAddrPart1" id="rtAddrPart1" />
+    <input type="hidden" name="rtAddrPart2" id="rtAddrPart2" />
+    <input type="hidden" name="rtEngAddr"   id="rtEngAddr"   />
+    <input type="hidden" name="rtJibunAddr" id="rtJibunAddr" />
+    <input type="hidden" name="rtZipNo" id="rtZipNo" />
+    <input type="hidden" name="rtAdmCd" id="rtAdmCd" />
+    <input type="hidden" name="rtRnMgtSn" id="rtRnMgtSn" />
+    <input type="hidden" name="rtBdMgtSn" id="rtBdMgtSn" />
+
+    <input type="hidden" name="rtDetBdNmList" id="rtDetBdNmList" />
+    <input type="hidden" name="rtBdNm" id="rtBdNm" />
+    <input type="hidden" name="rtBdKdcd" id="rtBdKdcd" />
+    <input type="hidden" name="rtSiNm" id="rtSiNm" />
+    <input type="hidden" name="rtSggNm" id="rtSggNm" />
+    <input type="hidden" name="rtEmdNm" id="rtEmdNm" />
+    <input type="hidden" name="rtLiNm" id="rtLiNm" />
+    <input type="hidden" name="rtRn" id="rtRn" />
+    <input type="hidden" name="rtUdrtYn" id="rtUdrtYn" />
+    <input type="hidden" name="rtBuldMnnm" id="rtBuldMnnm" />
+    <input type="hidden" name="rtBuldSlno" id="rtBuldSlno" />
+    <input type="hidden" name="rtMtYn" id="rtMtYn" />
+    <input type="hidden" name="rtLnbrMnnm" id="rtLnbrMnnm" />
+    <input type="hidden" name="rtLnbrSlno" id="rtLnbrSlno" />
+    <input type="hidden" name="rtEmdNo" id="rtEmdNo" />
+
+    <input type="hidden" name ="searchType"    id="searchType" />
+    <input type="hidden" name ="dsgubuntext"   id="dsgubuntext" />
+    <input type="hidden" name ="dscity1text"   id="dscity1text" />
+    <input type="hidden" name ="dscounty1text" id="dscounty1text" />
+    <input type="hidden" name ="dsemd1text"    id="dsemd1text" />
+    <input type="hidden" name ="dsri1text"     id="dsri1text" />
+    <input type="hidden" name ="dsrd_nm1text"  id="dsrd_nm1text" />
+    <input type="hidden" name ="dssan1text"    id="dssan1text" />
+
+    <div class="pop-address-search" style="width: 100%;" >
+        <div class="pop-address-search-inner" style="border: 0px;">
+            <div style="height: 365px;" id="searchContentBox">
+                <fieldset>
+                    <legend>도로명주소 검색</legend>
+                    <span class="wrap">
+						<input type="text" class="popSearchInput" style="font-size: 13px; font-weight: bold; ime-mode:active;" title="검색어를 입력하세요" name="keyword" id="keyword" placeholder="도로명주소, 건물명 또는 지번입력" value=""  tabindex="1"/>
+						<input type="button" title="검색"  tabindex="2" onclick="javascript:$('#currentPage').val(1);  searchUrlJuso();" style=" cursor: pointer;"/>
+					</span>
+                    <a class="close" href="javascript:popClose();" title="창닫기" tabindex="3">닫기</a>
+                </fieldset>
+                <p class="guide" style="margin-top:3px;">검색어 예 : 도로명(반포대로 58), 건물명(독립기념관), 지번(삼성동 25)</p>
+
+
+                <!-- nodata -->
+                <div class="popSearchNoResult" style="margin-top:10px; margin-bottom:5px;"></div>
+                <!-- //nodata -->
+
+                <!-- 상세주소 -->
+                <div class="detail"  style="display:none;" id="resultData">
+                    <p><strong>상세주소 입력</strong></p>
+                    <table class="data-row">
+                        <caption>주소 입력</caption>
+                        <colgroup>
+                            <col style="width:20%"></col>
+                            <col></col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">도로명주소</th>
+                            <td id="addrPart1" style="font-size:15px; height:20px; line-height:20px;"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><label >상세주소입력</label></th>
+                            <td>
+                                <input type="text" name="rtAddrDetail" id="rtAddrDetail" style="width: 100%; font-size: 13px;" onkeypress="addrDetailChk();" onkeyup="addrDetailChk1(this);" title="상세주소"/>
+                                <div id="addrPart2" style="font-size: 13px; line-height: 2em;"></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btns-submit">
+                        <a class="btn-bl" href="javascript:setParent();">주소입력</a>
+                    </div>
+                </div>
+            </div>
+            <!-- //상세주소 입력 -->
+            <div class="logo" style="display: block;" >&nbsp;</div>
+        </div>
+    </div>
+</form>
 </body>
 </html>

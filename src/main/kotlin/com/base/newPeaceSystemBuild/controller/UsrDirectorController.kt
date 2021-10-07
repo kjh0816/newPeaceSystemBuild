@@ -48,6 +48,11 @@ class UsrDirectorController(
             model.addAttribute("roadFullAddr", roadFullAddr)
         }
 
+        // 보안을 위해 서버 사이드에서 API 승인 key를 넘겨줌
+        model.addAttribute("confmKey", "devU01TX0FVVEgyMDIxMTAwNjE0NTM0NTExMTcyNjM=")
+        // 검색결과 화면 출력유(1 : 도로명, 2 : 도로명+지번, 3 : 도로명+상세건물명, 4 : 도로명+지번+상세건물명)
+        model.addAttribute("resultType", "1")
+
         return "usr/director/jusoPopup"
     }
 
@@ -111,6 +116,22 @@ class UsrDirectorController(
 
         for(funeral in funerals){
             val client = clientService.getClientById(funeral.clientId)
+
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+
+
+
+
+
+
+
             // 상주의 정보
             val chief = clientService.getFamilyByClientId(funeral.clientId)
 
