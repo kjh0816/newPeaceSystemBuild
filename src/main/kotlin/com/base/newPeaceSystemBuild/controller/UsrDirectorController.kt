@@ -286,6 +286,30 @@ class UsrDirectorController(
         return "usr/director/selectFlower"
     }
 
+    @RequestMapping("/usr/director/selectCoffinTransporter")
+    fun selectCoffinTransporter(model: Model): String {
+        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+
+        if (funeral != null) {
+            val details = mutableListOf<String>()
+            details.add("coffinTransporter")
+
+            for(detail in details){
+                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
+                    funeral.id,
+                    false,
+                    detail
+                )
+
+                model.addAttribute(detail + "Order", order)
+            }
+        }
+
+        model.addAttribute("funeral", funeral)
+
+        return "usr/director/selectCoffinTransporter"
+    }
+
     @RequestMapping("/usr/director/selectMourningCloth")
     fun showSelectMourningCloth(model: Model): String {
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
@@ -398,6 +422,20 @@ class UsrDirectorController(
         rq.login(memberService.getMemberById(rq.getLoginedMember()!!.id)!!)
 
         return rq.replaceJs("장례지도사 영업신청이 완료되었습니다.", "../home/main")
+    }
+
+    @RequestMapping("/usr/director/doSelectCoffinTransporter", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doSelectCoffinTransporter(
+        funeralId: Int,
+        @RequestParam(defaultValue = "") deceasedHomeAddress: String
+    ): String {
+        return Ut.getJsonStrFromObj(
+            vendorService.modifyFuneralIntoCoffinTransporterUseStatus(
+                funeralId,
+                deceasedHomeAddress
+            )
+        )
     }
 
     @RequestMapping("/usr/director/doSelectMourningCloth", method = [RequestMethod.POST])

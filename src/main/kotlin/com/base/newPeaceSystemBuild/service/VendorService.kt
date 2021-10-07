@@ -32,6 +32,60 @@ class VendorService(
         return vendorRepository.getFuneralById(funeralId)
     }
 
+    fun modifyFuneralIntoCoffinTransporterUseStatus(funeralId: Int, deceasedHomeAddress: String): ResultData {
+        val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
+
+        val roleCategoryId = 3
+
+        val detail = "coffinTransporter"
+        // order 정보 조회
+        val order = getOrderByFuneralIdAndCompletionStatusAndDetail(
+            funeral.id,
+            false,
+            detail
+        )
+
+        // order 정보 유무에따라 로직에 차별성을 줌
+        // DB에 order 정보가 없을경우엔 Insert 문으로 Order 를 추가
+        if (order == null) {
+            vendorRepository.insertIntoOrder(
+                funeral.id,
+                rq.getLoginedMember()!!.id,
+                roleCategoryId,
+                1,
+                detail
+            )
+
+            val orderId = vendorRepository.getLastInsertId()
+
+            // 상세주문 테이블도 Insert 해줌
+            when (detail) {
+                "coffinTransporter" -> {
+                    vendorRepository.insertIntoCoffinTransporterOrder(orderId, deceasedHomeAddress)
+                }
+            }
+        }
+        // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
+        else {
+            // 운구차량은 수정시에도 Order 테이블에는 변화가 없음.
+            // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Update 해줌
+            when (detail) {
+                "coffinTransporter" -> {
+                    vendorRepository.modifyCoffinTransporterOrderIntoDeceasedHomeAddressByOrderId(
+                        order.id,
+                        deceasedHomeAddress
+                    )
+                }
+            }
+        }
+
+        // funeral 테이블에 CoffinTransporterUseStatus 를 업데이트 한다.
+        vendorRepository.modifyFuneralIntoCoffinTransporterUseStatus(funeralId, true)
+        // 연결된 물품 공급업자에게 주문 정보를 주기 위해 orderId를 성공 시, 같이 return
+
+        return ResultData.from("S-1", "운구차 출동신청을 보냈습니다.", "funeral", funeral)
+    }
+
     fun modifyFuneralIntoFlowerId(
         funeralId: Int,
         flowerId: Int,
@@ -386,4 +440,6 @@ class VendorService(
     fun getNecktieById(necktieId: Int): MourningCloth? {
         return vendorRepository.getNecktieById(necktieId)
     }
+
+
 }
