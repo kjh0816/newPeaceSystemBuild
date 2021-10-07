@@ -116,6 +116,22 @@ class UsrDirectorController(
 
         for(funeral in funerals){
             val client = clientService.getClientById(funeral.clientId)
+
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+            println("고인 정보: ${client.toString()}")
+
+
+
+
+
+
+
             // 상주의 정보
             val chief = clientService.getFamilyByClientId(funeral.clientId)
 
