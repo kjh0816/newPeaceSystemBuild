@@ -1,6 +1,7 @@
 package com.base.newPeaceSystemBuild.repository
 
 import com.base.newPeaceSystemBuild.vo.client.Funeral
+import com.base.newPeaceSystemBuild.vo.standard.CoffinTransporter
 import com.base.newPeaceSystemBuild.vo.standard.MourningCloth
 import com.base.newPeaceSystemBuild.vo.standard.Flower
 import com.base.newPeaceSystemBuild.vo.standard.FlowerTribute
@@ -13,6 +14,13 @@ import org.apache.ibatis.annotations.Update
 
 @Mapper
 interface VendorRepository {
+
+    @Select(
+        """
+            SELECT * FROM coffinTransporter
+        """
+    )
+    fun getCoffinTransporters(): List<CoffinTransporter>
 
     @Select(
     """
@@ -682,4 +690,5 @@ interface VendorRepository {
         """
     )
     fun modifyFuneralIntoNecktieId(funeralId: Int, necktieId: Int)
+
 }

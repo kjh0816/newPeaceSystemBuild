@@ -310,6 +310,7 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/selectCoffinTransporter")
     fun selectCoffinTransporter(model: Model): String {
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+        val coffinTransporters = vendorService.getCoffinTransporters()
 
         if (funeral != null) {
             val details = mutableListOf<String>()
@@ -325,6 +326,8 @@ class UsrDirectorController(
                 model.addAttribute(detail + "Order", order)
             }
         }
+
+        model.addAttribute("coffinTransporters", coffinTransporters)
 
         model.addAttribute("funeral", funeral)
 
