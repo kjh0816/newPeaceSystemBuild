@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>운구차량 선정 동의서</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/vendor/request.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+
+<main layout:fragment="main">
+    <style>
+        #file-input {  /* 파일 필드 숨기기 */
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip:rect(0,0,0,0);
+            border: 0;
+        }
+    </style>
+    <form action="./doMourningClothRequest" method="POST" enctype="multipart/form-data" onsubmit="VendorRequest__submit(this); return false;">
+        <div class="p-10 card bg-base-200">
+            <div class="form-control">
+                <div class="card card-side bordered bg-white">
+                    <div class="card-body">
+                        <h2 class="card-title">운구차량 사업자 안내사항</h2>
+                        <div class="text-sm" th:each="coffinTransporter : ${coffinTransporters}" th:object="${coffinTransporter}">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">소비자가</div>
+                                <p class="pl-2" th:text="|${coffinTransporter.retailPriceFormat} 원|"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <label class="label">
+                    <span class="label-text font-bold">사업자 등록증 사진 파일 첨부</span>
+                </label>
+                <div class="file-box flex">
+                    <input type="text" placeholder="선택된 파일 없음." disabled="disabled" class="upload-name bg-transparent w-36 py-2 px-4 text-sm">
+                    <label class="btn btn-ghost w-24" for="file-input">첨부 파일</label>
+                    <!-- file__{relTypeCode}__{relId}__{typeCode}__{type2Code}__{fileNo} -->
+                    <!-- 이런식으로 입력받는게 관례라고 함 -->
+                    <!-- attachment__1 일 경우, 허가에 관련된 장례지도사 자격증, 사업자 등록증 사진 -->
+                    <!-- attachment__2 일 경우, 프로필 사진 -->
+                    <!-- attachment 카테고리는 추후 부가적으로 카테고리로 활용할 수 있음 -->
+                    <!-- accept="image/*" input 창에서 이미지파일만 노출됨 -->
+                    <input class="upload-hidden" type="file" id="file-input" name="file__member__0__vendor__attachment__1" accept="image/*">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-ghost">위 규격을 취급할 수 있음에 동의합니다</button>
+        </div>
+    </form>
+</main>
+
+</html>

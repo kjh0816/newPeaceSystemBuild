@@ -4,6 +4,7 @@ import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
+import com.base.newPeaceSystemBuild.vo.standard.CoffinTransporter
 import com.base.newPeaceSystemBuild.vo.standard.Flower
 import com.base.newPeaceSystemBuild.vo.standard.FlowerTribute
 import com.base.newPeaceSystemBuild.vo.standard.MourningCloth
@@ -64,6 +65,15 @@ class UsrVendorController(
         model.addAttribute("neckties", neckties)
 
         return "usr/vendor/mourningClothRequest"
+    }
+
+    @RequestMapping("/usr/vendor/coffinTransporterRequest")
+    fun showCoffinTransporterRequest(model: Model): String{
+        val coffinTransporters: List<CoffinTransporter> = vendorService.getCoffinTransporters()
+
+        model.addAttribute("coffinTransporters", coffinTransporters)
+
+        return "usr/vendor/coffinTransporterRequest"
     }
 
     @RequestMapping("/usr/vendor/dispatch")
@@ -143,6 +153,16 @@ class UsrVendorController(
         vendorRequest(multipartRequest, 2)
 
         return rq.replaceJs("상복 공급업자 등록 신청이 완료되었습니다.", "../home/main")
+    }
+
+    @RequestMapping("/usr/vendor/doCoffinTransporterRequest", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doCoffinTransporterRequest(
+        multipartRequest: MultipartRequest
+    ): String {
+        vendorRequest(multipartRequest, 3)
+
+        return rq.replaceJs("운구차량 사업자 등록 신청이 완료되었습니다.", "../home/main")
     }
 
     @RequestMapping("/usr/vendor/doDispatch", method = [RequestMethod.POST])
