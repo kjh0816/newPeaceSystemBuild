@@ -49,6 +49,9 @@
         <div class="card card-side shadow mb-2 bg-white">
             <div class="card-body">
                 <h2 class="card-title">운구 차량</h2>
+                <th:block th:if="${funeral.coffinTransporterUseStatus}">
+                    운구차량을 호출했습니다.
+                </th:block>
                 <form action="./selectCoffinTransporter">
                     <button class="btn btn-ghost" type="submit">운구 차량 호출하기</button>
                 </form>
