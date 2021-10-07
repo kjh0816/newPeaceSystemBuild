@@ -12,11 +12,43 @@
 <main layout:fragment="main">
     <form method="POST" onsubmit="DirectorModifyFuneral__submit(this); return false;">
         <div class="p-10 card bg-base-200">
-            <div class="card card-side bordered bg-white">
+            <div class="bg-white">
                 <div class="card-body text-sm border border-base-300">
                     <span class="w-1/2 text-center font-bold text-2xl">고인</span>
                     <br>
                     <br>
+
+                    <div class="divider w-1/2">고인 정보</div>
+
+                    <br>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            장례식장
+                        </span>
+                    </label>
+                    <select id="department" name="department" class="select select-bordered select-sm w-full max-w-xs">
+                        <option value="" disabled selected>시/도</option>
+                        <div th:each="department : ${departments}" th:object="${department}">
+                            <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                        </div>
+                    </select>
+
+                    <select id="departmentDetail" name="departmentDetail" class="select select-bordered select-sm w-full max-w-xs">
+                        <option value="" disabled selected>시/군/구</option>
+                    </select>
+
+                    <select id="funeralHallName" name="funeralHallName" class="select select-bordered select-sm w-full max-w-xs">
+                        <option value="" disabled selected>장례식장</option>
+                    </select>
+
+                    <br>
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            호실
+                        </span>
+                    </label>
+                    <input type="text" id="funeralHallRoom" name="funeralHallRoom" maxlength="20" placeholder="장례식장 호실을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                     <label class="label">
                         <span class="label-text font-bold">
@@ -35,8 +67,84 @@
                     <span class="self-center text-2xl">&nbsp; - &nbsp;</span>
                     <input th:value="${client?.backNum}" type="text" id="backNum" name="backNum" class="input input-bordered my-2 w-1/4"/>
                     </div>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            고인의 주민등록 주소
+                        </span>
+                    </label>
+                    <div class="flex">
+                        <button type="button" onclick="goPopup();" class="btn btn-outline w-20 whitespace-nowrap self-center">주소 검색</button>
+                        <!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
+                        <input readonly th:value="${client?.deceasedHomeAddress}" type="text" id="deceasedHomeAddress" name="deceasedHomeAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2 font-bold"/>
+                    </div>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            본관
+                        </span>
+                    </label>
+                    <input th:value="${client?.familyClan}" type="text" id="familyClan" name="familyClan" maxlength="20" placeholder="고인의 본관을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            종교
+                        </span>
+                    </label>
+                    <input th:value="${client?.religion}" type="text" id="religion" name="religion" maxlength="20" placeholder="고인의 종교를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            직분
+                        </span>
+                    </label>
+                    <input th:value="${client?.duty}" type="text" id="duty" name="duty" maxlength="20" placeholder="고인의 직분을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+
+                    <br>
                     <br>
 
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            장법
+                        </span>
+                    </label>
+                    <br>
+                    <div class="flex">
+                        <div class="flex">
+                            <input value="0" type="radio" id="bury" name="funeralMethod" class="radio"/>
+                            <span>&nbsp;매장</span>
+                        </div>
+                        &nbsp;
+                        <div class="flex">
+                            <input value="1" type="radio" id="cremation" name="funeralMethod" class="radio"/>
+                            <span>&nbsp;화장</span>
+                        </div>
+                    </div>
+                    <br>
+
+
+                    <div id="hideCremationInput" class="hidden">
+                        <a href="https://www.15774129.go.kr/new/esky_p/esky_index.do#MENU:M211000000" target='_blank' class="btn">화장장 예약하기</a>
+                        <label class="label">
+                        <span class="label-text font-bold">
+                            화장장
+                        </span>
+                        </label>
+                        <input type="text" id="cremationInput" name="buryInput" maxlength="30" placeholder="화장장를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                    </div>
+
+                    <div id="hideBuryInput" class="hidden">
+                        <label class="label">
+                        <span class="label-text font-bold">
+                            장지
+                        </span>
+                        </label>
+                        <input type="text" id="buryInput" name="buryInput" maxlength="30" placeholder="장지를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                    </div>
+
+                    <div class="divider w-1/2">서류 확인</div>
+
+                    <br>
                     <label class="label">
                         <span class="label-text font-bold">
                             사망 원인
@@ -85,116 +193,29 @@
                     </div>
                     <br>
 
-                    <label class="label">
-                        <span class="label-text font-bold">
-                            고인의 주민등록 주소
-                        </span>
-                    </label>
-                    <div class="flex">
-                    <button type="button" onclick="goPopup();" class="btn btn-outline w-20 whitespace-nowrap">주소 검색</button>
-<!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
-                    <input disabled th:value="${client?.deceasedHomeAddress}" type="text" id="deceasedHomeAddress" name="deceasedHomeAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2 font-bold"/>
-                    </div>
-                    <label class="label">
-                        <span class="label-text font-bold">
-                            본관
-                        </span>
-                    </label>
-                    <input th:value="${client?.familyClan}" type="text" id="familyClan" name="familyClan" maxlength="20" placeholder="고인의 본관을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                    <div class="divider w-1/2">장례식 일정</div>
 
-                    <label class="label">
-                        <span class="label-text font-bold">
-                            종교
-                        </span>
-                    </label>
-                    <input th:value="${client?.religion}" type="text" id="religion" name="religion" maxlength="20" placeholder="고인의 종교를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
-
-                    <label class="label">
-                        <span class="label-text font-bold">
-                            직분
-                        </span>
-                    </label>
-                    <input th:value="${client?.duty}" type="text" id="duty" name="duty" maxlength="20" placeholder="고인의 직분을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                     <br>
-                    <br>
-                    <label class="label">
-                        <span class="label-text font-bold">
-                            장례식장
-                        </span>
-                    </label>
-                    <select id="department" name="department" class="select select-bordered select-sm w-full max-w-xs">
-                        <option value="" disabled selected>시/도</option>
-                        <div th:each="department : ${departments}" th:object="${department}">
-                            <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
-                        </div>
-                    </select>
-
-                    <select id="departmentDetail" name="departmentDetail" class="select select-bordered select-sm w-full max-w-xs">
-                        <option value="" disabled selected>시/군/구</option>
-                    </select>
-
-                    <select id="funeralHallName" name="funeralHallName" class="select select-bordered select-sm w-full max-w-xs">
-                        <option value="" disabled selected>장례식장</option>
-                    </select>
-
-                    <br>
-                    <label class="label">
-                        <span class="label-text font-bold">
-                            호실
-                        </span>
-                    </label>
-                    <input type="text" id="funeralHallRoom" name="funeralHallRoom" maxlength="20" placeholder="장례식장 호실을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
-
                     <label class="label">
                         <span class="label-text font-bold">
                             입관일시
                         </span>
                     </label>
-                    <input type="date" min="getToday();" id="casketDate" name="casketDate" class=""/>
-
-
+                    <div class="flex">
+                    <input type="date" min="getToday();" id="casketDate" name="casketDate" class="input input-bordered w-1/6"/>
+                    <input type="time" min="getNow();" id="casketTime" name="casketTime" class="input input-bordered w-1/6"/>
+                    </div>
 
                     <br>
-                    <br>
-
                     <label class="label">
                         <span class="label-text font-bold">
-                            장법
+                            발인일시
                         </span>
                     </label>
-                    <br>
                     <div class="flex">
-                        <div class="flex">
-                            <input value="0" type="radio" id="bury" name="funeralMethod" class="radio"/>
-                            <span>&nbsp;매장</span>
-                        </div>
-                        &nbsp;
-                        <div class="flex">
-                            <input value="1" type="radio" id="cremation" name="funeralMethod" class="radio"/>
-                            <span>&nbsp;화장</span>
-                        </div>
-                    </div>
-                    <br>
-
-
-                    <div id="hideCremationInput" class="hidden">
-                        <a href="https://www.15774129.go.kr/new/esky_p/esky_index.do#MENU:M211000000" target='_blank' class="btn">화장장 예약하기</a>
-                        <label class="label">
-                        <span class="label-text font-bold">
-                            화장장
-                        </span>
-                        </label>
-                        <input type="text" id="cremationInput" name="buryInput" maxlength="30" placeholder="화장장를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
-                    </div>
-
-                    <div id="hideBuryInput" class="hidden">
-                        <label class="label">
-                        <span class="label-text font-bold">
-                            장지
-                        </span>
-                        </label>
-                        <input type="text" id="buryInput" name="buryInput" maxlength="30" placeholder="장지를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                        <input type="date" min="getToday();" id="leavingDate" name="leavingDate" class="input input-bordered w-1/6"/>
+                        <input type="time" min="getNow();" id="leavingTime" name="leavingTime" class="input input-bordered w-1/6"/>
                     </div>
 
                 </div>
@@ -229,10 +250,14 @@
 
                 <label class="label">
                         <span class="label-text font-bold">
-                            주소
+                            상주의 주소
                         </span>
                 </label>
-                <input th:value="${chief?.address}" type="text" id="chiefAddress" name="chiefAddress" maxlength="30" placeholder="상주님의 주소를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                <div class="flex">
+                    <button type="button" onclick="goPopup();" class="btn btn-outline w-20 whitespace-nowrap self-center">주소 검색</button>
+                    <!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
+                    <input readonly th:value="${chief?.address}" type="text" id="chiefAddress" name="chiefAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2 font-bold"/>
+                </div>
 
 
             </div>

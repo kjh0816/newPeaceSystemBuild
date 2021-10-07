@@ -31,6 +31,19 @@ function getToday(){
     return year + "-" + month + "-" + day;
 }
 
+// 현재 시간을 hh:mm:ss 형식으로 출력하는 함수
+function getNow(){
+    var today = new Date();
+
+    var hours = ('0' + today.getHours()).slice(-2);
+    var minutes = ('0' + today.getMinutes()).slice(-2);
+    var seconds = ('0' + today.getSeconds()).slice(-2);
+
+    var timeString = hours + ':' + minutes  + ':' + seconds;
+
+    return timeString;
+}
+
 // department(시/도)를 선택했을 때, Ajax 요청을 통해 조회 후 정보 반환
 $('#department').change(function(){
 
