@@ -394,6 +394,8 @@ ALTER TABLE funeral ADD COLUMN femaleMourningClothId INT(10) UNSIGNED NOT NULL D
 ALTER TABLE funeral ADD COLUMN maleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER femaleMourningClothId;
 ALTER TABLE funeral ADD COLUMN shirtId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER maleMourningClothId;
 ALTER TABLE funeral ADD COLUMN necktieId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER shirtId;
+ALTER TABLE funeral ADD COLUMN coffinTransporterUseStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER necktieId;
+
 
 SELECT * FROM funeral;
 /*
@@ -582,6 +584,30 @@ SELECT * FROM maleMourningCloth;
 SELECT * FROM shirt;
 SELECT * FROM necktie;
 
+CREATE TABLE coffinTransporter(
+		id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		regDate DATETIME NOT NULL,
+		updateDate DATETIME NOT NULL,
+		retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+		costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO coffinTransporter
+SET regDate = NOW(),
+updateDate = NOW(),
+retailPrice = "70000",
+costPrice = "70000";
+
+CREATE TABLE coffinTransporterOrder(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    orderId INT(10) UNSIGNED NOT NULL,
+    deceasedHomeAddress CHAR(100) NOT NULL
+);
+
+SELECT * FROM coffinTransporterOrder;
+
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
 /*
@@ -705,4 +731,3 @@ DELETE FROM `maleMourningClothOrder`;
 DELETE FROM `shirtOrder`;
 DELETE FROM `necktieOrder`;
 */
-
