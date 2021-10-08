@@ -193,6 +193,34 @@
                 </div>
             </div>
         </div>
+        <!-- 수의 -->
+        <div class="card card-side shadow mb-2 bg-white">
+            <figure>
+
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">수의</h2>
+                <th:block th:if="${shroud == null}">
+                    <p>수의를 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${shroud == null}">
+                    <p class="font-bold">수의</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상품명</div>
+                        <p class="pl-2">[[${shroud.name}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2">[[${shroud.retailPriceFormat}]] 원</p>
+                    </div>
+                </th:block>
+                <div class="card-actions">
+                    <form action="./selectShroud">
+                        <button class="btn btn-ghost" type="submit">수의 선택하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- 진행중인 장례가 없을경우 -->
     <div class="p-10 card bg-base-200" th:unless="${funeral != null}">

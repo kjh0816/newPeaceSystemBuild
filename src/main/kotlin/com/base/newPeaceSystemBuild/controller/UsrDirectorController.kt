@@ -76,14 +76,11 @@ class UsrDirectorController(
         var maleMourningClothPrice = 0
         var shirtPrice = 0
         var necktiePrice = 0
+        var shroudPrice = 0
 
         val formatter = DecimalFormat("###,###")
         // 합계
         var sum = 0
-
-
-
-
         // 장례식장 선택을 위해 최초 로딩 시, 시/도 정보를 넘겨준다.
 
 
@@ -112,6 +109,11 @@ class UsrDirectorController(
             rq.getLoginedMember()!!.id,
             false,
             "necktie"
+        )
+        val shroudOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+            rq.getLoginedMember()!!.id,
+            false,
+            "shroud"
         )
 
         for(funeral in funerals){
@@ -142,6 +144,7 @@ class UsrDirectorController(
             val maleMourningCloth = vendorService.getMaleMourningClothById(funeral.maleMourningClothId)
             val shirt = vendorService.getShirtById(funeral.shirtId)
             val necktie = vendorService.getNecktieById(funeral.necktieId)
+            val shroud = vendorService.getShroudById(funeral.shroudId)
 
             if (flower != null) {
                 flowerPrice = flower.retailPrice.toInt()
@@ -177,6 +180,10 @@ class UsrDirectorController(
                     necktie.retailPrice.toInt() * necktieOrder!!.extra__necktieCnt!!
                 sum += necktiePrice
             }
+            if (shroud != null) {
+                shroudPrice = shroud.retailPrice.toInt()
+                sum += shroudPrice
+            }
 
             model.addAttribute("funeral", funeral)
             model.addAttribute("client", client)
@@ -188,6 +195,7 @@ class UsrDirectorController(
             model.addAttribute("maleMourningCloth", maleMourningCloth)
             model.addAttribute("shirt", shirt)
             model.addAttribute("necktie", necktie)
+            model.addAttribute("shroud", shroud)
         }
 
         val flowerTributePriceFormat = formatter.format(flowerTributePrice)
@@ -212,6 +220,7 @@ class UsrDirectorController(
         model.addAttribute("maleMourningClothOrder", maleMourningClothOrder)
         model.addAttribute("shirtOrder", shirtOrder)
         model.addAttribute("necktieOrder", necktieOrder)
+        model.addAttribute("shroudOrder", shroudOrder)
 //      합계
         model.addAttribute("sumFormat", sumFormat)
 

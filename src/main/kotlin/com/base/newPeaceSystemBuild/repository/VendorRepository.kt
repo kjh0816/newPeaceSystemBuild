@@ -628,6 +628,15 @@ interface VendorRepository {
     )
     fun getNecktieById(necktieId: Int): MourningCloth?
 
+    @Select(
+        """
+            SELECT *
+            FROM `shroud`
+            WHERE id = #{shroudId}
+        """
+    )
+    fun getShroudById(shroudId: Int): Shroud?
+
     @Insert(
         """
             INSERT INTO shirtOrder

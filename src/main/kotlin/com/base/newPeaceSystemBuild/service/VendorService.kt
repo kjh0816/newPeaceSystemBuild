@@ -443,6 +443,10 @@ class VendorService(
         return vendorRepository.getNecktieById(necktieId)
     }
 
+    fun getShroudById(shroudId: Int): Shroud? {
+        return vendorRepository.getShroudById(shroudId)
+    }
+
     fun getShrouds(): List<Shroud> {
         return vendorRepository.getShrouds()
     }
