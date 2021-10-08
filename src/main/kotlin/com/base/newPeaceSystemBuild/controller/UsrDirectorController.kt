@@ -248,11 +248,13 @@ class UsrDirectorController(
         val chief = clientService.getFamilyByClientId(clientId)
 
         val departments = memberService.getDepartments()
+        val familyRelations = clientService.getFamilyRelations()
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
         model.addAttribute("departments", departments)
+        model.addAttribute("familyRelations", familyRelations)
 
         return "usr/director/modifyFuneral"
     }

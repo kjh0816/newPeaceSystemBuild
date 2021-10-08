@@ -46,15 +46,13 @@ function getNow(){
 
 // 유가족 추가 버튼을 눌렀을 때 실행될 함수
 function addFamily(){
-    var row1 =
-    "<li></li>";
-    // X 버튼 아이콘(클릭 시 삭제가 돼야한다($(this)))
-    var row2 = "<i class='fas fa-times'></i>";
-    var row3 = "<li>ㅎㅎ</li>";
+
+    var htmlCodes = "<li class='flex'><select id='familyRelation' name='familyRelation' class='select select-bordered select-sm w-1/12 self-center h-full'><option value='' disabled selected>관계</option><div th:each='familyRelation : ${familyRelations}' th:object='${familyRelation}'><option th:value='*{name}' th:text='*{name}'></option></div></select><input type='text' id='familyName' name='familyName' maxlength='10' placeholder='성함' autocomplete='off' class='input input-bordered w-1/12'/><input type='text' id='familyCellphoneNo' name='familyCellphoneNo' maxlength='15' placeholder='연락처(-없이)' autocomplete='off' class='input input-bordered w-2/12'/><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer'></i></li>";
+
+    $('#familyList').append(htmlCodes);
 
 
 
-    $('#familyList').append(row1);
 }
 
 // department(시/도)를 선택했을 때, Ajax 요청을 통해 조회 후 정보 반환

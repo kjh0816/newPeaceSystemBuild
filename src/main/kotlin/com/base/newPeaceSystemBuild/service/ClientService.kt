@@ -8,6 +8,7 @@ import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.client.Family
+import com.base.newPeaceSystemBuild.vo.client.FamilyRelation
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Member
 import org.springframework.beans.factory.annotation.Autowired
@@ -215,5 +216,9 @@ class ClientService(
 
     fun getFuneralsByDirectorMemberIdAndProgress(directorMemberId: Int, progress: Boolean): List<Funeral> {
         return clientRepository.getFuneralsByDirectorMemberIdAndProgress(directorMemberId, progress)
+    }
+
+    fun getFamilyRelations(): List<FamilyRelation> {
+        return clientRepository.getFamilyRelations()
     }
 }
