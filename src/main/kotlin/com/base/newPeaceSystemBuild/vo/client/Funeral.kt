@@ -26,6 +26,8 @@ data class Funeral(
     val necktieId: Int,
 //  coffinTransporterUseStatus = 운구차 이용 여부
     val coffinTransporterUseStatus: Boolean,
+//  shroudId = 수의 스탠다드 번호
+    val shroudId: Int,
 
 // progress = 장례 진행 상태(장례지도사 연결 여부 ~ 장례식 종료) default = 0(장례지도사 연결 안 됨)
     val progress: Int
