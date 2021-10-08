@@ -269,9 +269,18 @@
                     <li class="flex">
                         <select id="familyRelation" name="familyRelation" class="select select-bordered select-sm w-1/12 self-center h-full">
                             <option value="" disabled selected>관계</option>
-                            <div th:each="familyRelation : ${familyRelations}" th:object="${familyRelation}">
-                                <option th:value="*{name}" th:text="*{name}"></option>
-                            </div>
+                            <option value="배우자">배우자</option>
+                            <option value="아들">아들</option>
+                            <option value="딸">딸</option>
+                            <option value="사위">사위</option>
+                            <option value="며느리">며느리</option>
+                            <option value="손자">손자</option>
+                            <option value="손녀">손녀</option>
+                            <option value="외손자">외손자</option>
+                            <option value="외손녀">외손녀</option>
+                            <option value="부">부</option>
+                            <option value="모">모</option>
+                            <option value="직접입력">직접입력</option>
                         </select>
                         <input type="text" id="familyName" name="familyName" maxlength="10" placeholder="성함" autocomplete="off" class="input input-bordered w-1/12"/>
                         <input type="text" id="familyCellphoneNo" name="familyCellphoneNo" maxlength="15" placeholder="연락처('-'없이)" autocomplete="off" class="input input-bordered w-2/12"/>

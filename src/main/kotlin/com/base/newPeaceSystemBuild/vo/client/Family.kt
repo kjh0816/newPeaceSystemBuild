@@ -13,6 +13,5 @@ data class Family(
         val address: String,
         val bank: String,
         val accountNum: String,
-        val accountOwner: String,
-        val familyLastId: Int
+        val accountOwner: String
 )

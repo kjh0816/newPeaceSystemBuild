@@ -55,31 +55,6 @@ function addFamily(){
 
     $('#familyList').append(htmlCodes);
 
-    var options =
-        [
-          {
-            "text"  : "Option 1",
-            "value" : "Value 1"
-          },
-          {
-            "text"     : "Option 2",
-            "value"    : "Value 2"
-          },
-          {
-            "text"  : "Option 3",
-            "value" : "Value 3"
-          }
-        ];
-
-        var selectBox = document.getElementById('familyRelation');
-
-        for(var i = 0, l = options.length; i < l; i++){
-          var option = options[i];
-          selectBox.options.add( new Option(option.text, option.value, option.selected) );
-        }
-
-
-
 }
 
 // department(시/도)를 선택했을 때, Ajax 요청을 통해 조회 후 정보 반환
