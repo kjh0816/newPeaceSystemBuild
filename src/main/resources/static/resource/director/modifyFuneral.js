@@ -45,6 +45,8 @@ function getNow(){
 }
 
 // 유가족 추가 버튼을 눌렀을 때 실행될 함수
+
+
 function addFamily(){
 
 
