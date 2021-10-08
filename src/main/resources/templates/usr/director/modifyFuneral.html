@@ -264,6 +264,15 @@
                             유가족
                         </span>
                 </label>
+                <div class="flex">
+                <input type="text" id="familyName" name="familyName" maxlength="10" placeholder="성함" autocomplete="off" class="input input-bordered my-2 w-1/12"/>
+                    <select id="familyRelation" name="familyRelation" class="select select-bordered select-sm w-full max-w-xs">
+                        <option value="" disabled selected>관계</option>
+                        <div th:each="familyRelation : ${familyRelations}" th:object="${family}">
+                            <option th:value="*{name}" th:text="*{name}"></option>
+                        </div>
+                    </select>
+                </div>
                 <ul id="familyList">
                 </ul>
                 <span>

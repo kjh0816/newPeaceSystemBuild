@@ -48,8 +48,11 @@ function getNow(){
 function addFamily(){
     var row1 =
     "<li></li>";
+    // X 버튼 아이콘(클릭 시 삭제가 돼야한다($(this)))
     var row2 = "<i class='fas fa-times'></i>";
     var row3 = "<li>ㅎㅎ</li>";
+
+
 
     $('#familyList').append(row1);
 }
