@@ -45,13 +45,44 @@ function getNow(){
 }
 
 // 유가족 추가 버튼을 눌렀을 때 실행될 함수
-function addFamily(){
+function addFamily(yee){
+
+    var familyRelation = $(yee).siblings(document.getElementById('familyName')).val();
+    var familyName = $(yee).prev().prev().val();
+    var familyCellphoneNo = $(yee).prev().val();
 
 
 
-    var htmlCodes = "<li id='listElement' class='listElement flex'><select id='familyRelation' name='familyRelation' class='select select-bordered select-sm w-1/12 self-center h-full'><option value='' disabled selected>관계</option><option value='배우자'>배우자</option><option value='아들'>아들</option><option value='딸'>딸</option><option value='사위'>사위</option><option value='며느리'>며느리</option><option value='손자'>손자</option><option value='손녀'>손녀</option><option value='외손자'>외손자</option><option value='외손녀'>외손녀</option><option value='부'>부</option><option value='모'>모</option><option value='직접입력'>직접입력</option></select><input type='text' id='familyName' name='familyName' maxlength='10' placeholder='성함' autocomplete='off' class='input input-bordered w-1/12'/><input type='text' id='familyCellphoneNo' name='familyCellphoneNo' maxlength='15' placeholder='연락처(- 없이 입력)' autocomplete='off' class='input input-bordered w-2/12'/><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
+    if(familyRelation == null){
+        alert('관계를 선택해주십시오.');
+        return
+    }
+    if(familyName.trim().length == 0){
+        alert('이름을 입력해주십시오.')
+        return
+    }
+    if(familyCellphoneNo.trim().length == 0){
+        alert('핸드폰 번호를 입력해주십시오.')
+        return
+    }
+    // 직접입력일 경우, 입력란의 값을 취한다.
+    if(familyRelation == '직접입력'){
+        var familyRelation = $(yee).prev().prev().prev().val();
+    }
+
+    function getFamilyRelation(yee){
+            var familyRelation = $(yee).siblings(document.getElementById('familyName')).val();
+            return familyRelation
+        }
+
+    var htmlCodes = "<li class='flex'><input type='text' id='familyRelationValue' disabled class='input input-bordered w-1/12'><input type='text' id='familyNameValue' disabled class='input input-bordered w-1/12' value='getFamilyRelation(yee);'><input type='text' id='familyCellphoneNoValue' disabled class='input input-bordered w-2/12'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='if ( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){return false}else{removeFamily(this)};'></i></li>";
 
     $('#familyList').append(htmlCodes);
+
+//    $('#familyRelationValue').attr('value', familyRelation);
+    $('#familyNameValue').value = familyName;
+    $('#familyCellphoneNoValue').value = familyCellphoneNo;
+
 }
 
 // 유가족 삭제 버튼을 눌렀을 때 실행될 함수
