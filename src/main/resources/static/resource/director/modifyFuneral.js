@@ -45,17 +45,31 @@ function getNow(){
 }
 
 // 유가족 추가 버튼을 눌렀을 때 실행될 함수
-
-
 function addFamily(){
 
 
 
-    var htmlCodes = "<li class='flex'><select id='familyRelation' name='familyRelation' class='select select-bordered select-sm w-1/12 self-center h-full'><option value='' disabled selected>관계</option><div th:each='familyRelation : ${familyRelations}' th:object='${familyRelation}'><option th:field= '+ *{name}'></option></div></select><input type='text' id='familyName' name='familyName' maxlength='10' placeholder='성함' autocomplete='off' class='input input-bordered w-1/12'/><input type='text' id='familyCellphoneNo' name='familyCellphoneNo' maxlength='15' placeholder='연락처(-없이)' autocomplete='off' class='input input-bordered w-2/12'/><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer'></i></li>";
+    var htmlCodes = "<li id='listElement' class='listElement flex'><select id='familyRelation' name='familyRelation' class='select select-bordered select-sm w-1/12 self-center h-full'><option value='' disabled selected>관계</option><option value='배우자'>배우자</option><option value='아들'>아들</option><option value='딸'>딸</option><option value='사위'>사위</option><option value='며느리'>며느리</option><option value='손자'>손자</option><option value='손녀'>손녀</option><option value='외손자'>외손자</option><option value='외손녀'>외손녀</option><option value='부'>부</option><option value='모'>모</option><option value='직접입력'>직접입력</option></select><input type='text' id='familyName' name='familyName' maxlength='10' placeholder='성함' autocomplete='off' class='input input-bordered w-1/12'/><input type='text' id='familyCellphoneNo' name='familyCellphoneNo' maxlength='15' placeholder='연락처(- 없이 입력)' autocomplete='off' class='input input-bordered w-2/12'/><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
 
     $('#familyList').append(htmlCodes);
-
 }
+
+// 유가족 삭제 버튼을 눌렀을 때 실행될 함수
+function removeFamily(yee){
+    $(yee).closest('li').remove();
+}
+
+
+$('#familyRelation').change(function(){
+    // $(this).val() 셀렉트 박스의 현재 값
+    if($(this).val().trim() == "직접입력"){
+        $(this).next().css("display", "block");
+    }
+    if($(this).val().trim() != "직접입력"){
+            $(this).next().css("display", "none");
+    }
+
+});
 
 // department(시/도)를 선택했을 때, Ajax 요청을 통해 조회 후 정보 반환
 $('#department').change(function(){
