@@ -596,11 +596,11 @@ SELECT * FROM shirt;
 SELECT * FROM necktie;
 
 CREATE TABLE coffinTransporter(
-		id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-		regDate DATETIME NOT NULL,
-		updateDate DATETIME NOT NULL,
-		retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
-		costPrice CHAR(10) NOT NULL COMMENT '원가'
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
 );
 
 INSERT INTO coffinTransporter
@@ -618,6 +618,98 @@ CREATE TABLE coffinTransporterOrder(
 );
 
 SELECT * FROM coffinTransporterOrder;
+
+CREATE TABLE shroud(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(15) NOT NULL,
+	gender CHAR(1) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '갖은수의(혼합사)',
+gender = 'M',
+retailPrice = '200000',
+costPrice = '80000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '갖은수의(혼합사)',
+gender = 'F',
+retailPrice = '200000',
+costPrice = '80000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '갖은수의(저마)',
+gender = 'M',
+retailPrice = '500000',
+costPrice = '150000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '갖은수의(저마)',
+gender = 'F',
+retailPrice = '500000',
+costPrice = '150000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '갖은수의(대마)',
+gender = 'M',
+retailPrice = '1200000',
+costPrice = '380000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '갖은수의(대마)',
+gender = 'F',
+retailPrice = '1200000',
+costPrice = '380000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '갖은수의(인견+대마)',
+gender = 'M',
+retailPrice = '1500000',
+costPrice = '450000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '갖은수의(인견+대마)',
+gender = 'F',
+retailPrice = '1500000',
+costPrice = '450000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '안동포',
+gender = 'M',
+retailPrice = '5000000',
+costPrice = '4800000';
+
+INSERT INTO shroud
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '안동포',
+gender = 'F',
+retailPrice = '5000000',
+costPrice = '4800000';
+
+SELECT * FROM shroud;
 
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
