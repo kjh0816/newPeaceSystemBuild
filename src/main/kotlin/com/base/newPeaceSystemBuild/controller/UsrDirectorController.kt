@@ -565,6 +565,20 @@ class UsrDirectorController(
         )
     }
 
+    @RequestMapping("/usr/director/doSelectShroud", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doSelectShroud(
+        funeralId: Int,
+        @RequestParam(defaultValue = "0") shroudId: Int
+    ): String {
+        return Ut.getJsonStrFromObj(
+            vendorService.modifyFuneralIntoShroudId(
+                funeralId,
+                shroudId
+            )
+        )
+    }
+
     @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
     @ResponseBody
     fun doMoveProgressPage(

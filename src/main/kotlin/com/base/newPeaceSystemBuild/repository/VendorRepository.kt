@@ -45,6 +45,15 @@ interface VendorRepository {
     )
     fun modifyFuneralIntoFlowerId(funeralId:Int, flowerId: Int)
 
+    @Update(
+        """
+            UPDATE funeral 
+            SET shroudId = #{shroudId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoShroudId(funeralId: Int, shroudId: Int)
+
     @Select(
         """
             SELECT * 
@@ -361,6 +370,16 @@ interface VendorRepository {
         """
     )
     fun insertIntoFlowerOrder(orderId: Int)
+
+    @Insert(
+        """
+            INSERT INTO shroudOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId}
+        """
+    )
+    fun insertIntoShroudOrder(orderId: Int)
 
     @Select(
         """
@@ -703,5 +722,6 @@ interface VendorRepository {
         """
     )
     fun getShrouds(): List<Shroud>
+
 
 }

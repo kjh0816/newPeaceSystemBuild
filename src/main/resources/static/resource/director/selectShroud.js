@@ -1,7 +1,7 @@
-let Selectshroud__submitDone = false;
+let SelectShroud__submitDone = false;
 
-function Selectshroud__submit(form) {
-    if (form.shroudId.value.length == 0 && form.shroudTributeId.value.length == 0) {
+function SelectShroud__submit(form) {
+    if (form.shroudId.value.length == 0) {
         swal({
             title: "수의를 선택해주세요.",
             icon: "info",
