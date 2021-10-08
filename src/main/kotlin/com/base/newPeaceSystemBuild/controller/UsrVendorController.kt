@@ -4,10 +4,7 @@ import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
-import com.base.newPeaceSystemBuild.vo.standard.CoffinTransporter
-import com.base.newPeaceSystemBuild.vo.standard.Flower
-import com.base.newPeaceSystemBuild.vo.standard.FlowerTribute
-import com.base.newPeaceSystemBuild.vo.standard.MourningCloth
+import com.base.newPeaceSystemBuild.vo.standard.*
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -74,6 +71,15 @@ class UsrVendorController(
         model.addAttribute("coffinTransporters", coffinTransporters)
 
         return "usr/vendor/coffinTransporterRequest"
+    }
+
+    @RequestMapping("/usr/vendor/shroudRequest")
+    fun showShroudRequest(model: Model): String{
+        val shrouds: List<Shroud> = vendorService.getShrouds()
+
+        model.addAttribute("shrouds", shrouds)
+
+        return "usr/vendor/shroudRequest"
     }
 
     @RequestMapping("/usr/vendor/dispatch")
@@ -163,6 +169,16 @@ class UsrVendorController(
         vendorRequest(multipartRequest, 3)
 
         return rq.replaceJs("운구차량 사업자 등록 신청이 완료되었습니다.", "../home/main")
+    }
+
+    @RequestMapping("/usr/vendor/doShroudRequest", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doShroudRequest(
+        multipartRequest: MultipartRequest
+    ): String {
+        vendorRequest(multipartRequest, 4)
+
+        return rq.replaceJs("수의 사업자 등록 신청이 완료되었습니다.", "../home/main")
     }
 
     @RequestMapping("/usr/vendor/doDispatch", method = [RequestMethod.POST])
