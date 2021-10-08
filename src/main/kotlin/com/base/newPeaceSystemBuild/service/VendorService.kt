@@ -6,10 +6,7 @@ import com.base.newPeaceSystemBuild.repository.VendorRepository
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Funeral
-import com.base.newPeaceSystemBuild.vo.standard.CoffinTransporter
-import com.base.newPeaceSystemBuild.vo.standard.MourningCloth
-import com.base.newPeaceSystemBuild.vo.standard.Flower
-import com.base.newPeaceSystemBuild.vo.standard.FlowerTribute
+import com.base.newPeaceSystemBuild.vo.standard.*
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -444,6 +441,10 @@ class VendorService(
     }
     fun getNecktieById(necktieId: Int): MourningCloth? {
         return vendorRepository.getNecktieById(necktieId)
+    }
+
+    fun getShrouds(): List<Shroud> {
+        return vendorRepository.getShrouds()
     }
 
 

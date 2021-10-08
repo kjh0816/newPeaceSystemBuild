@@ -383,6 +383,32 @@ class UsrDirectorController(
         return "usr/director/selectMourningCloth"
     }
 
+    @RequestMapping("/usr/director/selectShroud")
+    fun showSelectShroud(model: Model): String {
+        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+        val shrouds = vendorService.getShrouds()
+
+        if (funeral != null) {
+            val details = mutableListOf<String>()
+            details.add("shroud")
+
+            for(detail in details){
+                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
+                    funeral.id,
+                    false,
+                    detail
+                )
+
+                model.addAttribute(detail + "Order", order)
+            }
+        }
+
+        model.addAttribute("shrouds", shrouds)
+        model.addAttribute("funeral", funeral)
+
+        return "usr/director/selectShroud"
+    }
+
     @RequestMapping("/usr/director/dispatch")
     fun showDispatch(
         model: Model,
