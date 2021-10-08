@@ -711,6 +711,12 @@ costPrice = '4800000';
 
 SELECT * FROM shroud;
 
+CREATE TABLE shroudOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL
+);
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
 /*
