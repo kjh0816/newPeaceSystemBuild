@@ -52,7 +52,7 @@ function addFamily(yee){
     var familyCellphoneNo = $(yee).prev().val();
 
 
-
+    // 입력 여부 검사 (시작)
     if(familyRelation == null){
         alert('관계를 선택해주십시오.');
         return
@@ -65,6 +65,8 @@ function addFamily(yee){
         alert('핸드폰 번호를 입력해주십시오.')
         return
     }
+    // 입력 여부 검사 (끝)
+
     // 직접입력일 경우, 입력란의 값을 취한다.
     if(familyRelation == '직접입력'){
         var familyRelation = $(yee).prev().prev().prev().val();
@@ -72,13 +74,10 @@ function addFamily(yee){
 
 
 
-    var htmlCodes = "<li class='flex'><input type='text' id='familyRelationValue' disabled class='input input-bordered w-1/12' value="[ familyRelation ]"><input type='text' id='familyNameValue' disabled class='input input-bordered w-1/12'><input type='text' id='familyCellphoneNoValue' disabled class='input input-bordered w-2/12'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='if ( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){return false}else{removeFamily(this)};'></i></li>";
+    var htmlCodes = "<li class='flex'><input type='text' id='familyRelationValue' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' id='familyNameValue' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' id='familyCellphoneNoValue' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='if ( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){return false}else{removeFamily(this)};'></i></li>";
 
     $('#familyList').append(htmlCodes);
 
-//    $('#familyRelationValue').attr('value', familyRelation);
-    $('#familyNameValue').value = familyName;
-    $('#familyCellphoneNoValue').value = familyCellphoneNo;
 
 }
 
