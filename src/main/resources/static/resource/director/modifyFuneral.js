@@ -70,12 +70,9 @@ function addFamily(yee){
         var familyRelation = $(yee).prev().prev().prev().val();
     }
 
-    function getFamilyRelation(yee){
-            var familyRelation = $(yee).siblings(document.getElementById('familyName')).val();
-            return familyRelation
-        }
 
-    var htmlCodes = "<li class='flex'><input type='text' id='familyRelationValue' disabled class='input input-bordered w-1/12'><input type='text' id='familyNameValue' disabled class='input input-bordered w-1/12' value='getFamilyRelation(yee);'><input type='text' id='familyCellphoneNoValue' disabled class='input input-bordered w-2/12'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='if ( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){return false}else{removeFamily(this)};'></i></li>";
+
+    var htmlCodes = "<li class='flex'><input type='text' id='familyRelationValue' disabled class='input input-bordered w-1/12' value="[ familyRelation ]"><input type='text' id='familyNameValue' disabled class='input input-bordered w-1/12'><input type='text' id='familyCellphoneNoValue' disabled class='input input-bordered w-2/12'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='if ( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){return false}else{removeFamily(this)};'></i></li>";
 
     $('#familyList').append(htmlCodes);
 

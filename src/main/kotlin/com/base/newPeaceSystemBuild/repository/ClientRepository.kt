@@ -2,12 +2,7 @@ package com.base.newPeaceSystemBuild.repository
 
 import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.client.Family
-import com.base.newPeaceSystemBuild.vo.client.FamilyRelation
 import com.base.newPeaceSystemBuild.vo.client.Funeral
-import com.base.newPeaceSystemBuild.vo.member.Bank
-import com.base.newPeaceSystemBuild.vo.member.Department
-import com.base.newPeaceSystemBuild.vo.member.Member
-import com.base.newPeaceSystemBuild.vo.member.Role
 import org.apache.ibatis.annotations.*
 
 @Mapper
@@ -139,11 +134,5 @@ interface ClientRepository {
     )
     fun getFuneralsByDirectorMemberIdAndProgress(directorMemberId: Int, progress: Boolean): List<Funeral>
 
-    @Select(
-            """
-                SELECT *
-                FROM familyRelation
-            """
-    )
-    fun getFamilyRelations(): List<FamilyRelation>
+
 }

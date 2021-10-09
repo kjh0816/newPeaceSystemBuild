@@ -311,15 +311,7 @@ CREATE TABLE family(
 	accountOwner CHAR(20) NOT NULL DEFAULT ''
 );
 
-CREATE TABLE familyRelation(
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`name` CHAR(20) NOT NULL
-);
 
-INSERT INTO familyRelation
-SET `name` = '아버지';
-INSERT INTO familyRelation
-SET `name` = '어머니';
 
 
 
