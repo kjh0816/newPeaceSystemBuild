@@ -114,6 +114,7 @@ interface ClientRepository {
     )
     fun insertIntoFamily(clientId: Int, relatedName: String, cellphoneNo: String)
 
+    // 상주 정보를 clientId롤 통해 조회(상주는 항상 1명만 있도록 로직이 짜여있음)
     @Select(
             """
                 SELECT *
@@ -133,7 +134,8 @@ interface ClientRepository {
         """
     )
     fun getFuneralsByDirectorMemberIdAndProgress(directorMemberId: Int, progress: Boolean): List<Funeral>
-
+    
+    // 상주 정보를 유가족 정보에 입력했는지 확인하기 위해 chiefStatus에 상관없이 조회
     @Select(
             """
                 SELECT *
@@ -145,7 +147,8 @@ interface ClientRepository {
             """
     )
     fun getFamilyByClientIdAndAll(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int): Family
-
+    
+    
     @Insert(
             """
                 INSERT INTO family
@@ -180,6 +183,18 @@ interface ClientRepository {
             """
     )
     fun removeFamily(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int)
+    @Select(
+            """
+                SELECT *
+                FROM family
+                WHERE name = #{familyName}
+                AND relation = #{familyRelation}
+                AND cellphoneNo = #{familyCellphoneNo}
+                AND clientId = #{clientId}
+                AND chiefStatus = 0
+            """
+    )
+    fun getFamilyMemberByAll(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int): Family
 
 
 }

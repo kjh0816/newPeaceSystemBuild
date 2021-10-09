@@ -249,6 +249,11 @@ class ClientService(
 
     fun removeFamily(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int): ResultData {
 
+        val familyMember = clientRepository.getFamilyMemberByAll(familyRelation, familyName, familyCellphoneNo, clientId)
+        if(familyMember == null){
+            return ResultData.from("F-1", "담당자에게 문의해주십시오.(010-4921-9810)")
+        }
+
         clientRepository.removeFamily(familyRelation, familyName, familyCellphoneNo, clientId)
         return ResultData.from("S-1", "해당 유가족의 정보를 삭제했습니다.")
     }
