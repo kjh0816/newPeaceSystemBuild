@@ -62,7 +62,7 @@ function addFamily(yee){
         return
     }
     if(familyCellphoneNo.trim().length == 0){
-        alert('핸드폰 번호를 입력해주십시오.')
+        alert('핸드폰 번호를 입력해주십시오.');
         return
     }
     // 입력 여부 검사 (끝)
@@ -72,17 +72,30 @@ function addFamily(yee){
         var familyRelation = $(yee).prev().prev().prev().val();
     }
 
+    // 데이터 정합성 검사 (시작)
+        // 이름 검사 (시작) : 2~10자의 한글만 입력 가능
+        var regex = /^[가-힣]{2,10}$/;
+        if(!regex.test(familyName)){
+            alert('유가족의 이름이 올바른지 확인해주십시오.');
+            return
+        }
+        // 이름 검사 (끝)
+    // 데이터 정합성 검사 (끝)
 
 
-    var htmlCodes = "<li class='flex'><input type='text' id='familyRelationValue' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' id='familyNameValue' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' id='familyCellphoneNoValue' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='if ( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){return false}else{removeFamily(this)};'></i></li>";
+    var htmlCodes = "<li class='flex'><input type='text' id='familyRelationValue' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' id='familyNameValue' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' id='familyCellphoneNoValue' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
 
     $('#familyList').append(htmlCodes);
-
-
 }
 
 // 유가족 삭제 버튼을 눌렀을 때 실행될 함수
 function removeFamily(yee){
+    if( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){
+    return false
+    }
+
+
+
     $(yee).closest('li').remove();
 }
 
