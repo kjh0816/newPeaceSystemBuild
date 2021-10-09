@@ -133,13 +133,14 @@ function addFamily(yee){
 
 // 유가족 삭제 버튼을 눌렀을 때 실행될 함수
 function removeFamily(yee){
-    if( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){
-    return false
-    }
 
     var familyRelation = $(yee).siblings(document.getElementById('familyName')).val();
     var familyName = $(yee).prev().prev().val();
     var familyCellphoneNo = $(yee).prev().val();
+
+    if( confirm("'" + familyName + "'" + ' 유가족님의 정보를 지우시겠습니까?') == false ){
+        return false
+    }
 
 
     $.ajax({
