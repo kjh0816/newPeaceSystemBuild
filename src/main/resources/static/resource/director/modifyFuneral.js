@@ -73,19 +73,35 @@ function addFamily(yee){
     }
 
     // 데이터 정합성 검사 (시작)
+        // 관계 검사 (시작) : 1~10자의 한글만 입력 가능
+            var relationRegex = /^[가-힣]{1,10}$/;
+            if(!relationRegex.test(familyRelation)){
+                alert('입력한 유가족 관계가 올바른지 확인해주십시오.');
+                return
+            }
+        // 관계 검사 (끝)
+
         // 이름 검사 (시작) : 2~10자의 한글만 입력 가능
-        var regex = /^[가-힣]{2,10}$/;
-        if(!regex.test(familyName)){
+        var nameRegex = /^[가-힣]{2,10}$/;
+        if(!nameRegex.test(familyName)){
             alert('유가족의 이름이 올바른지 확인해주십시오.');
             return
         }
         // 이름 검사 (끝)
+
+        // 핸드폰번호 검사 (시작) : 10~11의 숫자만 입력 가능
+        var cellphoneNoRegex = /^[0-9]{10,11}$/;
+        if(!cellphoneNoRegex.test(familyCellphoneNo)){
+            alert('유가족의 핸드폰번호가 올바른지 확인해주십시오.');
+            return
+        }
+        // 핸드폰번호 검사 (끝)
     // 데이터 정합성 검사 (끝)
 
-
-    var htmlCodes = "<li class='flex'><input type='text' id='familyRelationValue' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' id='familyNameValue' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' id='familyCellphoneNoValue' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
-
+    // 실제 보여줄 데이터를 HTML에 전달
+    var htmlCodes = "<li class='flex'><input type='text' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
     $('#familyList').append(htmlCodes);
+
 }
 
 // 유가족 삭제 버튼을 눌렀을 때 실행될 함수
@@ -93,7 +109,6 @@ function removeFamily(yee){
     if( confirm('해당 유가족 정보를 지우시겠습니까?') == false ){
     return false
     }
-
 
 
     $(yee).closest('li').remove();
