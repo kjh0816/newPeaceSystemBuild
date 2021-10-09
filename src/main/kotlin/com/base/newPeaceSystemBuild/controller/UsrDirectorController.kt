@@ -253,7 +253,7 @@ class UsrDirectorController(
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
         model.addAttribute("departments", departments)
-        
+
 
         return "usr/director/modifyFuneral"
     }
