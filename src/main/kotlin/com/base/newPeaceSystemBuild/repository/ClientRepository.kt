@@ -134,5 +134,40 @@ interface ClientRepository {
     )
     fun getFuneralsByDirectorMemberIdAndProgress(directorMemberId: Int, progress: Boolean): List<Funeral>
 
+    @Select(
+            """
+                SELECT *
+                FROM family
+                WHERE name = #{familyName}
+                AND relation = #{familyRelation}
+                AND cellphoneNo = #{familyCellphoneNo}
+                AND clientId = #{clientId}
+            """
+    )
+    fun getFamilyByClientIdAndAll(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int): Family
+
+    @Insert(
+            """
+                INSERT INTO family
+                SET regDate = NOW(),
+                updateDate = NOW(),
+                clientId = #{clientId},
+                name = #{familyName},
+                relation = #{familyRelation},
+                cellphoneNo = #{familyCellphoneNo}
+            """
+    )
+    fun addFamily(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int)
+
+    @Select(
+            """
+                SELECT *
+                FROM family
+                WHERE clientId = #{clientId}
+                AND chiefStatus = 0
+            """
+    )
+    fun getFamilyMembersByClientId(clientId: Int): List<Family>
+
 
 }

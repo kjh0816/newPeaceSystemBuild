@@ -6,10 +6,16 @@
 <head>
     <title>고인과 장례 관련 정보 입력 및 수정</title>
     <th:block layout:fragment="js">
-        <script type="text/javascript" src="/resource/director/modifyFuneral.js" charset="utf-8" defer></script>
+        <script type="text/javascript" src="/resource/director/modifyFuneral.js" charset="utf-8" defer>
+        </script>
     </th:block>
 </head>
 <main layout:fragment="main">
+    <!-- JS에서 Thymeleaf 변수를 사용하기 위한 부분 ( 시작 ) -->
+    <script th:inline="javascript">
+        var clientId = [[${client.id}]];
+    </script>
+    <!-- JS에서 Thymeleaf 변수를 사용하기 위한 부분 ( 끝 ) -->
     <form method="POST" onsubmit="DirectorModifyFuneral__submit(this); return false;">
         <div class="p-10 card bg-base-200">
             <div class="bg-white">
@@ -288,9 +294,17 @@
                 <br>
 
                 <div class="divider w-1/2">현재 등록된 유가족</div>
-
+                <br>
                 <ul id="familyList">
                     <!-- 유가족 추가 시, 정보가 들어가는 부분 -->
+                    <div th:each="familyMember : ${familyMembers}" th:object="${familyMember}">
+                        <li class='flex'>
+                            <input type='text' disabled class='input input-bordered w-1/12' th:value="*{relation}">
+                            <input type='text' disabled class='input input-bordered w-1/12' th:value="*{name}">
+                            <input type='text' disabled class='input input-bordered w-2/12' th:value="*{cellphoneNo}">
+                            <i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i>
+                        </li>
+                    </div>
                 </ul>
             </div>
 

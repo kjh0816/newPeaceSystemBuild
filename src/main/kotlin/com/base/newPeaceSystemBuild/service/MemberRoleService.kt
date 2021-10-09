@@ -2,6 +2,7 @@ package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.MemberRoleRepository
 import com.base.newPeaceSystemBuild.vo.ResultData
+import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.FuneralHall
 import org.springframework.stereotype.Service
 
@@ -41,5 +42,9 @@ class MemberRoleService(
 
         return ResultData.from("S-1", "장레식장 이름을 불러오는데 성공했습니다.", "funeralHallNames", funeralHallNames.distinct())
     }
+
+
+
+
 
 }

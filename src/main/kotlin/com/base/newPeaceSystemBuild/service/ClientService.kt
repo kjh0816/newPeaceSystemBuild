@@ -217,5 +217,35 @@ class ClientService(
         return clientRepository.getFuneralsByDirectorMemberIdAndProgress(directorMemberId, progress)
     }
 
+    fun addFamily(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int): ResultData {
+        if(familyRelation.isBlank()){
+            return ResultData.from("F-1", "입력한 유가족 관계가 올바른지 확인해주십시오.")
+        }
+        if(familyName.isBlank()){
+            return ResultData.from("F-2", "유가족의 이름이 올바른지 확인해주십시오.")
+        }
+        if(familyCellphoneNo.isBlank()){
+            return ResultData.from("F-3", "유가족의 핸드폰번호가 올바른지 확인해주십시오.")
+        }
+        // 넘겨받을 clientId가 존재하지 않는 것은, 잘못된 접근
+        if(clientId == 0){
+            return ResultData.from("F-4", "잘못된 접근입니다.")
+        }
+        // 해당 clientId로 조회된 데이터 중, 중복되는 데이터가 있는지 확인
+        val existingFamily = clientRepository.getFamilyByClientIdAndAll(familyRelation, familyName, familyCellphoneNo, clientId)
+        if(existingFamily != null){
+            return ResultData.from("F-5", "이미 동일한 유가족 또는 상주 정보를 입력하셨습니다.")
+        }
+
+        // 예외를 모두 통과한 경우
+        clientRepository.addFamily(familyRelation, familyName, familyCellphoneNo, clientId)
+
+        return ResultData.from("S-1", "유가족 정보를 추가했습니다.")
+    }
+
+    fun getFamilyMembersByClientId(clientId: Int): List<Family> {
+        return clientRepository.getFamilyMembersByClientId(clientId)
+    }
+
 
 }

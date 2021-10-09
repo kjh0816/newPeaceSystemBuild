@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.repository
 
+import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.FuneralHall
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
@@ -45,4 +46,6 @@ interface MemberRoleRepository {
             """
     )
     fun getFuneralHallsByDepartmentDetail(departmentDetail: String): List<FuneralHall>
+
+
 }

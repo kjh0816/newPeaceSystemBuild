@@ -245,13 +245,29 @@ class UsrDirectorController(
 
         // 상주 정보 불러옴
         val chief = clientService.getFamilyByClientId(clientId)
+        // 저장된 유가족 정보를 불러옴 (상주는 제외)
+        val familyMembers = clientService.getFamilyMembersByClientId(clientId)
 
         val departments = memberService.getDepartments()
+
+        println(familyMembers)
+        println(familyMembers)
+        println(familyMembers)
+        println(familyMembers)
+        println(familyMembers)
+        println(familyMembers)
+        println(familyMembers)
+        println(familyMembers)
+        println(familyMembers)
+
+
+
 
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
+        model.addAttribute("familyMembers", familyMembers)
         model.addAttribute("departments", departments)
 
 
@@ -266,6 +282,20 @@ class UsrDirectorController(
 
         return ""
     }
+
+    @RequestMapping("/usr/director/addFamily")
+    @ResponseBody
+    fun addFamily(
+            @RequestParam(defaultValue = "") familyRelation: String,
+            @RequestParam(defaultValue = "") familyName: String,
+            @RequestParam(defaultValue = "") familyCellphoneNo: String,
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String{
+
+        // 유가족 추가 시, Ajax로 이 controller를 실행
+        return Ut.getJsonStrFromObj(clientService.addFamily(familyRelation, familyName, familyCellphoneNo, clientId))
+    }
+
 
     @RequestMapping("/usr/director/departmentDetail", method = [RequestMethod.POST])
     @ResponseBody

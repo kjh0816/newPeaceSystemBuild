@@ -51,7 +51,6 @@ function addFamily(yee){
     var familyName = $(yee).prev().prev().val();
     var familyCellphoneNo = $(yee).prev().val();
 
-
     // 입력 여부 검사 (시작)
     if(familyRelation == null){
         alert('관계를 선택해주십시오.');
@@ -97,6 +96,32 @@ function addFamily(yee){
         }
         // 핸드폰번호 검사 (끝)
     // 데이터 정합성 검사 (끝)
+
+    // 서버로 데이터 전송 (시작)
+
+    $.ajax({
+        type: 'POST',
+        url: './addFamily',
+        dataType: 'json',
+        data: {
+        familyRelation:familyRelation,
+        familyName:familyName,
+        familyCellphoneNo:familyCellphoneNo,
+        clientId:clientId
+        },
+        success: function(result){
+            if ( result.success ) {
+                alert(result.msg);
+//                window.location.replace('/usr/member/login');
+            }
+            else {
+                alert(result.msg);
+                return
+            }
+        }
+
+    });
+    // 서버로 데이터 전송 (끝)
 
     // 실제 보여줄 데이터를 HTML에 전달
     var htmlCodes = "<li class='flex'><input type='text' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
