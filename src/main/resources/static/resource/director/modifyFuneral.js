@@ -97,7 +97,7 @@ function addFamily(yee){
         // 핸드폰번호 검사 (끝)
     // 데이터 정합성 검사 (끝)
 
-    // 서버로 데이터 전송 (시작)
+    // 서버로 데이터 전송 및 HTML 출력 (시작)
 
     $.ajax({
         type: 'POST',
@@ -111,21 +111,23 @@ function addFamily(yee){
         },
         success: function(result){
             if ( result.success ) {
+
                 alert(result.msg);
-//                window.location.replace('/usr/member/login');
+                // 실제 보여줄 데이터를 HTML에 전달
+                var htmlCodes = "<li class='flex'><input type='text' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
+                $('#familyList').append(htmlCodes);
+
             }
             else {
                 alert(result.msg);
-                return
             }
         }
 
     });
-    // 서버로 데이터 전송 (끝)
+    // 서버로 데이터 전송 및 HTML 출력 (끝)
 
-    // 실제 보여줄 데이터를 HTML에 전달
-    var htmlCodes = "<li class='flex'><input type='text' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
-    $('#familyList').append(htmlCodes);
+
+
 
 }
 
@@ -135,8 +137,31 @@ function removeFamily(yee){
     return false
     }
 
+    var familyRelation = $(yee).siblings(document.getElementById('familyName')).val();
+    var familyName = $(yee).prev().prev().val();
+    var familyCellphoneNo = $(yee).prev().val();
 
-    $(yee).closest('li').remove();
+
+    $.ajax({
+            type: 'POST',
+            url: './removeFamily',
+            dataType: 'json',
+            data: {
+            familyRelation:familyRelation,
+            familyName:familyName,
+            familyCellphoneNo:familyCellphoneNo,
+            clientId:clientId
+            },
+            success: function(result){
+                if ( result.success ) {
+                    // 실제 보여줄 데이터를 HTML에 전달
+                    $(yee).closest('li').remove();
+                }
+                else {
+                    alert(result.msg);
+                }
+            }
+    });
 }
 
 

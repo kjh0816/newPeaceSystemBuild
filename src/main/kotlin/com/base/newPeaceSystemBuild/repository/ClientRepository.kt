@@ -169,5 +169,17 @@ interface ClientRepository {
     )
     fun getFamilyMembersByClientId(clientId: Int): List<Family>
 
+    @Delete(
+            """
+                DELETE FROM family
+                WHERE name = #{familyName}
+                AND relation = #{familyRelation}
+                AND cellphoneNo = #{familyCellphoneNo}
+                AND clientId = #{clientId}
+                AND chiefStatus = 0
+            """
+    )
+    fun removeFamily(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int)
+
 
 }

@@ -250,20 +250,6 @@ class UsrDirectorController(
 
         val departments = memberService.getDepartments()
 
-        println(familyMembers)
-        println(familyMembers)
-        println(familyMembers)
-        println(familyMembers)
-        println(familyMembers)
-        println(familyMembers)
-        println(familyMembers)
-        println(familyMembers)
-        println(familyMembers)
-
-
-
-
-
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
@@ -294,6 +280,19 @@ class UsrDirectorController(
 
         // 유가족 추가 시, Ajax로 이 controller를 실행
         return Ut.getJsonStrFromObj(clientService.addFamily(familyRelation, familyName, familyCellphoneNo, clientId))
+    }
+
+    @RequestMapping("/usr/director/removeFamily")
+    @ResponseBody
+    fun removeFamily(
+            @RequestParam(defaultValue = "") familyRelation: String,
+            @RequestParam(defaultValue = "") familyName: String,
+            @RequestParam(defaultValue = "") familyCellphoneNo: String,
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String{
+
+        // 유가족 삭제 시, Ajax로 이 controller를 실행
+        return Ut.getJsonStrFromObj(clientService.removeFamily(familyRelation, familyName, familyCellphoneNo, clientId))
     }
 
 

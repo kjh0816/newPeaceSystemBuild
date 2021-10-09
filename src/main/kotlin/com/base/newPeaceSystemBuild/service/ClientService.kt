@@ -247,5 +247,11 @@ class ClientService(
         return clientRepository.getFamilyMembersByClientId(clientId)
     }
 
+    fun removeFamily(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int): ResultData {
+
+        clientRepository.removeFamily(familyRelation, familyName, familyCellphoneNo, clientId)
+        return ResultData.from("S-1", "해당 유가족의 정보를 삭제했습니다.")
+    }
+
 
 }
