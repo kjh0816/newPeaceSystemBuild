@@ -273,6 +273,9 @@
 
 
 	function setParent(){
+
+	    $('#inputNum').val(inputNum);
+
 		var rtRoadAddr = $.trim($("#rtRoadAddr").val());
 		var rtAddrPart1 = $.trim($("#rtAddrPart1").val());
 		var rtAddrPart2 = $.trim($("#rtAddrPart2").val());
@@ -299,6 +302,8 @@
 		var rtLnbrSlno = $.trim($("#rtLnbrSlno").val());
 		var rtEmdNo = $.trim($("#rtEmdNo").val());
 
+		inputNum = $.trim($("#inputNum").val());
+
 		var rtRoadFullAddr = rtAddrPart1;
 		if(rtAddrDetail != "" && rtAddrDetail != null){
 			rtRoadFullAddr += ", " + rtAddrDetail;
@@ -310,7 +315,7 @@
 		// IE에서 opener관련 오류가 발생하는 경우, 부모창에서 지정한 이름으로 opener를 재정의
 		if(opener == null || opener == undefined) opener = window.open("", "jusoPopup");
 
-		opener.jusoCallBack(rtRoadFullAddr, rtAddrPart1, rtAddrDetail, rtAddrPart2, rtEngAddr, rtJibunAddr, rtZipNo, rtAdmCd, rtRnMgtSn, rtBdMgtSn, rtDetBdNmList, rtBdNm, rtBdKdcd, rtSiNm, rtSggNm, rtEmdNm, rtLiNm, rtRn, rtUdrtYn, rtBuldMnnm, rtBuldSlno, rtMtYn, rtLnbrMnnm, rtLnbrSlno, rtEmdNo);
+		opener.jusoCallBack(rtRoadFullAddr, inputNum, rtAddrPart1, rtAddrDetail, rtAddrPart2, rtEngAddr, rtJibunAddr, rtZipNo, rtAdmCd, rtRnMgtSn, rtBdMgtSn, rtDetBdNmList, rtBdNm, rtBdKdcd, rtSiNm, rtSggNm, rtEmdNm, rtLiNm, rtRn, rtUdrtYn, rtBuldMnnm, rtBuldSlno, rtMtYn, rtLnbrMnnm, rtLnbrSlno, rtEmdNo);
 		window.open("about:blank","_self").close();
 
 	}

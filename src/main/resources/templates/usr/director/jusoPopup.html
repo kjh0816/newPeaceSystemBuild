@@ -17,7 +17,11 @@
     </th:block>
 </head>
 <body onload="init();" class ="visualSection">
+<script th:inline="javascript">
+    var inputNum = [[${param.inputNum[0]}]];
+</script>
 <form name="rtForm" id="rtForm" method="post">
+    <input type="hidden" name="inputNum" id="inputNum" value="1"/>
     <input type="hidden" name="inputYn" id="inputYn" value="Y"/>
     <input type="hidden" name="roadFullAddr" id="roadFullAddr"/>
 </form>
