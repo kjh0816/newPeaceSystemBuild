@@ -271,12 +271,16 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") deceasedHomeAddress: String,
             @RequestParam(defaultValue = "") familyClan: String,
             @RequestParam(defaultValue = "") religion: String,
-            @RequestParam(defaultValue = "") funeralMethod: String,
+
+            @RequestParam(defaultValue = "0") funeralMethod: Int,
+
             @RequestParam(defaultValue = "") cremationLocation: String,
             @RequestParam(defaultValue = "") buryLocation: String,
-            @RequestParam(defaultValue = "") cause: String,
-            @RequestParam(defaultValue = "") papers: String,
-            @RequestParam(defaultValue = "") autopsyCheck: String,
+
+            @RequestParam(defaultValue = "0") cause: String,
+            @RequestParam(defaultValue = "0") papers: Int,
+            @RequestParam(defaultValue = "false") autopsyCheck: Boolean,
+
             @RequestParam(defaultValue = "") casketDate: String,
             @RequestParam(defaultValue = "") casketTime: String,
             @RequestParam(defaultValue = "") leavingDate: String,
@@ -286,6 +290,32 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") chiefCellphoneNo: String,
             @RequestParam(defaultValue = "") chiefAddress: String
     ): String{
+
+        println("장례식장명: $funeralHallName")
+        println("호실: $funeralHallRoom")
+        println("고인명: $deceasedName")
+        println("고인 주번 앞자리: $frontNum")
+        println("고인 주번 뒷자리: $backNum")
+        println("고인 주소: $deceasedHomeAddress")
+        println("본관: $familyClan")
+        println("종교: $religion")
+        println("장법: $funeralMethod")
+        println("화장장: $cremationLocation")
+        println("장지: $buryLocation")
+        println("사망 원인: $cause")
+        println("사망 서류: $papers")
+        println("검시필증: $autopsyCheck")
+        println("입관날짜: $casketDate")
+        println("입관시간: $casketTime")
+        println("발인날짜: $leavingDate")
+        println("발인시간: $leavingTime")
+        println("상주이름: $chiefName")
+        println("상주 관계: $chiefRelation")
+        println("상주 전번: $chiefCellphoneNo")
+        println("상주 주소: $chiefAddress")
+
+
+
 
         return ""
     }

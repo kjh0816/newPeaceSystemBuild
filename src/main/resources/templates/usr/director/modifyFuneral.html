@@ -136,7 +136,7 @@
                             화장장
                         </span>
                         </label>
-                        <input type="text" id="cremationInput" name="buryInput" maxlength="30" placeholder="화장장을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                        <input type="text" id="cremationLocation" name="cremationLocation" maxlength="30" placeholder="화장장을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
                     </div>
 
                     <div id="hideBuryInput" class="hidden">
@@ -145,7 +145,7 @@
                             장지
                         </span>
                         </label>
-                        <input type="text" id="buryInput" name="buryLocation" maxlength="30" placeholder="장지를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                        <input type="text" id="buryLocation" name="buryLocation" maxlength="30" placeholder="장지를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
                     </div>
 
                     <div class="divider w-1/2">서류 확인</div>
@@ -159,17 +159,17 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input type="radio" id="disease" name="cause" class="radio"/>
+                            <input value="0" type="radio" id="disease" name="cause" class="radio"/>
                             <span>&nbsp;병사&nbsp;</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input type="radio" id="accident" name="cause" class="radio"/>
+                            <input value="1" type="radio" id="accident" name="cause" class="radio"/>
                             <span>&nbsp;사고사&nbsp;&nbsp;</span>
                         </div>
 
                         <div class="flex">
-                            <input type="radio" id="causeElse" name="cause" class="radio"/>
+                            <input value="2" type="radio" id="causeElse" name="cause" class="radio"/>
                             <span>&nbsp;기타</span>
                         </div>
                     </div>
@@ -183,12 +183,12 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input type="radio" id="deathDiagnosis" name="papers" class="radio"/>
+                            <input value="0" type="radio" id="deathDiagnosis" name="papers" class="radio"/>
                             <span>&nbsp;사망진단서&nbsp;</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input type="radio" id="deathCertificate" name="papers" class="radio"/>
+                            <input value="1" type="radio" id="deathCertificate" name="papers" class="radio"/>
                             <span>&nbsp;사체검안서&nbsp;&nbsp;</span>
                         </div>
 

@@ -15,9 +15,9 @@ function DirectorModifyFuneral__submit(form){
     var cremationLocation = form.cremationLocation.value;
     var buryLocation = form.buryLocation.value;
 
-    var cause = form.cause.value;
-    var papers = form.papers.value;
-    var autopsyCheck = form.autopsyCheck.value;
+    var cause = $('input[name="cause"]:checked').val();
+    var papers = $('input[name="papers"]:checked').val();
+    var autopsyCheck = $('input[name="autopsyCheck"]:checked').val();
 
     var casketDate = form.casketDate.value;
     var casketTime = form.casketTime.value;
@@ -31,16 +31,37 @@ function DirectorModifyFuneral__submit(form){
 
 
 
-//    $.ajax({
-//                        type: 'POST',
-//                        url: './doModifyFuneral',
-//                        dataType: 'json',
-//                        data: {
-//                        loginId:loginId
-//                        },
-//                        success: function(result){
-//                        }
-//    });
+    $.ajax({
+                        type: 'POST',
+                        url: './doModifyFuneral',
+                        dataType: 'json',
+                        data: {
+                        funeralHallName:funeralHallName,
+                        funeralHallRoom:funeralHallRoom,
+                        deceasedName:deceasedName,
+                        frontNum:frontNum,
+                        backNum:backNum,
+                        deceasedHomeAddress:deceasedHomeAddress,
+                        familyClan:familyClan,
+                        religion:religion,
+                        funeralMethod:funeralMethod,
+                        cremationLocation:cremationLocation,
+                        buryLocation:buryLocation,
+                        cause:cause,
+                        papers:papers,
+                        autopsyCheck:autopsyCheck,
+                        casketDate:casketDate,
+                        casketTime:casketTime,
+                        leavingDate:leavingDate,
+                        leavingTime:leavingTime,
+                        chiefName:chiefName,
+                        chiefRelation:chiefRelation,
+                        chiefCellphoneNo:chiefCellphoneNo,
+                        chiefAddress:chiefAddress
+                        },
+                        success: function(result){
+                        }
+    });
 }
 // 제출  ( 끝 )
 
