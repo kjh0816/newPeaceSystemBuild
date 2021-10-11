@@ -27,6 +27,8 @@ data class Client(
     val religion: String,
     val duty: String,
     val funeralMethod: Boolean,
+    val cremationLocation: String,
+    val buryLocation: String,
     val cause: Int,
     val papers: Boolean,
     val autopsyCheck: Boolean,

@@ -263,6 +263,18 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/doModifyFuneral")
     @ResponseBody
     fun doModifyFuneral(
+            @RequestParam(defaultValue = "") funeralHallName: String,
+            @RequestParam(defaultValue = "") funeralHallRoom: String,
+            @RequestParam(defaultValue = "") deceasedName: String,
+            @RequestParam(defaultValue = "") frontNum: String,
+            @RequestParam(defaultValue = "") backNum: String,
+            @RequestParam(defaultValue = "") deceasedHomeAddress: String,
+            @RequestParam(defaultValue = "") familyClan: String,
+            @RequestParam(defaultValue = "") religion: String,
+            @RequestParam(defaultValue = "") funeralMethod: String
+
+
+
 
     ): String{
 
