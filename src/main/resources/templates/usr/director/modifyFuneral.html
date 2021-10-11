@@ -159,17 +159,17 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="radio" id="disease" name="cause" class="radio"/>
+                            <input type="radio" id="disease" name="cause" class="radio"/>
                             <span>&nbsp;병사&nbsp;</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="radio" id="accident" name="cause" class="radio"/>
+                            <input type="radio" id="accident" name="cause" class="radio"/>
                             <span>&nbsp;사고사&nbsp;&nbsp;</span>
                         </div>
 
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="radio" id="causeElse" name="cause" class="radio"/>
+                            <input type="radio" id="causeElse" name="cause" class="radio"/>
                             <span>&nbsp;기타</span>
                         </div>
                     </div>
@@ -183,17 +183,17 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="checkbox" id="deathDiagnosis" name="papers" class="checkbox"/>
+                            <input type="radio" id="deathDiagnosis" name="papers" class="radio"/>
                             <span>&nbsp;사망진단서&nbsp;</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="checkbox" id="deathCertificate" name="papers" class="checkbox"/>
+                            <input type="radio" id="deathCertificate" name="papers" class="radio"/>
                             <span>&nbsp;사체검안서&nbsp;&nbsp;</span>
                         </div>
 
                         <div class="flex">
-                            <input th:value="${client?.cause}" type="checkbox" id="autopsied" name="papers" class="checkbox"/>
+                            <input type="checkbox" id="autopsied" name="autopsyCheck" class="checkbox"/>
                             <span>&nbsp;검시필증</span>
                         </div>
                     </div>

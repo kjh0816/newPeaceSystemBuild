@@ -271,11 +271,20 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") deceasedHomeAddress: String,
             @RequestParam(defaultValue = "") familyClan: String,
             @RequestParam(defaultValue = "") religion: String,
-            @RequestParam(defaultValue = "") funeralMethod: String
-
-
-
-
+            @RequestParam(defaultValue = "") funeralMethod: String,
+            @RequestParam(defaultValue = "") cremationLocation: String,
+            @RequestParam(defaultValue = "") buryLocation: String,
+            @RequestParam(defaultValue = "") cause: String,
+            @RequestParam(defaultValue = "") papers: String,
+            @RequestParam(defaultValue = "") autopsyCheck: String,
+            @RequestParam(defaultValue = "") casketDate: String,
+            @RequestParam(defaultValue = "") casketTime: String,
+            @RequestParam(defaultValue = "") leavingDate: String,
+            @RequestParam(defaultValue = "") leavingTime: String,
+            @RequestParam(defaultValue = "") chiefName: String,
+            @RequestParam(defaultValue = "") chiefRelation: String,
+            @RequestParam(defaultValue = "") chiefCellphoneNo: String,
+            @RequestParam(defaultValue = "") chiefAddress: String
     ): String{
 
         return ""

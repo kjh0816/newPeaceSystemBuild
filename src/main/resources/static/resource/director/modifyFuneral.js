@@ -1,23 +1,46 @@
 // 제출 ( 시작 )
 function DirectorModifyFuneral__submit(form){
 
-const post$ = rxjs.ajax.ajax.post(
-        '/usr/director/doModifyFuneral',
-        new FormData(form)
-    );
-    post$.subscribe(
-        res => {
-            if (res.response.success) {
-                    // 성공 시, 입력 및 수정을 끝내고 progress 페이지로 이동한다.
-                   alert(res.response.msg);
-                   window.location.href="/usr/director/progress?clientId=" + res.response.map.client.id;
-            }
-            else {
-                   alert(res.response.msg);
-                   window.location.replace(res.response.map.replaceUrl);
-            }
-        }
-    );
+    var funeralHallName = form.funeralHallName.value;
+    var funeralHallRoom = form.funeralHallRoom.value;
+    var deceasedName = form.deceasedName.value;
+    var frontNum = form.frontNum.value;
+    var backNum = form.backNum.value;
+    var deceasedHomeAddress = form.deceasedHomeAddress.value;
+    var familyClan = form.familyClan.value;
+    var religion = form.religion.value;
+
+    var funeralMethod = $('input[name="funeralMethod"]:checked').val();
+
+    var cremationLocation = form.cremationLocation.value;
+    var buryLocation = form.buryLocation.value;
+
+    var cause = form.cause.value;
+    var papers = form.papers.value;
+    var autopsyCheck = form.autopsyCheck.value;
+
+    var casketDate = form.casketDate.value;
+    var casketTime = form.casketTime.value;
+    var leavingDate = form.leavingDate.value;
+    var leavingTime = form.leavingTime.value;
+    var chiefName = form.chiefName.value;
+    var chiefRelation = form.chiefRelation.value;
+    var chiefCellphoneNo = form.chiefCellphoneNo.value;
+    var chiefAddress = form.chiefAddress.value;
+
+
+
+
+//    $.ajax({
+//                        type: 'POST',
+//                        url: './doModifyFuneral',
+//                        dataType: 'json',
+//                        data: {
+//                        loginId:loginId
+//                        },
+//                        success: function(result){
+//                        }
+//    });
 }
 // 제출  ( 끝 )
 
@@ -279,7 +302,7 @@ $('input[type=radio][name=funeralMethod]').on('click', function() {
 
 
 // 사망원인 또는 사망서류를 클릭했을 때
-$('input[type=checkbox][name=papers], input[type=radio][name=cause]').on('click', function() {
+$('input[type=radio][name=papers], input[type=checkbox][name=autopsyCheck], input[type=radio][name=cause]').on('click', function() {
 
     // 병사에 체크된 경우
     var disease = $('input[type=radio][id=disease]:checked').val();
@@ -287,9 +310,9 @@ $('input[type=checkbox][name=papers], input[type=radio][name=cause]').on('click'
     var accident = $('input[type=radio][id=accident]:checked').val();
 
     // 사망진단서가 체크된 경우
-    var deathDiagnosis = $('input[type=checkbox][id=deathDiagnosis]:checked').val();
+    var deathDiagnosis = $('input[type=radio][id=deathDiagnosis]:checked').val();
     // 사체검안서가 체크된 경우
-    var deathCertificate = $('input[type=checkbox][id=deathCertificate]:checked').val();
+    var deathCertificate = $('input[type=radio][id=deathCertificate]:checked').val();
     // 검시필증이 체크된 경우
     var autopsied = $('input[type=checkbox][id=autopsied]:checked').val();
 
@@ -309,10 +332,7 @@ $('input[type=checkbox][name=papers], input[type=radio][name=cause]').on('click'
 
 
     // 1) 사망진단서가 있으면, 사체 검안서나 검시필증이 필요없고, 사체검안서가 있으면 사망진단서가 필요없다.
-    if(deathDiagnosis && deathCertificate){
-        alert('사망진단서와 사체검안서 중 하나만 체크할 수 있습니다.');
-        $(this).prop("checked", false);
-    }
+
 
     // 사체검안서와 검시필증과의 관계 ( 시작 )
     if(autopsied && !deathCertificate){
