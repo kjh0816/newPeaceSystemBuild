@@ -20,7 +20,7 @@
             <div class="flex flex-col w-full" th:each="femaleMourningCloth : ${femaleMourningCloths}">
                 <div class="card card-side mb-2 w-full bg-white shadow">
                     <figure>
-
+                        <img th:src="@{../../../resource/img/femaleMourningCloth/femaleMourningCloth{femaleMourningClothId}.png(femaleMourningClothId = ${femaleMourningCloth.id})}" alt="" style="width: 400px; height: 250px;">
                     </figure>
                     <div class="card-body">
                         <div class="flex items-center mb-1">
@@ -51,7 +51,7 @@
             <div class="flex flex-col w-full" th:each="maleMourningCloth : ${maleMourningCloths}">
                 <div class="card card-side mb-2 w-full bg-white shadow">
                     <figure>
-
+                        <img th:src="@{../../../resource/img/maleMourningCloth/maleMourningCloth{maleMourningClothId}.png(maleMourningClothId = ${maleMourningCloth.id})}" alt="" style="width: 400px; height: 250px;">
                     </figure>
                     <div class="card-body">
                         <div class="flex items-center mb-1">
@@ -82,7 +82,7 @@
             <div class="flex flex-col w-full"  th:each="shirt : ${shirts}">
                 <div class="card card-side mb-2 w-full bg-white shadow">
                     <figure>
-
+                        <img th:src="@{../../../resource/img/shirt/shirt{shirtId}.png(shirtId = ${shirt.id})}" alt="" style="width: 400px; height: 250px;">
                     </figure>
                     <div class="card-body">
                         <div class="flex items-center mb-1">
@@ -112,7 +112,7 @@
             <div class="flex flex-col w-full" th:each="necktie : ${neckties}">
                 <div class="card card-side mb-2 w-full bg-white shadow">
                     <figure>
-
+                        <img th:src="@{../../../resource/img/necktie/necktie{necktieId}.png(necktieId = ${necktie.id})}" alt="" style="width: 400px; height: 250px;">
                     </figure>
                     <div class="card-body">
                         <div class="flex items-center mb-1">
