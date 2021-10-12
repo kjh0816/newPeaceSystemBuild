@@ -33,13 +33,14 @@
                                 <input id="femaleMourningClothId" type="radio" name="femaleMourningClothId" class="radio" th:value="${femaleMourningCloth.id}" style="display: none;">
                             </div>
                         </div>
+                        <div class="form-control">
+                            <input type="text" id="femaleClothCnt" name="femaleClothCnt" placeholder="필요한 상복(여) 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${femaleMourningClothOrder != null} ? ${femaleMourningClothOrder.extra__femaleClothCnt} : ''">
+                        </div>
                     </div>
                 </div>
                 <div class="divider" th:if="${femaleMourningCloths.size != femaleMourningCloth.id}">OR</div>
             </div>
-            <div class="form-control">
-                <input type="text" id="femaleClothCnt" name="femaleClothCnt" placeholder="필요한 상복(여) 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${femaleMourningClothOrder != null} ? ${femaleMourningClothOrder.extra__femaleClothCnt} : ''">
-            </div>
+
             <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
             <script th:if="${femaleMourningClothOrder != null}">
                 $(".femaleMourningClothIdSelectBox#femaleMourningCloth[[${femaleMourningClothOrder.standardId}]]").addClass('active');
@@ -64,20 +65,21 @@
                                 <input type="radio" name="maleMourningClothId" class="radio" value="0" style="display: none;">
                             </div>
                         </div>
+                        <div class="form-control">
+                            <input type="text" id="maleClothCnt" name="maleClothCnt" placeholder="필요한 상복(남) 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${maleMourningClothOrder != null} ? ${maleMourningClothOrder.extra__maleClothCnt} : ''">
+                        </div>
                     </div>
                 </div>
                 <div class="divider" th:if="${maleMourningCloths.size != maleMourningCloth.id}">OR</div>
             </div>
-            <div class="form-control">
-                <input type="text" id="maleClothCnt" name="maleClothCnt" placeholder="필요한 상복(남) 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${maleMourningClothOrder != null} ? ${maleMourningClothOrder.extra__maleClothCnt} : ''">
-            </div>
+
             <script th:if="${femaleMourningClothOrder != null}">
                 $(".maleMourningClothIdSelectBox#maleMourningCloth[[${maleMourningClothOrder.standardId}]]").addClass('active');
                 $(".maleMourningClothIdSelectBox#maleMourningCloth[[${maleMourningClothOrder.standardId}]]").text("선택 됨");
                 $("input[value='[[${maleMourningClothOrder.standardId}]]']#maleMourningClothId").prop('checked', true);
             </script>
             <h2 class="card-title">와이셔츠 선택</h2>
-            <div class="flex flex-col w-full" th:each="shirt : ${shirts}">
+            <div class="flex flex-col w-full"  th:each="shirt : ${shirts}">
                 <div class="card card-side mb-2 w-full bg-white shadow">
                     <figure>
 
@@ -94,12 +96,12 @@
                                 <input type="radio" name="shirtId" class="radio" value="0" style="display: none;">
                             </div>
                         </div>
+                        <div class="form-control">
+                            <input type="text" id="shirtCnt" name="shirtCnt" placeholder="필요한 와이셔츠 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${shirtOrder != null} ? ${shirtOrder.extra__shirtCnt} : ''">
+                        </div>
                     </div>
                 </div>
                 <div class="divider" th:if="${shirts.size != shirt.id}">OR</div>
-            </div>
-            <div class="form-control">
-                <input type="text" id="shirtCnt" name="shirtCnt" placeholder="필요한 와이셔츠 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${shirtOrder != null} ? ${shirtOrder.extra__shirtCnt} : ''">
             </div>
             <script th:if="${shirtOrder != null}">
                 $(".shirtIdSelectBox#shirt[[${shirtOrder.standardId}]]").addClass('active');
@@ -124,13 +126,14 @@
                                 <input type="radio" name="necktieId" class="radio" value="0" style="display: none;">
                             </div>
                         </div>
+                        <div class="form-control">
+                            <input type="text" id="necktieCnt" name="necktieCnt" placeholder="필요한 넥타이 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${necktieOrder != null} ? ${necktieOrder.extra__necktieCnt} : ''">
+                        </div>
                     </div>
                 </div>
                 <div class="divider" th:if="${neckties.size != necktie.id}">OR</div>
             </div>
-            <div class="form-control">
-                <input type="text" id="necktieCnt" name="necktieCnt" placeholder="필요한 넥타이 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${necktieOrder != null} ? ${necktieOrder.extra__necktieCnt} : ''">
-            </div>
+
             <script th:if="${necktieOrder != null}">
                 $(".necktieIdSelectBox#necktie[[${necktieOrder.standardId}]]").addClass('active');
                 $(".necktieIdSelectBox#necktie[[${necktieOrder.standardId}]]").text("선택 됨");

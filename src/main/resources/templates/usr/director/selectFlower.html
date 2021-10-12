@@ -18,7 +18,7 @@
         <form onsubmit="SelectFlower__submit(this); return false;">
             <h2 class="card-title">제단꽃 선택</h2>
             <input type="hidden" name="funeralId" th:value="${funeral.id}">
-            <div class="flex flex-col w-full" th:each="flower : ${flowers}">
+            <div class="flex flex-col w-full"  th:each="flower : ${flowers}">
                 <div class="card card-side mb-2 w-full bg-white shadow">
                     <figure>
                         <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${flower.id})}" alt="" style="width: 400px; height: 250px;">
@@ -73,6 +73,9 @@
                                 <input type="radio" name="flowerTributeId" class="radio" value="0" style="display: none;">
                             </div>
                         </div>
+                        <div class="form-control">
+                            <input type="text" id="bunchCnt" name="bunchCnt" placeholder="한 세트당 30개이며 몇 세트를 원하시는지 입력해 주세요." class="input input-bordered my-2" th:value="${flowerTributeOrder != null} ? ${flowerTributeOrder.extra__bunchCnt} : ''">
+                        </div>
                     </div>
                 </div>
                 <div class="divider" th:if="${flowerTributes.size != flowerTribute.id}">OR</div>
@@ -88,9 +91,7 @@
                 }
             </script>
             <br>
-            <div class="form-control">
-                <input type="text" id="bunchCnt" name="bunchCnt" placeholder="한 세트당 30개이며 몇 세트를 원하시는지 입력해 주세요." class="input input-bordered my-2" th:value="${flowerTributeOrder != null} ? ${flowerTributeOrder.extra__bunchCnt} : ''">
-            </div>
+
             <input class="btn btn-ghost w-full" type="submit" value="완료">
             <br>
             <br>
