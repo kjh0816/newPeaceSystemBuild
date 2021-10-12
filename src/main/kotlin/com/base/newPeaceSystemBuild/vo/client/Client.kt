@@ -16,7 +16,6 @@ data class Client(
     // 고인의 주민등록상 주소(장례지도사가 서류상 대조하기 위함) - 장례 정보 수정 및 입력 페이지에서 값을 받는다.
     val deceasedHomeAddress: String,
     val deceasedDate: String,
-    val deceasedTime: String,
     val frontNum: String,
     val backNum: String,
     val birth: String,

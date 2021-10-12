@@ -106,6 +106,39 @@
                     </label>
                     <input th:value="${client?.duty}" type="text" id="duty" name="duty" maxlength="20" placeholder="고인의 직분을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            고인의 생년월일
+                        </span>
+                    </label>
+                    <input type="date" th:value="${client.birth}" id="birth" name="birth" class="input input-bordered my-2 w-1/2">
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            고인이 돌아가신 날짜
+                        </span>
+                    </label>
+                    <input type="date" th:value="${client.deceasedDate}" id="deceasedDate" name="deceasedDate" class="input input-bordered my-2 w-1/2">
+
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            양력/음력
+                        </span>
+                    </label>
+                    <br>
+                    <div class="flex">
+                        <div class="flex">
+                            <input value="0" type="radio" id="solar" name="lunar" class="radio"/>
+                            <span>&nbsp;양력</span>
+                        </div>
+                        &nbsp;
+                        <div class="flex">
+                            <input value="1" type="radio" id="lunar" name="lunar" class="radio"/>
+                            <span>&nbsp;음력</span>
+                        </div>
+                    </div>
+
+
                     <br>
                     <br>
 

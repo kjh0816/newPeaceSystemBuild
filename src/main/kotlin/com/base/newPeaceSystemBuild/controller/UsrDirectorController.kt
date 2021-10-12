@@ -271,7 +271,10 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") deceasedHomeAddress: String,
             @RequestParam(defaultValue = "") familyClan: String,
             @RequestParam(defaultValue = "") religion: String,
+            @RequestParam(defaultValue = "") birth: String,
+            @RequestParam(defaultValue = "") deceasedDate: String,
 
+            @RequestParam(defaultValue = "0") lunar: Int,
             @RequestParam(defaultValue = "0") funeralMethod: Int,
 
             @RequestParam(defaultValue = "") cremationLocation: String,
@@ -288,36 +291,10 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") chiefName: String,
             @RequestParam(defaultValue = "") chiefRelation: String,
             @RequestParam(defaultValue = "") chiefCellphoneNo: String,
-            @RequestParam(defaultValue = "") chiefAddress: String
+            @RequestParam(defaultValue = "") chiefAddress: String,
+            @RequestParam(defaultValue = "0") clientId: Int
     ): String{
-
-        println("장례식장명: $funeralHallName")
-        println("호실: $funeralHallRoom")
-        println("고인명: $deceasedName")
-        println("고인 주번 앞자리: $frontNum")
-        println("고인 주번 뒷자리: $backNum")
-        println("고인 주소: $deceasedHomeAddress")
-        println("본관: $familyClan")
-        println("종교: $religion")
-        println("장법: $funeralMethod")
-        println("화장장: $cremationLocation")
-        println("장지: $buryLocation")
-        println("사망 원인: $cause")
-        println("사망 서류: $papers")
-        println("검시필증: $autopsyCheck")
-        println("입관날짜: $casketDate")
-        println("입관시간: $casketTime")
-        println("발인날짜: $leavingDate")
-        println("발인시간: $leavingTime")
-        println("상주이름: $chiefName")
-        println("상주 관계: $chiefRelation")
-        println("상주 전번: $chiefCellphoneNo")
-        println("상주 주소: $chiefAddress")
-
-
-
-
-        return ""
+        return Ut.getJsonStrFromObj(clientService.modifyFuneral(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, birth, deceasedDate, lunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingTime, leavingDate, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId))
     }
 
     @RequestMapping("/usr/director/addFamily")

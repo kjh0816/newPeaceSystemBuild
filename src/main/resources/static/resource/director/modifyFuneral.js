@@ -9,7 +9,10 @@ function DirectorModifyFuneral__submit(form){
     var deceasedHomeAddress = form.deceasedHomeAddress.value;
     var familyClan = form.familyClan.value;
     var religion = form.religion.value;
+    var birth = form.birth.value;
+    var deceasedDate = form.deceasedDate.value;
 
+    var lunar = $('inout[name="lunar"]:checked').val();
     var funeralMethod = $('input[name="funeralMethod"]:checked').val();
 
     var cremationLocation = form.cremationLocation.value;
@@ -57,7 +60,8 @@ function DirectorModifyFuneral__submit(form){
                         chiefName:chiefName,
                         chiefRelation:chiefRelation,
                         chiefCellphoneNo:chiefCellphoneNo,
-                        chiefAddress:chiefAddress
+                        chiefAddress:chiefAddress,
+                        clientId:clientId
                         },
                         success: function(result){
                         }

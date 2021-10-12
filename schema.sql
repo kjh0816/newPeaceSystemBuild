@@ -267,7 +267,6 @@ CREATE TABLE `client`(
 	deceasedAddress CHAR(100) NOT NULL DEFAULT '' COMMENT '운구차가 찾아가기 위한 주소',
 	deceasedHomeAddress CHAR(100) NOT NULL DEFAULT '' COMMENT '장례지도사가 서류상 대조할 수 있도록',
 	deceasedDate CHAR(20) NOT NULL DEFAULT '' COMMENT '사망일',
-	deceasedTime CHAR(20) NOT NULL DEFAULT '' COMMENT '사망시각 (분 단위까지 받는다.)',
 	frontNum CHAR(60) NOT NULL DEFAULT '' COMMENT '고인의 주민등록번호 앞자리',
 	backNum CHAR(60) NOT NULL DEFAULT '' COMMENT '고인의 주민등록번호 뒷자리',
 	birth CHAR(20) NOT NULL DEFAULT '' COMMENT '고인의 생년월일',
