@@ -197,4 +197,36 @@ interface ClientRepository {
     fun getFamilyMemberByAll(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int): Family
 
 
+    @Update(
+            """
+                UPDATE client
+                SET updateDate = NOW(),
+                deceasedName = #{deceasedName},
+                deceasedHomeAddress = #{deceasedHomeAddress},
+                deceasedDate = #{deceasedDate},
+                frontNum = #{frontNum},
+                backNum = #{backNum},
+                birth = #{birth},
+                lunar = #{lunar},
+                funeralHall = #{funeralHallName},
+                funeralHallRoom = #{funeralHallRoom},
+                familyClan = #{familyClan},
+                religion = #{religion},
+                duty = #{duty},
+                funeralMethod = #{funeralMethod},
+                cremationLocation = #{cremationLocation},
+                buryLocation = #{buryLocation},
+                cause = #{cause},
+                papers = #{papers},
+                autopsyCheck = #{autopsyCheck},
+                casketDate = #{casketDate},
+                casketTime = #{casketTime},
+                leavingDate = #{leavingDate},
+                leavingTime = #{leavingTime}
+                WHERE id = #{clientId} 
+            """
+    )
+    fun modifyClient(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, lunar: Int, funeralMethod: Int, cremationLocation: String, buryLocation: String, cause: String, papers: Int, autopsyCheck: Boolean, casketDate: String, casketTime: String, leavingDate: String, leavingTime: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int)
+
+
 }

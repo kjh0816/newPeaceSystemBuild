@@ -9,6 +9,7 @@ function DirectorModifyFuneral__submit(form){
     var deceasedHomeAddress = form.deceasedHomeAddress.value;
     var familyClan = form.familyClan.value;
     var religion = form.religion.value;
+    var duty = form.duty.value;
     var birth = form.birth.value;
     var deceasedDate = form.deceasedDate.value;
 
@@ -47,6 +48,7 @@ function DirectorModifyFuneral__submit(form){
                         deceasedHomeAddress:deceasedHomeAddress,
                         familyClan:familyClan,
                         religion:religion,
+                        duty:duty,
                         funeralMethod:funeralMethod,
                         cremationLocation:cremationLocation,
                         buryLocation:buryLocation,
@@ -64,6 +66,7 @@ function DirectorModifyFuneral__submit(form){
                         clientId:clientId
                         },
                         success: function(result){
+                            alert(result.msg);
                         }
     });
 }

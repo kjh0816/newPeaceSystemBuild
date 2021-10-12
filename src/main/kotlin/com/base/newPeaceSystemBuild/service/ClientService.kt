@@ -258,9 +258,11 @@ class ClientService(
         return ResultData.from("S-1", "해당 유가족의 정보를 삭제했습니다.")
     }
 
-    fun modifyFuneral(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, birth: String, deceasedDate: String, lunar: Int, funeralMethod: Int, cremationLocation: String, buryLocation: String, cause: String, papers: Int, autopsyCheck: Boolean, casketDate: String, casketTime: String, leavingTime: String, leavingDate: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int): ResultData {
-L
-        clientRepository.modifyClient(funeralHallName, funeralHallRoom)
+    fun modifyFuneral(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, lunar: Int, funeralMethod: Int, cremationLocation: String, buryLocation: String, cause: String, papers: Int, autopsyCheck: Boolean, casketDate: String, casketTime: String, leavingTime: String, leavingDate: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int): ResultData {
+
+        clientRepository.modifyClient(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, lunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingDate, leavingTime, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId)
+
+        return ResultData.from("S-1", "입력하신 정보가 저장되었습니다.")
     }
 
 

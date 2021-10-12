@@ -271,6 +271,7 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") deceasedHomeAddress: String,
             @RequestParam(defaultValue = "") familyClan: String,
             @RequestParam(defaultValue = "") religion: String,
+            @RequestParam(defaultValue = "") duty: String,
             @RequestParam(defaultValue = "") birth: String,
             @RequestParam(defaultValue = "") deceasedDate: String,
 
@@ -294,7 +295,7 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") chiefAddress: String,
             @RequestParam(defaultValue = "0") clientId: Int
     ): String{
-        return Ut.getJsonStrFromObj(clientService.modifyFuneral(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, birth, deceasedDate, lunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingTime, leavingDate, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId))
+        return Ut.getJsonStrFromObj(clientService.modifyFuneral(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, lunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingTime, leavingDate, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId))
     }
 
     @RequestMapping("/usr/director/addFamily")
