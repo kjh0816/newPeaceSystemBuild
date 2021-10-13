@@ -18,7 +18,19 @@
 </head>
 <body onload="init();" class ="visualSection">
 <script th:inline="javascript">
-    var inputNum = [[${param.inputNum[0]}]];
+function getUrlParams() {
+    var params = {};
+
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+    	function(str, key, value) {
+        	params[key] = value;
+        }
+    );
+    return params;
+    }
+    params = getUrlParams();
+    var inputNum = params.inputNum;
+
 </script>
 <form name="rtForm" id="rtForm" method="post">
     <input type="hidden" name="inputNum" id="inputNum" value="1"/>
