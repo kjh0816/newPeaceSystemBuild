@@ -263,6 +263,7 @@ CREATE TABLE `client`(
 	location CHAR(30) NOT NULL,
 	# 고인 관련 정보
 	deceasedName CHAR(20) NOT NULL COMMENT '고인의 성함',
+	sex TINYINT(1) NOT NULL DEFAULT 0 COMMENT '고인의 성별'
 	briefAddress CHAR(100) NOT NULL COMMENT '영업자가 최초에 입력하는 주소(장례지도사 본인이 가까운지 등을 파악하기 위한 용도)',
 	deceasedAddress CHAR(100) NOT NULL DEFAULT '' COMMENT '운구차가 찾아가기 위한 주소',
 	deceasedHomeAddress CHAR(100) NOT NULL DEFAULT '' COMMENT '장례지도사가 서류상 대조할 수 있도록',
@@ -590,29 +591,35 @@ SELECT * FROM maleMourningCloth;
 SELECT * FROM shirt;
 SELECT * FROM necktie;
 
+
+
+
+
+
+
+
 CREATE TABLE coffinTransporter(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
-	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
-	costPrice CHAR(10) NOT NULL COMMENT '원가'
+	funeralId INT(10) UNSIGNED NOT NULL,
+	price CHAR(20) NOT NULL COMMENT '가격',
+	departureAddress CHAR(100) NOT NULL,
+	destinationAddress CHAR(100) NOT NULL,
+	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '운구 완료 여부(0 = 미완료, 1 = 완료)'
 );
 
-INSERT INTO coffinTransporter
-SET regDate = NOW(),
-updateDate = NOW(),
-retailPrice = "70000",
-costPrice = "70000";
 
-CREATE TABLE coffinTransporterOrder(
-    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    regDate DATETIME NOT NULL,
-    updateDate DATETIME NOT NULL,
-    orderId INT(10) UNSIGNED NOT NULL,
-    deceasedHomeAddress CHAR(100) NOT NULL
-);
 
-SELECT * FROM coffinTransporterOrder;
+
+SELECT * FROM coffinTransporter;
+
+
+
+
+
+
+
 
 CREATE TABLE shroud(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

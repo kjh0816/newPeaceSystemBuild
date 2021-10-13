@@ -202,6 +202,7 @@ interface ClientRepository {
                 UPDATE client
                 SET updateDate = NOW(),
                 deceasedName = #{deceasedName},
+                sex = #{sex},
                 deceasedHomeAddress = #{deceasedHomeAddress},
                 deceasedDate = #{deceasedDate},
                 frontNum = #{frontNum},
@@ -226,7 +227,7 @@ interface ClientRepository {
                 WHERE id = #{clientId} 
             """
     )
-    fun modifyClient(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, lunar: Int, funeralMethod: Int, cremationLocation: String, buryLocation: String, cause: String, papers: Int, autopsyCheck: Boolean, casketDate: String, casketTime: String, leavingDate: String, leavingTime: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int)
+    fun modifyClient(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, lunar: Int, funeralMethod: Int, cremationLocation: String, buryLocation: String, cause: String, papers: Int, autopsyCheck: Boolean, casketDate: String, casketTime: String, leavingDate: String, leavingTime: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int, sex: Int)
 
 
 }

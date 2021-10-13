@@ -18,8 +18,8 @@
                     <div class="card-body">
                         <h2 class="card-title">운구차량</h2>
                         <div class="flex items-center mb-1">
-                            <div class="badge badge-md">가격</div>
-                            <p class="pl-2" th:text="|${coffinTransporter.retailPriceFormat} 원|"></p>
+                            <div class="badge badge-md">비용</div>
+                            <p class="pl-2" th:text="|70,000 원|"></p>
                         </div>
                         <label class="label">
                         <span class="label-text font-bold">
@@ -27,8 +27,17 @@
                         </span>
                         </label>
                         <div class="flex">
-                            <input readonly="readonly" th:value="${coffinTransporterOrder?.extra__deceasedHomeAddress}" type="text" id="deceasedHomeAddress" name="deceasedHomeAddress" placeholder="오른쪽 버튼을 통해 주소를 검색해주세요." class="py-2 px-4 mr-2 w-full text-sm bg-base-200 rounded-lg"/>
-                            <button type="button" onclick="goPopup();" class="btn btn-outline w-20 whitespace-nowrap">주소 검색</button>
+                            <input readonly="readonly" th:value="${coffinTransporter.departureAddress}" type="text" id="departureAddress" name="departureAddress" placeholder="오른쪽 버튼을 통해 주소를 검색해주세요." class="py-2 px-4 mr-2 w-full text-sm bg-base-200 rounded-lg"/>
+                            <button type="button" onclick="goPopup(1);" class="btn btn-outline w-20 whitespace-nowrap">주소 검색</button>
+                        </div>
+                        <label class="label">
+                        <span class="label-text font-bold">
+                            운구차량 도착 장소
+                        </span>
+                        </label>
+                        <div class="flex">
+                            <input readonly="readonly" th:value="${coffinTransporter.destinationAddress}" type="text" id="destinationAddress" name="destinationAddress" placeholder="오른쪽 버튼을 통해 주소를 검색해주세요." class="py-2 px-4 mr-2 w-full text-sm bg-base-200 rounded-lg"/>
+                            <button type="button" onclick="goPopup(2);" class="btn btn-outline w-20 whitespace-nowrap">주소 검색</button>
                         </div>
                     </div>
                 </div>

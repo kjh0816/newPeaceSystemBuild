@@ -7,14 +7,17 @@ data class CoffinTransporter(
     val id: Int,
     val regDate: String,
     var updateDate: String,
-    var retailPrice: String,
-    var costPrice: String
+    val funeralId: String,
+    val price: String,
+    val departureAddress: String,
+    val destinationAddress: String,
+    val completionStatus: Int
 )
 {
     private val formatter = DecimalFormat("###,###")
 
-    val retailPriceFormat: String
+    val priceFormatted: String
         get() {
-            return formatter.format(retailPrice.toInt())
+            return formatter.format(price.toInt())
         }
 }

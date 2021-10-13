@@ -9,6 +9,7 @@ data class Client(
     val location: String,
     // 고인 관련 정보
     val deceasedName: String,
+    val sex: Boolean,
     // 영업자가 최초에 입력하는 주소(장례지도사 본인이 가까운지 등을 파악하기 위한 용도
     val briefAddress: String,
     // 운구차를 호출할 때 고인이 현재 계신 곳의 주소 - 운구차 모듈에서 입력받는다.
