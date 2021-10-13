@@ -23,6 +23,12 @@
                         <figure>
                             <img th:src="@{../../../resource/img/shroud/shroud{shroudId}.png(shroudId = ${shroud.id})}" alt="" style="width: 400px; height: 250px;">
                         </figure>
+                        <th:block th:if="${client.sex == true}">
+                            남
+                        </th:block>
+                        <th:block th:unless="${client.sex == true}">
+                            여
+                        </th:block>
                         <div class="card-body">
                             <div class="flex items-center mb-1">
                                 <div class="badge badge-md">상품명</div>

@@ -447,6 +447,10 @@ class UsrDirectorController(
         val shrouds = vendorService.getShrouds()
 
         if (funeral != null) {
+            val client = clientService.getClientById(funeral.clientId)
+
+            model.addAttribute("client", client)
+
             val details = mutableListOf<String>()
             details.add("shroud")
 
