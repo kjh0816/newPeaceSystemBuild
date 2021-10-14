@@ -385,8 +385,12 @@ class UsrDirectorController(
 
         val client = clientService.getClientById(clientId)
         val funeral = clientService.getFuneralByClientId(clientId)
-        // client, funeral이 null인 경우, 잘못된 clienId로 접근한 경우이므로 돌려보냄
-        if(funeral == null || client == null){
+        val chief = clientService.getFamilyByClientId(clientId)
+
+        val clientCellphoneNo = Ut.getCellphoneNoFormatted(chief.cellphoneNo)
+
+        // client, funeral, chief이 null인 경우, 잘못된 clienId로 접근한 경우이므로 돌려보냄
+        if(funeral == null || client == null || chief == null){
             return "usr/home/main"
         }
 
@@ -394,6 +398,10 @@ class UsrDirectorController(
         if(funeral.directorMemberId != rq.getLoginedMember()!!.id){
             return "usr/home/main"
         }
+
+
+
+
 
 
 
@@ -419,6 +427,8 @@ class UsrDirectorController(
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
+        model.addAttribute("chief", chief)
+        model.addAttribute("clientCellphoneNo", clientCellphoneNo)
 
         return "usr/director/selectCoffinTransporter"
     }
