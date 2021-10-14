@@ -396,8 +396,9 @@ CREATE TABLE funeral(
 
 
 ALTER TABLE funeral ADD COLUMN flowerTributeId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerId;
-ALTER TABLE funeral ADD COLUMN femaleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerTributeId;
-ALTER TABLE funeral ADD COLUMN maleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER femaleMourningClothId;
+ALTER TABLE funeral ADD COLUMN femaleMourningClothBlackId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER flowerTributeId;
+ALTER TABLE funeral ADD COLUMN femaleMourningClothWhiteId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER femaleMourningClothBlackId;
+ALTER TABLE funeral ADD COLUMN maleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER femaleMourningClothWhiteId;
 ALTER TABLE funeral ADD COLUMN shirtId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER maleMourningClothId;
 ALTER TABLE funeral ADD COLUMN necktieId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER shirtId;
 ALTER TABLE funeral ADD COLUMN coffinTransporterUseStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER necktieId;
@@ -480,13 +481,20 @@ CREATE TABLE flowerOrder(
 	orderId INT(10) UNSIGNED NOT NULL
 );
 
-CREATE TABLE femaleMourningClothOrder(
+CREATE TABLE femaleMourningClothBlackOrder(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	orderId INT(10) UNSIGNED NOT NULL,
-	femaleClothCnt INT(10) UNSIGNED NOT NULL DEFAULT 0,
-	femaleClothColor CHAR(10) NOT NULL
+	femaleClothCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
+CREATE TABLE femaleMourningClothWhiteOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	femaleClothCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
 );
 
 CREATE TABLE maleMourningClothOrder(
@@ -515,7 +523,16 @@ CREATE TABLE necktieOrder(
 
 SELECT * FROM `order`;
 
-CREATE TABLE femaleMourningCloth(
+CREATE TABLE femaleMourningClothBlack(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(10) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+CREATE TABLE femaleMourningClothWhite(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
@@ -551,14 +568,14 @@ CREATE TABLE necktie(
 	costPrice CHAR(10) NOT NULL COMMENT '원가'
 );
 
-INSERT INTO femaleMourningCloth
+INSERT INTO femaleMourningClothBlack
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = "여성상복(흑)",
 retailPrice = "20000",
 costPrice = "5000";
 
-INSERT INTO femaleMourningCloth
+INSERT INTO femaleMourningClothWhite
 SET regDate = NOW(),
 updateDate = NOW(),
 `name` = "여성상복(백)",
@@ -586,7 +603,8 @@ updateDate = NOW(),
 retailPrice = "5000",
 costPrice = "1000";
 
-SELECT * FROM femaleMourningCloth;
+SELECT * FROM femaleMourningClothBlack;
+SELECT * FROM femaleMourningClothWhite;
 SELECT * FROM maleMourningCloth;
 SELECT * FROM shirt;
 SELECT * FROM necktie;
