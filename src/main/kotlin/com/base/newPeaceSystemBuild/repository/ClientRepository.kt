@@ -3,6 +3,7 @@ package com.base.newPeaceSystemBuild.repository
 import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.Funeral
+import com.base.newPeaceSystemBuild.vo.standard.CoffinTransporter
 import org.apache.ibatis.annotations.*
 
 @Mapper
@@ -228,6 +229,15 @@ interface ClientRepository {
             """
     )
     fun modifyClient(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, lunar: Int, funeralMethod: Int, cremationLocation: String, buryLocation: String, cause: String, papers: Int, autopsyCheck: Boolean, casketDate: String, casketTime: String, leavingDate: String, leavingTime: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int, sex: Char)
+
+    @Select(
+            """
+                SELECT *
+                FROM coffinTransporter
+                WHERE funeralId = #{id}
+            """
+    )
+    fun getCoffinTransporterByFuneralId(id: Int): CoffinTransporter
 
 
 }

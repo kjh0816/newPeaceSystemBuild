@@ -66,6 +66,9 @@ function jusoCallBack(roadFullAddr, inputNum){
         if(inputNum == '2'){
             document.getElementById("destinationAddress").value = roadFullAddr;
         }
+        if(inputNum == '3'){
+            document.getElementById("deceasedHomeAddress").value = roadFullAddr;
+        }
 
 }
 

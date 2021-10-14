@@ -10,6 +10,7 @@ import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.Funeral
 import com.base.newPeaceSystemBuild.vo.member.Member
+import com.base.newPeaceSystemBuild.vo.standard.CoffinTransporter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -263,6 +264,10 @@ class ClientService(
         clientRepository.modifyClient(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, lunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingDate, leavingTime, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId, sex)
 
         return ResultData.from("S-1", "입력하신 정보가 저장되었습니다.")
+    }
+
+    fun getCoffinTransporterByFuneralId(id: Int): CoffinTransporter {
+        return clientRepository.getCoffinTransporterByFuneralId(id)
     }
 
 

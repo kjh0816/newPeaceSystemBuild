@@ -395,6 +395,7 @@ class UsrDirectorController(
         val funeral = clientService.getFuneralByClientId(clientId)
         val chief = clientService.getFamilyByClientId(clientId)
 
+
         val clientCellphoneNo = Ut.getCellphoneNoFormatted(chief.cellphoneNo)
 
         val departments = memberService.getDepartments()
@@ -409,11 +410,14 @@ class UsrDirectorController(
             return "usr/home/main"
         }
 
+        val coffinTransporter = clientService.getCoffinTransporterByFuneralId(funeral.id)
+
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
         model.addAttribute("clientCellphoneNo", clientCellphoneNo)
         model.addAttribute("departments", departments)
+        model.addAttribute("coffinTransporter", coffinTransporter)
 
         return "usr/director/selectCoffinTransporter"
     }
