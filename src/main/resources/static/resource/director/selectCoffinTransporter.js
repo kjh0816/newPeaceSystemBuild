@@ -1,5 +1,7 @@
 let SelectMourningCloth__submitDone = false;
 
+var once = true;
+
 function selectCoffinTransporter__submit(form) {
     if (form.deceasedHomeAddress.value.length == 0) {
         swal({
@@ -10,6 +12,10 @@ function selectCoffinTransporter__submit(form) {
 
         return;
     }
+
+    if(once){
+        once = false;
+
 
     const post$ = rxjs.ajax.ajax.post(
         '/usr/director/doSelectCoffinTransporter',
@@ -26,6 +32,7 @@ function selectCoffinTransporter__submit(form) {
             }
         }
     );
+    }
 }
 
 // 팝업 창을 띠워주기 위한 함수(팝업은 html 파일로, 인터셉터에서 설정한 접근 권한에 영향을 받는다.)
