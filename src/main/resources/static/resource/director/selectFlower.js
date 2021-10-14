@@ -53,6 +53,7 @@ $('.flowerTributeIdSelectBox').click(function () {
         $(this).removeClass('active');
         $("input[value='" + flowerTributeId + "']#flowerTributeId").prop('checked', false);
         $("input[name='bunchCnt']").val('');
+        $("#bunchCnt").css("display", "none");
     }
     else{
         $('.flowerTributeIdSelectBox').removeClass('active');
@@ -60,5 +61,6 @@ $('.flowerTributeIdSelectBox').click(function () {
         $(this).addClass('active');
         $(this).text("선택 됨");
         $("input[value='" + flowerTributeId + "']#flowerTributeId").prop('checked', true);
+        $("#bunchCnt").css("display", "block");
     }
 });

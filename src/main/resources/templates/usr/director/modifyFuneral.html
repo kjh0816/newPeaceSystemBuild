@@ -71,12 +71,12 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input value="0" type="radio" id="men" name="sex" class="radio"/>
+                            <input th:checked="${#strings.equals('M', client.sex) }" value="M" type="radio" id="men" name="sex" class="radio"/>
                             <span> 남성</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input value="1" type="radio" id="women" name="sex" class="radio"/>
+                            <input th:checked="${#strings.equals('F', client.sex) }" value="F" type="radio" id="women" name="sex" class="radio"/>
                             <span>&nbsp;여성</span>
                         </div>
                     </div>

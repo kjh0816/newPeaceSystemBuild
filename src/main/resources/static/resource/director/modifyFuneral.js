@@ -13,7 +13,7 @@ function DirectorModifyFuneral__submit(form){
     var birth = form.birth.value;
     var deceasedDate = form.deceasedDate.value;
 
-    var sex = $('inout[name="sex"]:checked').val();
+    var sex = $('input[name="sex"]:checked').val();
 
     var lunar = $('inout[name="lunar"]:checked').val();
     var funeralMethod = $('input[name="funeralMethod"]:checked').val();

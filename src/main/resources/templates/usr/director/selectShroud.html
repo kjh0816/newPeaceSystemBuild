@@ -18,40 +18,39 @@
             <div class="card-body text-sm border border-base-300 bg-white mb-2">
                 <h2 class="card-title">수의 선택</h2>
                 <input type="hidden" name="funeralId" th:value="${funeral.id}">
+                <th:block th:if="${#strings.equals(client.sex, 'N')}">
+                    고인의 성별을 선택 후 주문해주세요
+                </th:block>
                 <div class="flex flex-col w-full" th:each="shroud : ${shrouds}">
-                    <div class="card card-side mb-2 w-full bg-base-200 shadow">
-                        <figure>
-                            <img th:src="@{../../../resource/img/shroud/shroud{shroudId}.png(shroudId = ${shroud.id})}" alt="" style="width: 400px; height: 250px;">
-                        </figure>
-                        <th:block th:if="${client.sex == true}">
-                            남
-                        </th:block>
-                        <th:block th:unless="${client.sex == true}">
-                            여
-                        </th:block>
-                        <div class="card-body">
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">상품명</div>
-                                <p class="pl-2">[[${shroud.name}]]</p>
-                            </div>
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">성별</div>
-                                <p class="pl-2" th:if="${#strings.equals(shroud.gender, 'M')}">남성</p>
-                                <p class="pl-2" th:if="${#strings.equals(shroud.gender, 'F')}">여성</p>
-                            </div>
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">가격</div>
-                                <p class="pl-2">[[${shroud.retailPriceFormat}]] 원</p>
-                            </div>
-                            <div class="card-actions">
-                                <div class="form-control flex">
-                                    <span class="shroudIdSelectBox btn btn-ghost" th:id="|shroud${shroud.id}|" th:value="${shroud.id}">선택하기</span>
-                                    <input id="shroudId" type="radio" name="shroudId" class="radio" th:value="${shroud.id}" style="display: none;">
+                    <th:block th:if="${#strings.equals(shroud.gender, client.sex)}">
+                        <div class="card card-side mb-2 w-full bg-base-200 shadow">
+                            <figure>
+                                <img th:src="@{../../../resource/img/shroud/shroud{shroudId}.png(shroudId = ${shroud.id})}" alt="" style="width: 400px; height: 250px;">
+                            </figure>
+                            <div class="card-body">
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">상품명</div>
+                                    <p class="pl-2">[[${shroud.name}]]</p>
+                                </div>
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">성별</div>
+                                    <p class="pl-2" th:if="${#strings.equals(shroud.gender, 'M')}">남성</p>
+                                    <p class="pl-2" th:if="${#strings.equals(shroud.gender, 'F')}">여성</p>
+                                </div>
+                                <div class="flex items-center mb-1">
+                                    <div class="badge badge-md">가격</div>
+                                    <p class="pl-2">[[${shroud.retailPriceFormat}]] 원</p>
+                                </div>
+                                <div class="card-actions">
+                                    <div class="form-control flex">
+                                        <span class="shroudIdSelectBox btn btn-ghost" th:id="|shroud${shroud.id}|" th:value="${shroud.id}">선택하기</span>
+                                        <input id="shroudId" type="radio" name="shroudId" class="radio" th:value="${shroud.id}" style="display: none;">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="divider" th:if="${shrouds.size != shroud.id}">OR</div>
+                        <div class="divider" th:if="${shrouds.size != shroud.id && shrouds.size - 1 != shroud.id}">OR</div>
+                    </th:block>
                 </div>
             </div>
             <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->

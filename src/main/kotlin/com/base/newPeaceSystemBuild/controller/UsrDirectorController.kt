@@ -275,7 +275,7 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") birth: String,
             @RequestParam(defaultValue = "") deceasedDate: String,
 
-            @RequestParam(defaultValue = "0") sex: Int,
+            @RequestParam(defaultValue = "N") sex: Char,
             @RequestParam(defaultValue = "0") lunar: Int,
             @RequestParam(defaultValue = "0") funeralMethod: Int,
 
