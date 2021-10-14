@@ -377,9 +377,28 @@ class UsrDirectorController(
     }
 
     @RequestMapping("/usr/director/selectCoffinTransporter")
-    fun selectCoffinTransporter(model: Model): String {
+    fun selectCoffinTransporter(
+            model: Model,
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String {
+
+
+        val client = clientService.getClientById(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
+        // client, funeral이 null인 경우, 잘못된 clienId로 접근한 경우이므로 돌려보냄
+        if(funeral == null || client == null){
+            return "usr/home/main"
+        }
+
+        // 담당 장례지도사 id와 현재 로그인한 사람의 id가 일치하는지 검사
+        if(funeral.directorMemberId != rq.getLoginedMember()!!.id){
+            return "usr/home/main"
+        }
+
+
+
 //        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
-        val coffinTransporters = vendorService.getCoffinTransporters()
+//        val coffinTransporters = vendorService.getCoffinTransporters()
 
 //        if (funeral != null) {
 //            val details = mutableListOf<String>()
@@ -396,9 +415,10 @@ class UsrDirectorController(
 //            }
 //        }
 
-        model.addAttribute("coffinTransporters", coffinTransporters)
+//        model.addAttribute("coffinTransporters", coffinTransporters)
 
-//        model.addAttribute("funeral", funeral)
+        model.addAttribute("client", client)
+        model.addAttribute("funeral", funeral)
 
         return "usr/director/selectCoffinTransporter"
     }

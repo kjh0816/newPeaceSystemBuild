@@ -61,10 +61,10 @@ function jusoCallBack(roadFullAddr, inputNum){
 		// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
 //		document.form.deceasedHomeAddress.value = roadFullAddr;
         if(inputNum == '1'){
-            document.getElementById("deceasedHomeAddress").value = roadFullAddr;
+            document.getElementById("departureAddress").value = roadFullAddr;
         }
         if(inputNum == '2'){
-            document.getElementById("chiefAddress").value = roadFullAddr;
+            document.getElementById("destinationAddress").value = roadFullAddr;
         }
 
 }
