@@ -378,27 +378,27 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/selectCoffinTransporter")
     fun selectCoffinTransporter(model: Model): String {
-        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+//        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
         val coffinTransporters = vendorService.getCoffinTransporters()
 
-        if (funeral != null) {
-            val details = mutableListOf<String>()
-            details.add("coffinTransporter")
-
-            for(detail in details){
-                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
-                    funeral.id,
-                    false,
-                    detail
-                )
-
-                model.addAttribute(detail + "Order", order)
-            }
-        }
+//        if (funeral != null) {
+//            val details = mutableListOf<String>()
+//            details.add("coffinTransporter")
+//
+//            for(detail in details){
+//                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
+//                    funeral.id,
+//                    false,
+//                    detail
+//                )
+//
+//                model.addAttribute(detail + "Order", order)
+//            }
+//        }
 
         model.addAttribute("coffinTransporters", coffinTransporters)
 
-        model.addAttribute("funeral", funeral)
+//        model.addAttribute("funeral", funeral)
 
         return "usr/director/selectCoffinTransporter"
     }
