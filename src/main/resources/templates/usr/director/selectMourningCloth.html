@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="form-control">
-                                <input type="text" id="femaleClothCnt" name="femaleClothCnt" placeholder="필요한 상복(여) 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${femaleMourningClothOrder != null} ? ${femaleMourningClothOrder.extra__femaleClothCnt} : ''">
+                                <input type="text" th:id="|femaleClothCnt${femaleMourningCloth.id}|" name="femaleClothCnt" th:placeholder="|필요한 상복(${femaleMourningCloth.name}) 갯수를 입력해 주세요.|" class="input input-bordered my-2 hidden" th:value="${femaleMourningClothOrder != null} ? ${femaleMourningClothOrder.extra__femaleClothCnt} : ''">
                             </div>
                         </div>
                     </div>
@@ -47,6 +47,7 @@
                     $(".femaleMourningClothIdSelectBox#femaleMourningCloth[[${femaleMourningClothOrder.standardId}]]").addClass('active');
                     $(".femaleMourningClothIdSelectBox#femaleMourningCloth[[${femaleMourningClothOrder.standardId}]]").text("선택 됨");
                     $("input[value='[[${femaleMourningClothOrder.standardId}]]']#femaleMourningClothId").prop('checked', true);
+                    $("#femaleClothCnt"+[[${femaleMourningClothOrder.standardId}]]).css("display", "block");
                 </script>
             <div class="card-body text-sm border border-base-300 bg-white mb-2">
                 <h2 class="card-title">상복(남) 선택</h2>
@@ -68,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="form-control">
-                                <input type="text" id="maleClothCnt" name="maleClothCnt" placeholder="필요한 상복(남) 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${maleMourningClothOrder != null} ? ${maleMourningClothOrder.extra__maleClothCnt} : ''">
+                                <input type="text" th:id="|maleClothCnt${maleMourningCloth.id}|" name="maleClothCnt" placeholder="필요한 상복(남) 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${maleMourningClothOrder != null} ? ${maleMourningClothOrder.extra__maleClothCnt} : ''">
                             </div>
                         </div>
                     </div>
@@ -79,6 +80,7 @@
                     $(".maleMourningClothIdSelectBox#maleMourningCloth[[${maleMourningClothOrder.standardId}]]").addClass('active');
                     $(".maleMourningClothIdSelectBox#maleMourningCloth[[${maleMourningClothOrder.standardId}]]").text("선택 됨");
                     $("input[value='[[${maleMourningClothOrder.standardId}]]']#maleMourningClothId").prop('checked', true);
+                    $("#maleClothCnt"+[[${maleMourningClothOrder.standardId}]]).css("display", "block");
                 </script>
             <div class="card-body text-sm border border-base-300 bg-white mb-2">
                 <h2 class="card-title">와이셔츠 선택</h2>
@@ -100,7 +102,7 @@
                                 </div>
                             </div>
                             <div class="form-control">
-                                <input type="text" id="shirtCnt" name="shirtCnt" placeholder="필요한 와이셔츠 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${shirtOrder != null} ? ${shirtOrder.extra__shirtCnt} : ''">
+                                <input type="text" th:id="|shirtCnt${shirt.id}|" name="shirtCnt" placeholder="필요한 와이셔츠 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${shirtOrder != null} ? ${shirtOrder.extra__shirtCnt} : ''">
                             </div>
                         </div>
                     </div>
@@ -111,6 +113,7 @@
                     $(".shirtIdSelectBox#shirt[[${shirtOrder.standardId}]]").addClass('active');
                     $(".shirtIdSelectBox#shirt[[${shirtOrder.standardId}]]").text("선택 됨");
                     $("input[value='[[${shirtOrder.standardId}]]']#shirtId").prop('checked', true);
+                    $("#shirtCnt"+[[${shirtOrder.standardId}]]).css("display", "block");
                 </script>
             <div class="card-body text-sm border border-base-300 bg-white mb-2">
                 <h2 class="card-title">넥타이 선택</h2>
@@ -132,7 +135,7 @@
                                 </div>
                             </div>
                             <div class="form-control">
-                                <input type="text" id="necktieCnt" name="necktieCnt" placeholder="필요한 넥타이 갯수를 입력해 주세요." class="input input-bordered my-2" th:value="${necktieOrder != null} ? ${necktieOrder.extra__necktieCnt} : ''">
+                                <input type="text" th:id="|necktieCnt${necktie.id}|" name="necktieCnt" placeholder="필요한 넥타이 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${necktieOrder != null} ? ${necktieOrder.extra__necktieCnt} : ''">
                             </div>
                         </div>
                     </div>
@@ -143,6 +146,7 @@
                     $(".necktieIdSelectBox#necktie[[${necktieOrder.standardId}]]").addClass('active');
                     $(".necktieIdSelectBox#necktie[[${necktieOrder.standardId}]]").text("선택 됨");
                     $("input[value='[[${necktieOrder.standardId}]]']#necktieId").prop('checked', true);
+                    $("#necktieCnt"+[[${necktieOrder.standardId}]]).css("display", "block");
                 </script>
             <br>
             <input class="btn btn-ghost w-full" type="submit" value="완료">
