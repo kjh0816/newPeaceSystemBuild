@@ -265,9 +265,10 @@ class VendorService(
 
     fun modifyFuneralIntoMourningClothId(
         funeralId: Int,
-        femaleMourningClothId: Int,
-        femaleClothCnt: Int,
-        femaleClothColor: String,
+        femaleMourningClothBlackId: Int,
+        femaleMourningClothBlackCnt: Int,
+        femaleMourningClothWhiteId: Int,
+        femaleMourningClothWhiteCnt: Int,
         maleMourningClothId: Int,
         maleClothCnt: Int,
         shirtId: Int,
@@ -282,7 +283,8 @@ class VendorService(
 
         // detail List
         val details = mutableListOf<String>()
-        details.add("femaleMourningCloth")
+        details.add("femaleMourningClothBlack")
+        details.add("femaleMourningClothWhite")
         details.add("maleMourningCloth")
         details.add("shirt")
         details.add("necktie")
@@ -290,8 +292,11 @@ class VendorService(
         for(detail in details){
             // detail 에 따라 standardId 값을 변경
             val standardId = when (detail) {
-                "femaleMourningCloth" -> {
-                    femaleMourningClothId
+                "femaleMourningClothBlack" -> {
+                    femaleMourningClothBlackId
+                }
+                "femaleMourningClothWhite" -> {
+                    femaleMourningClothWhiteId
                 }
                 "maleMourningCloth" -> {
                     maleMourningClothId
@@ -328,8 +333,11 @@ class VendorService(
 
                 // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Insert 해줌
                 when (detail) {
-                    "femaleMourningCloth" -> {
-                        vendorRepository.insertIntoFemaleMourningClothOrder(orderId, femaleClothCnt, femaleClothColor)
+                    "femaleMourningClothBlack" -> {
+                        vendorRepository.insertIntoFemaleMourningClothBlackOrder(orderId, femaleMourningClothBlackCnt)
+                    }
+                    "femaleMourningClothWhite" -> {
+                        vendorRepository.insertIntoFemaleMourningClothWhiteOrder(orderId, femaleMourningClothWhiteCnt)
                     }
                     "maleMourningCloth" -> {
                         vendorRepository.insertIntoMaleMourningClothOrder(orderId, maleClothCnt)
@@ -354,10 +362,15 @@ class VendorService(
                 )
                 // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Update 해줌
                 when (detail) {
-                    "femaleMourningCloth" -> {
-                        vendorRepository.modifyFemaleMourningClothOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
-                            femaleClothCnt,
-                            femaleClothColor,
+                    "femaleMourningClothBlack" -> {
+                        vendorRepository.modifyFemaleMourningClothBlackOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+                            femaleMourningClothBlackCnt,
+                            order.id
+                        )
+                    }
+                    "femaleMourningClothWhite" -> {
+                        vendorRepository.modifyFemaleMourningClothWhiteOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+                            femaleMourningClothWhiteCnt,
                             order.id
                         )
                     }
@@ -384,7 +397,8 @@ class VendorService(
         }
 
         // funeral 테이블에 standardId 들을 업데이트 한다.
-        vendorRepository.modifyFuneralIntoFemaleMourningClothId(funeralId, femaleMourningClothId)
+        vendorRepository.modifyFuneralIntoFemaleMourningClothBlackId(funeralId, femaleMourningClothBlackId)
+        vendorRepository.modifyFuneralIntoFemaleMourningClothWhiteId(funeralId, femaleMourningClothWhiteId)
         vendorRepository.modifyFuneralIntoMaleMourningClothId(funeralId, maleMourningClothId)
         vendorRepository.modifyFuneralIntoShirtId(funeralId, shirtId)
         vendorRepository.modifyFuneralIntoNecktieId(funeralId, necktieId)
@@ -488,8 +502,12 @@ class VendorService(
         )
     }
 
-    fun getFemaleMourningCloths(): List<MourningCloth> {
-        return vendorRepository.getFemaleMourningCloths()
+    fun getFemaleMourningClothBlacks(): List<MourningCloth> {
+        return vendorRepository.getFemaleMourningClothBlacks()
+    }
+
+    fun getFemaleMourningClothWhites(): List<MourningCloth> {
+        return vendorRepository.getFemaleMourningClothWhites()
     }
 
     fun getMaleMourningCloths(): List<MourningCloth> {
@@ -504,8 +522,12 @@ class VendorService(
         return vendorRepository.getNeckties()
     }
 
-    fun getFemaleMourningClothById(femaleMourningClothId: Int): MourningCloth? {
-        return vendorRepository.getFemaleMourningClothById(femaleMourningClothId)
+    fun getFemaleMourningClothBlackById(femaleMourningClothBlackId: Int): MourningCloth? {
+        return vendorRepository.getFemaleMourningClothBlackById(femaleMourningClothBlackId)
+    }
+
+    fun getFemaleMourningClothWhiteById(femaleMourningClothWhiteId: Int): MourningCloth? {
+        return vendorRepository.getFemaleMourningClothWhiteById(femaleMourningClothWhiteId)
     }
 
     fun getMaleMourningClothById(maleMourningClothId: Int): MourningCloth? {

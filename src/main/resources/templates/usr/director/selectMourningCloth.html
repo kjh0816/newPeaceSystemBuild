@@ -18,36 +18,75 @@
             <div class="card-body text-sm border border-base-300 bg-white mb-2">
                 <h2 class="card-title">상복(여) 선택</h2>
                 <input type="hidden" name="funeralId" th:value="${funeral.id}">
-                <div class="flex flex-col w-full" th:each="femaleMourningCloth : ${femaleMourningCloths}">
+                <div class="flex flex-col w-full" th:each="femaleMourningClothBlack : ${femaleMourningClothBlacks}">
                     <div class="card card-side mb-2 w-full bg-base-200 shadow">
                         <figure>
-                            <img th:src="@{../../../resource/img/femaleMourningCloth/femaleMourningCloth{femaleMourningClothId}.png(femaleMourningClothId = ${femaleMourningCloth.id})}" alt="" style="width: 400px; height: 250px;">
+                            <img th:src="@{../../../resource/img/femaleMourningClothBlack/femaleMourningClothBlack{femaleMourningClothBlackId}.png(femaleMourningClothBlackId = ${femaleMourningClothBlack.id})}" alt="" style="width: 400px; height: 250px;">
                         </figure>
                         <div class="card-body">
                             <div class="flex items-center mb-1">
+                                <div class="badge badge-md">상품명</div>
+                                <p class="pl-2">[[${femaleMourningClothBlack.name}]]</p>
+                            </div>
+                            <div class="flex items-center mb-1">
                                 <div class="badge badge-md">가격</div>
-                                <p class="pl-2">[[${femaleMourningCloth.retailPriceFormat}]] 원</p>
+                                <p class="pl-2">[[${femaleMourningClothBlack.retailPriceFormat}]] 원</p>
                             </div>
                             <div class="card-actions">
                                 <div class="form-control flex">
-                                    <span class="femaleMourningClothIdSelectBox btn btn-ghost" th:id="|femaleMourningCloth${femaleMourningCloth.id}|" th:value="${femaleMourningCloth.id}">선택하기</span>
-                                    <input id="femaleMourningClothId" type="radio" name="femaleMourningClothId" class="radio" th:value="${femaleMourningCloth.id}" style="display: none;">
+                                    <span class="femaleMourningClothBlackIdSelectBox btn btn-ghost" th:id="|femaleMourningClothBlack${femaleMourningClothBlack.id}|" th:value="${femaleMourningClothBlack.id}">선택하기</span>
+                                    <input id="femaleMourningClothBlackId" type="radio" name="femaleMourningClothBlackId" class="radio" th:value="${femaleMourningClothBlack.id}" style="display: none;">
                                 </div>
                             </div>
                             <div class="form-control">
-                                <input type="text" th:id="|femaleClothCnt${femaleMourningCloth.id}|" name="femaleClothCnt" th:placeholder="|필요한 상복(${femaleMourningCloth.name}) 갯수를 입력해 주세요.|" class="input input-bordered my-2 hidden" th:value="${femaleMourningClothOrder != null} ? ${femaleMourningClothOrder.extra__femaleClothCnt} : ''">
+                                <input type="text" th:id="|femaleMourningClothBlackCnt${femaleMourningClothBlack.id}|" name="femaleMourningClothBlackCnt" th:placeholder="|필요한 상복(${femaleMourningClothBlack.name}) 갯수를 입력해 주세요.|" class="input input-bordered my-2 hidden" th:value="${femaleMourningClothBlackOrder != null} ? ${femaleMourningClothBlackOrder.extra__femaleClothBlackCnt} : ''">
                             </div>
                         </div>
                     </div>
-                    <div class="divider" th:if="${femaleMourningCloths.size != femaleMourningCloth.id}">OR</div>
+                    <div class="divider" th:if="${femaleMourningClothBlacks.size != femaleMourningClothBlack.id}">OR</div>
+                </div>
+                <div class="flex flex-col w-full" th:each="femaleMourningClothWhite : ${femaleMourningClothWhites}">
+                    <div class="card card-side mb-2 w-full bg-base-200 shadow">
+                        <figure>
+                            <img th:src="@{../../../resource/img/femaleMourningClothWhite/femaleMourningClothWhite{femaleMourningClothWhiteId}.png(femaleMourningClothWhiteId = ${femaleMourningClothWhite.id})}" alt="" style="width: 400px; height: 250px;">
+                        </figure>
+                        <div class="card-body">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">상품명</div>
+                                <p class="pl-2">[[${femaleMourningClothWhite.name}]]</p>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">가격</div>
+                                <p class="pl-2">[[${femaleMourningClothWhite.retailPriceFormat}]] 원</p>
+                            </div>
+                            <div class="card-actions">
+                                <div class="form-control flex">
+                                    <span class="femaleMourningClothWhiteIdSelectBox btn btn-ghost" th:id="|femaleMourningClothWhite${femaleMourningClothWhite.id}|" th:value="${femaleMourningClothWhite.id}">선택하기</span>
+                                    <input id="femaleMourningClothWhiteId" type="radio" name="femaleMourningClothWhiteId" class="radio" th:value="${femaleMourningClothWhite.id}" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" th:id="|femaleMourningClothWhiteCnt${femaleMourningClothWhite.id}|" name="femaleMourningClothWhiteCnt" th:placeholder="|필요한 상복(${femaleMourningClothWhite.name}) 갯수를 입력해 주세요.|" class="input input-bordered my-2 hidden" th:value="${femaleMourningClothWhiteOrder != null} ? ${femaleMourningClothWhiteOrder.extra__femaleClothWhiteCnt} : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" th:if="${femaleMourningClothWhites.size != femaleMourningClothWhite.id}">OR</div>
                 </div>
             </div>
                 <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
-                <script th:if="${femaleMourningClothOrder != null}">
-                    $(".femaleMourningClothIdSelectBox#femaleMourningCloth[[${femaleMourningClothOrder.standardId}]]").addClass('active');
-                    $(".femaleMourningClothIdSelectBox#femaleMourningCloth[[${femaleMourningClothOrder.standardId}]]").text("선택 됨");
-                    $("input[value='[[${femaleMourningClothOrder.standardId}]]']#femaleMourningClothId").prop('checked', true);
-                    $("#femaleClothCnt"+[[${femaleMourningClothOrder.standardId}]]).css("display", "block");
+                <script th:if="${femaleMourningClothBlackOrder != null}">
+                    $(".femaleMourningClothBlackIdSelectBox#femaleMourningClothBlack[[${femaleMourningClothBlackOrder.standardId}]]").addClass('active');
+                    $(".femaleMourningClothBlackIdSelectBox#femaleMourningClothBlack[[${femaleMourningClothBlackOrder.standardId}]]").text("선택 됨");
+                    $("input[value='[[${femaleMourningClothBlackOrder.standardId}]]']#femaleMourningClothBlackId").prop('checked', true);
+                    $("#femaleClothCnt"+[[${femaleMourningClothBlackOrder.standardId}]]).css("display", "block");
+                </script>
+
+                <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+                <script th:if="${femaleMourningClothWhiteOrder != null}">
+                    $(".femaleMourningClothWhiteIdSelectBox#femaleMourningClothWhite[[${femaleMourningClothWhiteOrder.standardId}]]").addClass('active');
+                    $(".femaleMourningClothWhiteIdSelectBox#femaleMourningClothWhite[[${femaleMourningClothWhiteOrder.standardId}]]").text("선택 됨");
+                    $("input[value='[[${femaleMourningClothWhiteOrder.standardId}]]']#femaleMourningClothWhiteId").prop('checked', true);
+                    $("#femaleClothCnt"+[[${femaleMourningClothWhiteOrder.standardId}]]).css("display", "block");
                 </script>
             <div class="card-body text-sm border border-base-300 bg-white mb-2">
                 <h2 class="card-title">상복(남) 선택</h2>
@@ -76,7 +115,7 @@
                     <div class="divider" th:if="${maleMourningCloths.size != maleMourningCloth.id}">OR</div>
                 </div>
             </div>
-                <script th:if="${femaleMourningClothOrder != null}">
+                <script th:if="${maleMourningClothOrder != null}">
                     $(".maleMourningClothIdSelectBox#maleMourningCloth[[${maleMourningClothOrder.standardId}]]").addClass('active');
                     $(".maleMourningClothIdSelectBox#maleMourningCloth[[${maleMourningClothOrder.standardId}]]").text("선택 됨");
                     $("input[value='[[${maleMourningClothOrder.standardId}]]']#maleMourningClothId").prop('checked', true);

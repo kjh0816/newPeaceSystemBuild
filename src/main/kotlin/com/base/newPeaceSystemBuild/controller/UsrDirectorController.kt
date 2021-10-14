@@ -66,153 +66,172 @@ class UsrDirectorController(
         if(funerals.isEmpty()){
            model.addAttribute("funeral", null)
         }
-
-        // 뷰페이지에서 총액을 표기해주기 위한 변수들
-        // 선택하지 않은상태에선 해당 변수(flower, portrait 등) 들이 null값을 가지고있다.
-        // null 값을 허용하면서 null 일경우 해당 상품의 가격을 0으로 측정해서 넣어줌.
-        var flowerPrice = 0
-        var flowerTributePrice = 0
-        var femaleMourningClothPrice = 0
-        var maleMourningClothPrice = 0
-        var shirtPrice = 0
-        var necktiePrice = 0
-        var shroudPrice = 0
-
-        val formatter = DecimalFormat("###,###")
-        // 합계
-        var sum = 0
-        // 장례식장 선택을 위해 최초 로딩 시, 시/도 정보를 넘겨준다.
+        else{
 
 
-        // 헌화의 주문정보를 장례지도사 회원정보로 조회한 결과를 가져온다
-        val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
-            rq.getLoginedMember()!!.id,
-            false,
-            "flowerTribute"
-        )
-        val femaleMourningClothOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
-            rq.getLoginedMember()!!.id,
-            false,
-            "femaleMourningCloth"
-        )
-        val maleMourningClothOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
-            rq.getLoginedMember()!!.id,
-            false,
-            "maleMourningCloth"
-        )
-        val shirtOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
-            rq.getLoginedMember()!!.id,
-            false,
-            "shirt"
-        )
-        val necktieOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
-            rq.getLoginedMember()!!.id,
-            false,
-            "necktie"
-        )
-        val shroudOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
-            rq.getLoginedMember()!!.id,
-            false,
-            "shroud"
-        )
+            // 뷰페이지에서 총액을 표기해주기 위한 변수들
+            // 선택하지 않은상태에선 해당 변수(flower, portrait 등) 들이 null값을 가지고있다.
+            // null 값을 허용하면서 null 일경우 해당 상품의 가격을 0으로 측정해서 넣어줌.
+            var flowerPrice = 0
+            var flowerTributePrice = 0
+            var femaleMourningClothBlackPrice = 0
+            var femaleMourningClothWhitePrice = 0
+            var maleMourningClothPrice = 0
+            var shirtPrice = 0
+            var necktiePrice = 0
+            var shroudPrice = 0
 
-        for(funeral in funerals){
-            val client = clientService.getClientById(funeral.clientId)
+            val formatter = DecimalFormat("###,###")
+            // 합계
+            var sum = 0
+            // 장례식장 선택을 위해 최초 로딩 시, 시/도 정보를 넘겨준다.
 
 
+            // 헌화의 주문정보를 장례지도사 회원정보로 조회한 결과를 가져온다
+            val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+                rq.getLoginedMember()!!.id,
+                false,
+                "flowerTribute"
+            )
+            val femaleMourningClothBlackOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+                rq.getLoginedMember()!!.id,
+                false,
+                "femaleMourningClothBlack"
+            )
+            val femaleMourningClothWhiteOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+                rq.getLoginedMember()!!.id,
+                false,
+                "femaleMourningClothWhite"
+            )
+            val maleMourningClothOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+                rq.getLoginedMember()!!.id,
+                false,
+                "maleMourningCloth"
+            )
+            val shirtOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+                rq.getLoginedMember()!!.id,
+                false,
+                "shirt"
+            )
+            val necktieOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+                rq.getLoginedMember()!!.id,
+                false,
+                "necktie"
+            )
+            val shroudOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+                rq.getLoginedMember()!!.id,
+                false,
+                "shroud"
+            )
+
+            for(funeral in funerals){
+                val client = clientService.getClientById(funeral.clientId)
 
 
 
 
-            // 상주의 정보
-            val chief = clientService.getFamilyByClientId(funeral.clientId)
 
-            // 뷰페이지에서 선택된 스탠다드의 가격을 표기하기 위해 불러온다
-            val flower = vendorService.getFlowerById(funeral.flowerId)
-            val flowerTribute = vendorService.getFlowerTributeById(funeral.flowerTributeId)
-            val femaleMourningCloth = vendorService.getFemaleMourningClothById(funeral.femaleMourningClothId)
-            val maleMourningCloth = vendorService.getMaleMourningClothById(funeral.maleMourningClothId)
-            val shirt = vendorService.getShirtById(funeral.shirtId)
-            val necktie = vendorService.getNecktieById(funeral.necktieId)
-            val shroud = vendorService.getShroudById(funeral.shroudId)
 
-            if (flower != null) {
-                flowerPrice = flower.retailPrice.toInt()
-                sum += flowerPrice
-            }
-            if (flowerTribute != null) {
-                flowerTributePrice =
-                    (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
+                // 상주의 정보
+                val chief = clientService.getFamilyByClientId(funeral.clientId)
 
-                // 포장이 선택되었다면 가격에 3을 곱한다.
-                if (flowerTributeOrder.extra__packing == true) {
-                    flowerTributePrice *= 3
+                // 뷰페이지에서 선택된 스탠다드의 가격을 표기하기 위해 불러온다
+                val flower = vendorService.getFlowerById(funeral.flowerId)
+                val flowerTribute = vendorService.getFlowerTributeById(funeral.flowerTributeId)
+                val femaleMourningClothBlack = vendorService.getFemaleMourningClothBlackById(funeral.femaleMourningClothBlackId)
+                val femaleMourningClothWhite = vendorService.getFemaleMourningClothWhiteById(funeral.femaleMourningClothWhiteId)
+                val maleMourningCloth = vendorService.getMaleMourningClothById(funeral.maleMourningClothId)
+                val shirt = vendorService.getShirtById(funeral.shirtId)
+                val necktie = vendorService.getNecktieById(funeral.necktieId)
+                val shroud = vendorService.getShroudById(funeral.shroudId)
+
+                if (flower != null) {
+                    flowerPrice = flower.retailPrice.toInt()
+                    sum += flowerPrice
                 }
-                sum += flowerTributePrice
-            }
-            if (femaleMourningCloth != null) {
-                femaleMourningClothPrice =
-                    femaleMourningCloth.retailPrice.toInt() * femaleMourningClothOrder!!.extra__femaleClothCnt!!
-                sum += femaleMourningClothPrice
-            }
-            if (maleMourningCloth != null) {
-                maleMourningClothPrice =
-                    maleMourningCloth.retailPrice.toInt() * maleMourningClothOrder!!.extra__maleClothCnt!!
-                sum += maleMourningClothPrice
-            }
-            if (shirt != null) {
-                shirtPrice =
-                    shirt.retailPrice.toInt() * shirtOrder!!.extra__shirtCnt!!
-                sum += shirtPrice
-            }
-            if (necktie != null) {
-                necktiePrice =
-                    necktie.retailPrice.toInt() * necktieOrder!!.extra__necktieCnt!!
-                sum += necktiePrice
-            }
-            if (shroud != null) {
-                shroudPrice = shroud.retailPrice.toInt()
-                sum += shroudPrice
-            }
+                if (flowerTribute != null) {
+                    flowerTributePrice =
+                        (flowerTribute.retailPrice.toInt() * flowerTribute.bunch) * flowerTributeOrder!!.extra__bunchCnt!!
 
-            model.addAttribute("funeral", funeral)
-            model.addAttribute("client", client)
-            model.addAttribute("chief", chief)
+                    // 포장이 선택되었다면 가격에 3을 곱한다.
+                    if (flowerTributeOrder.extra__packing == true) {
+                        flowerTributePrice *= 3
+                    }
+                    sum += flowerTributePrice
+                }
+                if (femaleMourningClothBlack != null) {
+                    femaleMourningClothBlackPrice =
+                        femaleMourningClothBlack.retailPrice.toInt() * femaleMourningClothBlackOrder!!.extra__femaleClothBlackCnt!!
+                    sum += femaleMourningClothBlackPrice
+                }
+                if (femaleMourningClothWhite != null) {
+                    femaleMourningClothWhitePrice =
+                        femaleMourningClothWhite.retailPrice.toInt() * femaleMourningClothWhiteOrder!!.extra__femaleClothWhiteCnt!!
+                    sum += femaleMourningClothWhitePrice
+                }
+                if (maleMourningCloth != null) {
+                    maleMourningClothPrice =
+                        maleMourningCloth.retailPrice.toInt() * maleMourningClothOrder!!.extra__maleClothCnt!!
+                    sum += maleMourningClothPrice
+                }
+                if (shirt != null) {
+                    shirtPrice =
+                        shirt.retailPrice.toInt() * shirtOrder!!.extra__shirtCnt!!
+                    sum += shirtPrice
+                }
+                if (necktie != null) {
+                    necktiePrice =
+                        necktie.retailPrice.toInt() * necktieOrder!!.extra__necktieCnt!!
+                    sum += necktiePrice
+                }
+                if (shroud != null) {
+                    shroudPrice = shroud.retailPrice.toInt()
+                    sum += shroudPrice
+                }
+
+                model.addAttribute("funeral", funeral)
+                model.addAttribute("client", client)
+                model.addAttribute("chief", chief)
 //      선택된 스탠다드 종류
-            model.addAttribute("flower", flower)
-            model.addAttribute("flowerTribute", flowerTribute)
-            model.addAttribute("femaleMourningCloth", femaleMourningCloth)
-            model.addAttribute("maleMourningCloth", maleMourningCloth)
-            model.addAttribute("shirt", shirt)
-            model.addAttribute("necktie", necktie)
-            model.addAttribute("shroud", shroud)
-        }
+                model.addAttribute("flower", flower)
+                model.addAttribute("flowerTribute", flowerTribute)
+                model.addAttribute("femaleMourningClothBlack", femaleMourningClothBlack)
+                model.addAttribute("femaleMourningClothWhite", femaleMourningClothWhite)
+                model.addAttribute("maleMourningCloth", maleMourningCloth)
+                model.addAttribute("shirt", shirt)
+                model.addAttribute("necktie", necktie)
+                model.addAttribute("shroud", shroud)
+            }
 
-        val flowerTributePriceFormat = formatter.format(flowerTributePrice)
-        val femaleMourningClothPriceFormat = formatter.format(femaleMourningClothPrice)
-        val maleMourningClothPriceFormat = formatter.format(maleMourningClothPrice)
-        val shirtPriceFormat = formatter.format(shirtPrice)
-        val necktiePriceFormat = formatter.format(necktiePrice)
+            val flowerTributePriceFormat = formatter.format(flowerTributePrice)
+            val femaleMourningClothBlackPriceFormat = formatter.format(femaleMourningClothBlackPrice)
+            val femaleMourningClothWhitePriceFormat = formatter.format(femaleMourningClothWhitePrice)
+            val maleMourningClothPriceFormat = formatter.format(maleMourningClothPrice)
+            val shirtPriceFormat = formatter.format(shirtPrice)
+            val necktiePriceFormat = formatter.format(necktiePrice)
 
-        val sumFormat = formatter.format(sum)
+            val sumFormat = formatter.format(sum)
 
 
 
 //      단품이 아닌 세트 혹은 다수의 상품을 선택해야하는것들, 선택한 갯수랑 개당가격을 계산한가격
-        model.addAttribute("flowerTributePriceFormat", flowerTributePriceFormat)
-        model.addAttribute("femaleMourningClothPriceFormat", femaleMourningClothPriceFormat)
-        model.addAttribute("maleMourningClothPriceFormat", maleMourningClothPriceFormat)
-        model.addAttribute("shirtPriceFormat", shirtPriceFormat)
-        model.addAttribute("necktiePriceFormat", necktiePriceFormat)
+            model.addAttribute("flowerTributePriceFormat", flowerTributePriceFormat)
+            model.addAttribute("femaleMourningClothBlackPriceFormat", femaleMourningClothBlackPriceFormat)
+            model.addAttribute("femaleMourningClothWhitePriceFormat", femaleMourningClothWhitePriceFormat)
+            model.addAttribute("maleMourningClothPriceFormat", maleMourningClothPriceFormat)
+            model.addAttribute("shirtPriceFormat", shirtPriceFormat)
+            model.addAttribute("necktiePriceFormat", necktiePriceFormat)
 //      상품별 Order 상세정보
-        model.addAttribute("flowerTributeOrder", flowerTributeOrder)
-        model.addAttribute("femaleMourningClothOrder", femaleMourningClothOrder)
-        model.addAttribute("maleMourningClothOrder", maleMourningClothOrder)
-        model.addAttribute("shirtOrder", shirtOrder)
-        model.addAttribute("necktieOrder", necktieOrder)
-        model.addAttribute("shroudOrder", shroudOrder)
+            model.addAttribute("flowerTributeOrder", flowerTributeOrder)
+            model.addAttribute("femaleMourningClothBlackOrder", femaleMourningClothBlackOrder)
+            model.addAttribute("femaleMourningClothWhiteOrder", femaleMourningClothWhiteOrder)
+            model.addAttribute("maleMourningClothOrder", maleMourningClothOrder)
+            model.addAttribute("shirtOrder", shirtOrder)
+            model.addAttribute("necktieOrder", necktieOrder)
+            model.addAttribute("shroudOrder", shroudOrder)
 //      합계
-        model.addAttribute("sumFormat", sumFormat)
+            model.addAttribute("sumFormat", sumFormat)
+        }
 
         return "usr/director/progress"
     }
@@ -438,14 +457,16 @@ class UsrDirectorController(
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
 
         // 각 상품의 스탠다드 데이터들을 DB에서 조회
-        val femaleMourningCloths = vendorService.getFemaleMourningCloths()
+        val femaleMourningClothBlacks = vendorService.getFemaleMourningClothBlacks()
+        val femaleMourningClothWhites = vendorService.getFemaleMourningClothWhites()
         val maleMourningCloths = vendorService.getMaleMourningCloths()
         val shirts = vendorService.getShirts()
         val neckties = vendorService.getNeckties()
 
         if (funeral != null) {
             val details = mutableListOf<String>()
-            details.add("femaleMourningCloth")
+            details.add("femaleMourningClothBlack")
+            details.add("femaleMourningClothWhite")
             details.add("maleMourningCloth")
             details.add("shirt")
             details.add("necktie")
@@ -461,8 +482,9 @@ class UsrDirectorController(
             }
         }
 
+        model.addAttribute("femaleMourningClothBlacks", femaleMourningClothBlacks)
+        model.addAttribute("femaleMourningClothWhites", femaleMourningClothWhites)
         model.addAttribute("maleMourningCloths", maleMourningCloths)
-        model.addAttribute("femaleMourningCloths", femaleMourningCloths)
         model.addAttribute("shirts", shirts)
         model.addAttribute("neckties", neckties)
 
@@ -595,8 +617,10 @@ class UsrDirectorController(
     @ResponseBody
     fun doSelectMourningCloth(
         funeralId: Int,
-        @RequestParam(defaultValue = "0") femaleMourningClothId: Int,
-        @RequestParam(defaultValue = "0") femaleClothCnt: Int,
+        @RequestParam(defaultValue = "0") femaleMourningClothBlackId: Int,
+        @RequestParam(defaultValue = "0") femaleMourningClothBlackCnt: Int,
+        @RequestParam(defaultValue = "0") femaleMourningClothWhiteId: Int,
+        @RequestParam(defaultValue = "0") femaleMourningClothWhiteCnt: Int,
         @RequestParam(defaultValue = "0") maleMourningClothId: Int,
         @RequestParam(defaultValue = "0") maleClothCnt: Int,
         @RequestParam(defaultValue = "0") shirtId: Int,
@@ -604,20 +628,13 @@ class UsrDirectorController(
         @RequestParam(defaultValue = "0") necktieId: Int,
         @RequestParam(defaultValue = "0") necktieCnt: Int
     ): String {
-        var femaleClothColor = ""
-
-        if (femaleMourningClothId == 1) {
-            femaleClothColor = "흑"
-        } else if (femaleMourningClothId == 2) {
-            femaleClothColor = "백"
-        }
-
         return Ut.getJsonStrFromObj(
             vendorService.modifyFuneralIntoMourningClothId(
                 funeralId,
-                femaleMourningClothId,
-                femaleClothCnt,
-                femaleClothColor,
+                femaleMourningClothBlackId,
+                femaleMourningClothBlackCnt,
+                femaleMourningClothWhiteId,
+                femaleMourningClothWhiteCnt,
                 maleMourningClothId,
                 maleClothCnt,
                 shirtId,

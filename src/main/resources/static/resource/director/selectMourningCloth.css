@@ -1,9 +1,17 @@
 /* active 처리 */
-.femaleMourningClothIdSelectBox.active{
+.femaleMourningClothBlackIdSelectBox.active{
     background: #d2d4d7;
 }
 
-.femaleMourningClothIdSelectBox.active{
+.femaleMourningClothBlackIdSelectBox.active{
+    background: #d2d4d7;
+}
+
+.femaleMourningClothWhiteIdSelectBox.active{
+    background: #d2d4d7;
+}
+
+.femaleMourningClothWhiteIdSelectBox.active{
     background: #d2d4d7;
 }
 

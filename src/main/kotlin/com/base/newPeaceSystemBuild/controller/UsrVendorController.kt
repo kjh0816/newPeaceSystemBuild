@@ -50,13 +50,15 @@ class UsrVendorController(
     @RequestMapping("/usr/vendor/mourningClothRequest")
     fun showMourningClothRequest(model: Model): String{
 
-        val femaleMourningCloths: List<MourningCloth> = vendorService.getFemaleMourningCloths()
+        val femaleMourningClothBlacks: List<MourningCloth> = vendorService.getFemaleMourningClothBlacks()
+        val femaleMourningClothWhites: List<MourningCloth> = vendorService.getFemaleMourningClothWhites()
         val maleMourningCloths: List<MourningCloth> = vendorService.getMaleMourningCloths()
         val shirts: List<MourningCloth> = vendorService.getShirts()
         val neckties: List<MourningCloth> = vendorService.getNeckties()
 
 
-        model.addAttribute("femaleMourningCloths", femaleMourningCloths)
+        model.addAttribute("femaleMourningClothBlacks", femaleMourningClothBlacks)
+        model.addAttribute("femaleMourningClothWhites", femaleMourningClothWhites)
         model.addAttribute("maleMourningCloths", maleMourningCloths)
         model.addAttribute("shirts", shirts)
         model.addAttribute("neckties", neckties)

@@ -19,25 +19,46 @@ function SelectMourningCloth__submit(form) {
 }
 
 // radio 버튼 대신 사용할 버튼 디자인
-$('.femaleMourningClothIdSelectBox').click(function () {
-    var femaleMourningClothId = $(this).attr('value');
+$('.femaleMourningClothBlackIdSelectBox').click(function () {
+    var femaleMourningClothBlackId = $(this).attr('value');
 
     if($(this).hasClass('active')){
-        $('.femaleMourningClothIdSelectBox').text('선택하기');
+        $('.femaleMourningClothBlackIdSelectBox').text('선택하기');
         $(this).removeClass('active');
-        $("input[value='" + femaleMourningClothId + "']#femaleMourningClothId").prop('checked', false);
+        $("input[value='" + femaleMourningClothBlackId + "']#femaleMourningClothBlackId").prop('checked', false);
         $("input[name='femaleClothCnt']").val('');
-        $("#femaleClothCnt" + femaleMourningClothId).css("display", "none");
+        $("#femaleMourningClothBlackCnt" + femaleMourningClothBlackId).css("display", "none");
     }
     else{
-        $('.femaleMourningClothIdSelectBox').removeClass('active');
-        $('.femaleMourningClothIdSelectBox').text('선택하기');
+        $('.femaleMourningClothBlackIdSelectBox').removeClass('active');
+        $('.femaleMourningClothBlackIdSelectBox').text('선택하기');
         $("input[name='femaleClothCnt']").css("display", "none");
         $("input[name='femaleClothCnt']").val('');
         $(this).addClass('active');
         $(this).text("선택 됨");
-        $("input[value='" + femaleMourningClothId + "']#femaleMourningClothId").prop('checked', true);
-        $("#femaleClothCnt" + femaleMourningClothId).css("display", "block");
+        $("input[value='" + femaleMourningClothBlackId + "']#femaleMourningClothBlackId").prop('checked', true);
+        $("#femaleMourningClothBlackCnt" + femaleMourningClothBlackId).css("display", "block");
+    }
+});
+$('.femaleMourningClothWhiteIdSelectBox').click(function () {
+    var femaleMourningClothWhiteId = $(this).attr('value');
+
+    if($(this).hasClass('active')){
+        $('.femaleMourningClothWhiteIdSelectBox').text('선택하기');
+        $(this).removeClass('active');
+        $("input[value='" + femaleMourningClothWhiteId + "']#femaleMourningClothWhiteId").prop('checked', false);
+        $("input[name='femaleClothCnt']").val('');
+        $("#femaleMourningClothWhiteCnt" + femaleMourningClothWhiteId).css("display", "none");
+    }
+    else{
+        $('.femaleMourningClothWhiteIdSelectBox').removeClass('active');
+        $('.femaleMourningClothWhiteIdSelectBox').text('선택하기');
+        $("input[name='femaleClothCnt']").css("display", "none");
+        $("input[name='femaleClothCnt']").val('');
+        $(this).addClass('active');
+        $(this).text("선택 됨");
+        $("input[value='" + femaleMourningClothWhiteId + "']#femaleMourningClothWhiteId").prop('checked', true);
+        $("#femaleMourningClothWhiteCnt" + femaleMourningClothWhiteId).css("display", "block");
     }
 });
 $('.maleMourningClothIdSelectBox').click(function () {

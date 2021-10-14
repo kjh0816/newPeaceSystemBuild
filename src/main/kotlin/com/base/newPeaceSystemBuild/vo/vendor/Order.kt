@@ -21,8 +21,8 @@ data class Order (
     var extra__bunch: Int? = null
     var extra__packing: Boolean? = null
     // 상복(여) 주문정보 관련 데이터
-    var extra__femaleClothCnt: Int? = null
-    var extra__femaleClothColor: String? = null
+    var extra__femaleClothBlackCnt: Int? = null
+    var extra__femaleClothWhiteCnt: Int? = null
     // 상복(남) 주문정보 관련 데이터
     var extra__maleClothCnt: Int? = null
     // 와이셔츠 주문정보 관련 데이터

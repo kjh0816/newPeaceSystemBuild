@@ -118,22 +118,40 @@
             </figure>
             <div class="card-body">
                 <h2 class="card-title">상복</h2>
-                <th:block th:if="${femaleMourningCloth == null}">
-                    <p>상복(여)을 선택할 수 있습니다.</p>
+                <th:block th:if="${femaleMourningClothBlack == null}">
+                    <p>상복(여, 흑)을 선택할 수 있습니다.</p>
                 </th:block>
-                <th:block th:unless="${femaleMourningCloth == null}">
-                    <p class="font-bold">상복(여)</p>
+                <th:block th:unless="${femaleMourningClothBlack == null}">
+                    <p class="font-bold">상복(여, 흑)</p>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">가격</div>
-                        <p class="pl-2">[[${femaleMourningCloth.retailPriceFormat}]] 원 (단품)</p>
+                        <p class="pl-2">[[${femaleMourningClothBlack.retailPriceFormat}]] 원 (단품)</p>
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">갯수</div>
-                        <p class="pl-2">[[${femaleMourningClothOrder.extra__femaleClothCnt}]] 벌</p>
+                        <p class="pl-2">[[${femaleMourningClothBlackOrder.extra__femaleClothBlackCnt}]] 벌</p>
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>
-                        <p class="pl-2">[[${femaleMourningClothPriceFormat}]] 원</p>
+                        <p class="pl-2">[[${femaleMourningClothBlackPriceFormat}]] 원</p>
+                    </div>
+                </th:block>
+                <th:block th:if="${femaleMourningClothWhite == null}">
+                    <p>상복(여, 백)을 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${femaleMourningClothWhite == null}">
+                    <p class="font-bold">상복(여, 백)</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2">[[${femaleMourningClothWhite.retailPriceFormat}]] 원 (단품)</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2">[[${femaleMourningClothWhiteOrder.extra__femaleClothWhiteCnt}]] 벌</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2">[[${femaleMourningClothWhitePriceFormat}]] 원</p>
                     </div>
                 </th:block>
                 <th:block th:if="${maleMourningCloth == null}">

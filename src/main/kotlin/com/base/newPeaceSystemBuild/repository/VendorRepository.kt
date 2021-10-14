@@ -186,10 +186,13 @@ interface VendorRepository {
                 , FTO.bunchCnt AS `extra__bunchCnt`
                 , FTO.packing AS `extra__packing`
             </if>
-            <if test="detail == 'femaleMourningCloth'">
-                , FMC.retailPrice AS `extra__retailPrice`
-                , FMCO.femaleClothCnt AS `extra__femaleClothCnt`
-                , FMCO.femaleClothColor AS `extra__femaleClothColor`
+            <if test="detail == 'femaleMourningClothBlack'">
+                , FMCB.retailPrice AS `extra__retailPrice`
+                , FMCBO.femaleClothCnt AS `extra__femaleClothBlackCnt`
+            </if>
+            <if test="detail == 'femaleMourningClothWhite'">
+                , FMCW.retailPrice AS `extra__retailPrice`
+                , FMCWO.femaleClothCnt AS `extra__femaleClothWhiteCnt`
             </if>
             <if test="detail == 'maleMourningCloth'">
                 , MMC.retailPrice AS `extra__retailPrice`
@@ -223,11 +226,17 @@ interface VendorRepository {
                 LEFT JOIN flowerTributeOrder AS FTO
                 ON O.id = FTO.orderId
             </if>
-            <if test="detail == 'femaleMourningCloth'">
-                LEFT JOIN femaleMourningCloth AS FMC
-                ON O.standardId = FMC.id
-                LEFT JOIN femaleMourningClothOrder AS FMCO
-                ON O.id = FMCO.orderId
+            <if test="detail == 'femaleMourningClothBlack'">
+                LEFT JOIN femaleMourningClothBlack AS FMCB
+                ON O.standardId = FMCB.id
+                LEFT JOIN femaleMourningClothBlackOrder AS FMCBO
+                ON O.id = FMCBO.orderId
+            </if>
+            <if test="detail == 'femaleMourningClothWhite'">
+                LEFT JOIN femaleMourningClothWhite AS FMCW
+                ON O.standardId = FMCW.id
+                LEFT JOIN femaleMourningClothWhiteOrder AS FMCWO
+                ON O.id = FMCWO.orderId
             </if>
             <if test="detail == 'maleMourningCloth'">
                 LEFT JOIN maleMourningCloth AS MMC
@@ -283,10 +292,13 @@ interface VendorRepository {
                 , FTO.bunchCnt AS `extra__bunchCnt`
                 , FTO.packing AS `extra__packing`
             </if>
-            <if test="detail == 'femaleMourningCloth'">
-                , FMC.retailPrice AS `extra__retailPrice`
-                , FMCO.femaleClothCnt AS `extra__femaleClothCnt`
-                , FMCO.femaleClothColor AS `extra__femaleClothColor`
+            <if test="detail == 'femaleMourningClothBlack'">
+                , FMCB.retailPrice AS `extra__retailPrice`
+                , FMCBO.femaleClothCnt AS `extra__femaleClothBlackCnt`
+            </if>
+            <if test="detail == 'femaleMourningClothWhite'">
+                , FMCW.retailPrice AS `extra__retailPrice`
+                , FMCWO.femaleClothCnt AS `extra__femaleClothWhiteCnt`
             </if>
             <if test="detail == 'maleMourningCloth'">
                 , MMC.retailPrice AS `extra__retailPrice`
@@ -320,11 +332,17 @@ interface VendorRepository {
                 LEFT JOIN flowerTributeOrder AS FTO
                 ON O.id = FTO.orderId
             </if>
-            <if test="detail == 'femaleMourningCloth'">
-                LEFT JOIN femaleMourningCloth AS FMC
-                ON O.standardId = FMC.id
-                LEFT JOIN femaleMourningClothOrder AS FMCO
-                ON O.id = FMCO.orderId
+            <if test="detail == 'femaleMourningClothBlack'">
+                LEFT JOIN femaleMourningClothBlack AS FMCB
+                ON O.standardId = FMCB.id
+                LEFT JOIN femaleMourningClothBlackOrder AS FMCBO
+                ON O.id = FMCBO.orderId
+            </if>
+            <if test="detail == 'femaleMourningClothWhite'">
+                LEFT JOIN femaleMourningClothWhite AS FMCW
+                ON O.standardId = FMCW.id
+                LEFT JOIN femaleMourningClothWhiteOrder AS FMCWO
+                ON O.id = FMCWO.orderId
             </if>
             <if test="detail == 'maleMourningCloth'">
                 LEFT JOIN maleMourningCloth AS MMC
@@ -382,10 +400,13 @@ interface VendorRepository {
                 , FTO.bunchCnt AS `extra__bunchCnt`
                 , FTO.packing AS `extra__packing`
             </if>
-            <if test="detail == 'femaleMourningCloth'">
-                , FMC.retailPrice AS `extra__retailPrice`
-                , FMCO.femaleClothCnt AS `extra__femaleClothCnt`
-                , FMCO.femaleClothColor AS `extra__femaleClothColor`
+            <if test="detail == 'femaleMourningClothBlack'">
+                , FMCB.retailPrice AS `extra__retailPrice`
+                , FMCBO.femaleClothCnt AS `extra__femaleClothBlackCnt`
+            </if>
+            <if test="detail == 'femaleMourningClothWhite'">
+                , FMCW.retailPrice AS `extra__retailPrice`
+                , FMCWO.femaleClothCnt AS `extra__femaleClothWhiteCnt`
             </if>
             <if test="detail == 'maleMourningCloth'">
                 , MMC.retailPrice AS `extra__retailPrice`
@@ -419,11 +440,17 @@ interface VendorRepository {
                 LEFT JOIN flowerTributeOrder AS FTO
                 ON O.id = FTO.orderId
             </if>
-            <if test="detail == 'femaleMourningCloth'">
-                LEFT JOIN femaleMourningCloth AS FMC
-                ON O.standardId = FMC.id
-                LEFT JOIN femaleMourningClothOrder AS FMCO
-                ON O.id = FMCO.orderId
+            <if test="detail == 'femaleMourningClothBlack'">
+                LEFT JOIN femaleMourningClothBlack AS FMCB
+                ON O.standardId = FMCB.id
+                LEFT JOIN femaleMourningClothBlackOrder AS FMCBO
+                ON O.id = FMCBO.orderId
+            </if>
+            <if test="detail == 'femaleMourningClothWhite'">
+                LEFT JOIN femaleMourningClothWhite AS FMCW
+                ON O.standardId = FMCW.id
+                LEFT JOIN femaleMourningClothWhiteOrder AS FMCWO
+                ON O.id = FMCWO.orderId
             </if>
             <if test="detail == 'maleMourningCloth'">
                 LEFT JOIN maleMourningCloth AS MMC
@@ -544,10 +571,17 @@ interface VendorRepository {
 
     @Select(
         """
-            SELECT * FROM `femaleMourningCloth`
+            SELECT * FROM `femaleMourningClothBlack`
         """
     )
-    fun getFemaleMourningCloths(): List<MourningCloth>
+    fun getFemaleMourningClothBlacks(): List<MourningCloth>
+
+    @Select(
+        """
+            SELECT * FROM `femaleMourningClothWhite`
+        """
+    )
+    fun getFemaleMourningClothWhites(): List<MourningCloth>
 
     @Select(
         """
@@ -572,32 +606,55 @@ interface VendorRepository {
 
     @Insert(
         """
-            INSERT INTO femaleMourningClothOrder
+            INSERT INTO femaleMourningClothBlackOrder
             SET regDate = NOW(),
             updateDate = NOW(),
             orderId = #{orderId},
-            femaleClothCnt = #{femaleClothCnt},
-            femaleClothColor = #{femaleClothColor}
+            femaleClothCnt = #{femaleClothCnt}
         """
     )
-    fun insertIntoFemaleMourningClothOrder(
+    fun insertIntoFemaleMourningClothBlackOrder(
         orderId: Int,
-        femaleClothCnt: Int,
-        femaleClothColor: String
+        femaleClothCnt: Int
+    )
+
+    @Insert(
+        """
+            INSERT INTO femaleMourningClothWhiteOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            femaleClothCnt = #{femaleClothCnt}
+        """
+    )
+    fun insertIntoFemaleMourningClothWhiteOrder(
+        orderId: Int,
+        femaleClothCnt: Int
     )
 
     @Update(
         """
-            UPDATE femaleMourningClothOrder
+            UPDATE femaleMourningClothBlackOrder
             SET updateDate = NOW(),
-            femaleClothCnt = #{femaleClothCnt},
-            femaleClothColor = #{femaleClothColor}
+            femaleClothCnt = #{femaleClothCnt}
             WHERE orderId = #{orderId}
         """
     )
-    fun modifyFemaleMourningClothOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+    fun modifyFemaleMourningClothBlackOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
         femaleClothCnt: Int,
-        femaleClothColor: String,
+        orderId: Int
+    )
+
+    @Update(
+        """
+            UPDATE femaleMourningClothWhiteOrder
+            SET updateDate = NOW(),
+            femaleClothCnt = #{femaleClothCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyFemaleMourningClothWhiteOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+        femaleClothCnt: Int,
         orderId: Int
     )
 
@@ -625,11 +682,20 @@ interface VendorRepository {
     @Update(
         """
             UPDATE funeral 
-            SET femaleMourningClothId = #{femaleMourningClothId} 
+            SET femaleMourningClothBlackId = #{femaleMourningClothBlackId} 
             WHERE id = #{funeralId};
         """
     )
-    fun modifyFuneralIntoFemaleMourningClothId(funeralId: Int, femaleMourningClothId: Int)
+    fun modifyFuneralIntoFemaleMourningClothBlackId(funeralId: Int, femaleMourningClothBlackId: Int)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET femaleMourningClothWhiteId = #{femaleMourningClothWhiteId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoFemaleMourningClothWhiteId(funeralId: Int, femaleMourningClothWhiteId: Int)
 
     @Update(
         """
@@ -643,11 +709,20 @@ interface VendorRepository {
     @Select(
         """
             SELECT *
-            FROM `femaleMourningCloth`
-            WHERE id = #{femaleMourningClothId}
+            FROM `femaleMourningClothBlack`
+            WHERE id = #{femaleMourningClothBlackId}
         """
     )
-    fun getFemaleMourningClothById(femaleMourningClothId: Int): MourningCloth?
+    fun getFemaleMourningClothBlackById(femaleMourningClothBlackId: Int): MourningCloth?
+
+    @Select(
+        """
+            SELECT *
+            FROM `femaleMourningClothWhite`
+            WHERE id = #{femaleMourningClothWhiteId}
+        """
+    )
+    fun getFemaleMourningClothWhiteById(femaleMourningClothWhiteId: Int): MourningCloth?
 
     @Select(
         """

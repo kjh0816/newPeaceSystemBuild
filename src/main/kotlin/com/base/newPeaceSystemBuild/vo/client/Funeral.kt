@@ -17,7 +17,8 @@ data class Funeral(
 //  flowerTributeId = 어떤 헌화를 선택했는지
     val flowerTributeId: Int,
 //  femaleMourningClothId = 여자 상복 스탠다드 번호
-    val femaleMourningClothId: Int,
+    val femaleMourningClothBlackId: Int,
+    val femaleMourningClothWhiteId: Int,
 //  maleMourningClothId = 남자 상복 스탠다드 번호
     val maleMourningClothId: Int,
 //  shirtId = 와이셔츠 스탠다드 번호
