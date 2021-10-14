@@ -10,6 +10,9 @@
     </th:block>
 </head>
 <main layout:fragment="main">
+    <script th:inline="javascript">
+        var cellphoneNo = [[${chief.cellphoneNo}]];
+    </script>
     <!--  장례  -->
     <div class="p-10 card bg-base-200" th:if="${funeral != null}">
         <div class="card card-side shadow my-2 bg-white">
@@ -22,6 +25,7 @@
                 <div class="flex items-center">
                     <div class="badge badge-md">상주 전화번호</div>
                     <p class="pl-2">[[${chief.cellphoneNo}]]</p>
+                    <button th:onclick="document.location.href='tel:' + cellphoneNo" class="btn btn-active ml-10">전화걸기</button>
                 </div>
                 <div class="flex items-center">
                     <div class="badge badge-md">고인의 위치</div>
