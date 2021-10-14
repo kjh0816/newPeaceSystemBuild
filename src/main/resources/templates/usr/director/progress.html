@@ -52,9 +52,9 @@
                 <th:block th:if="${funeral.coffinTransporterUseStatus}">
                     운구차량을 호출했습니다.
                 </th:block>
-                <form action="./selectCoffinTransporter">
+                <a th:href="@{./selectCoffinTransporter(clientId=${client.id})}">
                     <button class="btn btn-ghost" type="submit">운구 차량 호출하기</button>
-                </form>
+                </a>
             </div>
         </div>
         <!--  제단꽃  -->
