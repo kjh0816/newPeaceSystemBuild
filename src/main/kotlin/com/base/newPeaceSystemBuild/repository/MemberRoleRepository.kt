@@ -46,6 +46,14 @@ interface MemberRoleRepository {
             """
     )
     fun getFuneralHallsByDepartmentDetail(departmentDetail: String): List<FuneralHall>
+    @Select(
+            """
+                SELECT *
+                FROM funeralHall
+                WHERE name = #{name}
+            """
+    )
+    fun getFuneralHallByName(name: String): FuneralHall
 
 
 }

@@ -11,28 +11,97 @@
     </th:block>
 </head>
 <main layout:fragment="main">
+
     <div class="p-10 card bg-base-200">
-        <div class="flex flex-col w-full">
-            <div class="card card-side shadow my-2 bg-white">
-                <div class="card-body">
-                    <h2 class="card-title">고인 정보</h2>
-                    <div class="flex items-center mb-1">
-                        <div class="badge badge-md">상주 성함</div>
-                        <p class="pl-2">[[${chief.name}]]</p>
-                    </div>
-                    <div class="flex items-center mb-1">
-                        <div class="badge badge-md">상주 연락처</div>
-                        <p class="pl-2">[[${clientCellphoneNo}]]</p>
+        <form onsubmit="selectCoffinTransporter__submit(this); return false;">
+            <div class="flex flex-col w-full">
+
+                <div class="card card-side shadow my-2 bg-white">
+
+                    <div class="card-body">
+
+                        <h2 class="card-title">고인 정보 ( ※ 필요에 따라 선택적으로 입력할 수 있습니다. )</h2>
+                        <br>
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">상주 성함</div>
+                            <p class="pl-2">[[${chief.name}]]</p>
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">상주 연락처</div>
+                            <p class="pl-2">[[${clientCellphoneNo}]]</p>
+                        </div>
+
+                        <br>
+
+
+                        <label class="label">
+                        <span class="label-text font-bold">
+                            고인 성함
+                        </span>
+                        </label>
+                        <input th:value="${client?.deceasedName}" type="text" id="deceasedName" name="deceasedName"
+                               maxlength="20" placeholder="고인 성함을 입력해주세요." autocomplete="off"
+                               class="input input-bordered my-2 w-1/2"/>
+
+                        <label class="label">
+                        <span class="label-text font-bold">
+                            고인의 성별
+                        </span>
+                        </label>
+                        <br>
+                        <div class="flex">
+                            <div class="flex">
+                                <input th:checked="${#strings.equals('M', client.sex) }" value="M" type="radio" id="men"
+                                       name="sex" class="radio"/>
+                                <span> 남성</span>
+                            </div>
+                            &nbsp;
+                            <div class="flex">
+                                <input th:checked="${#strings.equals('F', client.sex) }" value="F" type="radio"
+                                       id="women" name="sex" class="radio"/>
+                                <span>&nbsp;여성</span>
+                            </div>
+                        </div>
+                        <br>
+
+                        <label class="label">
+                        <span class="label-text font-bold">
+                            고인 주민등록번호
+                        </span>
+                        </label>
+                        <div class="flex">
+                            <input th:value="${client?.frontNum}" placeholder="주민등록번호 앞자리" type="text" id="frontNum"
+                                   name="frontNum" class="input input-bordered my-2 w-1/4"/>
+                            <span class="self-center text-2xl">&nbsp; - &nbsp;</span>
+                            <input th:value="${client?.backNum}" placeholder="주민등록번호 뒷자리" type="text" id="backNum"
+                                   name="backNum" class="input input-bordered my-2 w-1/4"/>
+                        </div>
+
+                        <label class="label">
+                        <span class="label-text font-bold">
+                            고인의 주민등록 주소
+                        </span>
+                        </label>
+                        <div class="flex">
+                            <button type="button" onclick="goPopup(3);"
+                                    class="btn btn-outline w-20 whitespace-nowrap self-center">주소 검색
+                            </button>
+                            <!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
+                            <input readonly th:value="${client?.deceasedHomeAddress}" type="text"
+                                   id="deceasedHomeAddress" name="deceasedHomeAddress"
+                                   placeholder="왼쪽 버튼을 통해 주소를 검색해주세요."
+                                   class="input input-bordered my-2 w-1/2 font-bold"/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <form onsubmit="selectCoffinTransporter__submit(this); return false;">
+
             <input type="hidden" name="funeralId" th:value="${funeral.id}">
             <div class="flex flex-col w-full">
                 <div class="card card-side shadow my-2 bg-white">
                     <div class="card-body">
                         <h2 class="card-title">운구차량</h2>
+                        <br>
                         <div class="flex items-center mb-1">
                             <div class="badge badge-md">비용</div>
                             <p class="pl-2" th:text="|70,000 원|"></p>
@@ -43,25 +112,70 @@
                         </span>
                         </label>
                         <div class="flex">
-                            <input readonly="readonly" type="text" id="departureAddress" name="departureAddress"
-                                   placeholder="오른쪽 버튼을 통해 주소를 검색해주세요."
-                                   class="py-2 px-4 mr-2 w-full text-sm bg-base-200 rounded-lg"/>
-                            <button type="button" onclick="goPopup(1);" class="btn btn-outline w-20 whitespace-nowrap">
-                                주소 검색
+                            <button type="button" onclick="goPopup(1);"
+                                    class="btn btn-outline w-20 whitespace-nowrap self-center">주소 검색
                             </button>
+                            <input readonly th:value="${coffinTransporter?.departureAddress}" type="text"
+                                   id="departureAddress" name="departureAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요."
+                                   class="input input-bordered my-2 w-1/2 font-bold"/>
                         </div>
+
+                        <br>
+                        <br>
+
                         <label class="label">
                         <span class="label-text font-bold">
                             운구차량 도착 장소
                         </span>
                         </label>
-                        <div class="flex">
-                            <input readonly="readonly" type="text" id="destinationAddress" name="destinationAddress"
-                                   placeholder="오른쪽 버튼을 통해 주소를 검색해주세요."
-                                   class="py-2 px-4 mr-2 w-full text-sm bg-base-200 rounded-lg"/>
-                            <button type="button" onclick="goPopup(2);" class="btn btn-outline w-20 whitespace-nowrap">
-                                주소 검색
+
+                        <ul class="menu items-stretch px-3 shadow-lg bg-base-100 horizontal rounded-box font-bold w-3/12">
+                            <li id="funeralInput" class="border-b-4">
+                                <a>
+                                    장례식장
+                                </a>
+                            </li>
+                            <li>
+                                <a id="addrInput">
+                                    직접입력
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div id="funeralTab" class="flex flex-col">
+                            <select id="department" name="department"
+                                    class="select select-bordered select-sm w-full max-w-xs">
+                                <option value="" disabled selected>시/도</option>
+                                <div th:each="department : ${departments}" th:object="${department}">
+                                    <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                                </div>
+                            </select>
+
+                            <select id="departmentDetail" name="departmentDetail"
+                                    class="select select-bordered select-sm w-full max-w-xs">
+                                <option value="" disabled selected>시/군/구</option>
+                            </select>
+
+                            <select id="funeralHallName" name="funeralHallName"
+                                    class="select select-bordered select-sm w-full max-w-xs">
+                                <option value="" disabled selected>장례식장</option>
+                            </select>
+
+                            <br>
+                            <div class="flex items-center mb-1" id="funeralHallNum">
+
+                            </div>
+                        </div>
+
+
+                        <div id="addrTab" class="flex hidden">
+                            <button type="button" onclick="goPopup(1);"
+                                    class="btn btn-outline w-20 whitespace-nowrap self-center">주소 검색
                             </button>
+                            <!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
+                            <input readonly th:value="${coffinTransporter?.destinationAddress}" type="text"
+                                   id="destinationAddress" name="destinationAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요."
+                                   class="input input-bordered my-2 w-1/2 font-bold"/>
                         </div>
                     </div>
                 </div>

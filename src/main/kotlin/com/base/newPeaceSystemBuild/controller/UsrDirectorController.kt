@@ -365,6 +365,14 @@ class UsrDirectorController(
         return Ut.getJsonStrFromObj(memberRoleService.getFuneralHallsByDepartmentDetail(departmentDetail.trim()))
     }
 
+    @RequestMapping("/usr/director/funeralHallNum", method = [RequestMethod.POST])
+    @ResponseBody
+    fun funeralHallNum(
+            @RequestParam(defaultValue = "") name: String
+    ): String{
+        return Ut.getJsonStrFromObj(memberRoleService.getFuneralHallByName(name.trim()))
+    }
+
     @RequestMapping("/usr/director/selectFlower")
     fun showSelectFlower(model: Model): String {
         val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
@@ -406,7 +414,10 @@ class UsrDirectorController(
         val funeral = clientService.getFuneralByClientId(clientId)
         val chief = clientService.getFamilyByClientId(clientId)
 
+
         val clientCellphoneNo = Ut.getCellphoneNoFormatted(chief.cellphoneNo)
+
+        val departments = memberService.getDepartments()
 
         // client, funeral, chief이 null인 경우, 잘못된 clienId로 접근한 경우이므로 돌려보냄
         if(funeral == null || client == null || chief == null){
@@ -418,36 +429,14 @@ class UsrDirectorController(
             return "usr/home/main"
         }
 
-
-
-
-
-
-
-//        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
-//        val coffinTransporters = vendorService.getCoffinTransporters()
-
-//        if (funeral != null) {
-//            val details = mutableListOf<String>()
-//            details.add("coffinTransporter")
-//
-//            for(detail in details){
-//                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
-//                    funeral.id,
-//                    false,
-//                    detail
-//                )
-//
-//                model.addAttribute(detail + "Order", order)
-//            }
-//        }
-
-//        model.addAttribute("coffinTransporters", coffinTransporters)
+        val coffinTransporter = clientService.getCoffinTransporterByFuneralId(funeral.id)
 
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
         model.addAttribute("clientCellphoneNo", clientCellphoneNo)
+        model.addAttribute("departments", departments)
+        model.addAttribute("coffinTransporter", coffinTransporter)
 
         return "usr/director/selectCoffinTransporter"
     }
