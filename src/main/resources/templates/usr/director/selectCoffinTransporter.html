@@ -50,12 +50,56 @@
                                 주소 검색
                             </button>
                         </div>
+
+                        <br>
+                        <br>
+
                         <label class="label">
                         <span class="label-text font-bold">
                             운구차량 도착 장소
                         </span>
                         </label>
-                        <div class="flex">
+
+                        <ul class="menu items-stretch px-3 shadow-lg bg-base-100 horizontal rounded-box font-bold w-3/12">
+                            <li id="funeralInput" class="border-b-4">
+                                <a>
+                                    장례식장
+                                </a>
+                            </li>
+                            <li>
+                                <a id="addrInput">
+                                    직접입력
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div id="funeralTab" class="flex flex-col">
+                             <select id="department" name="department"
+                                    class="select select-bordered select-sm w-full max-w-xs">
+                                <option value="" disabled selected>시/도</option>
+                                <div th:each="department : ${departments}" th:object="${department}">
+                                    <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                                </div>
+                            </select>
+
+                            <select id="departmentDetail" name="departmentDetail"
+                                    class="select select-bordered select-sm w-full max-w-xs">
+                                <option value="" disabled selected>시/군/구</option>
+                            </select>
+
+                            <select id="funeralHallName" name="funeralHallName"
+                                    class="select select-bordered select-sm w-full max-w-xs">
+                                <option value="" disabled selected>장례식장</option>
+                            </select>
+
+                            <br>
+                            <div class="flex items-center mb-1" id="funeralHallNum">
+
+                            </div>
+                        </div>
+
+
+                        <div id="addrTab" class="flex hidden">
                             <input readonly="readonly" type="text" id="destinationAddress" name="destinationAddress"
                                    placeholder="오른쪽 버튼을 통해 주소를 검색해주세요."
                                    class="py-2 px-4 mr-2 w-full text-sm bg-base-200 rounded-lg"/>

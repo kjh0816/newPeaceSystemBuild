@@ -43,8 +43,11 @@ class MemberRoleService(
         return ResultData.from("S-1", "장레식장 이름을 불러오는데 성공했습니다.", "funeralHallNames", funeralHallNames.distinct())
     }
 
+    fun getFuneralHallByName(name: String): ResultData {
+        val funeralHall = memberRoleRepository.getFuneralHallByName(name)
 
-
+        return ResultData.from("S-1", "장례식장 연락처를 불러오는데 성공했습니다.", "cellphoneNo", funeralHall.cellphoneNo)
+    }
 
 
 }
