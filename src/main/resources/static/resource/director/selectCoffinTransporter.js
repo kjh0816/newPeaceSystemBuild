@@ -152,9 +152,19 @@ $('#funeralHallName').change(function(){
 
 // 장례식장을 클릭했을 때
 $('#funeralInput').click(function(){
-
+    // (1) 입력탭을 보여준다.
+    $('#addrTab').addClass('hidden');
+    $('#funeralTab').removeClass('hidden');
+    // (2) 디자인 요소 변경
+    $('#funeralInput').addClass('border-b-4');
+    $('#addrInput').removeClass('border-b-4');
 });
 // 직접 입력을 클릭했을 때
 $('#addrInput').click(function(){
-
+    // (1) 입력탭을 보여준다.
+    $('#funeralTab').addClass('hidden');
+    $('#addrTab').removeClass('hidden');
+    // (2) 디자인 요소 변경
+    $('#addrInput').addClass('border-b-4');
+    $('#funeralInput').removeClass('border-b-4');
 });
