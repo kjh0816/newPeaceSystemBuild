@@ -507,7 +507,13 @@ class VendorService(
             return ResultData.from("F-1", "잘못된 접근입니다.")
         }
 
-        // 2) 필수 입력값 검사
+        // 2) 이미 운구차를 호출한 이력이 있는 경우, 다시 호출할 수 없다.
+        if(funeral.coffinTransporterUseStatus){
+            return ResultData.from("F-2", "운구차를 다시 호출할 수 없습니다.")
+        }
+
+
+        // 3) 필수 입력값 검사
         if(departureAddress.isBlank()){
             return ResultData.from("F-2", "운구차량 출동 주소를 입력해주세요.")
         }
@@ -519,7 +525,7 @@ class VendorService(
         }
 
 
-        // 3) 장례식장을 선택한 경우, 해당 장례식장을 통해 주소를 조회해서 destinationAddress 변수의 값으로 할당해준다.
+        // 4) 장례식장을 선택한 경우, 해당 장례식장을 통해 주소를 조회해서 destinationAddress 변수의 값으로 할당해준다.
         var destinationAddr = destinationAddress
 
         if(destinationAddress.isBlank() && funeralHallName.isNotBlank()){
@@ -531,12 +537,12 @@ class VendorService(
         // 운구차 테이블에 정보를 넣는다.
         vendorRepository.insertIntoCoffinTransporter(funeralId, departureAddress, destinationAddr)
 
+        // 운구차 사용 여부를 true로 변경
+        clientRepository.updateCoffinTransporterUseStatus(funeralId, true)
 
 
 
-        return ResultData.from("S-1", "주소지를 확인해봅시다.", "destinationAddr", destinationAddr)
-
-
+        return ResultData.from("S-1", "운구차 출동 요청이 완료되었습니다.")
     }
 
 

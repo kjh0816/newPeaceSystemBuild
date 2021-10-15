@@ -423,6 +423,10 @@ class UsrDirectorController(
         if(funeral == null || client == null || chief == null){
             return "usr/home/main"
         }
+        // 운구차를 이미 호출한 경우, 다시 호출할 수 없다.
+        if(funeral.coffinTransporterUseStatus){
+            return "redirect:/usr/director/progress?clientId=$clientId"
+        }
 
         // 담당 장례지도사 id와 현재 로그인한 사람의 id가 일치하는지 검사
         if(funeral.directorMemberId != rq.getLoginedMember()!!.id){
@@ -594,7 +598,7 @@ class UsrDirectorController(
         @RequestParam(defaultValue = "0") clientId: Int,
         @RequestParam(defaultValue = "0") funeralId: Int,
         @RequestParam(defaultValue = "") deceasedName: String,
-        @RequestParam(defaultValue = "") sex: String,
+        @RequestParam(defaultValue = "N") sex: String,
         @RequestParam(defaultValue = "") frontNum: String,
         @RequestParam(defaultValue = "") backNum: String,
         @RequestParam(defaultValue = "") deceasedHomeAddress: String,

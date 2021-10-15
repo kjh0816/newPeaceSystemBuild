@@ -6,8 +6,6 @@ USE peaceSystemBuild;
 
 
 
-
-
 # 직업에 대한 테이블 생성
 CREATE TABLE `role`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '사용자 직업 (0 = 에러, 1 = 관리자, 2 = 회원, 3 = 장례지도사)',
@@ -400,8 +398,8 @@ ALTER TABLE funeral ADD COLUMN femaleMourningClothWhiteId INT(10) UNSIGNED NOT N
 ALTER TABLE funeral ADD COLUMN maleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER femaleMourningClothWhiteId;
 ALTER TABLE funeral ADD COLUMN shirtId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER maleMourningClothId;
 ALTER TABLE funeral ADD COLUMN necktieId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER shirtId;
-ALTER TABLE funeral ADD COLUMN coffinTransporterMemberId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER necktieId;
-ALTER TABLE funeral ADD COLUMN shroudId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음'  AFTER coffinTransporterMemberId;
+ALTER TABLE funeral ADD COLUMN coffinTransporterUseStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER necktieId;
+ALTER TABLE funeral ADD COLUMN shroudId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음'  AFTER coffinTransporterUseStatus;
 
 
 SELECT * FROM funeral;

@@ -52,9 +52,9 @@
         <!--  운구 차량  -->
         <div class="card card-side shadow mb-2 bg-white">
             <div class="card-body">
-                <h2 class="card-title">운구 차량</h2>
+                <h2 class="card-title">운구 차량 (※ 운구 차량은 한 번만 호출할 수 있습니다.)</h2>
                 <th:block th:if="${funeral.coffinTransporterUseStatus}">
-                    운구차량을 호출했습니다.
+                    운구차량을 호출했습니다. 연결 시, 연락처가 표시됩니다.
                 </th:block>
                 <a th:href="@{./selectCoffinTransporter(clientId=${client.id})}"  class="btn btn-ghost w-2/12">
                     운구 차량 호출하기

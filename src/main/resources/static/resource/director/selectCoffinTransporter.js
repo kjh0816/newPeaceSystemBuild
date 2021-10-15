@@ -78,9 +78,10 @@ function selectCoffinTransporter__submit(form) {
                 },
                 success: function(result){
                     if(result.success){
-                        alert('성공');
+                        alert(result.msg);
+                        window.location.replace('/usr/director/progress?clientId=' + clientId);
                     }else{
-                        alert('실패');
+                        alert(result.msg);
                     }
 
                 }

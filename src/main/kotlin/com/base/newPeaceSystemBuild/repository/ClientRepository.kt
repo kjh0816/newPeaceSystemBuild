@@ -251,6 +251,15 @@ interface ClientRepository {
             """
     )
     fun updateClientInCoffinTransporter(deceasedName: String, sex: String, frontNum: String, backNum: String, deceasedHomeAddress: String)
+    @Update(
+        """
+            UPDATE funeral
+            SET updateDate = NOW(),
+            coffinTransporterUseStatus = #{bool}
+            WHERE id = #{funeralId}
+        """
+    )
+    fun updateCoffinTransporterUseStatus(funeralId: Int, bool: Boolean)
 
 
 }
