@@ -78,7 +78,7 @@
                     $(".femaleMourningClothBlackIdSelectBox#femaleMourningClothBlack[[${femaleMourningClothBlackOrder.standardId}]]").addClass('active');
                     $(".femaleMourningClothBlackIdSelectBox#femaleMourningClothBlack[[${femaleMourningClothBlackOrder.standardId}]]").text("선택 됨");
                     $("input[value='[[${femaleMourningClothBlackOrder.standardId}]]']#femaleMourningClothBlackId").prop('checked', true);
-                    $("#femaleClothCnt"+[[${femaleMourningClothBlackOrder.standardId}]]).css("display", "block");
+                    $("#femaleMourningClothBlackCnt"+[[${femaleMourningClothBlackOrder.standardId}]]).css("display", "block");
                 </script>
 
                 <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
@@ -86,7 +86,7 @@
                     $(".femaleMourningClothWhiteIdSelectBox#femaleMourningClothWhite[[${femaleMourningClothWhiteOrder.standardId}]]").addClass('active');
                     $(".femaleMourningClothWhiteIdSelectBox#femaleMourningClothWhite[[${femaleMourningClothWhiteOrder.standardId}]]").text("선택 됨");
                     $("input[value='[[${femaleMourningClothWhiteOrder.standardId}]]']#femaleMourningClothWhiteId").prop('checked', true);
-                    $("#femaleClothCnt"+[[${femaleMourningClothWhiteOrder.standardId}]]).css("display", "block");
+                    $("#femaleMourningClothWhiteCnt"+[[${femaleMourningClothWhiteOrder.standardId}]]).css("display", "block");
                 </script>
             <div class="card-body text-sm border border-base-300 bg-white mb-2">
                 <h2 class="card-title">상복(남) 선택</h2>
