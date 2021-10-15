@@ -30,12 +30,6 @@
                 <div class="card card-side bordered bg-white">
                     <div class="card-body">
                         <h2 class="card-title">운구차량 사업자 안내사항</h2>
-                        <div class="text-sm" th:each="coffinTransporter : ${coffinTransporters}" th:object="${coffinTransporter}">
-                            <div class="flex items-center mb-1">
-                                <div class="badge badge-md">소비자가</div>
-                                <p class="pl-2" th:text="|${coffinTransporter.retailPriceFormat} 원|"></p>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <br>
