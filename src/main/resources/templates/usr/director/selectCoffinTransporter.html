@@ -11,6 +11,10 @@
     </th:block>
 </head>
 <main layout:fragment="main">
+    <script th:inline="javascript">
+        var clientId = [[${client.id}]];
+        var funeralId = [[${funeral.id}]];
+    </script>
 
     <div class="p-10 card bg-base-200">
         <form onsubmit="selectCoffinTransporter__submit(this); return false;">

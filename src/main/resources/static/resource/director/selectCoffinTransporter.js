@@ -3,7 +3,7 @@ let SelectMourningCloth__submitDone = false;
 var once = true;
 
 function selectCoffinTransporter__submit(form) {
-    if (form.deceasedHomeAddress.value.length == 0) {
+    if (form.departureAddress.value.length == 0) {
         swal({
             title: "운구차량 출동 주소를 입력해주세요.",
             icon: "info",
@@ -12,26 +12,63 @@ function selectCoffinTransporter__submit(form) {
 
         return;
     }
+    // 장례식장 선택과 직접 입력 둘 다 안 했을 경우, 하나라도 입력해야한다.
+    if(form.funeralHallName.value.length == 0 && form.desinationAddress.value.length == 0){
+        swal({
+                    title: "장례식장을 선택하거나, 도착 주소를 입력해주세요.",
+                    icon: "info",
+                    button: "확인",
+                });
+
+        return;
+    }
+
+
+
 
     if(once){
         once = false;
 
+        var deceasedName = form.deceasedName.value;
+        var sex = form.sex.value;
+        var frontNum = form.frontNum.value;
+        var backNum = form.backNum.value;
+        var deceasedHomeAddress = form.deceasedHomeAddress.value;
 
-    const post$ = rxjs.ajax.ajax.post(
-        '/usr/director/doSelectCoffinTransporter',
-        new FormData(form)
-    );
-    post$.subscribe(
-        res => {
-            if ( res.response.success ) {
-                   if ( !confirm(res.response.msg) ) return false;
-                   window.location.href="/usr/director/progress";
-            }
-            else {
-                   alert(res.response.msg);
-            }
-        }
-    );
+        var departureAddress = form.departureAddress.value;
+
+        var destinationAddress = form.destinationAddress.value;
+        var funeralHallName = form.funeralHallName.value;
+
+
+        $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: './selectCoffinTransporter',
+                data: {
+                clientId:clientId,
+                funeralId:funeralId,
+                deceasedName:deceasedName,
+                sex:sex,
+                frontNum:frontNum,
+                backNum:backNum,
+                deceasedHomeAddress:deceasedHomeAddress,
+                departureAddress:departureAddress,
+                destinationAddress:destinationAddress,
+                funeralHallName:funeralHallName
+                },
+                success: function(result){
+                    if(result.success){
+                        alert('성공');
+                    }else{
+                        alert('실패');
+                    }
+
+                }
+
+        });
+
+
     }
 }
 

@@ -592,7 +592,16 @@ class UsrDirectorController(
     @ResponseBody
     fun doSelectCoffinTransporter(
         funeralId: Int,
-        @RequestParam(defaultValue = "") deceasedHomeAddress: String
+
+        @RequestParam(defaultValue = "0") clientId: Int,
+        @RequestParam(defaultValue = "") deceasedName: String,
+        @RequestParam(defaultValue = "") sex: String,
+        @RequestParam(defaultValue = "") frontNum: String,
+        @RequestParam(defaultValue = "") backNum: String,
+        @RequestParam(defaultValue = "") deceasedHomeAddress: String,
+        @RequestParam(defaultValue = "") departureAddress: String,
+        @RequestParam(defaultValue = "") destinationAddress: String,
+        @RequestParam(defaultValue = "") funeralHallName: String
     ): String {
         return Ut.getJsonStrFromObj(
             vendorService.modifyFuneralIntoCoffinTransporterUseStatus(
