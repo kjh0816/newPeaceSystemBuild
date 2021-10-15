@@ -808,6 +808,17 @@ interface VendorRepository {
             """
     )
     fun getFuneralHallAddrByName(funeralHallName: String): String
+    @Insert(
+            """
+                INSERT INTO coffinTransporter
+                SET regDate = NOW(),
+                updateDate = NOW(),
+                funeralId = #{funeralId},
+                departureAddress = #{departureAddress},
+                destinationAddress = #{destinationAddr}
+            """
+    )
+    fun insertIntoCoffinTransporter(funeralId: Int, departureAddress: String, destinationAddr: String)
 
 
 }

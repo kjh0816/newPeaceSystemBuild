@@ -239,5 +239,18 @@ interface ClientRepository {
     )
     fun getCoffinTransporterByFuneralId(id: Int): CoffinTransporter
 
+    @Update(
+            """
+                UPDATE client
+                SET updateDate = NOW(),
+                sex = #{sex},
+                deceasedName = #{deceasedName},
+                frontNum = #{frontNum},
+                backNum = #{backNum},
+                deceasedHomeAddress = #{deceasedHomeAddress}
+            """
+    )
+    fun updateClientInCoffinTransporter(deceasedName: String, sex: String, frontNum: String, backNum: String, deceasedHomeAddress: String)
+
 
 }

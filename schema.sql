@@ -621,7 +621,7 @@ CREATE TABLE coffinTransporter(
 	updateDate DATETIME NOT NULL,
 	funeralId INT(10) UNSIGNED NOT NULL,
 	memberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '담당 운구차 운전자, 0 = 아직 정해지지 않음',
-	price CHAR(20) NOT NULL COMMENT '가격',
+	price CHAR(20) NOT NULL DEFAULT '70000' COMMENT '가격',
 	departureAddress CHAR(100) NOT NULL,
 	destinationAddress CHAR(100) NOT NULL,
 	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '운구 완료 여부(0 = 미완료, 1 = 완료)'

@@ -525,9 +525,17 @@ class VendorService(
         if(destinationAddress.isBlank() && funeralHallName.isNotBlank()){
             destinationAddr = vendorRepository.getFuneralHallAddrByName(funeralHallName)
         }
+        // 선택적으로 입력된 client 정보를 수정한다.
+        clientRepository.updateClientInCoffinTransporter(deceasedName, sex, frontNum, backNum, deceasedHomeAddress)
+
+        // 운구차 테이블에 정보를 넣는다.
+        vendorRepository.insertIntoCoffinTransporter(funeralId, departureAddress, destinationAddr)
+
+
+
 
         return ResultData.from("S-1", "주소지를 확인해봅시다.", "destinationAddr", destinationAddr)
-        
+
 
     }
 
