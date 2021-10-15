@@ -1,5 +1,6 @@
 package com.base.newPeaceSystemBuild.service
 
+import com.base.newPeaceSystemBuild.controller.UsrDirectorController
 import com.base.newPeaceSystemBuild.repository.ClientRepository
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.repository.VendorRepository
@@ -17,6 +18,7 @@ class VendorService(
     private val vendorRepository: VendorRepository,
     private val memberRepository: MemberRepository,
     private val clientRepository: ClientRepository
+
 ) {
     @Autowired
     private lateinit var rq: Rq;
@@ -34,59 +36,7 @@ class VendorService(
         return vendorRepository.getFuneralById(funeralId)
     }
 
-    fun modifyFuneralIntoCoffinTransporterUseStatus(funeralId: Int, deceasedHomeAddress: String): ResultData {
-        val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
-        val roleCategoryId = 3
-
-        val detail = "coffinTransporter"
-        // order 정보 조회
-        val order = getOrderByFuneralIdAndCompletionStatusAndDetail(
-            funeral.id,
-            false,
-            detail
-        )
-
-        // order 정보 유무에따라 로직에 차별성을 줌
-        // DB에 order 정보가 없을경우엔 Insert 문으로 Order 를 추가
-        if (order == null) {
-            vendorRepository.insertIntoOrder(
-                funeral.id,
-                rq.getLoginedMember()!!.id,
-                roleCategoryId,
-                1,
-                detail
-            )
-
-            val orderId = vendorRepository.getLastInsertId()
-
-            // 상세주문 테이블도 Insert 해줌
-            when (detail) {
-                "coffinTransporter" -> {
-                    vendorRepository.insertIntoCoffinTransporterOrder(orderId, deceasedHomeAddress)
-                }
-            }
-        }
-        // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
-        else {
-            // 운구차량은 수정시에도 Order 테이블에는 변화가 없음.
-            // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Update 해줌
-            when (detail) {
-                "coffinTransporter" -> {
-                    vendorRepository.modifyCoffinTransporterOrderIntoDeceasedHomeAddressByOrderId(
-                        order.id,
-                        deceasedHomeAddress
-                    )
-                }
-            }
-        }
-
-        // funeral 테이블에 CoffinTransporterUseStatus 를 업데이트 한다.
-        vendorRepository.modifyFuneralIntoCoffinTransporterUseStatus(funeralId, true)
-        // 연결된 물품 공급업자에게 주문 정보를 주기 위해 orderId를 성공 시, 같이 return
-
-        return ResultData.from("S-1", "운구차 출동신청을 보냈습니다.", "funeral", funeral)
-    }
 
     fun modifyFuneralIntoFlowerId(
         funeralId: Int,
@@ -547,6 +497,38 @@ class VendorService(
 
     fun getShrouds(): List<Shroud> {
         return vendorRepository.getShrouds()
+    }
+
+    fun callCoffinTransporter(clientId: Int, funeralId: Int, deceasedName: String, sex: String, frontNum: String, backNum: String, deceasedHomeAddress: String, departureAddress: String, destinationAddress: String, funeralHallName: String, department: String): ResultData {
+
+        // 1) clientId로 funeral에 접근 후, funeral이 null인지 funeral의 담당 장례지도사가 맞는지 확인한다.
+        val funeral = clientRepository.getFuneralByClientId(clientId)
+        if(funeral == null || funeral.directorMemberId != rq.getLoginedMember()!!.id){
+            return ResultData.from("F-1", "잘못된 접근입니다.")
+        }
+
+        // 2) 필수 입력값 검사
+        if(departureAddress.isBlank()){
+            return ResultData.from("F-2", "운구차량 출동 주소를 입력해주세요.")
+        }
+        if(destinationAddress.isBlank() && funeralHallName.isBlank()){
+            return ResultData.from("F-3", "장례식장을 선택하거나, 도착 주소를 입력해주세요.")
+        }
+        if(destinationAddress.isNotBlank() && funeralHallName.isNotBlank()){
+            return ResultData.from("F-4", "장례식장 선택과 직접 입력 중, 하나만 입력해주십시오.")
+        }
+
+
+        // 3) 장례식장을 선택한 경우, 해당 장례식장을 통해 주소를 조회해서 destinationAddress 변수의 값으로 할당해준다.
+        var destinationAddr = destinationAddress
+
+        if(destinationAddress.isBlank() && funeralHallName.isNotBlank()){
+            destinationAddr = vendorRepository.getFuneralHallAddrByName(funeralHallName)
+        }
+
+        return ResultData.from("S-1", "주소지를 확인해봅시다.", "destinationAddr", destinationAddr)
+        
+
     }
 
 

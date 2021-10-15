@@ -8,9 +8,10 @@ data class CoffinTransporter(
     val regDate: String,
     var updateDate: String,
     val funeralId: String,
+    val memberId: String,
     val price: String,
     val departureAddress: String,
-    val destinationAddress: String,
+    var destinationAddress: String,
     val completionStatus: Int
 )
 {

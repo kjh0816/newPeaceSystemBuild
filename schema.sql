@@ -211,13 +211,12 @@ INSERT  INTO `bank`(`id`,`name`) VALUES
 (8,'KDB산업');
 
 
-
 CREATE TABLE funeralHall(
 	id INT(10),
 	`name` CHAR(60) NOT NULL,
 	department CHAR(30) NOT NULL,
 	departmentDetail CHAR(40) NOT NULL,
-	addresse CHAR(120) NOT NULL,
+	address CHAR(120) NOT NULL,
 	cellphoneNo CHAR(20) NOT NULL
 );
 
@@ -401,8 +400,8 @@ ALTER TABLE funeral ADD COLUMN femaleMourningClothWhiteId INT(10) UNSIGNED NOT N
 ALTER TABLE funeral ADD COLUMN maleMourningClothId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER femaleMourningClothWhiteId;
 ALTER TABLE funeral ADD COLUMN shirtId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER maleMourningClothId;
 ALTER TABLE funeral ADD COLUMN necktieId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER shirtId;
-ALTER TABLE funeral ADD COLUMN coffinTransporterUseStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER necktieId;
-ALTER TABLE funeral ADD COLUMN shroudId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음'  AFTER coffinTransporterUseStatus;
+ALTER TABLE funeral ADD COLUMN coffinTransporterMemberId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER necktieId;
+ALTER TABLE funeral ADD COLUMN shroudId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음'  AFTER coffinTransporterMemberId;
 
 
 SELECT * FROM funeral;
@@ -621,6 +620,7 @@ CREATE TABLE coffinTransporter(
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	funeralId INT(10) UNSIGNED NOT NULL,
+	memberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '담당 운구차 운전자, 0 = 아직 정해지지 않음',
 	price CHAR(20) NOT NULL COMMENT '가격',
 	departureAddress CHAR(100) NOT NULL,
 	destinationAddress CHAR(100) NOT NULL,

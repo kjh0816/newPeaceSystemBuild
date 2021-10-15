@@ -13,7 +13,7 @@ function selectCoffinTransporter__submit(form) {
         return;
     }
     // 장례식장 선택과 직접 입력 둘 다 안 했을 경우, 하나라도 입력해야한다.
-    if(form.funeralHallName.value.length == 0 && form.desinationAddress.value.length == 0){
+    if(form.funeralHallName.value.length == 0 && form.destinationAddress.value.length == 0){
         swal({
                     title: "장례식장을 선택하거나, 도착 주소를 입력해주세요.",
                     icon: "info",
@@ -22,6 +22,17 @@ function selectCoffinTransporter__submit(form) {
 
         return;
     }
+    // 장례식장 선택과 직접 입력을 둘 다 입력한 경우, 하나만 입력하도록 지시해야한다.
+    if(form.department.value.length != 0 && form.destinationAddress.value.length != 0){
+
+            swal({
+                        title: "장례식장 선택과 직접 입력 중, 하나만 입력해주십시오.",
+                        icon: "info",
+                        button: "확인",
+                    });
+
+            return;
+        }
 
 
 
@@ -40,11 +51,18 @@ function selectCoffinTransporter__submit(form) {
         var destinationAddress = form.destinationAddress.value;
         var funeralHallName = form.funeralHallName.value;
 
+        // 문자 발송을 위해 17개 시도 중 하나를 변수에 담아준다.
+        var department = form.department.value;
+        if(department.length == 0){
+            department = getDepartmentFromAddr(destinationAddress);
+        }
+
+
 
         $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: './selectCoffinTransporter',
+                url: './doSelectCoffinTransporter',
                 data: {
                 clientId:clientId,
                 funeralId:funeralId,
@@ -55,7 +73,8 @@ function selectCoffinTransporter__submit(form) {
                 deceasedHomeAddress:deceasedHomeAddress,
                 departureAddress:departureAddress,
                 destinationAddress:destinationAddress,
-                funeralHallName:funeralHallName
+                funeralHallName:funeralHallName,
+                department:department
                 },
                 success: function(result){
                     if(result.success){
@@ -70,6 +89,12 @@ function selectCoffinTransporter__submit(form) {
 
 
     }
+}
+
+function getDepartmentFromAddr(addr){
+
+    var address = addr.split(" ");
+    return address[0]
 }
 
 // 팝업 창을 띠워주기 위한 함수(팝업은 html 파일로, 인터셉터에서 설정한 접근 권한에 영향을 받는다.)
@@ -122,6 +147,9 @@ function jusoCallBack(roadFullAddr, inputNum){
 $('#department').change(function(){
 
     var department = $('#department').val().trim().toString();
+    if(department == '선택 안함'){
+        return
+    }
 
      $.ajax({
                     type: 'POST',
@@ -152,6 +180,9 @@ $('#department').change(function(){
 $('#departmentDetail').change(function(){
 
     var departmentDetail = $('#departmentDetail').val().trim().toString();
+    if(departmentDetail == '선택 안함'){
+        return
+    }
 
 
     $.ajax({
@@ -180,6 +211,11 @@ $('#funeralHallName').change(function(){
 
 
     var name = $('#funeralHallName').val().trim().toString();
+    if(name == '선택 안함'){
+        return
+    }
+
+
     $.ajax({
         type: 'POST',
         url: './funeralHallNum',
@@ -205,6 +241,8 @@ $('#funeralInput').click(function(){
     // (2) 디자인 요소 변경
     $('#funeralInput').addClass('border-b-4');
     $('#addrInput').removeClass('border-b-4');
+    // (3) 다른 탭의 입력값 초기화
+    $('#destinationAddress').val('');
 });
 // 직접 입력을 클릭했을 때
 $('#addrInput').click(function(){
@@ -214,4 +252,12 @@ $('#addrInput').click(function(){
     // (2) 디자인 요소 변경
     $('#addrInput').addClass('border-b-4');
     $('#funeralInput').removeClass('border-b-4');
+    // (3) 다른 탭의 입력값 초기화
+    $('#department').val('');
+    $('#departmentDetail').val('');
+    $('#funeralHallName').val('');
+});
+
+$('#removeDestinationAddress').click(function(){
+    $('#destinationAddress').val('');
 });

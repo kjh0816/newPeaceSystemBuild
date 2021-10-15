@@ -27,14 +27,7 @@ interface VendorRepository {
     )
     fun getFlowers(): List<Flower>
 
-    @Update(
-        """
-            UPDATE funeral 
-            SET coffinTransporterUseStatus = #{coffinTransporterUseStatus} 
-            WHERE id = #{funeralId};
-        """
-    )
-    fun modifyFuneralIntoCoffinTransporterUseStatus(funeralId:Int, coffinTransporterUseStatus: Boolean)
+
 
     @Update(
         """
@@ -494,16 +487,6 @@ interface VendorRepository {
         detail: String
     ): Order?
 
-    @Insert(
-        """
-            INSERT INTO coffinTransporterOrder
-            SET regDate = NOW(),
-            updateDate = NOW(),
-            deceasedHomeAddress = #{deceasedHomeAddress},
-            orderId = #{orderId}
-        """
-    )
-    fun insertIntoCoffinTransporterOrder(orderId: Int, deceasedHomeAddress: String)
 
     @Insert(
         """
@@ -559,15 +542,6 @@ interface VendorRepository {
     )
     fun modifyFlowerTributeOrderIntoBunchCntAndPackingByOrderId(bunchCnt: Int, packing: Boolean, orderId: Int)
 
-    @Update(
-        """
-            UPDATE coffinTransporterOrder
-            SET updateDate = NOW(),
-            deceasedHomeAddress = #{deceasedHomeAddress}
-            WHERE orderId = #{orderId}
-        """
-    )
-    fun modifyCoffinTransporterOrderIntoDeceasedHomeAddressByOrderId(orderId: Int, deceasedHomeAddress: String)
 
     @Select(
         """
@@ -826,6 +800,14 @@ interface VendorRepository {
         """
     )
     fun getShrouds(): List<Shroud>
+    @Select(
+            """
+                SELECT address
+                FROM funeralHall
+                WHERE name = #{funeralHallName}
+            """
+    )
+    fun getFuneralHallAddrByName(funeralHallName: String): String
 
 
 }

@@ -110,6 +110,7 @@
                             <div class="badge badge-md">비용</div>
                             <p class="pl-2" th:text="|70,000 원|"></p>
                         </div>
+                        <br>
                         <label class="label">
                         <span class="label-text font-bold">
                             운구차량 출동 장소
@@ -129,10 +130,10 @@
 
                         <label class="label">
                         <span class="label-text font-bold">
-                            운구차량 도착 장소
+                            운구차량 도착 장소 (※ 장례식장을 선택하거나, 주소를 직접 입력할 수 있습니다.)
                         </span>
                         </label>
-
+                        <br>
                         <ul class="menu items-stretch px-3 shadow-lg bg-base-100 horizontal rounded-box font-bold w-3/12">
                             <li id="funeralInput" class="border-b-4">
                                 <a>
@@ -162,7 +163,7 @@
 
                             <select id="funeralHallName" name="funeralHallName"
                                     class="select select-bordered select-sm w-full max-w-xs">
-                                <option value="" disabled selected>장례식장</option>
+                                <option value="no" disabled selected>장례식장</option>
                             </select>
 
                             <br>
@@ -173,13 +174,14 @@
 
 
                         <div id="addrTab" class="flex hidden">
-                            <button type="button" onclick="goPopup(1);"
+                            <button type="button" onclick="goPopup(2);"
                                     class="btn btn-outline w-20 whitespace-nowrap self-center">주소 검색
                             </button>
                             <!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
                             <input readonly th:value="${coffinTransporter?.destinationAddress}" type="text"
                                    id="destinationAddress" name="destinationAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요."
                                    class="input input-bordered my-2 w-1/2 font-bold"/>
+                            <button id="removeDestinationAddress" type="button" class="btn btn-outline w-20 whitespace-nowrap self-center">지우기</button>
                         </div>
                     </div>
                 </div>

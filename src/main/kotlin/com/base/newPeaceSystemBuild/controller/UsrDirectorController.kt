@@ -591,9 +591,8 @@ class UsrDirectorController(
     @RequestMapping("/usr/director/doSelectCoffinTransporter", method = [RequestMethod.POST])
     @ResponseBody
     fun doSelectCoffinTransporter(
-        funeralId: Int,
-
         @RequestParam(defaultValue = "0") clientId: Int,
+        @RequestParam(defaultValue = "0") funeralId: Int,
         @RequestParam(defaultValue = "") deceasedName: String,
         @RequestParam(defaultValue = "") sex: String,
         @RequestParam(defaultValue = "") frontNum: String,
@@ -601,14 +600,16 @@ class UsrDirectorController(
         @RequestParam(defaultValue = "") deceasedHomeAddress: String,
         @RequestParam(defaultValue = "") departureAddress: String,
         @RequestParam(defaultValue = "") destinationAddress: String,
-        @RequestParam(defaultValue = "") funeralHallName: String
+        @RequestParam(defaultValue = "") funeralHallName: String,
+        @RequestParam(defaultValue = "") department: String
     ): String {
+
+
+
+
         return Ut.getJsonStrFromObj(
-            vendorService.modifyFuneralIntoCoffinTransporterUseStatus(
-                funeralId,
-                deceasedHomeAddress
-            )
-        )
+            vendorService.callCoffinTransporter(clientId, funeralId, deceasedName, sex, frontNum, backNum, deceasedHomeAddress, departureAddress, destinationAddress, funeralHallName, department))
+
     }
 
     @RequestMapping("/usr/director/doSelectMourningCloth", method = [RequestMethod.POST])
