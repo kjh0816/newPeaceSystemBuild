@@ -820,5 +820,24 @@ interface VendorRepository {
     )
     fun insertIntoCoffinTransporter(funeralId: Int, departureAddress: String, destinationAddr: String)
 
+    @Select(
+            """
+                SELECT *
+                FROM coffinTransporter
+                WHERE funeralId = #{id}
+            """
+    )
+    fun getCoffinTransporterByFuneralId(id: Int): CoffinTransporter
+
+    @Update(
+            """
+                UPDATE coffinTransporter
+                SET updateDate = NOW(),
+                memberId = #{memberId}
+                WHERE funeralId = #{funeralId}
+            """
+    )
+    fun updateCoffinTransporter(memberId: Int, funeralId: Int)
+
 
 }

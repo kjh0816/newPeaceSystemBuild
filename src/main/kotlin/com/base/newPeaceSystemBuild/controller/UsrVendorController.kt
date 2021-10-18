@@ -82,14 +82,37 @@ class UsrVendorController(
             @RequestParam(defaultValue = "0") clientId: Int
     ): String{
 
-        // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
-        val client = clientService.getClientById(clientId)
-
-        if (client == null) {
+        // 현재 접속한 회원이 운구차 운전자가 아닌 경우는 잘못된 접근
+        if(rq.getLoginedMember()!!.roleLevel != 4 || rq.getLoginedMember()!!.extra__roleCategoryId != 3){
             return "usr/home/main"
         }
 
+        // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
+        val client = clientService.getClientById(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
+
+        if (client == null || funeral == null) {
+            return "usr/home/main"
+        }
+
+        val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral.id)
+        if(coffinTransporter == null){
+            return "usr/home/main"
+        }
+
+        model.addAttribute("coffinTransporter", coffinTransporter)
+
         return "usr/vendor/coffinTransporterDispatch"
+    }
+
+    @RequestMapping("/usr/vendor/doCoffinTransporterDispatch")
+    @ResponseBody
+    fun doCoffinTransporterDispatch(
+            @RequestParam(defaultValue="0") clientId: Int
+    ): String{
+
+        return Ut.getJsonStrFromObj(vendorService.doCoffinTransporterDispatch(clientId))
+
     }
 
     @RequestMapping("/usr/vendor/shroudRequest")
