@@ -568,7 +568,7 @@ class VendorService(
         val msg = "https://webroot/usr/vendor/coffinTransporterDispatch?clientId=${clientId} \n위 링크를 통해 위치를 확인하시고, 수락해주십시오."
 
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
-        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
 
         return ResultData.from("S-1", "운구차 출동 요청이 완료되었습니다.")
     }
