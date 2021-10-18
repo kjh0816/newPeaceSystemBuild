@@ -134,7 +134,6 @@ accountNum = '12341234123';
 
 
 
-
 SELECT * FROM `member`;
 
 

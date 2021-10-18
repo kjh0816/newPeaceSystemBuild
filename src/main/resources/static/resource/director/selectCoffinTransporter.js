@@ -1,4 +1,4 @@
-let SelectMourningCloth__submitDone = false;
+
 
 var once = true;
 
@@ -58,10 +58,8 @@ function selectCoffinTransporter__submit(form) {
         var funeralHallName = form.funeralHallName.value;
 
         // 문자 발송을 위해 17개 시도 중 하나를 변수에 담아준다.
-        var department = form.department.value;
-        if(department.length == 0){
-            department = getDepartmentFromAddr(destinationAddress);
-        }
+        var department = getDepartmentFromAddr(departureAddress);
+
 
 
 

@@ -516,33 +516,15 @@ class VendorService(
             return ResultData.from("F-2", "운구차를 다시 호출할 수 없습니다.")
         }
 
-        println("destinationAddress: $destinationAddress")
-        println("destinationAddress: $destinationAddress")
-        println("destinationAddress: $destinationAddress")
-        println("destinationAddress: $destinationAddress")
-        println("destinationAddress: $destinationAddress")
-        println("destinationAddress: $destinationAddress")
-        println("funeralHallName: $funeralHallName")
-        println("funeralHallName: $funeralHallName")
-
-        println("funeralHallName: $funeralHallName")
-        println("funeralHallName: $funeralHallName")
-        println("funeralHallName: $funeralHallName")
-        println("funeralHallName: $funeralHallName")
-        println("funeralHallName: $funeralHallName")
-        println("funeralHallName: $funeralHallName")
-        println("funeralHallName: $funeralHallName")
-
-
 
         // 3) 필수 입력값 검사
-        if(departureAddress == null){
+        if(departureAddress.isBlank()){
             return ResultData.from("F-2", "운구차량 출동 주소를 입력해주세요.")
         }
-        if(destinationAddress == null && funeralHallName == null){
+        if(destinationAddress.isBlank() && funeralHallName.isBlank()){
             return ResultData.from("F-3", "장례식장을 선택하거나, 도착 주소를 입력해주세요.")
         }
-        if(destinationAddress != null && funeralHallName != null){
+        if(destinationAddress.isNotBlank() && funeralHallName.isNotBlank()){
             return ResultData.from("F-4", "장례식장 선택과 직접 입력 중, 하나만 입력해주십시오.")
         }
 
@@ -550,7 +532,7 @@ class VendorService(
         // 4) 장례식장을 선택한 경우, 해당 장례식장을 통해 주소를 조회해서 destinationAddress 변수의 값으로 할당해준다.
         var destinationAddr = destinationAddress
 
-        if(destinationAddress == null && funeralHallName != null){
+        if(destinationAddress.isBlank() && funeralHallName.isNotBlank()){
             destinationAddr = vendorRepository.getFuneralHallAddrByName(funeralHallName)
         }
         // 선택적으로 입력된 client 정보를 수정한다.
@@ -587,13 +569,7 @@ class VendorService(
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
         val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
 
-        // 장례지도사에게 운구업자가 연결되었다고 문자로 알려준다.
 
-        val directorMember = memberRepository.getMemberById(funeral.directorMemberId)
-        val to2 = directorMember!!.cellphoneNo
-        val msg2 = "https://webroot/usr/director/progress?clientId=${clientId} \n 운구업자가 연결되었습니다. 위 링크를 통해 연락처를 확인해주십시오."
-
-        val rb2: Aligo__send__ResponseBody = Ut.sendSms(from, to2.toString(), msg2, true)
 
         return ResultData.from("S-1", "운구차 출동 요청이 완료되었습니다.")
     }
@@ -633,6 +609,18 @@ class VendorService(
 
         // 현재 회원을 운구차 운전자로 배정
         vendorRepository.updateCoffinTransporter(rq.getLoginedMember()!!.id, funeral.id)
+
+        // 장례지도사에게 연결된 사실을 알린다 (시작)
+
+        val from = "01049219810"
+        val directorMember = memberRepository.getMemberById(funeral.directorMemberId)
+        val to = directorMember!!.cellphoneNo
+        val msg = "https://webroot/usr/director/progress?clientId=${clientId} \n 운구업자가 연결되었습니다. 위 링크를 통해 연락처를 확인해주십시오."
+
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
+
+        // 장례지도사에게 연결된 사실을 알린다 (끝)
+
 
         return ResultData.from("S-1", "출동 요청을 수락했습니다.", "replaceUri", "/usr/vendor/coffinTransporterProgress?clientId=$clientId")
     }
