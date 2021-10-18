@@ -3,6 +3,7 @@
 // 아래 함수를 통해 입력값이 아예 없는 경우를 대비할 수 있다.
 
 
+var once = true;
 
 function MemberJoin__submit(form) {
 
@@ -116,6 +117,10 @@ function MemberJoin__submit(form) {
             return;
         }
 
+    if(once){
+
+    once = false;
+
     form.loginPwInput.value = sha256(form.loginPw.value);
     form.loginPw.value = '';
     form.loginPwConfirm.value = '';
@@ -141,7 +146,7 @@ function MemberJoin__submit(form) {
     						}
     					);
 
-
+    }
 }
 // 폼체크 함수 끝
 
