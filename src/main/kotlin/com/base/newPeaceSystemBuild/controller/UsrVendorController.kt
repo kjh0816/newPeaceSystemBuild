@@ -141,7 +141,7 @@ class UsrVendorController(
 
         val flower = vendorService.getFlowerById(funeral.flowerId)
         val flowerTribute = vendorService.getFlowerTributeById(funeral.flowerTributeId)
-        val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(directorMemberId, false, "flowerTribute")
+        val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(directorMemberId, false, "flowerTribute", funeralId)
 
         val chief = clientService.getFamilyByClientId(clientId)
 

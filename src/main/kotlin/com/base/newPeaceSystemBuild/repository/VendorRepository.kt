@@ -370,13 +370,15 @@ interface VendorRepository {
             WHERE O.directorMemberId = #{directorMemberId}
             AND completionStatus = #{completionStatus}
             AND detail = #{detail}
+            AND funeralId = #{funeralId}
             </script>
         """
     )
-    fun getOrderByDirectorMemberIdAndCompletionStatusAndDetail(
+    fun getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
         directorMemberId: Int,
         completionStatus: Boolean,
-        detail: String
+        detail: String,
+        funeralId: Int
     ): Order?
 
     @Select(

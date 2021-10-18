@@ -132,6 +132,7 @@ interface ClientRepository {
             FROM funeral
             WHERE directorMemberId = #{directorMemberId}
             AND progress = #{progress}
+            ORDER BY id DESC
         """
     )
     fun getFuneralsByDirectorMemberIdAndProgress(directorMemberId: Int, progress: Boolean): List<Funeral>

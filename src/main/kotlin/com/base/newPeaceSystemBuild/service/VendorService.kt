@@ -1,6 +1,5 @@
 package com.base.newPeaceSystemBuild.service
 
-import com.base.newPeaceSystemBuild.controller.UsrDirectorController
 import com.base.newPeaceSystemBuild.repository.ClientRepository
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.repository.VendorRepository
@@ -440,8 +439,8 @@ class VendorService(
         return vendorRepository.getFlowerTributeById(flowerTributeId)
     }
 
-    fun getOrderByDirectorMemberIdAndCompletionStatusAndDetail(directorMemberId: Int, completionStatus: Boolean, detail: String): Order? {
-        return vendorRepository.getOrderByDirectorMemberIdAndCompletionStatusAndDetail(directorMemberId, completionStatus, detail)
+    fun getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(directorMemberId: Int, completionStatus: Boolean, detail: String, funeralId: Int): Order? {
+        return vendorRepository.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(directorMemberId, completionStatus, detail, funeralId)
     }
 
     fun getOrderByFuneralIdAndCompletionStatusAndDetail(
