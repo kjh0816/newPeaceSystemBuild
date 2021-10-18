@@ -149,6 +149,9 @@ class UsrVendorController(
 
         val cellphoneNo = Ut.getCellphoneNoFormatted(directorMember!!.cellphoneNo)
 
+        val chief = clientService.getFamilyByClientId(clientId)
+
+        model.addAttribute("chief", chief)
         model.addAttribute("coffinTransporter", coffinTransporter)
         model.addAttribute("directorMember", directorMember)
         model.addAttribute("cellphoneNo", cellphoneNo)
