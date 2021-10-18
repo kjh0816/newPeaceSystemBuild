@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>운구차량 출동 요청</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/vendor/coffinTransporterDispatch.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+
+<main layout:fragment="main">
+    <form onsubmit="Dispatch__submit(this); return false;">
+        <div class="p-10 card bg-base-200">
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+                    <input type="hidden" name="clientId" th:value="${client.id}">
+                    <h2 class="card-title">故 [[${client.deceasedName}]]님의 장례</h2>
+
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상주 성함</div>
+                        <p class="pl-2">[[${chief.name}]]</p>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <input class="btn btn-ghost" type="submit" value="출동하기">
+        </div>
+    </form>
+</main>
+
+</html>

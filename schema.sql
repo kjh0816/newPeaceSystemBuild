@@ -132,6 +132,9 @@ accountNum = '12341234123';
 
 
 
+
+
+
 SELECT * FROM `member`;
 
 
@@ -150,6 +153,24 @@ CREATE TABLE memberRole(
   authenticationLevel SMALLINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '승인 여부(0 = 미확인, 1 = 승인, 2 = 보류)',
   authenticationDate DATETIME DEFAULT NOW() COMMENT '인증된 날짜'
 );
+
+
+
+# user2 를 운구차 운전자로
+UPDATE `member`
+SET roleLevel = 4
+WHERE id = 3;
+
+
+INSERT INTO memberRole
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+roleId = 4,
+roleCategoryId = 3,
+authenticationLevel = 1;
+
+
 
 
 

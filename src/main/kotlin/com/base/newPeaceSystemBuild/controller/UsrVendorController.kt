@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartRequest
 
@@ -73,6 +74,22 @@ class UsrVendorController(
         model.addAttribute("coffinTransporters", coffinTransporters)
 
         return "usr/vendor/coffinTransporterRequest"
+    }
+
+    @RequestMapping("/usr/vendor/coffinTransporterDispatch")
+    fun showCoffinTransporterDispatch(
+            model: Model,
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String{
+
+        // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
+        val client = clientService.getClientById(clientId)
+
+        if (client == null) {
+            return "usr/home/main"
+        }
+
+        return "usr/vendor/coffinTransporterDispatch"
     }
 
     @RequestMapping("/usr/vendor/shroudRequest")

@@ -4,9 +4,12 @@ import com.base.newPeaceSystemBuild.controller.UsrDirectorController
 import com.base.newPeaceSystemBuild.repository.ClientRepository
 import com.base.newPeaceSystemBuild.repository.MemberRepository
 import com.base.newPeaceSystemBuild.repository.VendorRepository
+import com.base.newPeaceSystemBuild.util.Ut
+import com.base.newPeaceSystemBuild.vo.Aligo__send__ResponseBody
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Funeral
+import com.base.newPeaceSystemBuild.vo.member.Member
 import com.base.newPeaceSystemBuild.vo.standard.*
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
@@ -540,7 +543,32 @@ class VendorService(
         // 운구차 사용 여부를 true로 변경
         clientRepository.updateCoffinTransporterUseStatus(funeralId, true)
 
+        // 해당 지역의 운구차업자에게 문자메세지 발송
+        // 직업: 운구차 운전자 ( roleLevel = 4, roleCategoryId = 3 )
+        val roleLevel = 4
 
+        // 직업을 구분하기 위해 roleLevel 지역을 구분하기 위해 location을 매개변수로 받아, members를 출력
+        // 추후 범용적으로 이 함수를 사용하기 위해 roleCategoryId를 넣었다. (0일 경우, roleCategoryId가 내부적으로 적용되지 않는다.)
+        // 반대로, vendor의 경우, roleCategoryId 값을 넣으면 내부적으로 적용된다.
+        val coffinTransporters: List<Member> = memberRepository.getMembersByLocationAndRole(department, roleLevel, 3)
+
+        // location으로 조회했을 때, 해당 지역에 한 명도 없는 경우에 대한 예외처리
+        if(coffinTransporters.isEmpty()){
+            return ResultData.from("F-6", "${department}에 등록된 운구업자가 없습니다.")
+        }
+
+
+
+        // 발신자 전화번호
+        val from = "01049219810"
+        // 1명 이상의 수신자 전화번호 ( 알리고 API에서 수신인(receiver)로써 인식 가능한 상태로 넣어주는 함수 )
+        // 다른 직업에 대해서도 재사용 가능
+        val to = Ut.getCellphoneNosFromMembers(coffinTransporters)
+        // 문자 내용
+        val msg = "https://webroot/usr/vendor/coffinTransporterDispatch?clientId=${clientId} \n위 링크를 통해 위치를 확인하시고, 수락해주십시오."
+
+        // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
 
         return ResultData.from("S-1", "운구차 출동 요청이 완료되었습니다.")
     }
