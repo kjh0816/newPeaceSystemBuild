@@ -557,8 +557,6 @@ class VendorService(
             return ResultData.from("F-6", "${department}에 등록된 운구업자가 없습니다.")
         }
 
-
-
         // 발신자 전화번호
         val from = "01049219810"
         // 1명 이상의 수신자 전화번호 ( 알리고 API에서 수신인(receiver)로써 인식 가능한 상태로 넣어주는 함수 )
@@ -570,6 +568,8 @@ class VendorService(
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
         val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
 
+
+
         return ResultData.from("S-1", "운구차 출동 요청이 완료되었습니다.")
     }
 
@@ -580,12 +580,14 @@ class VendorService(
     fun doCoffinTransporterDispatch(clientId: Int): ResultData {
         // 현재 접속한 회원이 운구차 운전자가 아닌 경우는 잘못된 접근
         if(rq.getLoginedMember()!!.roleLevel != 4 || rq.getLoginedMember()!!.extra__roleCategoryId != 3){
-            return ResultData.from("F-1", "잘못된 접근입니다.")
+            return ResultData.from("F-1", "잘못된 접근입니다.", "replaceUri", "/usr/home/main")
         }
+
 
         // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
         val client = clientService.getClientById(clientId)
         val funeral = clientService.getFuneralByClientId(clientId)
+
 
         if (client == null || funeral == null) {
             return ResultData.from("F-1", "잘못된 접근입니다.", "replaceUri", "/usr/home/main")
@@ -600,14 +602,59 @@ class VendorService(
             return ResultData.from("F-2", "이미 요청을 수락하셨습니다. 해당 페이지로 이동합니다.", "replaceUri", "/usr/vendor/coffinTransporterProgress?clientId=$clientId")
         }
 
-        if(coffinTransporter.memberId == 0){
+        if(coffinTransporter.memberId != 0){
             return ResultData.from("F-3", "이미 다른 업자에 의해 수락되었습니다.", "replaceUri", "/usr/home/main")
         }
 
         // 현재 회원을 운구차 운전자로 배정
         vendorRepository.updateCoffinTransporter(rq.getLoginedMember()!!.id, funeral.id)
 
+        // 장례지도사에게 연결된 사실을 알린다 (시작)
+
+        val from = "01049219810"
+        val directorMember = memberRepository.getMemberById(funeral.directorMemberId)
+        val to = directorMember!!.cellphoneNo
+        val msg = "https://webroot/usr/director/progress?clientId=${clientId} \n 운구업자가 연결되었습니다. 위 링크를 통해 연락처를 확인해주십시오."
+
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
+
+        // 장례지도사에게 연결된 사실을 알린다 (끝)
+
+
         return ResultData.from("S-1", "출동 요청을 수락했습니다.", "replaceUri", "/usr/vendor/coffinTransporterProgress?clientId=$clientId")
+    }
+
+    fun doCoffinTransporterProgress(clientId: Int): ResultData {
+        // 현재 접속한 회원이 운구차 운전자가 아닌 경우는 잘못된 접근
+        if(rq.getLoginedMember()!!.roleLevel != 4 || rq.getLoginedMember()!!.extra__roleCategoryId != 3){
+            return ResultData.from("F-1", "잘못된 접근입니다.", "replaceUri", "/usr/home/main")
+        }
+
+
+        // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
+        val client = clientService.getClientById(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
+
+
+        if (client == null || funeral == null) {
+            return ResultData.from("F-1", "잘못된 접근입니다.", "replaceUri", "/usr/home/main")
+        }
+
+        val coffinTransporter = getCoffinTransporterByFuneralId(funeral.id)
+        if(coffinTransporter == null){
+            return ResultData.from("F-1", "잘못된 접근입니다.", "replaceUri", "/usr/home/main")
+        }
+        if(coffinTransporter.memberId == 0){
+            return ResultData.from("F-2", "접근 권한이 없습니다.", "replaceUri", "/usr/home/main")
+        }
+
+        if(coffinTransporter.memberId != rq.getLoginedMember()!!.id){
+            return ResultData.from("F-2", "접근 권한이 없습니다.", "replaceUri", "/usr/home/main")
+        }
+
+        vendorRepository.updateCoffinTransporterComplete(funeral.id)
+
+        return ResultData.from("S-1", "완료 처리되었습니다.", "replaceUri", "/isr/home/main")
     }
 
 

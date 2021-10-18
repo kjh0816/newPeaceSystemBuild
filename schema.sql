@@ -134,7 +134,6 @@ accountNum = '12341234123';
 
 
 
-
 SELECT * FROM `member`;
 
 
@@ -645,6 +644,7 @@ CREATE TABLE coffinTransporter(
 	destinationAddress CHAR(100) NOT NULL,
 	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '운구 완료 여부(0 = 미완료, 1 = 완료)'
 );
+
 
 
 

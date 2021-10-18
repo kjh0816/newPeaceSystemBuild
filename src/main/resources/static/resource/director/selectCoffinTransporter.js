@@ -1,8 +1,14 @@
-let SelectMourningCloth__submitDone = false;
+
 
 var once = true;
 
 function selectCoffinTransporter__submit(form) {
+
+    // 장례식장을 선택하지 않은 경우, option의 값은 text인 장례식장이므로, 공백인 것으로 치환한다.
+    if(form.funeralHallName.value == '장례식장'){
+        form.funeralHallName.value = '';
+    }
+
     if (form.departureAddress.value.length == 0) {
         swal({
             title: "운구차량 출동 주소를 입력해주세요.",
@@ -52,10 +58,8 @@ function selectCoffinTransporter__submit(form) {
         var funeralHallName = form.funeralHallName.value;
 
         // 문자 발송을 위해 17개 시도 중 하나를 변수에 담아준다.
-        var department = form.department.value;
-        if(department.length == 0){
-            department = getDepartmentFromAddr(destinationAddress);
-        }
+        var department = getDepartmentFromAddr(departureAddress);
+
 
 
 

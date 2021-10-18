@@ -12,6 +12,10 @@
 </head>
 
 <main layout:fragment="main">
+    <script th:inline="javascript">
+        var clientId = [[${param.clientId}]];
+    </script>
+
     <form onsubmit="coffinTransporterDispatch__submit(this); return false;">
         <div class="p-10 card bg-base-200">
             <div class="card card-side bordered bg-white">

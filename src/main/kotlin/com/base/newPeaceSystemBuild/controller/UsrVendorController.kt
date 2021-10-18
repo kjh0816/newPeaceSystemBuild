@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartRequest
+import java.text.DecimalFormat
 
 
 @Controller
@@ -87,6 +88,7 @@ class UsrVendorController(
             return "usr/home/main"
         }
 
+
         // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
         val client = clientService.getClientById(clientId)
         val funeral = clientService.getFuneralByClientId(clientId)
@@ -105,14 +107,66 @@ class UsrVendorController(
         return "usr/vendor/coffinTransporterDispatch"
     }
 
-    @RequestMapping("/usr/vendor/doCoffinTransporterDispatch")
+    @RequestMapping("/usr/vendor/doCoffinTransporterDispatch", method = [RequestMethod.POST])
     @ResponseBody
     fun doCoffinTransporterDispatch(
-            @RequestParam(defaultValue="0") clientId: Int
+            @RequestParam(defaultValue = "0") clientId: Int
     ): String{
+
 
         return Ut.getJsonStrFromObj(vendorService.doCoffinTransporterDispatch(clientId))
 
+    }
+
+    @RequestMapping("/usr/vendor/coffinTransporterProgress")
+    fun showCoffinTransporterProgress(
+            model: Model,
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String{
+
+        // 현재 접속한 회원이 운구차 운전자가 아닌 경우는 잘못된 접근
+        if(rq.getLoginedMember()!!.roleLevel != 4 || rq.getLoginedMember()!!.extra__roleCategoryId != 3){
+            return "usr/home/main"
+        }
+
+
+        // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
+        val client = clientService.getClientById(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
+
+        if (client == null || funeral == null) {
+            return "usr/home/main"
+        }
+
+
+        val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral.id)
+        if(coffinTransporter == null){
+            return "usr/home/main"
+        }
+
+
+        val directorMember = memberService.getMemberById(funeral.directorMemberId)
+
+        val cellphoneNo = Ut.getCellphoneNoFormatted(directorMember!!.cellphoneNo)
+
+        val chief = clientService.getFamilyByClientId(clientId)
+
+        model.addAttribute("chief", chief)
+        model.addAttribute("coffinTransporter", coffinTransporter)
+        model.addAttribute("directorMember", directorMember)
+        model.addAttribute("cellphoneNo", cellphoneNo)
+
+
+
+        return "usr/vendor/coffinTransporterProgress"
+    }
+
+    @RequestMapping("/usr/vendor/doCoffinTransporterProgress")
+    @ResponseBody
+    fun doCoffinTransporterProgress(
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String{
+        return Ut.getJsonStrFromObj(vendorService.doCoffinTransporterProgress(clientId))
     }
 
     @RequestMapping("/usr/vendor/shroudRequest")

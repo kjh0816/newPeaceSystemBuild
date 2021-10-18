@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+
+<head>
+    <title>운구차량 출동</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/vendor/coffinTransporterProgress.js" charset="utf-8" defer></script>
+    </th:block>
+</head>
+
+<main layout:fragment="main">
+    <script th:inline="javascript">
+        var clientId = [[${param.clientId}]];
+        clientId.toString();
+    </script>
+
+    <form onsubmit="coffinTransporterProgress__submit(this); return false;">
+        <div class="p-10 card bg-base-200">
+            <div class="card card-side bordered bg-white">
+                <div class="card-body text-sm">
+
+                    <h2 class="card-title">담당 장례지도사</h2>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">이름</div>
+                        <p class="pl-2">[[${directorMember?.name}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">연락처</div>
+                        <p class="pl-2">[[${cellphoneNo}]]</p>
+                    </div>
+
+                    <br>
+                    <br>
+
+
+                    <h2 class="card-title">상주 정보</h2>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">이름</div>
+                        <p class="pl-2">[[${chief?.name}]]</p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">연락처</div>
+                        <p class="pl-2">[[${cellphoneNo}]]</p>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+                    <h2 class="card-title">현재 고인의 위치</h2>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">주소</div>
+                        <p class="pl-2">[[${coffinTransporter?.departureAddress}]]</p>
+                    </div>
+
+                    <br>
+                    <br>
+
+                    <h2 class="card-title">고인이 이동할 위치</h2>
+
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">주소</div>
+                        <p class="pl-2">[[${coffinTransporter?.destinationAddress}]]</p>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <input class="btn btn-ghost" type="submit" value="운구 작업 완료">
+        </div>
+    </form>
+</main>
+
+</html>
