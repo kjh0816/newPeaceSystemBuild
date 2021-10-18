@@ -649,6 +649,7 @@ CREATE TABLE coffinTransporter(
 
 
 
+
 SELECT * FROM coffinTransporter;
 
 

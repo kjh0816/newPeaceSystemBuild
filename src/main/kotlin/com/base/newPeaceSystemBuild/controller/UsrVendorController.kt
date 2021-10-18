@@ -87,6 +87,7 @@ class UsrVendorController(
             return "usr/home/main"
         }
 
+
         // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
         val client = clientService.getClientById(clientId)
         val funeral = clientService.getFuneralByClientId(clientId)
@@ -105,11 +106,12 @@ class UsrVendorController(
         return "usr/vendor/coffinTransporterDispatch"
     }
 
-    @RequestMapping("/usr/vendor/doCoffinTransporterDispatch")
+    @RequestMapping("/usr/vendor/doCoffinTransporterDispatch", method = [RequestMethod.POST])
     @ResponseBody
     fun doCoffinTransporterDispatch(
-            @RequestParam(defaultValue="0") clientId: Int
+            @RequestParam(defaultValue = "0") clientId: Int
     ): String{
+
 
         return Ut.getJsonStrFromObj(vendorService.doCoffinTransporterDispatch(clientId))
 
