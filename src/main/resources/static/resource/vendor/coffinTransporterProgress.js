@@ -1,6 +1,22 @@
-function cellphoneNoFormat(){
-    var cellphoneNo = $('#cellphoneNo').val();
+function coffinTransporterProgress__submit(form){
 
-    cellphoneNo = cellphoneNo.substr(0,3) + '-' + cellphoneNo.substr(3,7) + '-' + cellphoneNo.substr(7,cellphoneNo.length);
-    $('#cellphoneNo').val('sex');
+     $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: './doCoffinTransporterProgress',
+                    data: {
+                    clientId:clientId
+                    },
+                    success: function(result){
+                        if(result.success){
+                            alert(result.msg);
+                            window.location.replace(result.map.replaceUri);
+                        }else{
+                            alert(result.msg);
+                            window.location.replace(result.map.replaceUri);
+                        }
+
+                    }
+
+            });
 }

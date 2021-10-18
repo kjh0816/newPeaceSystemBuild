@@ -147,12 +147,23 @@ class UsrVendorController(
 
         val directorMember = memberService.getMemberById(funeral.directorMemberId)
 
+        val cellphoneNo = Ut.getCellphoneNoFormatted(directorMember!!.cellphoneNo)
+
         model.addAttribute("coffinTransporter", coffinTransporter)
         model.addAttribute("directorMember", directorMember)
+        model.addAttribute("cellphoneNo", cellphoneNo)
 
 
 
         return "usr/vendor/coffinTransporterProgress"
+    }
+
+    @RequestMapping("/usr/vendor/doCoffinTransporterProgress")
+    @ResponseBody
+    fun doCoffinTransporterProgress(
+            @RequestParam(defaultValue = "0") clientId: Int
+    ): String{
+        return Ut.getJsonStrFromObj(vendorService.doCoffinTransporterProgress(clientId))
     }
 
     @RequestMapping("/usr/vendor/shroudRequest")

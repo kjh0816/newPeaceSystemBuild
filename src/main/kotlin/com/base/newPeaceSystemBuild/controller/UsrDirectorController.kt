@@ -58,7 +58,8 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/progress")
     fun showProgress(
-        model: Model
+        model: Model,
+        @RequestParam(defaultValue = "0") clientId: Int
     ): String {
 
         val funerals = clientService.getFuneralsByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id, true)
@@ -212,7 +213,16 @@ class UsrDirectorController(
 
             val sumFormat = formatter.format(sum)
 
+            val funeral = clientService.getFuneralByClientId(clientId)
 
+            val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral!!.id)
+
+            val coffinTransporterMember = memberService.getMemberById(coffinTransporter.memberId)
+            val coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember!!.cellphoneNo)
+
+            model.addAttribute("coffinTransporter", coffinTransporter)
+            model.addAttribute("coffinTransporterMember", coffinTransporterMember)
+            model.addAttribute("coffinTransporterCellphoneNo", coffinTransporterCellphoneNo)
 
 //      단품이 아닌 세트 혹은 다수의 상품을 선택해야하는것들, 선택한 갯수랑 개당가격을 계산한가격
             model.addAttribute("flowerTributePriceFormat", flowerTributePriceFormat)
@@ -607,9 +617,6 @@ class UsrDirectorController(
         @RequestParam(defaultValue = "") funeralHallName: String,
         @RequestParam(defaultValue = "") department: String
     ): String {
-
-
-
 
         return Ut.getJsonStrFromObj(
             vendorService.callCoffinTransporter(clientId, funeralId, deceasedName, sex, frontNum, backNum, deceasedHomeAddress, departureAddress, destinationAddress, funeralHallName, department))

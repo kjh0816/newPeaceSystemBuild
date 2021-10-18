@@ -625,5 +625,38 @@ class VendorService(
         return ResultData.from("S-1", "출동 요청을 수락했습니다.", "replaceUri", "/usr/vendor/coffinTransporterProgress?clientId=$clientId")
     }
 
+    fun doCoffinTransporterProgress(clientId: Int): ResultData {
+        // 현재 접속한 회원이 운구차 운전자가 아닌 경우는 잘못된 접근
+        if(rq.getLoginedMember()!!.roleLevel != 4 || rq.getLoginedMember()!!.extra__roleCategoryId != 3){
+            return ResultData.from("F-1", "잘못된 접근입니다.", "replaceUri", "/usr/home/main")
+        }
+
+
+        // 존재하지 않는 clientId를 URL로 접근하는 경우에 대한 예외처리
+        val client = clientService.getClientById(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
+
+
+        if (client == null || funeral == null) {
+            return ResultData.from("F-1", "잘못된 접근입니다.", "replaceUri", "/usr/home/main")
+        }
+
+        val coffinTransporter = getCoffinTransporterByFuneralId(funeral.id)
+        if(coffinTransporter == null){
+            return ResultData.from("F-1", "잘못된 접근입니다.", "replaceUri", "/usr/home/main")
+        }
+        if(coffinTransporter.memberId == 0){
+            return ResultData.from("F-2", "접근 권한이 없습니다.", "replaceUri", "/usr/home/main")
+        }
+
+        if(coffinTransporter.memberId != rq.getLoginedMember()!!.id){
+            return ResultData.from("F-2", "접근 권한이 없습니다.", "replaceUri", "/usr/home/main")
+        }
+
+        vendorRepository.updateCoffinTransporterComplete(funeral.id)
+
+        return ResultData.from("S-1", "완료 처리되었습니다.", "replaceUri", "/isr/home/main")
+    }
+
 
 }

@@ -838,6 +838,15 @@ interface VendorRepository {
             """
     )
     fun updateCoffinTransporter(memberId: Int, funeralId: Int)
+    @Update(
+            """
+                UPDATE coffinTransporter
+                SET updateDate = NOW(),
+                completionStatus = true
+                WHERE funeralId = #{funeralId)
+            """
+    )
+    fun updateCoffinTransporterComplete(funeralId: Int)
 
 
 }
