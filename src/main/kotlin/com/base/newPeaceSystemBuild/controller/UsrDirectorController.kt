@@ -115,8 +115,6 @@ class UsrDirectorController(
             var necktiePrice = 0
             var shroudPrice = 0
 
-            val formatter = DecimalFormat("###,###")
-
             // 합계
             var sum = 0
 
@@ -138,7 +136,10 @@ class UsrDirectorController(
             if(coffinTransporter != null){
                 // coffinTransporter의 운구업자가 등록되었을 경우, 추가적으로 운구업자의 정보를 addAttr 한다.
                 coffinTransporterMember = memberService.getMemberById(coffinTransporter.memberId)
-                coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember!!.cellphoneNo)
+                if(coffinTransporterMember != null){
+                    coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember.cellphoneNo)
+                }
+
             }
             // 운구차 데이터를 배열에 넣어줌
             coffinTransporters.add(coffinTransporter)
