@@ -616,7 +616,7 @@ class VendorService(
         val to = directorMember!!.cellphoneNo
         val msg = "https://webroot/usr/director/progress?clientId=${clientId} \n 운구업자가 연결되었습니다. 위 링크를 통해 연락처를 확인해주십시오."
 
-        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, false)
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
 
         // 장례지도사에게 연결된 사실을 알린다 (끝)
 

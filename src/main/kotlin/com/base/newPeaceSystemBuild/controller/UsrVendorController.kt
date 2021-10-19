@@ -147,14 +147,18 @@ class UsrVendorController(
 
         val directorMember = memberService.getMemberById(funeral.directorMemberId)
 
-        val cellphoneNo = Ut.getCellphoneNoFormatted(directorMember!!.cellphoneNo)
+        val directorCellphoneNo = Ut.getCellphoneNoFormatted(directorMember!!.cellphoneNo)
 
         val chief = clientService.getFamilyByClientId(clientId)
+
+        val chiefCellphoneNo = Ut.getCellphoneNoFormatted(chief.cellphoneNo)
+
 
         model.addAttribute("chief", chief)
         model.addAttribute("coffinTransporter", coffinTransporter)
         model.addAttribute("directorMember", directorMember)
-        model.addAttribute("cellphoneNo", cellphoneNo)
+        model.addAttribute("directorCellphoneNo", directorCellphoneNo)
+        model.addAttribute("chiefCellphoneNo", chiefCellphoneNo)
 
 
 
