@@ -528,20 +528,7 @@ class VendorService(
         }
 
 
-        // 4) 장례식장을 선택한 경우, 해당 장례식장을 통해 주소를 조회해서 destinationAddress 변수의 값으로 할당해준다.
-        var destinationAddr = destinationAddress
 
-        if(destinationAddress.isBlank() && funeralHallName.isNotBlank()){
-            destinationAddr = vendorRepository.getFuneralHallAddrByName(funeralHallName)
-        }
-        // 선택적으로 입력된 client 정보를 수정한다.
-        clientRepository.updateClientInCoffinTransporter(deceasedName, sex, frontNum, backNum, deceasedHomeAddress)
-
-        // 운구차 테이블에 정보를 넣는다.
-        vendorRepository.insertIntoCoffinTransporter(funeralId, departureAddress, destinationAddr)
-
-        // 운구차 사용 여부를 true로 변경
-        clientRepository.updateCoffinTransporterUseStatus(funeralId, true)
 
         // 해당 지역의 운구차업자에게 문자메세지 발송
         // 직업: 운구차 운전자 ( roleLevel = 4, roleCategoryId = 3 )
@@ -567,6 +554,21 @@ class VendorService(
 
         // 알리고 API에서 문자 전송에 필요한 데이터를 넘겨주고, 알리고로부터 반환된 결과값 rb
         val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
+
+        // 4) 장례식장을 선택한 경우, 해당 장례식장을 통해 주소를 조회해서 destinationAddress 변수의 값으로 할당해준다.
+        var destinationAddr = destinationAddress
+
+        if(destinationAddress.isBlank() && funeralHallName.isNotBlank()){
+            destinationAddr = vendorRepository.getFuneralHallAddrByName(funeralHallName)
+        }
+        // 선택적으로 입력된 client 정보를 수정한다.
+        clientRepository.updateClientInCoffinTransporter(deceasedName, sex, frontNum, backNum, deceasedHomeAddress)
+
+        // 운구차 테이블에 정보를 넣는다.
+        vendorRepository.insertIntoCoffinTransporter(funeralId, departureAddress, destinationAddr)
+
+        // 운구차 사용 여부를 true로 변경
+        clientRepository.updateCoffinTransporterUseStatus(funeralId, true)
 
 
 
