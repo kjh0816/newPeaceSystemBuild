@@ -476,25 +476,22 @@ class UsrDirectorController(
 
 
 
-            val funeral = clientService.getFuneralByClientId(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
 
-            val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral!!.id)
-            // coffinTransporter가 null이 아닐 경우, coffinTransporter만 addAttr 한다.
-            if(coffinTransporter != null){
-                // coffinTransporter의 운구업자가 등록되었을 경우, 추가적으로 운구업자의 정보를 addAttr 한다.
-                if(coffinTransporter.memberId != 0){
+        val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral!!.id)
+        // coffinTransporter가 null이 아닐 경우, coffinTransporter만 addAttr 한다.
+        if(coffinTransporter != null){
+            // coffinTransporter의 운구업자가 등록되었을 경우, 추가적으로 운구업자의 정보를 addAttr 한다.
+            if(coffinTransporter.memberId != 0){
 
-                    val coffinTransporterMember = memberService.getMemberById(coffinTransporter.memberId)
-                    val coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember!!.cellphoneNo)
+                val coffinTransporterMember = memberService.getMemberById(coffinTransporter.memberId)
+                val coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember!!.cellphoneNo)
 
-                    model.addAttribute("coffinTransporterMember", coffinTransporterMember)
-                    model.addAttribute("coffinTransporterCellphoneNo", coffinTransporterCellphoneNo)
-                }
-
-
-                model.addAttribute("coffinTransporter", coffinTransporter)
-
+                model.addAttribute("coffinTransporterMember", coffinTransporterMember)
+                model.addAttribute("coffinTransporterCellphoneNo", coffinTransporterCellphoneNo)
             }
+            model.addAttribute("coffinTransporter", coffinTransporter)
+        }
 
 
 //      단품이 아닌 세트 혹은 다수의 상품을 선택해야하는것들, 선택한 갯수랑 개당가격을 계산한가격

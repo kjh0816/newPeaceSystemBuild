@@ -656,7 +656,20 @@ class VendorService(
 
         vendorRepository.updateCoffinTransporterComplete(funeral.id)
 
-        return ResultData.from("S-1", "완료 처리되었습니다.", "replaceUri", "/isr/home/main")
+
+        // 운구 완료된 사실을 담당 장례지도사에게 통보(시작)
+
+        val from = "01049219810"
+
+        val to = memberRepository.getMemberById(funeral.directorMemberId)!!.cellphoneNo
+
+        val msg = "https://webroot/usr/director/progress?clientId=${clientId} \n 고인의 운구가 완료되었습니다. 위 링크를 통해 장례 절차를 진행해주십시오."
+
+        val rb: Aligo__send__ResponseBody = Ut.sendSms(from, to.toString(), msg, true)
+
+        // 운구 완료된 사실을 담당 장례지도사에게 통보(끝)
+
+        return ResultData.from("S-1", "완료 처리되었습니다.", "replaceUri", "/usr/home/main")
     }
 
 
