@@ -11,7 +11,8 @@
 </head>
 <main layout:fragment="main">
     <script th:inline="javascript">
-        var cellphoneNo = [[${chief.cellphoneNo}]];
+        var chiefCellphoneNo = [[${chief.cellphoneNo}]];
+        var coffinTransporterCellphoneNo = [[${coffinTransporterCellphoneNo}]];
     </script>
     <!--  장례  -->
     <div class="p-10 card bg-base-200" th:if="${funeral != null}">
@@ -25,7 +26,7 @@
                 <div class="flex items-center">
                     <div class="badge badge-md">상주 전화번호</div>
                     <p class="pl-2">[[${chief.cellphoneNo}]]</p>
-                    <button th:onclick="document.location.href='tel:' + cellphoneNo" class="btn btn-active ml-10">전화걸기</button>
+                    <button th:onclick="document.location.href='tel:' + chiefCellphoneNo" class="btn btn-active ml-10">전화걸기</button>
                 </div>
                 <div class="flex items-center">
                     <div class="badge badge-md">고인의 위치</div>
@@ -66,6 +67,7 @@
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">연락처</div>
                         <p class="pl-2">[[${coffinTransporterCellphoneNo}]]</p>
+                        <button th:onclick="document.location.href='tel:' + coffinTransporterCellphoneNo" class="btn btn-active ml-10">전화걸기</button>
                     </div>
                 </th:block>
                 <th:block th:if="${!funeral?.coffinTransporterUseStatus}">
