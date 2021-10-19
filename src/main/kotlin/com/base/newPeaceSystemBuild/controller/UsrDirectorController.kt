@@ -5,10 +5,8 @@ import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
 import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.client.Family
-import com.base.newPeaceSystemBuild.vo.standard.Flower
-import com.base.newPeaceSystemBuild.vo.standard.FlowerTribute
-import com.base.newPeaceSystemBuild.vo.standard.MourningCloth
-import com.base.newPeaceSystemBuild.vo.standard.Shroud
+import com.base.newPeaceSystemBuild.vo.member.Member
+import com.base.newPeaceSystemBuild.vo.standard.*
 import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -99,6 +97,10 @@ class UsrDirectorController(
         val shirtOrders = mutableListOf<Order?>()
         val necktieOrders = mutableListOf<Order?>()
         val shroudOrders = mutableListOf<Order?>()
+        // 운구차 업자 정보
+        val coffinTransporters = mutableListOf<CoffinTransporter?>()
+        val coffinTransporterMembers = mutableListOf<Member?>()
+        val coffinTransporterCellphoneNos = mutableListOf<String?>()
 
         // 숫자 변환기
         val formatter = DecimalFormat("###,###")
@@ -128,6 +130,22 @@ class UsrDirectorController(
             val necktie = vendorService.getNecktieById(funeral.necktieId)
             val shroud = vendorService.getShroudById(funeral.shroudId)
 
+            // 운구차 데이터
+            val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral.id)
+            var coffinTransporterMember: Member? = null
+            var coffinTransporterCellphoneNo: String? = null
+
+            if(coffinTransporter != null){
+                // coffinTransporter의 운구업자가 등록되었을 경우, 추가적으로 운구업자의 정보를 addAttr 한다.
+                coffinTransporterMember = memberService.getMemberById(coffinTransporter.memberId)
+                coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember!!.cellphoneNo)
+            }
+            // 운구차 데이터를 배열에 넣어줌
+            coffinTransporters.add(coffinTransporter)
+            coffinTransporterMembers.add(coffinTransporterMember)
+            coffinTransporterCellphoneNos.add(coffinTransporterCellphoneNo)
+
+            // 선택된 스텐다드 데이터를 배열에 넣어줌
             flowers.add(flower)
             flowerTributes.add(flowerTribute)
             femaleMourningClothBlacks.add(femaleMourningClothBlack)
@@ -187,6 +205,7 @@ class UsrDirectorController(
                 funeral.id
             )
 
+            // 장레별 선택된 주문의 상세정보를 배열에 넣어줌
             flowerOrders.add(flowerOrder)
             flowerTributeOrders.add(flowerTributeOrder)
             femaleMourningClothBlackOrders.add(femaleMourningClothBlackOrder)
@@ -196,6 +215,7 @@ class UsrDirectorController(
             necktieOrders.add(necktieOrder)
             shroudOrders.add(shroudOrder)
 
+            // 주문된 상품들의 합계랑 각각의 상품들의 가격을 계산해줌
             if (flower != null) {
                 flowerPrice = flower.retailPrice.toInt()
                 sum += flowerPrice
@@ -279,9 +299,10 @@ class UsrDirectorController(
                 shroudPrices.add(formatter.format(shroudPrice))
             }
 
+            // 장례별 총 사용액을 배열에 넣어줌
             sums.add(formatter.format(sum))
 
-
+            // 장례별 고인과 유가족의 정보를 배열에넣어줌
             val client = clientService.getClientById(funeral.clientId)
 
             if (client != null) {
@@ -299,6 +320,14 @@ class UsrDirectorController(
         model.addAttribute("clients", clients)
         model.addAttribute("chiefs", chiefs)
         // 가격
+        model.addAttribute("flowerPrices", flowerPrices)
+        model.addAttribute("flowerTributePrices", flowerTributePrices)
+        model.addAttribute("femaleMourningClothBlackPrices", femaleMourningClothBlackPrices)
+        model.addAttribute("femaleMourningClothWhitePrices", femaleMourningClothWhitePrices)
+        model.addAttribute("maleMourningClothPrices", maleMourningClothPrices)
+        model.addAttribute("shirtPrices", shirtPrices)
+        model.addAttribute("necktiePrices", necktiePrices)
+        model.addAttribute("shroudPrices", shroudPrices)
         model.addAttribute("sums", sums)
         // 스탠다드
         model.addAttribute("flowers", flowers)
@@ -318,6 +347,10 @@ class UsrDirectorController(
         model.addAttribute("shirtOrders", shirtOrders)
         model.addAttribute("necktieOrders", necktieOrders)
         model.addAttribute("shroudOrders", shroudOrders)
+        // 운구차 정보
+        model.addAttribute("coffinTransporters", coffinTransporters)
+        model.addAttribute("coffinTransporterMembers", coffinTransporterMembers)
+        model.addAttribute("coffinTransporterCellphoneNos", coffinTransporterCellphoneNos)
 
         return "usr/director/funeral"
     }
@@ -476,25 +509,25 @@ class UsrDirectorController(
 
 
 
-            val funeral = clientService.getFuneralByClientId(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
 
-            val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral!!.id)
-            // coffinTransporter가 null이 아닐 경우, coffinTransporter만 addAttr 한다.
-            if(coffinTransporter != null){
-                // coffinTransporter의 운구업자가 등록되었을 경우, 추가적으로 운구업자의 정보를 addAttr 한다.
-                if(coffinTransporter.memberId != 0){
+        val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral!!.id)
+        // coffinTransporter가 null이 아닐 경우, coffinTransporter만 addAttr 한다.
+        if(coffinTransporter != null){
+            // coffinTransporter의 운구업자가 등록되었을 경우, 추가적으로 운구업자의 정보를 addAttr 한다.
+            if(coffinTransporter.memberId != 0){
 
-                    val coffinTransporterMember = memberService.getMemberById(coffinTransporter.memberId)
-                    val coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember!!.cellphoneNo)
+                val coffinTransporterMember = memberService.getMemberById(coffinTransporter.memberId)
+                val coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember!!.cellphoneNo)
 
-                    model.addAttribute("coffinTransporterMember", coffinTransporterMember)
-                    model.addAttribute("coffinTransporterCellphoneNo", coffinTransporterCellphoneNo)
-                }
-
-
-                model.addAttribute("coffinTransporter", coffinTransporter)
-
+                model.addAttribute("coffinTransporterMember", coffinTransporterMember)
+                model.addAttribute("coffinTransporterCellphoneNo", coffinTransporterCellphoneNo)
             }
+
+
+            model.addAttribute("coffinTransporter", coffinTransporter)
+
+        }
 
 
 //      단품이 아닌 세트 혹은 다수의 상품을 선택해야하는것들, 선택한 갯수랑 개당가격을 계산한가격
@@ -656,8 +689,12 @@ class UsrDirectorController(
     }
 
     @RequestMapping("/usr/director/selectFlower")
-    fun showSelectFlower(model: Model): String {
-        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+    fun showSelectFlower(
+        model: Model,
+        @RequestParam(defaultValue = "0") clientId: Int
+    ): String {
+        val funeral = clientService.getFuneralByClientId(clientId)
+
         val flowers = vendorService.getFlowers()
         val flowerTributes = vendorService.getFlowerTributes()
 
@@ -728,8 +765,11 @@ class UsrDirectorController(
     }
 
     @RequestMapping("/usr/director/selectMourningCloth")
-    fun showSelectMourningCloth(model: Model): String {
-        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+    fun showSelectMourningCloth(
+        model: Model,
+        @RequestParam(defaultValue = "0") clientId: Int
+    ): String {
+        val funeral = clientService.getFuneralByClientId(clientId)
 
         // 각 상품의 스탠다드 데이터들을 DB에서 조회
         val femaleMourningClothBlacks = vendorService.getFemaleMourningClothBlacks()
@@ -769,8 +809,11 @@ class UsrDirectorController(
     }
 
     @RequestMapping("/usr/director/selectShroud")
-    fun showSelectShroud(model: Model): String {
-        val funeral = clientService.getProgressingFuneralByDirectorMemberId(rq.getLoginedMember()!!.id)
+    fun showSelectShroud(
+        model: Model,
+        @RequestParam(defaultValue = "0") clientId: Int
+    ): String {
+        val funeral = clientService.getFuneralByClientId(clientId)
         val shrouds = vendorService.getShrouds()
 
         if (funeral != null) {

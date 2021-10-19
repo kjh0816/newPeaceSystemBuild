@@ -829,7 +829,7 @@ interface VendorRepository {
                 WHERE funeralId = #{id}
             """
     )
-    fun getCoffinTransporterByFuneralId(id: Int): CoffinTransporter
+    fun getCoffinTransporterByFuneralId(id: Int): CoffinTransporter?
 
     @Update(
             """

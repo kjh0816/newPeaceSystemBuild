@@ -575,7 +575,7 @@ class VendorService(
         return ResultData.from("S-1", "운구차 출동 요청이 완료되었습니다.")
     }
 
-    fun getCoffinTransporterByFuneralId(id: Int): CoffinTransporter {
+    fun getCoffinTransporterByFuneralId(id: Int): CoffinTransporter? {
         return vendorRepository.getCoffinTransporterByFuneralId(id)
     }
 
