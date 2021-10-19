@@ -14,7 +14,7 @@
 <main layout:fragment="main">
     <script th:inline="javascript">
         var clientId = [[${param.clientId}]];
-        clientId.toString();
+        clientId = clientId.toString();
     </script>
 
     <form onsubmit="coffinTransporterProgress__submit(this); return false;">

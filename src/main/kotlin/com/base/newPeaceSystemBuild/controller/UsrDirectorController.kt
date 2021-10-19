@@ -510,6 +510,7 @@ class UsrDirectorController(
 
 
         val funeral = clientService.getFuneralByClientId(clientId)
+<<<<<<< HEAD
 
         val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral!!.id)
         // coffinTransporter가 null이 아닐 경우, coffinTransporter만 addAttr 한다.
@@ -523,10 +524,27 @@ class UsrDirectorController(
                 model.addAttribute("coffinTransporterMember", coffinTransporterMember)
                 model.addAttribute("coffinTransporterCellphoneNo", coffinTransporterCellphoneNo)
             }
+=======
+>>>>>>> 01fa57427a637600d2519a127bcbe287f783d561
 
+        val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral!!.id)
+        // coffinTransporter가 null이 아닐 경우, coffinTransporter만 addAttr 한다.
+        if(coffinTransporter != null){
+            // coffinTransporter의 운구업자가 등록되었을 경우, 추가적으로 운구업자의 정보를 addAttr 한다.
+            if(coffinTransporter.memberId != 0){
 
+<<<<<<< HEAD
             model.addAttribute("coffinTransporter", coffinTransporter)
 
+=======
+                val coffinTransporterMember = memberService.getMemberById(coffinTransporter.memberId)
+                val coffinTransporterCellphoneNo = Ut.getCellphoneNoFormatted(coffinTransporterMember!!.cellphoneNo)
+
+                model.addAttribute("coffinTransporterMember", coffinTransporterMember)
+                model.addAttribute("coffinTransporterCellphoneNo", coffinTransporterCellphoneNo)
+            }
+            model.addAttribute("coffinTransporter", coffinTransporter)
+>>>>>>> 01fa57427a637600d2519a127bcbe287f783d561
         }
 
 

@@ -845,7 +845,7 @@ interface VendorRepository {
                 UPDATE coffinTransporter
                 SET updateDate = NOW(),
                 completionStatus = true
-                WHERE funeralId = #{funeralId)
+                WHERE funeralId = #{funeralId}
             """
     )
     fun updateCoffinTransporterComplete(funeralId: Int)
