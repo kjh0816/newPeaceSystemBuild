@@ -53,11 +53,11 @@
         <div class="card card-side shadow mb-2 bg-white">
             <div class="card-body">
                 <h2 class="card-title">운구 차량 (※ 운구 차량은 한 번만 호출할 수 있습니다.)</h2>
-                <th:block th:if="${coffinTransporter.memberId == 0}">
+                <th:block th:if="${coffinTransporter?.memberId == 0}">
                     운구차량을 호출했습니다. 연결 시, 연락처가 표시됩니다.
                 </th:block>
 
-                <th:block th:if="${coffinTransporter.memberId != 0}">
+                <th:block th:if="${coffinTransporter != null && coffinTransporter?.memberId != 0}">
                     <h4 class="card-title">담당 운구업자</h4>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">이름</div>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">연락처</div>
-                        <p class="pl-2">[[${coffinTransporterCellphoneNo}]]</p>
+                        <p class="pl-2">[[${coffinTransporterCellphoneNo?}]]</p>
                     </div>
                 </th:block>
                 <th:block th:if="${!funeral?.coffinTransporterUseStatus}">
