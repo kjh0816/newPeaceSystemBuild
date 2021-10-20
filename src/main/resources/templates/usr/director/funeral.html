@@ -10,10 +10,15 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    <div class="p-10 card bg-base-200" th:each="i : ${#numbers.sequence(0, funerals.size() - 1)}">
-        <script th:inline="javascript">
-            var cellphoneNo = [[${chiefs[i].cellphoneNo}]];
-        </script>
+    <div class="p-10 card bg-base-200" th:if="${funerals.size() == 0}">
+        <div class="card card-side shadow my-2 bg-white">
+            <div class="card-body">
+                진행중인 장례가 없습니다.
+            </div>
+        </div>
+    </div>
+    <div class="p-10 card bg-base-200" th:unless="${funerals.size() == 0}" th:each="i : ${#numbers.sequence(0, funerals.size() - 1)}">
+
         <div class="card card-side shadow my-2 bg-white">
             <div class="card-body">
                 <h2 class="card-title" th:text="|故 ${clients[i].deceasedName} 님의 장례|"> [[${client.deceasedName}]]</h2>
@@ -48,12 +53,29 @@
         <div class="card card-side shadow mb-2 bg-white">
             <div class="card-body">
                 <h2 class="card-title">운구 차량 (※ 운구 차량은 한 번만 호출할 수 있습니다.)</h2>
-                <th:block th:if="${funerals[i].coffinTransporterUseStatus}">
-                    운구차량을 호출했습니다. 연결 시, 연락처가 표시됩니다.
+                <th:block th:if="${coffinTransporters[i] != null}">
+                    <th:block th:if="${coffinTransporters[i]?.memberId == 0}">
+                        운구차량을 호출했습니다. 연결 시, 연락처가 표시됩니다.
+                    </th:block>
+
+                    <th:block th:if="${coffinTransporters[i] != null && coffinTransporters[i]?.memberId != 0}">
+                        <h4 class="card-title">담당 운구업자</h4>
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">이름</div>
+                            <p class="pl-2" th:text="${coffinTransporterMembers[i]?.name}"></p>
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="badge badge-md">연락처</div>
+                            <p class="pl-2" th:text="${coffinTransporterCellphoneNos[i]}"></p>
+                        </div>
+                    </th:block>
                 </th:block>
-                <a th:href="@{./selectCoffinTransporter(clientId=${clients[i].id})}"  class="btn btn-ghost w-2/12">
-                    운구 차량 호출하기
-                </a>
+
+                <th:block th:if="${!funerals[i]?.coffinTransporterUseStatus}">
+                    <a th:href="@{./selectCoffinTransporter(clientId=${funerals[i].clientId})}"  class="btn btn-ghost w-2/12">
+                        운구 차량 호출하기
+                    </a>
+                </th:block>
             </div>
         </div>
         <!--  제단꽃  -->
@@ -91,7 +113,8 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">세트</div>
-                        <p class="pl-2" th:text="|${flowerTributeOrders[i].extra__bunchCnt} 세트 (${flowerTributes[i].bunch * flowerTributeOrders[i].extra__bunchCnt} 개)|"></p>
+                        <p class="pl-2" th:text="|${flowerTributeOrders[i].extra__bunchCnt} 세트|"></p>
+                        <p class="pl-2" th:text="|(${flowerTributes[i].bunch * flowerTributeOrders[i].extra__bunchCnt} 개)|"></p>
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>
@@ -100,6 +123,7 @@
                 </th:block>
                 <div class="card-actions">
                     <form action="./selectFlower">
+                        <input type="hidden" name="clientId" th:value="${funerals[i].clientId}">
                         <button class="btn btn-ghost" type="submit">제단꽃, 헌화 선택하기</button>
                     </form>
                 </div>
@@ -127,7 +151,7 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>
-                        <p class="pl-2" th:text="|${femaleMourningClothBlackPriceFormat} 원|"></p>
+                        <p class="pl-2" th:text="|${femaleMourningClothBlackPrices[i]} 원|"></p>
                     </div>
                 </th:block>
                 <th:block th:if="${femaleMourningClothWhites[i] == null}">
@@ -145,7 +169,7 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>
-                        <p class="pl-2" th:text="|${femaleMourningClothWhitePriceFormat} 원|"></p>
+                        <p class="pl-2" th:text="|${femaleMourningClothWhitePrices[i]} 원|"></p>
                     </div>
                 </th:block>
                 <th:block th:if="${maleMourningCloths[i] == null}">
@@ -163,7 +187,7 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>
-                        <p class="pl-2" th:text="|${maleMourningClothPriceFormat} 원|"></p>
+                        <p class="pl-2" th:text="|${maleMourningClothPrices[i]} 원|"></p>
                     </div>
                 </th:block>
                 <th:block th:if="${shirts[i] == null}">
@@ -181,7 +205,7 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>
-                        <p class="pl-2" th:text="|${shirtPriceFormat} 원|"></p>
+                        <p class="pl-2" th:text="|${shirtPrices[i]} 원|"></p>
                     </div>
                 </th:block>
                 <th:block th:if="${neckties[i] == null}">
@@ -199,11 +223,12 @@
                     </div>
                     <div class="flex items-center mb-1">
                         <div class="badge badge-md">합계</div>
-                        <p class="pl-2" th:text="|${necktiePriceFormat} 원|"></p>
+                        <p class="pl-2" th:text="|${necktiePrices[i]} 원|"></p>
                     </div>
                 </th:block>
                 <div class="card-actions">
                     <form action="./selectMourningCloth">
+                        <input type="hidden" name="clientId" th:value="${funerals[i].clientId}">
                         <button class="btn btn-ghost" type="submit">상복 선택하기</button>
                     </form>
                 </div>
@@ -232,6 +257,7 @@
                 </th:block>
                 <div class="card-actions">
                     <form action="./selectShroud">
+                        <input type="hidden" name="clientId" th:value="${funerals[i].clientId}">
                         <button class="btn btn-ghost" type="submit">수의 선택하기</button>
                     </form>
                 </div>
