@@ -51,6 +51,8 @@
                         </div>
                         <div class="divider" th:if="${shrouds.size != shroud.id && shrouds.size - 1 != shroud.id}">OR</div>
                     </th:block>
+
+
                 </div>
             </div>
             <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
@@ -59,6 +61,27 @@
                 $(".shroudIdSelectBox#shroud[[${shroudOrder.standardId}]]").text("선택 됨");
                 $("input[value='[[${shroudOrder.standardId}]]']#shroudId").prop('checked', true);
             </script>
+
+            <div class="card-body text-sm border border-base-300 bg-white mb-2">
+                <h2 class="card-title">관 선택</h2>
+                <select id="coffinName" name="coffinName" class="select select-bordered select-sm w-full max-w-xs">
+                    <option value="" disabled selected>재질</option>
+                    <div th:each="coffinName : ${coffinNames}">
+                        <option th:value="*{coffinName}" th:text="*{coffinName}"></option>
+                    </div>
+                </select>
+
+                <select id="coffinChi" name="coffinChi" class="select select-bordered select-sm w-full max-w-xs">
+                    <option value="" disabled selected>치</option>
+                </select>
+
+                <select id="coffinSize" name="coffinSize" class="select select-bordered select-sm w-full max-w-xs">
+                    <option value="" disabled selected>사이즈</option>
+                </select>
+            </div>
+
+            <input type="hidden" id="coffinId" name="coffinId">
+
             <input class="btn btn-ghost w-full" type="submit" value="완료">
             <br>
             <br>

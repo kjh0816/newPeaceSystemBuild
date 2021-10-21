@@ -240,9 +240,10 @@
 
             </figure>
             <div class="card-body">
-                <h2 class="card-title">수의</h2>
+                <h2 class="card-title">수의 / 관</h2>
                 <th:block th:if="${shrouds[i] == null}">
                     <p>수의를 선택할 수 있습니다.</p>
+                    <p>관을 선택할 수 있습니다.</p>
                 </th:block>
                 <th:block th:unless="${shrouds[i] == null}">
                     <p class="font-bold">수의</p>
@@ -258,7 +259,7 @@
                 <div class="card-actions">
                     <form action="./selectShroud">
                         <input type="hidden" name="clientId" th:value="${funerals[i].clientId}">
-                        <button class="btn btn-ghost" type="submit">수의 선택하기</button>
+                        <button class="btn btn-ghost" type="submit">수의/관 선택하기</button>
                     </form>
                 </div>
             </div>

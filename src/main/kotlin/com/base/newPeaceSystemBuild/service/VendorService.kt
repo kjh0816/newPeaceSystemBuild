@@ -142,9 +142,14 @@ class VendorService(
 
     fun modifyFuneralIntoShroudId(
         funeralId: Int,
-        shroudId: Int
+        shroudId: Int,
+        coffinId: Int
     ): ResultData {
         val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
+
+        if(coffinId == 0){
+            return ResultData.from("F-2", "관을 선택해주십시오.")
+        }
 
         //  order에 대한 데이터를 DB에 저장
         val roleCategoryId = 4
@@ -209,11 +214,14 @@ class VendorService(
             }
         }
 
+        // 관의 주문 정보를 최초 입력한다. (coffinOrder 테이블에 정보 저장)
+        vendorRepository.insertIntoCoffinOrder(coffinId, funeralId)
+
         // funeral 테이블에 shroudId 를 업데이트 한다.
         vendorRepository.modifyFuneralIntoShroudId(funeralId, shroudId)
         // 연결된 물품 공급업자에게 주문 정보를 주기 위해 orderId를 성공 시, 같이 return
 
-        return ResultData.from("S-1", "수의 주문 정보를 입력했습니다.", "funeral", funeral)
+        return ResultData.from("S-1", "수의 및 관 주문 정보를 입력했습니다.", "funeral", funeral)
     }
 
     fun modifyFuneralIntoMourningClothId(
@@ -670,6 +678,10 @@ class VendorService(
         // 운구 완료된 사실을 담당 장례지도사에게 통보(끝)
 
         return ResultData.from("S-1", "완료 처리되었습니다.", "replaceUri", "/usr/home/main")
+    }
+
+    fun getCoffinNames(): List<String> {
+        return vendorRepository.getCoffinNames()
     }
 
 

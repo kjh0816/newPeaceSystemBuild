@@ -850,5 +850,24 @@ interface VendorRepository {
     )
     fun updateCoffinTransporterComplete(funeralId: Int)
 
+    @Select(
+            """
+                SELECT DISTINCT(name)
+                FROM coffin
+            """
+    )
+    fun getCoffinNames(): List<String>
+
+    @Insert(
+            """
+                INSERT INTO coffinOrder
+                SET regDate = NOW(),
+                updateDate = NOW(),
+                funeralId = #{funeralId},
+                coffinId = #{coffinId}
+            """
+    )
+    fun insertIntoCoffinOrder(coffinId: Int, funeralId: Int)
+
 
 }
