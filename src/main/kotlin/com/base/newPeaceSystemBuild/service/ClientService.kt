@@ -218,6 +218,16 @@ class ClientService(
         return clientRepository.getFuneralsByDirectorMemberIdAndProgress(directorMemberId, progress)
     }
 
+    fun getFilteredFuneralsByDirectorMemberIdAndProgress(
+        directorMemberId: Int,
+        progress: Boolean,
+        page: Int,
+        itemsInAPage: Int,
+        limitFrom: Int
+    ): List<Funeral> {
+        return clientRepository.getFilteredFuneralsByDirectorMemberIdAndProgress(directorMemberId, progress, page, itemsInAPage, limitFrom)
+    }
+
     fun addFamily(familyRelation: String, familyName: String, familyCellphoneNo: String, clientId: Int): ResultData {
         if(familyRelation.isBlank()){
             return ResultData.from("F-1", "입력한 유가족 관계가 올바른지 확인해주십시오.")

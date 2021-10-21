@@ -10,15 +10,31 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-    <div class="p-10 card bg-base-200" th:if="${funerals.size() == 0}">
+    <div class="p-10 card bg-base-200" th:if="${filteredFunerals.size() == 0}">
         <div class="card card-side shadow my-2 bg-white">
             <div class="card-body">
                 진행중인 장례가 없습니다.
             </div>
         </div>
     </div>
-    <div class="p-10 card bg-base-200" th:unless="${funerals.size() == 0}" th:each="i : ${#numbers.sequence(0, funerals.size() - 1)}">
+    <div class="p-10 card bg-base-200" th:unless="${filteredFunerals.size() == 0}" th:each="i : ${#numbers.sequence(0, filteredFunerals.size() - 1)}">
 
+        <div class="btn-group w-full">
+            <form action="./progress" class="w-1/2" th:if="${page != 1}">
+                <input type="hidden" name="page" th:value="${page - 1}">
+                <button class="btn btn-outline w-full">이전 페이지</button>
+            </form>
+            <div class="w-1/2" th:unless="${page != 1}">
+                <span class="btn btn-outline w-full">이전 페이지</span>
+            </div>
+            <form action="./progress" class="w-1/2" th:if="${totalPage} > ${page}">
+                <input type="hidden" name="page" th:value="${page + 1}">
+                <button class="btn btn-outline w-full">다음 페이지</button>
+            </form>
+            <div class="w-1/2" th:unless="${totalPage} > ${page}">
+                <span class="btn btn-outline w-full">다음 페이지</span>
+            </div>
+        </div>
         <div class="card card-side shadow my-2 bg-white">
             <div class="card-body">
                 <h2 class="card-title" th:text="|故 ${clients[i].deceasedName} 님의 장례|"> [[${client.deceasedName}]]</h2>
@@ -71,8 +87,8 @@
                     </th:block>
                 </th:block>
 
-                <th:block th:if="${!funerals[i]?.coffinTransporterUseStatus}">
-                    <a th:href="@{./selectCoffinTransporter(clientId=${funerals[i].clientId})}"  class="btn btn-ghost w-2/12">
+                <th:block th:if="${!filteredFunerals[i]?.coffinTransporterUseStatus}">
+                    <a th:href="@{./selectCoffinTransporter(clientId=${filteredFunerals[i].clientId})}"  class="btn btn-ghost w-2/12">
                         운구 차량 호출하기
                     </a>
                 </th:block>
@@ -81,12 +97,12 @@
         <!--  제단꽃  -->
         <div class="card card-side shadow mb-2 bg-white">
             <figure>
-                <div th:if="${funerals[i].flowerId != 0}">
-                    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${funerals[i].flowerId})}"
+                <div th:if="${filteredFunerals[i].flowerId != 0}">
+                    <img th:src="@{../../../resource/img/flower/flower{flowerId}.png(flowerId = ${filteredFunerals[i].flowerId})}"
                          alt="" style="width: 400px; height: 250px;">
                 </div>
-                <div th:if="${funerals[i].flowerTributeId != 0}">
-                    <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${funerals[i].flowerTributeId})}"
+                <div th:if="${filteredFunerals[i].flowerTributeId != 0}">
+                    <img th:src="@{../../../resource/img/flowerTribute/flowerTribute{flowerTributeId}.png(flowerTributeId = ${filteredFunerals[i].flowerTributeId})}"
                          alt="" style="width: 400px; height: 250px;">
                 </div>
             </figure>
@@ -123,7 +139,7 @@
                 </th:block>
                 <div class="card-actions">
                     <form action="./selectFlower">
-                        <input type="hidden" name="clientId" th:value="${funerals[i].clientId}">
+                        <input type="hidden" name="clientId" th:value="${filteredFunerals[i].clientId}">
                         <button class="btn btn-ghost" type="submit">제단꽃, 헌화 선택하기</button>
                     </form>
                 </div>
@@ -228,7 +244,7 @@
                 </th:block>
                 <div class="card-actions">
                     <form action="./selectMourningCloth">
-                        <input type="hidden" name="clientId" th:value="${funerals[i].clientId}">
+                        <input type="hidden" name="clientId" th:value="${filteredFunerals[i].clientId}">
                         <button class="btn btn-ghost" type="submit">상복 선택하기</button>
                     </form>
                 </div>
@@ -257,7 +273,7 @@
                 </th:block>
                 <div class="card-actions">
                     <form action="./selectShroud">
-                        <input type="hidden" name="clientId" th:value="${funerals[i].clientId}">
+                        <input type="hidden" name="clientId" th:value="${filteredFunerals[i].clientId}">
                         <button class="btn btn-ghost" type="submit">수의 선택하기</button>
                     </form>
                 </div>
