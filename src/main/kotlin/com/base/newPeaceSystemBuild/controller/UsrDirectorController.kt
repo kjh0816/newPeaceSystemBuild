@@ -632,6 +632,10 @@ class UsrDirectorController(
         val funeral = clientService.getFuneralByClientId(clientId)
         val shrouds = vendorService.getShrouds()
 
+        // 관의 이름만
+        val coffinNames = vendorService.getCoffinNames()
+
+
         if (funeral != null) {
             val client = clientService.getClientById(funeral.clientId)
 
@@ -653,6 +657,7 @@ class UsrDirectorController(
 
         model.addAttribute("shrouds", shrouds)
         model.addAttribute("funeral", funeral)
+        model.addAttribute("coffinNames", coffinNames)
 
         return "usr/director/selectShroud"
     }
@@ -810,12 +815,17 @@ class UsrDirectorController(
     @ResponseBody
     fun doSelectShroud(
         funeralId: Int,
-        @RequestParam(defaultValue = "0") shroudId: Int
+        @RequestParam(defaultValue = "0") shroudId: Int,
+        @RequestParam(defaultValue = "0") coffinId: Int
     ): String {
+
+
+
         return Ut.getJsonStrFromObj(
             vendorService.modifyFuneralIntoShroudId(
                 funeralId,
-                shroudId
+                shroudId,
+                coffinId
             )
         )
     }
@@ -835,4 +845,40 @@ class UsrDirectorController(
 
 
     // VIEW 기능 함수 끝
+
+    @RequestMapping("/usr/director/coffinChi", method = [RequestMethod.POST])
+    @ResponseBody
+    fun coffinChi(
+            @RequestParam(defaultValue = "") coffinName: String
+    ): String {
+
+
+        return Ut.getJsonStrFromObj(memberRoleService.getCoffinChisByName(coffinName.trim()))
+
+    }
+
+    @RequestMapping("/usr/director/coffinSize", method = [RequestMethod.POST])
+    @ResponseBody
+    fun coffinSize(
+            @RequestParam(defaultValue = "") coffinChi: String
+    ): String {
+
+
+        return Ut.getJsonStrFromObj(memberRoleService.getCoffinSizesByChi(coffinChi.trim()))
+
+    }
+
+    @RequestMapping("/usr/director/getCoffinId", method = [RequestMethod.POST])
+    @ResponseBody
+    fun getCoffinId(
+            @RequestParam(defaultValue = "") coffinName: String,
+            @RequestParam(defaultValue = "") coffinChi: String,
+            @RequestParam(defaultValue = "") coffinSize: String
+    ): String {
+
+
+        return Ut.getJsonStrFromObj(memberRoleService.getCoffinIdByAll(coffinName.trim(), coffinChi.trim(), coffinSize.trim()))
+
+    }
+
 }

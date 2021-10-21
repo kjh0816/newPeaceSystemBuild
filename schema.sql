@@ -864,6 +864,8 @@ CREATE TABLE coffin(
 );
 
 
+
+
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '보통',
@@ -1054,7 +1056,6 @@ CREATE TABLE coffinOrder(
 	funeralId INT(10) UNSIGNED NOT NULL,
 	memberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '관 공급업자의 id (0 = 아직 정해지지 않음)',
 	coffinId INT(10) UNSIGNED NOT NULL,
-	destinationAddress CHAR(100) NOT NULL,
 	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 미완료 / 1 = 완료'
 );
 
