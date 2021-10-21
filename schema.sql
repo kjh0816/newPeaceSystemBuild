@@ -757,7 +757,103 @@ CREATE TABLE shroudOrder(
 	orderId INT(10) UNSIGNED NOT NULL
 );
 
+# 빈소용품(초동용품)
+CREATE TABLE `incense`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(15) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
 
+INSERT INTO `incense`
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '기본 향',
+retailPrice = '30000',
+costPrice = '10000';
+
+CREATE TABLE `candle`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(15) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO `candle`
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '기본 양초',
+retailPrice = '15000',
+costPrice = '6000';
+
+CREATE TABLE `ancestralTablet`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(15) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO `ancestralTablet`
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '기본 위패',
+retailPrice = '30000',
+costPrice = '15000';
+
+CREATE TABLE `condolenceMoneyBook`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(15) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO `condolenceMoneyBook`
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '기본 부의록',
+retailPrice = '15000',
+costPrice = '8000';
+
+CREATE TABLE `condolenceBook`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(15) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO `condolenceBook`
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '기본 조의록',
+retailPrice = '15000',
+costPrice = '8000';
+
+CREATE TABLE `pictureRibbon`(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`name` CHAR(15) NOT NULL,
+	retailPrice CHAR(10) NOT NULL COMMENT '소비자가',
+	costPrice CHAR(10) NOT NULL COMMENT '원가'
+);
+
+INSERT INTO `pictureRibbon`
+SET regDate = NOW(),
+updateDate = NOW(),
+`name` = '기본 사진리본',
+retailPrice = '5000',
+costPrice = '1500';
+# 관
 CREATE TABLE coffin(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`name` CHAR(20) NOT NULL,
