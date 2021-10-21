@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartRequest
 import java.text.DecimalFormat
+import kotlin.math.ceil
 
 
 @Controller
@@ -63,9 +64,16 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/progress")
     fun showProgress(
-        model: Model
+        model: Model,
+        @RequestParam(defaultValue = "1") page: Int
     ): String {
         val funerals = clientService.getFuneralsByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id, true)
+        // 페이징
+        val itemsInAPage = 1
+        val limitFrom = (page - 1) * itemsInAPage
+        val filteredFunerals = clientService.getFilteredFuneralsByDirectorMemberIdAndProgress(rq.getLoginedMember()!!.id, true, page, itemsInAPage, limitFrom)
+        val totalPage = ceil(funerals.size.toDouble() / itemsInAPage).toInt()
+
         val clients = mutableListOf<Client>()
         val chiefs = mutableListOf<Family>()
         // 가격정보
@@ -104,7 +112,7 @@ class UsrDirectorController(
 
         // 숫자 변환기
         val formatter = DecimalFormat("###,###")
-        for (funeral in funerals){
+        for (funeral in filteredFunerals){
             // 상품 가격정보
             var flowerPrice = 0
             var flowerTributePrice = 0
@@ -317,9 +325,12 @@ class UsrDirectorController(
             }
         }
 
-        model.addAttribute("funerals", funerals)
+        model.addAttribute("filteredFunerals", filteredFunerals)
         model.addAttribute("clients", clients)
         model.addAttribute("chiefs", chiefs)
+        // 페이징 정보
+        model.addAttribute("page", page)
+        model.addAttribute("totalPage", totalPage)
         // 가격
         model.addAttribute("flowerPrices", flowerPrices)
         model.addAttribute("flowerTributePrices", flowerTributePrices)

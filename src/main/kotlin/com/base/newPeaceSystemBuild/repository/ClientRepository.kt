@@ -136,7 +136,26 @@ interface ClientRepository {
         """
     )
     fun getFuneralsByDirectorMemberIdAndProgress(directorMemberId: Int, progress: Boolean): List<Funeral>
-    
+
+    @Select(
+        """
+            SELECT *
+            FROM funeral
+            WHERE directorMemberId = #{directorMemberId}
+            AND progress = #{progress}
+            ORDER BY id DESC
+            LIMIT #{itemsInAPage}
+            OFFSET #{limitFrom}
+        """
+    )
+    fun getFilteredFuneralsByDirectorMemberIdAndProgress(
+        directorMemberId: Int,
+        progress: Boolean,
+        page: Int,
+        itemsInAPage: Int,
+        limitFrom: Int
+    ): List<Funeral>
+
     // 상주 정보를 유가족 정보에 입력했는지 확인하기 위해 chiefStatus에 상관없이 조회
     @Select(
             """
