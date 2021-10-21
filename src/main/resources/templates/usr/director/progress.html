@@ -10,16 +10,7 @@
     </th:block>
 </head>
 <main layout:fragment="main">
-<<<<<<< HEAD
-    <script th:inline="javascript">
-        var chiefCellphoneNo = [[${chief.cellphoneNo}]];
-        var coffinTransporterCellphoneNo = [[${coffinTransporterCellphoneNo}]];
-    </script>
-    <!--  장례  -->
-    <div class="p-10 card bg-base-200" th:if="${funeral != null}">
-=======
     <div class="p-10 card bg-base-200" th:if="${funerals.size() == 0}">
->>>>>>> b47d85700c1d598dc9989ed03ca87c3ae7f12ad1
         <div class="card card-side shadow my-2 bg-white">
             <div class="card-body">
                 진행중인 장례가 없습니다.
@@ -37,13 +28,8 @@
                 </div>
                 <div class="flex items-center">
                     <div class="badge badge-md">상주 전화번호</div>
-<<<<<<< HEAD
-                    <p class="pl-2">[[${chief.cellphoneNo}]]</p>
-                    <button th:onclick="document.location.href='tel:' + chiefCellphoneNo" class="btn btn-active ml-10">전화걸기</button>
-=======
                     <p class="pl-2" th:text="${chiefs[i].cellphoneNo}"></p>
                     <button th:onclick="document.location.href='tel:' + cellphoneNo" class="btn btn-active ml-10">전화걸기</button>
->>>>>>> b47d85700c1d598dc9989ed03ca87c3ae7f12ad1
                 </div>
                 <div class="flex items-center">
                     <div class="badge badge-md">고인의 위치</div>
@@ -72,19 +58,6 @@
                         운구차량을 호출했습니다. 연결 시, 연락처가 표시됩니다.
                     </th:block>
 
-<<<<<<< HEAD
-                <th:block th:if="${coffinTransporter != null && coffinTransporter?.memberId != 0}">
-                    <h4 class="card-title">담당 운구업자</h4>
-                    <div class="flex items-center mb-1">
-                        <div class="badge badge-md">이름</div>
-                        <p class="pl-2">[[${coffinTransporterMember?.name}]]</p>
-                    </div>
-                    <div class="flex items-center mb-1">
-                        <div class="badge badge-md">연락처</div>
-                        <p class="pl-2">[[${coffinTransporterCellphoneNo}]]</p>
-                        <button th:onclick="document.location.href='tel:' + coffinTransporterCellphoneNo" class="btn btn-active ml-10">전화걸기</button>
-                    </div>
-=======
                     <th:block th:if="${coffinTransporters[i] != null && coffinTransporters[i]?.memberId != 0}">
                         <h4 class="card-title">담당 운구업자</h4>
                         <div class="flex items-center mb-1">
@@ -96,7 +69,6 @@
                             <p class="pl-2" th:text="${coffinTransporterCellphoneNos[i]}"></p>
                         </div>
                     </th:block>
->>>>>>> b47d85700c1d598dc9989ed03ca87c3ae7f12ad1
                 </th:block>
 
                 <th:block th:if="${!funerals[i]?.coffinTransporterUseStatus}">

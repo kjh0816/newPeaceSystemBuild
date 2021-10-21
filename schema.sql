@@ -772,182 +772,182 @@ INSERT INTO coffin
 SET `name` = '오동나무',
 size = '보통',
 chi = '0.6',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '특',
 chi = '0.6',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '보통',
 chi = '1.0',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '특',
 chi = '1.0',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '맞춤',
 chi = '1.0',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '보통',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '특',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '맞춤',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '2단보통',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '2단특',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '보통',
 chi = '2.0',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '특',
 chi = '2.0',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '맞춤',
 chi = '2.0',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '2단보통',
 chi = '2.0',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '2단특',
 chi = '2.0',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '솔송',
 size = '보통',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '솔송',
 size = '특',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '솔송',
 size = '맞춤',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 
 INSERT INTO coffin
 SET `name` = '솔송',
 size = '2단보통',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '솔송',
 size = '2단특',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 
 INSERT INTO coffin
 SET `name` = '향송',
 size = '보통',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '향송',
 size = '특',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '향송',
 size = '맞춤',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '향송',
 size = '2단보통',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 INSERT INTO coffin
 SET `name` = '향송',
 size = '2단특',
 chi = '1.5',
-costPrice '10000',
-retailPrice '20000';
+costPrice = '10000',
+retailPrice = '20000';
 
 
 
@@ -958,6 +958,7 @@ CREATE TABLE coffinOrder(
 	funeralId INT(10) UNSIGNED NOT NULL,
 	memberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '관 공급업자의 id (0 = 아직 정해지지 않음)',
 	coffinId INT(10) UNSIGNED NOT NULL,
+	destinationAddress CHAR(100) NOT NULL,
 	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 미완료 / 1 = 완료'
 );
 
