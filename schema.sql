@@ -756,6 +756,211 @@ CREATE TABLE shroudOrder(
 	updateDate DATETIME NOT NULL,
 	orderId INT(10) UNSIGNED NOT NULL
 );
+
+
+CREATE TABLE coffin(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`name` CHAR(20) NOT NULL,
+	size CHAR(20) NOT NULL,
+	chi CHAR(20) NOT NULL,
+	costPrice CHAR(20) NOT NULL,
+	retailPrice CHAR(20) NOT NULL
+);
+
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '보통',
+chi = '0.6',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '특',
+chi = '0.6',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '보통',
+chi = '1.0',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '특',
+chi = '1.0',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '맞춤',
+chi = '1.0',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '보통',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '특',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '맞춤',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '2단보통',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '2단특',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '보통',
+chi = '2.0',
+costPrice '10000',
+retailPrice '20000';
+
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '특',
+chi = '2.0',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '맞춤',
+chi = '2.0',
+costPrice '10000',
+retailPrice '20000';
+
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '2단보통',
+chi = '2.0',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '오동나무',
+size = '2단특',
+chi = '2.0',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '솔송',
+size = '보통',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '솔송',
+size = '특',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '솔송',
+size = '맞춤',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+
+INSERT INTO coffin
+SET `name` = '솔송',
+size = '2단보통',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '솔송',
+size = '2단특',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+
+INSERT INTO coffin
+SET `name` = '향송',
+size = '보통',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '향송',
+size = '특',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '향송',
+size = '맞춤',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '향송',
+size = '2단보통',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+INSERT INTO coffin
+SET `name` = '향송',
+size = '2단특',
+chi = '1.5',
+costPrice '10000',
+retailPrice '20000';
+
+
+
+CREATE TABLE coffinOrder(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	funeralId INT(10) UNSIGNED NOT NULL,
+	memberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '관 공급업자의 id (0 = 아직 정해지지 않음)',
+	coffinId INT(10) UNSIGNED NOT NULL,
+	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 미완료 / 1 = 완료'
+);
+
 #더미데이터 추가하는 부분
 # 테스트 회원 장례지도사 신청 더미데이터
 /*
