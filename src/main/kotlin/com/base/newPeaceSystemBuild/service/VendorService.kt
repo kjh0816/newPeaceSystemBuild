@@ -149,18 +149,34 @@ class VendorService(
             return ResultData.from("F-2", "관을 선택해주십시오.")
         }
 
-        //  order에 대한 데이터를 DB에 저장
-        val roleCategoryId = 4
+
 
         // detail List
         val details = mutableListOf<String>()
         details.add("shroud")
+        details.add("coffin")
 
         for(detail in details){
             // detail 에 따라 standardId 값을 변경
             val standardId = when (detail) {
                 "shroud" -> {
                     shroudId
+                }
+                "coffin" -> {
+                    coffinId
+                }
+                else -> {
+                    0
+                }
+            }
+
+            //  order에 대한 데이터를 DB에 저장
+            val roleCategoryId = when (detail){
+                "shroud" -> {
+                    4
+                }
+                "coffin" -> {
+                    5
                 }
                 else -> {
                     0
@@ -173,7 +189,7 @@ class VendorService(
                 false,
                 detail
             )
-            // order 정보 유무에따라 로직에 차별성을 줌
+            // order 정보 유무에 따라 로직에 차별성을 줌
             // DB에 order 정보가 없을경우엔 Insert 문으로 Order 를 추가
             if (order == null) {
                 vendorRepository.insertIntoOrder(
@@ -189,6 +205,9 @@ class VendorService(
                 when (detail) {
                     "shroud" -> {
                         vendorRepository.insertIntoShroudOrder(orderId)
+                    }
+                    "coffin" -> {
+                        vendorRepository.insertIntoCoffinOrder(orderId)
                     }
                 }
             }
@@ -210,8 +229,6 @@ class VendorService(
             }
         }
 
-        // 관의 주문 정보를 최초 입력한다. (coffinOrder 테이블에 정보 저장)
-        vendorRepository.insertIntoCoffinOrder(coffinId, funeralId)
 
         // funeral 테이블에 shroudId 를 업데이트 한다.
         vendorRepository.modifyFuneralIntoShroudId(funeralId, shroudId)

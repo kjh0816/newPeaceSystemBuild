@@ -383,6 +383,9 @@ interface VendorRepository {
             <script>
             SELECT 
             O.*
+            <if test="detail == 'coffin'">
+                , C.retailPrice AS `extra__retailPrice`
+            </if>
             <if test="detail == 'flower'">
                 , F.retailPrice AS `extra__retailPrice`
             </if>
@@ -420,6 +423,12 @@ interface VendorRepository {
                 , S.retailPrice AS `extra__retailPrice`
             </if>
             FROM `order` AS O
+            <if test="detail == 'coffin'">
+                LEFT JOIN coffin AS C
+                ON O.standardId = C.id
+                LEFT JOIN coffinOrder AS CO
+                ON O.id = CO.orderId
+            </if>
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
                 ON O.standardId = F.id
@@ -855,14 +864,13 @@ interface VendorRepository {
 
     @Insert(
             """
-                INSERT INTO coffinOrder
-                SET regDate = NOW(),
-                updateDate = NOW(),
-                funeralId = #{funeralId},
-                coffinId = #{coffinId}
+            INSERT INTO coffinOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId}
             """
     )
-    fun insertIntoCoffinOrder(coffinId: Int, funeralId: Int)
+    fun insertIntoCoffinOrder(orderId: Int)
 
 
 }
