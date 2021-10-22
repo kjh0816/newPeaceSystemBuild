@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
+<head>
+    <title>빈소용품 선택</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/selectMortuary.js" charset="utf-8" defer></script>
+    </th:block>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="/resource/director/selectMortuary.css">
+    </th:block>
+</head>
+<main layout:fragment="main">
+
+    <div class="p-10 card bg-base-200">
+        <form onsubmit="selectMortuary__submit(this); return false;">
+            <div class="card-body text-sm border border-base-300 bg-white mb-2">
+                <h2 class="card-title">향 선택</h2>
+                <input type="hidden" name="funeralId" th:value="${funeral.id}">
+                <div class="flex flex-col w-full"  th:each="incense : ${incenses}">
+                    <div class="card card-side mb-2 w-full bg-base-200 shadow">
+                        <figure>
+                            <img th:src="@{../../../resource/img/incense/incense{incenseId}.png(incenseId = ${incense.id})}" alt="" style="width: 400px; height: 250px;">
+                        </figure>
+                        <div class="card-body">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">상품명</div>
+                                <p class="pl-2">[[${incense.name}]]</p>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">가격</div>
+                                <p class="pl-2">[[${incense.retailPriceFormat}]] 원</p>
+                            </div>
+                            <div class="card-actions">
+                                <div class="form-control flex">
+                                    <span class="incenseIdSelectBox btn btn-ghost" th:id="|incense${incense.id}|" th:value="${incense.id}">선택하기</span>
+                                    <input id="incenseId" type="radio" name="incenseId" class="radio" th:value="${incense.id}" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" th:id="|incenseCnt${incense.id}|" name="incenseCnt" placeholder="필요한 향 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${incenseOrder != null} ? ${incenseOrder.extra__incenseCnt} : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" th:if="${incenses.size != incense.id}">OR</div>
+                </div>
+            </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${incenseOrder != null}">
+                $(".incenseIdSelectBox#incense[[${incenseOrder.standardId}]]").addClass('active');
+                $(".incenseIdSelectBox#incense[[${incenseOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${incenseOrder.standardId}]]']#incenseId").prop('checked', true);
+                $("#incenseCnt"+[[${incenseOrder.standardId}]]).css("display", "block");
+            </script>
+            <br>
+
+            <input class="btn btn-ghost w-full" type="submit" value="완료">
+            <br>
+            <br>
+            <input class="btn btn-ghost w-full" type="button" value="돌아가기">
+        </form>
+    </div>
+</main>
+
+</html>

@@ -205,6 +205,10 @@ interface VendorRepository {
             <if test="detail == 'shroud'">
                 , S.retailPrice AS `extra__retailPrice`
             </if>
+            <if test="detail == 'incense'">
+                , I.retailPrice AS `extra__retailPrice`
+                , IO.incenseCnt AS `extra__incenseCnt`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -259,6 +263,12 @@ interface VendorRepository {
                 ON O.standardId = S.id
                 LEFT JOIN shroudOrder AS SO
                 ON O.id = SO.orderId
+            </if>
+            <if test="detail == 'incense'">
+                LEFT JOIN incense AS I
+                ON O.standardId = I.id
+                LEFT JOIN incenseOrder AS IO
+                ON O.id = IO.orderId
             </if>
             WHERE O.vendorMemberId = #{vendorMemberId}
             AND O.orderStatus = #{orderStatus}
@@ -311,6 +321,10 @@ interface VendorRepository {
             <if test="detail == 'shroud'">
                 , S.retailPrice AS `extra__retailPrice`
             </if>
+            <if test="detail == 'incense'">
+                , I.retailPrice AS `extra__retailPrice`
+                , IO.incenseCnt AS `extra__incenseCnt`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -365,6 +379,12 @@ interface VendorRepository {
                 ON O.standardId = S.id
                 LEFT JOIN shroudOrder AS SO
                 ON O.id = SO.orderId
+            </if>
+            <if test="detail == 'incense'">
+                LEFT JOIN incense AS I
+                ON O.standardId = I.id
+                LEFT JOIN incenseOrder AS IO
+                ON O.id = IO.orderId
             </if>
             WHERE completionStatus = #{completionStatus}
             AND detail = #{detail}
@@ -419,6 +439,10 @@ interface VendorRepository {
             <if test="detail == 'shroud'">
                 , S.retailPrice AS `extra__retailPrice`
             </if>
+            <if test="detail == 'incense'">
+                , I.retailPrice AS `extra__retailPrice`
+                , IO.incenseCnt AS `extra__incenseCnt`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -473,6 +497,12 @@ interface VendorRepository {
                 ON O.standardId = S.id
                 LEFT JOIN shroudOrder AS SO
                 ON O.id = SO.orderId
+            </if>
+            <if test="detail == 'incense'">
+                LEFT JOIN incense AS I
+                ON O.standardId = I.id
+                LEFT JOIN incenseOrder AS IO
+                ON O.id = IO.orderId
             </if>
             WHERE O.funeralId = #{funeralId}
             AND O.completionStatus = #{completionStatus}
@@ -864,5 +894,44 @@ interface VendorRepository {
     )
     fun insertIntoCoffinOrder(coffinId: Int, funeralId: Int)
 
+    @Select(
+        """
+            SELECT * 
+            FROM `incense`
+        """
+    )
+    fun getIncenses(): List<Mortuary>
 
+    @Insert(
+        """
+            INSERT INTO incenseOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            incenseCnt = #{incenseCnt}
+        """
+    )
+    fun insertIntoIncenseOrder(orderId: Int, incenseCnt: Int)
+
+    @Update(
+        """
+            UPDATE incenseOrder
+            SET updateDate = NOW(),
+            incenseCnt = #{incenseCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyIncenseOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+        incenseCnt: Int,
+        orderId: Int
+    )
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET incenseId = #{incenseId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoIncenseId(funeralId: Int, incenseId: Int)
 }

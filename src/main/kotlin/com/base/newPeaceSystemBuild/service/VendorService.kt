@@ -363,6 +363,85 @@ class VendorService(
         return ResultData.from("S-1", "상복 주문 정보를 입력했습니다.", "funeral", funeral)
     }
 
+    fun modifyFuneralIntoMortuaryIds(
+        funeralId: Int,
+        incenseId: Int,
+        incenseCnt: Int
+    ): ResultData {
+        val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
+
+        //  order에 대한 데이터를 DB에 저장
+        val roleCategoryId = 0
+
+        // detail List
+        val details = mutableListOf<String>()
+        details.add("incense")
+
+        for(detail in details){
+            // detail 에 따라 standardId 값을 변경
+            val standardId = when (detail) {
+                "incense" -> {
+                    incenseId
+                }
+                else -> {
+                    0
+                }
+            }
+
+            // order 정보 조회
+            val order = getOrderByFuneralIdAndCompletionStatusAndDetail(
+                funeral.id,
+                false,
+                detail
+            )
+            // order 정보 유무에따라 로직에 차별성을 줌
+            // DB에 order 정보가 없을경우엔 Insert 문으로 Order 를 추가
+            if (order == null) {
+                vendorRepository.insertIntoOrder(
+                    funeral.id,
+                    roleCategoryId,
+                    standardId,
+                    detail
+                )
+
+                val orderId = vendorRepository.getLastInsertId()
+
+                // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Insert 해줌
+                when (detail) {
+                    "incense" -> {
+                        vendorRepository.insertIntoIncenseOrder(orderId, incenseCnt)
+                    }
+                }
+            }
+            // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
+            else {
+                vendorRepository.modifyOrderIntoStandardIdByFuneralIdRoleCategoryIdDetailCompletionStatus(
+                    standardId,
+                    funeral.id,
+                    roleCategoryId,
+                    detail,
+                    false
+                )
+                // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Update 해줌
+                when (detail) {
+                    "incense" -> {
+                        vendorRepository.modifyIncenseOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+                            incenseCnt,
+                            order.id
+                        )
+                    }
+                }
+            }
+        }
+
+        // funeral 테이블에 standardId 들을 업데이트 한다.
+        vendorRepository.modifyFuneralIntoIncenseId(funeralId, incenseId)
+
+        // 연결된 물품 공급업자에게 주문 정보를 주기 위해 orderId를 성공 시, 같이 return
+
+        return ResultData.from("S-1", "빈소용품 주문 정보를 입력했습니다.", "funeral", funeral)
+    }
+
     fun getFlowerById(flowerId: Int): Flower? {
         return vendorRepository.getFlowerById(flowerId)
     }
@@ -678,5 +757,8 @@ class VendorService(
         return vendorRepository.getCoffinNames()
     }
 
+    fun getIncenses(): List<Mortuary> {
+        return vendorRepository.getIncenses()
+    }
 
 }

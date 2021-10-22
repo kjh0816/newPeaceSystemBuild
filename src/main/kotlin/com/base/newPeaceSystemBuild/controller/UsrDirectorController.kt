@@ -654,6 +654,37 @@ class UsrDirectorController(
         return "usr/director/selectShroud"
     }
 
+    @RequestMapping("/usr/director/selectMortuary")
+    fun showSelectMortuary(
+        model: Model,
+        @RequestParam(defaultValue = "0") clientId: Int
+    ): String {
+        val funeral = clientService.getFuneralByClientId(clientId)
+
+        val incenses = vendorService.getIncenses()
+
+        if (funeral != null) {
+            val details = mutableListOf<String>()
+            details.add("incense")
+
+            for(detail in details){
+                val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
+                    funeral.id,
+                    false,
+                    detail
+                )
+
+                model.addAttribute(detail + "Order", order)
+            }
+        }
+
+
+        model.addAttribute("incenses", incenses)
+        model.addAttribute("funeral", funeral)
+
+        return "usr/director/selectMortuary"
+    }
+
     @RequestMapping("/usr/director/dispatch")
     fun showDispatch(
         model: Model,
@@ -779,6 +810,22 @@ class UsrDirectorController(
                 shirtCnt,
                 necktieId,
                 necktieCnt
+            )
+        )
+    }
+
+    @RequestMapping("/usr/director/doSelectMortuary", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doSelectMortuary(
+        funeralId: Int,
+        @RequestParam(defaultValue = "0") incenseId: Int,
+        @RequestParam(defaultValue = "0") incenseCnt: Int
+    ): String {
+        return Ut.getJsonStrFromObj(
+            vendorService.modifyFuneralIntoMortuaryIds(
+                funeralId,
+                incenseId,
+                incenseCnt
             )
         )
     }

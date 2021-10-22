@@ -1,0 +1,8 @@
+/* active 처리 */
+.incenseIdSelectBox.active{
+    background: #d2d4d7;
+}
+
+.incenseTributeIdSelectBox.active{
+    background: #d2d4d7;
+}
