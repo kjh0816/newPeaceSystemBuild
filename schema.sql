@@ -419,8 +419,8 @@ ALTER TABLE funeral ADD COLUMN maleMourningClothId INT(10) UNSIGNED NOT NULL DEF
 ALTER TABLE funeral ADD COLUMN shirtId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER maleMourningClothId;
 ALTER TABLE funeral ADD COLUMN necktieId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER shirtId;
 ALTER TABLE funeral ADD COLUMN coffinTransporterUseStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER necktieId;
-ALTER TABLE funeral ADD COLUMN shroudId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음'  AFTER coffinTransporterUseStatus;
-ALTER TABLE funeral ADD COLUMN coffinId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음'  AFTER shroudId;
+ALTER TABLE funeral ADD COLUMN shroudId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER coffinTransporterUseStatus;
+ALTER TABLE funeral ADD COLUMN incenseId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER shroudId;
 
 
 SELECT * FROM funeral;
@@ -480,7 +480,6 @@ CREATE TABLE flowerTributeOrder(
 	packing TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '포장 여부 0 = 미포장, 1 = 포장'
 );
 
-SELECT * FROM coffinOrder;
 
 CREATE TABLE flowerOrder(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -765,6 +764,14 @@ updateDate = NOW(),
 retailPrice = '30000',
 costPrice = '10000';
 
+CREATE TABLE `incenseOrder` (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	incenseCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
 CREATE TABLE `candle`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
@@ -856,7 +863,6 @@ CREATE TABLE coffin(
 
 
 
-
 INSERT INTO coffin
 SET `name` = '오동나무',
 size = '보통',
@@ -1038,15 +1044,20 @@ chi = '1.5',
 costPrice = '10000',
 retailPrice = '20000';
 
-SELECT * FROM coffinTransporter;
 
 
 CREATE TABLE coffinOrder(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
-	orderId INT(10) UNSIGNED NOT NULL
+	funeralId INT(10) UNSIGNED NOT NULL,
+	memberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '관 공급업자의 id (0 = 아직 정해지지 않음)',
+	coffinId INT(10) UNSIGNED NOT NULL,
+	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 미완료 / 1 = 완료'
 );
+
+
+SELECT * FROM CLIENT;
 
 
 #더미데이터 추가하는 부분
@@ -1164,6 +1175,7 @@ UPDATE funeral SET femaleMourningClothId = 0;
 UPDATE funeral SET maleMourningClothId = 0;
 UPDATE funeral SET shirtId = 0;
 UPDATE funeral SET necktieId = 0;
+UPDATE funeral SET incenseId = 0;
 DELETE FROM `order`;
 DELETE FROM `flowerTributeOrder`;
 DELETE FROM `flowerOrder`;
@@ -1171,4 +1183,5 @@ DELETE FROM `femaleMourningClothOrder`;
 DELETE FROM `maleMourningClothOrder`;
 DELETE FROM `shirtOrder`;
 DELETE FROM `necktieOrder`;
-*/	
+DELETE FROM `incenseOrder`;
+*/
