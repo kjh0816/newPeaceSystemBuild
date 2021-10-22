@@ -3,6 +3,7 @@ package com.base.newPeaceSystemBuild.repository
 import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.FuneralHall
 import com.base.newPeaceSystemBuild.vo.standard.Coffin
+import groovy.time.BaseDuration
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
@@ -84,6 +85,33 @@ interface MemberRoleRepository {
             """
     )
     fun getCoffinByAll(coffinName: String, coffinChi: String, coffinSize: String): Coffin
+
+    @Select(
+            """
+                SELECT *
+                FROM funeralHall
+                WHERE address = #{destinationAddress}
+            """
+    )
+    fun getFuneralHallByAddress(destinationAddress: String): FuneralHall
+
+    @Select(
+            """
+                SELECT DISTINCT(departmentDetail)
+                FROM funeralHall
+                WHERE department = #{department}
+            """
+    )
+    fun getDepartmentDetailsByDepartment(department: String): List<String>
+
+    @Select(
+            """
+                SELECT DISTINCT(name)
+                FROM funeralHall
+                WHERE departmentDetail = #{departmentDetail}
+            """
+    )
+    fun getFuneralHallNamesByDepartmentDetail(departmentDetail: String): List<String>
 
 
 }
