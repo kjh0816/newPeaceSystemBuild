@@ -367,15 +367,13 @@ interface VendorRepository {
                 LEFT JOIN shroudOrder AS SO
                 ON O.id = SO.orderId
             </if>
-            WHERE O.directorMemberId = #{directorMemberId}
-            AND completionStatus = #{completionStatus}
+            WHERE completionStatus = #{completionStatus}
             AND detail = #{detail}
             AND funeralId = #{funeralId}
             </script>
         """
     )
-    fun getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-        directorMemberId: Int,
+    fun getOrderByCompletionStatusAndDetailAndFuneralId(
         completionStatus: Boolean,
         detail: String,
         funeralId: Int

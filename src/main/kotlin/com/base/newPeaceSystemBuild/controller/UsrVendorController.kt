@@ -3,9 +3,7 @@ package com.base.newPeaceSystemBuild.controller
 import com.base.newPeaceSystemBuild.service.*
 import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.Rq
-import com.base.newPeaceSystemBuild.vo.client.Client
 import com.base.newPeaceSystemBuild.vo.standard.*
-import com.base.newPeaceSystemBuild.vo.vendor.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartRequest
-import java.text.DecimalFormat
 
 
 @Controller
@@ -199,7 +196,7 @@ class UsrVendorController(
 
         val flower = vendorService.getFlowerById(funeral.flowerId)
         val flowerTribute = vendorService.getFlowerTributeById(funeral.flowerTributeId)
-        val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(directorMemberId, false, "flowerTribute", funeralId)
+        val flowerTributeOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(false, "flowerTribute", funeralId)
 
         val chief = clientService.getFamilyByClientId(clientId)
 

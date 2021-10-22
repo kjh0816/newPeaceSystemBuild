@@ -165,50 +165,42 @@ class UsrDirectorController(
             shrouds.add(shroud)
 
             // 장례별 선택된 스텐다드 데이터의 주문 상세정보
-            val flowerOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-                rq.getLoginedMember()!!.id,
+            val flowerOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
                 false,
                 "flower",
                 funeral.id
             )
-            val flowerTributeOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-                rq.getLoginedMember()!!.id,
+            val flowerTributeOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
                 false,
                 "flowerTribute",
                 funeral.id
             )
-            val femaleMourningClothBlackOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-                rq.getLoginedMember()!!.id,
+            val femaleMourningClothBlackOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
                 false,
                 "femaleMourningClothBlack",
                 funeral.id
             )
-            val femaleMourningClothWhiteOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-                rq.getLoginedMember()!!.id,
+            val femaleMourningClothWhiteOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
                 false,
                 "femaleMourningClothWhite",
                 funeral.id
             )
-            val maleMourningClothOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-                rq.getLoginedMember()!!.id,
+            val maleMourningClothOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
                 false,
                 "maleMourningCloth",
                 funeral.id
             )
-            val shirtOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-                rq.getLoginedMember()!!.id,
+            val shirtOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
                 false,
                 "shirt",
                 funeral.id
             )
-            val necktieOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-                rq.getLoginedMember()!!.id,
+            val necktieOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
                 false,
                 "necktie",
                 funeral.id
             )
-            val shroudOrder = vendorService.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(
-                rq.getLoginedMember()!!.id,
+            val shroudOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
                 false,
                 "shroud",
                 funeral.id

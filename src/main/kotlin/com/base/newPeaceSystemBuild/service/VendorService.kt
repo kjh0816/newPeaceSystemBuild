@@ -447,8 +447,8 @@ class VendorService(
         return vendorRepository.getFlowerTributeById(flowerTributeId)
     }
 
-    fun getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(directorMemberId: Int, completionStatus: Boolean, detail: String, funeralId: Int): Order? {
-        return vendorRepository.getOrderByDirectorMemberIdAndCompletionStatusAndDetailAndFuneralId(directorMemberId, completionStatus, detail, funeralId)
+    fun getOrderByCompletionStatusAndDetailAndFuneralId(completionStatus: Boolean, detail: String, funeralId: Int): Order? {
+        return vendorRepository.getOrderByCompletionStatusAndDetailAndFuneralId(completionStatus, detail, funeralId)
     }
 
     fun getOrderByFuneralIdAndCompletionStatusAndDetail(
