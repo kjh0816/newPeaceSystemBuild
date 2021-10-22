@@ -778,15 +778,12 @@ class VendorService(
         return vendorRepository.getCoffinNames()
     }
 
-<<<<<<< HEAD
     fun getIncenses(): List<Mortuary> {
         return vendorRepository.getIncenses()
     }
-=======
+
     fun getCoffinById(coffinId: Int): Coffin? {
         return vendorRepository.getCoffinById(coffinId)
     }
-
->>>>>>> 2db3efd54f97597e05e49772e3387f9f4cb0e987
 
 }
