@@ -89,7 +89,6 @@ class VendorService(
             if (order == null) {
                 vendorRepository.insertIntoOrder(
                     funeral.id,
-                    rq.getLoginedMember()!!.id,
                     roleCategoryId,
                     standardId,
                     detail
@@ -109,10 +108,9 @@ class VendorService(
             }
             // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
             else {
-                vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+                vendorRepository.modifyOrderIntoStandardIdByFuneralIdRoleCategoryIdDetailCompletionStatus(
                     standardId,
                     funeral.id,
-                    rq.getLoginedMember()!!.id,
                     roleCategoryId,
                     detail,
                     false
@@ -180,7 +178,6 @@ class VendorService(
             if (order == null) {
                 vendorRepository.insertIntoOrder(
                     funeral.id,
-                    rq.getLoginedMember()!!.id,
                     roleCategoryId,
                     standardId,
                     detail
@@ -197,10 +194,9 @@ class VendorService(
             }
             // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
             else {
-                vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+                vendorRepository.modifyOrderIntoStandardIdByFuneralIdRoleCategoryIdDetailCompletionStatus(
                     standardId,
                     funeral.id,
-                    rq.getLoginedMember()!!.id,
                     roleCategoryId,
                     detail,
                     false
@@ -284,7 +280,6 @@ class VendorService(
             if (order == null) {
                 vendorRepository.insertIntoOrder(
                     funeral.id,
-                    rq.getLoginedMember()!!.id,
                     roleCategoryId,
                     standardId,
                     detail
@@ -313,10 +308,9 @@ class VendorService(
             }
             // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
             else {
-                vendorRepository.modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+                vendorRepository.modifyOrderIntoStandardIdByFuneralIdRoleCategoryIdDetailCompletionStatus(
                     standardId,
                     funeral.id,
-                    rq.getLoginedMember()!!.id,
                     roleCategoryId,
                     detail,
                     false
@@ -399,9 +393,9 @@ class VendorService(
         // 장례지도사가 상품을 주문하면 order 테이블에 데이터가 추가된다. 이때 vendorMemberId는 기본값 0인상태, orderStatus = false 인 상태이다.
         // 사업자가 주문을 받으면 테이블의 데이터를 수정한다 vendorMemberId 는 로그인 정보의 ID로 바꿔주고 orderStatus 는 true 로 바꿔준다.
         // 바꿔줄 데이터는 where 절을 통해 directorMemberId 와 roleCategoryId가 일치하는 데이터의 정보만 바꿔준다.
-        vendorRepository.modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberIdAndRoleCategoryId(
+        vendorRepository.modifyOrderIntoVendorMemberIdAndOrderStatusByFuneralIdAndRoleCategoryId(
             memberId,
-            funeral.directorMemberId,
+            funeral.id,
             roleCategoryId,
             true
         )

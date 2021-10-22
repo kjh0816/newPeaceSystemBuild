@@ -78,24 +78,23 @@ interface VendorRepository {
             SET regDate = NOW(),
             updateDate = NOW(),
             funeralId = #{funeralId},
-            directorMemberId = #{directorMemberId},
             roleCategoryId = #{roleCategoryId},
             standardId = #{standardId},
             detail = #{detail}
         """
     )
-    fun insertIntoOrder(funeralId: Int, directorMemberId: Int, roleCategoryId: Int, standardId: Int, detail: String)
+    fun insertIntoOrder(funeralId: Int, roleCategoryId: Int, standardId: Int, detail: String)
 
     @Update(
         """
             UPDATE `order` SET
             vendorMemberId = #{vendorMemberId},
             orderStatus = #{orderStatus}
-            WHERE directorMemberId = #{directorMemberId}
+            WHERE funeralId = #{funeralId}
             AND roleCategoryId = #{roleCategoryId}
         """
     )
-    fun modifyOrderIntoVendorMemberIdAndOrderStatusByDirectorMemberIdAndRoleCategoryId(vendorMemberId: Int, directorMemberId: Int, roleCategoryId: Int, orderStatus: Boolean)
+    fun modifyOrderIntoVendorMemberIdAndOrderStatusByFuneralIdAndRoleCategoryId(vendorMemberId: Int, funeralId: Int, roleCategoryId: Int, orderStatus: Boolean)
 
     @Select(
         """
@@ -516,16 +515,14 @@ interface VendorRepository {
             SET updateDate = NOW(),
             standardId = #{standardId}
             WHERE funeralId = #{funeralId}
-            AND directorMemberId = #{directorMemberId}
             AND roleCategoryId = #{roleCategoryId}
             AND detail = #{detail}
             AND completionStatus = #{completionStatus}
         """
     )
-    fun modifyOrderIntoStandardIdByFuneralIdDirectorMemberIdRoleCategoryIdDetailCompletionStatus(
+    fun modifyOrderIntoStandardIdByFuneralIdRoleCategoryIdDetailCompletionStatus(
         standardId: Int,
         funeralId: Int,
-        directorMemberId: Int,
         roleCategoryId: Int,
         detail: String,
         completionStatus: Boolean

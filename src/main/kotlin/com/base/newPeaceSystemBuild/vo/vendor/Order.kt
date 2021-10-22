@@ -8,7 +8,6 @@ data class Order (
     var updateDate: String,
     var vendorMemberId: Int,
     val funeralId: Int,
-    val directorMemberId: Int,
     val roleCategoryId: Int,
     val standardId: Int,
     var orderStatus: Boolean,
