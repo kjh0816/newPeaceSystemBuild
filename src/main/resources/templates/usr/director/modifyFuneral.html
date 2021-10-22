@@ -36,18 +36,24 @@
                     <select id="department" name="department" class="select select-bordered select-sm w-full max-w-xs">
                         <option value="" disabled selected>시/도</option>
                         <div th:each="department : ${departments}" th:object="${department}">
-                            <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                            <option th:value="*{departmentName}" th:text="*{departmentName}" th:selected="${departmentName} == *{departmentName}"></option>
                         </div>
                     </select>
 
                     <select id="departmentDetail" name="departmentDetail" class="select select-bordered select-sm w-full max-w-xs">
                         <option value="" disabled selected>시/군/구</option>
+                        <div th:each="departmentDetail : ${departmentDetails}">
+                            <option th:value="*{departmentDetail}" th:text="*{departmentDetail}" th:selected="${departmentDetailSelected} == *{departmentDetail}"></option>
+                        </div>
                     </select>
+
 
                     <select id="funeralHallName" name="funeralHallName" class="select select-bordered select-sm w-full max-w-xs">
                         <option value="" disabled selected>장례식장</option>
+                        <div th:each="funeralHallName : ${funeralHallNames}">
+                            <option th:value="*{funeralHallName}" th:text="*{funeralHallName}" th:selected="${funeralHallNameSelected} == *{funeralHallName}"></option>
+                        </div>
                     </select>
-
                     <br>
                     <label class="label">
                         <span class="label-text font-bold">

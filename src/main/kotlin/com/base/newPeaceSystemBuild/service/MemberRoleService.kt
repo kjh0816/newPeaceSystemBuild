@@ -70,5 +70,17 @@ class MemberRoleService(
         return ResultData.from("S-1", "coffinId를 불러오는데 성공했습니다.", "coffin", coffin)
     }
 
+    fun getFuneralHallByAddress(destinationAddress: String): FuneralHall {
+        return memberRoleRepository.getFuneralHallByAddress(destinationAddress)
+    }
+
+    fun getDepartmentDetailsByDepartment(department: String): List<String> {
+        return memberRoleRepository.getDepartmentDetailsByDepartment(department)
+    }
+
+    fun getFuneralHallNamesByDepartmentDetail(departmentDetail: String): List<String> {
+        return memberRoleRepository.getFuneralHallNamesByDepartmentDetail(departmentDetail)
+    }
+
 
 }

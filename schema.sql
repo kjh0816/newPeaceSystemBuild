@@ -1038,6 +1038,8 @@ chi = '1.5',
 costPrice = '10000',
 retailPrice = '20000';
 
+SELECT * FROM coffinTransporter;
+
 
 CREATE TABLE coffinOrder(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

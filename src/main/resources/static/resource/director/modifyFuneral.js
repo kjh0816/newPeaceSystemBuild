@@ -291,6 +291,7 @@ $('#departmentDetail').change(function(){
 
 
 
+
 // 팝업 창을 띠워주기 위한 함수(팝업은 html 파일로, 인터셉터에서 설정한 접근 권한에 영향을 받는다.)
 function goPopup(inputNum){
 	// 주소검색을 수행할 팝업 페이지를 호출합니다.

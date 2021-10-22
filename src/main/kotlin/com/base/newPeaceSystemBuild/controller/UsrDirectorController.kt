@@ -416,6 +416,23 @@ class UsrDirectorController(
 
         val departments = memberService.getDepartments()
 
+        val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral.id)
+        if(coffinTransporter != null){
+            val funeralHall = memberRoleService.getFuneralHallByAddress(coffinTransporter.destinationAddress)
+            model.addAttribute("departmentName", funeralHall.department)
+            model.addAttribute("departmentDetailSelected", funeralHall.departmentDetail)
+            model.addAttribute("funeralHallNameSelected", funeralHall.name)
+            // 운구차가 호출된 경우, 해당 장례식장이 속한 시/군/구를 불러온다.
+            val departmentDetails = memberRoleService.getDepartmentDetailsByDepartment(funeralHall.department)
+            model.addAttribute("departmentDetails", departmentDetails)
+
+            val funeralHallNames = memberRoleService.getFuneralHallNamesByDepartmentDetail(funeralHall.departmentDetail)
+            model.addAttribute("funeralHallNames", funeralHallNames)
+
+
+
+        }
+
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
