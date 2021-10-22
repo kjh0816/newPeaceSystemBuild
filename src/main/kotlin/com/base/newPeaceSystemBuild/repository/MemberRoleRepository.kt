@@ -83,7 +83,7 @@ interface MemberRoleRepository {
                 AND size = #{coffinSize}
             """
     )
-    fun getCoffinIdByAll(coffinName: String, coffinChi: String, coffinSize: String): Coffin
+    fun getCoffinByAll(coffinName: String, coffinChi: String, coffinSize: String): Coffin
 
 
 }

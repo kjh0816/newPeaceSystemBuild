@@ -63,11 +63,11 @@ class MemberRoleService(
         return ResultData.from("S-1", "관의 사이즈 정보를 불러오는데 성공했습니다.", "coffinSizes", coffinSizes)
     }
 
-    fun getCoffinIdByAll(coffinName: String, coffinChi: String, coffinSize: String): ResultData {
+    fun getCoffinByAll(coffinName: String, coffinChi: String, coffinSize: String): ResultData {
 
-        val coffin = memberRoleRepository.getCoffinIdByAll(coffinName, coffinChi, coffinSize)
+        val coffin = memberRoleRepository.getCoffinByAll(coffinName, coffinChi, coffinSize)
 
-        return ResultData.from("S-1", "coffinId를 불러오는데 성공했습니다.", "coffinId", coffin.id)
+        return ResultData.from("S-1", "coffinId를 불러오는데 성공했습니다.", "coffin", coffin)
     }
 
 

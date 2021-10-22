@@ -268,9 +268,10 @@ interface ClientRepository {
                 frontNum = #{frontNum},
                 backNum = #{backNum},
                 deceasedHomeAddress = #{deceasedHomeAddress}
+                WHERE id = #{clientId}
             """
     )
-    fun updateClientInCoffinTransporter(deceasedName: String, sex: String, frontNum: String, backNum: String, deceasedHomeAddress: String)
+    fun updateClientInCoffinTransporter(deceasedName: String, sex: String, frontNum: String, backNum: String, deceasedHomeAddress: String, clientId: Int)
     @Update(
         """
             UPDATE funeral

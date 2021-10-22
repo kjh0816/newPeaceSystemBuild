@@ -860,7 +860,7 @@ class UsrDirectorController(
 
     }
 
-    @RequestMapping("/usr/director/getCoffinId", method = [RequestMethod.POST])
+    @RequestMapping("/usr/director/getCoffin", method = [RequestMethod.POST])
     @ResponseBody
     fun getCoffinId(
             @RequestParam(defaultValue = "") coffinName: String,
@@ -869,7 +869,7 @@ class UsrDirectorController(
     ): String {
 
 
-        return Ut.getJsonStrFromObj(memberRoleService.getCoffinIdByAll(coffinName.trim(), coffinChi.trim(), coffinSize.trim()))
+        return Ut.getJsonStrFromObj(memberRoleService.getCoffinByAll(coffinName.trim(), coffinChi.trim(), coffinSize.trim()))
 
     }
 

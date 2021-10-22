@@ -119,7 +119,7 @@ $('#coffinSize').change(function(){
 
         $.ajax({
             type: 'POST',
-            url: './getCoffinId',
+            url: './getCoffin',
             dataType: 'json',
             data: {
             coffinName:coffinName,
@@ -128,8 +128,19 @@ $('#coffinSize').change(function(){
             },
             success: function(result){
 
-                $('#coffinId').val(result.map.coffinId);
+                $('#coffinId').val(result.map.coffin.id);
+                $('#coffinPrice').empty();
+                $('#coffinPrice').append("<div class='badge badge-md'' >가격</div>");
+                $('#coffinPrice').append("<p class='pl-2'>" + numberWithCommas(result.map.coffin.retailPrice) + " 원</p>");
+                $('#coffinPrice').removeClass('hidden');
+
+
 
             }
         });
 });
+
+// 세자리마다 ,를 표시해주는 함수
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

@@ -570,7 +570,7 @@ class VendorService(
             destinationAddr = vendorRepository.getFuneralHallAddrByName(funeralHallName)
         }
         // 선택적으로 입력된 client 정보를 수정한다.
-        clientRepository.updateClientInCoffinTransporter(deceasedName, sex, frontNum, backNum, deceasedHomeAddress)
+        clientRepository.updateClientInCoffinTransporter(deceasedName, sex, frontNum, backNum, deceasedHomeAddress, clientId)
 
         // 운구차 테이블에 정보를 넣는다.
         vendorRepository.insertIntoCoffinTransporter(funeralId, departureAddress, destinationAddr)
