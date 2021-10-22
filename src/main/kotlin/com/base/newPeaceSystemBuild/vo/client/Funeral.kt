@@ -29,6 +29,8 @@ data class Funeral(
     val coffinTransporterUseStatus: Boolean,
 //  shroudId = 수의 스탠다드 번호
     val shroudId: Int,
+// coffinId = 관 스탠다드 번호
+    val coffinId: Int,
 
 // progress = 장례 진행 상태(장례지도사 연결 여부 ~ 장례식 종료) default = 0(장례지도사 연결 안 됨)
     val progress: Int

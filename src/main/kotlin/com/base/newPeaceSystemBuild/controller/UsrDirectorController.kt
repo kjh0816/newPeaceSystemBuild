@@ -85,6 +85,7 @@ class UsrDirectorController(
         val shirtPrices = mutableListOf<String>()
         val necktiePrices = mutableListOf<String>()
         val shroudPrices = mutableListOf<String>()
+        val coffinPrices = mutableListOf<String>()
         // 가격 합계
         val sums = mutableListOf<String>()
         // 스탠다드
@@ -96,6 +97,7 @@ class UsrDirectorController(
         val shirts = mutableListOf<MourningCloth?>()
         val neckties = mutableListOf<MourningCloth?>()
         val shrouds = mutableListOf<Shroud?>()
+        val coffins = mutableListOf<Coffin?>()
         // 주문정보
         val flowerOrders = mutableListOf<Order?>()
         val flowerTributeOrders = mutableListOf<Order?>()
@@ -105,6 +107,7 @@ class UsrDirectorController(
         val shirtOrders = mutableListOf<Order?>()
         val necktieOrders = mutableListOf<Order?>()
         val shroudOrders = mutableListOf<Order?>()
+        val coffinOrders = mutableListOf<Order?>()
         // 운구차 업자 정보
         val coffinTransporters = mutableListOf<CoffinTransporter?>()
         val coffinTransporterMembers = mutableListOf<Member?>()
@@ -122,6 +125,7 @@ class UsrDirectorController(
             var shirtPrice = 0
             var necktiePrice = 0
             var shroudPrice = 0
+            var coffinPrice = 0
 
             // 합계
             var sum = 0
@@ -135,6 +139,7 @@ class UsrDirectorController(
             val shirt = vendorService.getShirtById(funeral.shirtId)
             val necktie = vendorService.getNecktieById(funeral.necktieId)
             val shroud = vendorService.getShroudById(funeral.shroudId)
+            val coffin = vendorService.getCoffinById(funeral.coffinId)
 
             // 운구차 데이터
             val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral.id)
@@ -163,6 +168,7 @@ class UsrDirectorController(
             shirts.add(shirt)
             neckties.add(necktie)
             shrouds.add(shroud)
+            coffins.add(coffin)
 
             // 장례별 선택된 스텐다드 데이터의 주문 상세정보
             val flowerOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
@@ -205,6 +211,11 @@ class UsrDirectorController(
                 "shroud",
                 funeral.id
             )
+            val coffinOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
+                    false,
+                    "coffin",
+                    funeral.id
+            )
 
             // 장레별 선택된 주문의 상세정보를 배열에 넣어줌
             flowerOrders.add(flowerOrder)
@@ -215,6 +226,7 @@ class UsrDirectorController(
             shirtOrders.add(shirtOrder)
             necktieOrders.add(necktieOrder)
             shroudOrders.add(shroudOrder)
+            coffinOrders.add(coffinOrder)
 
             // 주문된 상품들의 합계랑 각각의 상품들의 가격을 계산해줌
             if (flower != null) {
@@ -300,6 +312,15 @@ class UsrDirectorController(
                 shroudPrices.add(formatter.format(shroudPrice))
             }
 
+            if (coffin != null) {
+                coffinPrice = coffin.retailPrice.toInt()
+                sum += coffinPrice
+                coffinPrices.add(formatter.format(coffinPrice))
+            }
+            else{
+                coffinPrices.add(formatter.format(coffinPrice))
+            }
+
             // 장례별 총 사용액을 배열에 넣어줌
             sums.add(formatter.format(sum))
 
@@ -332,6 +353,7 @@ class UsrDirectorController(
         model.addAttribute("shirtPrices", shirtPrices)
         model.addAttribute("necktiePrices", necktiePrices)
         model.addAttribute("shroudPrices", shroudPrices)
+        model.addAttribute("coffinPrices", coffinPrices)
         model.addAttribute("sums", sums)
         // 스탠다드
         model.addAttribute("flowers", flowers)
@@ -342,6 +364,7 @@ class UsrDirectorController(
         model.addAttribute("shirts", shirts)
         model.addAttribute("neckties", neckties)
         model.addAttribute("shrouds", shrouds)
+        model.addAttribute("coffins", coffins)
         // 주문정보
         model.addAttribute("flowerOrders", flowerOrders)
         model.addAttribute("flowerTributeOrders", flowerTributeOrders)
@@ -351,6 +374,7 @@ class UsrDirectorController(
         model.addAttribute("shirtOrders", shirtOrders)
         model.addAttribute("necktieOrders", necktieOrders)
         model.addAttribute("shroudOrders", shroudOrders)
+        model.addAttribute("coffinOrders", coffinOrders)
         // 운구차 정보
         model.addAttribute("coffinTransporters", coffinTransporters)
         model.addAttribute("coffinTransporterMembers", coffinTransporterMembers)

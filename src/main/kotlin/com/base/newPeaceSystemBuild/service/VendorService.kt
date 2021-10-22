@@ -225,6 +225,9 @@ class VendorService(
                     "shroud" -> {
 
                     }
+                    "coffin" -> {
+
+                    }
                 }
             }
         }
@@ -232,6 +235,7 @@ class VendorService(
 
         // funeral 테이블에 shroudId 를 업데이트 한다.
         vendorRepository.modifyFuneralIntoShroudId(funeralId, shroudId)
+        vendorRepository.modifyFuneralIntoCoffinId(funeralId, coffinId)
         // 연결된 물품 공급업자에게 주문 정보를 주기 위해 orderId를 성공 시, 같이 return
 
         return ResultData.from("S-1", "수의 및 관 주문 정보를 입력했습니다.", "funeral", funeral)
@@ -693,6 +697,10 @@ class VendorService(
 
     fun getCoffinNames(): List<String> {
         return vendorRepository.getCoffinNames()
+    }
+
+    fun getCoffinById(coffinId: Int): Coffin? {
+        return vendorRepository.getCoffinById(coffinId)
     }
 
 

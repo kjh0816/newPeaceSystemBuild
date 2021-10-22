@@ -871,6 +871,23 @@ interface VendorRepository {
             """
     )
     fun insertIntoCoffinOrder(orderId: Int)
+    @Select(
+            """
+                SELECT *
+                FROM coffin
+                WHERE id = #{coffinId}
+            """
+    )
+    fun getCoffinById(coffinId: Int): Coffin?
+
+    @Update(
+            """
+            UPDATE funeral 
+            SET coffinId = #{coffinId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoCoffinId(funeralId: Int, coffinId: Int)
 
 
 }
