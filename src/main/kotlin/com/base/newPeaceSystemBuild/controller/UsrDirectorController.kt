@@ -419,19 +419,22 @@ class UsrDirectorController(
         // client 테이블의 funeralHall 칼럼에 값이 있는 경우에만 실행
         // client.funeralHall의 값은 운구차 호출 시, 장례 정보 수정 및 입력 페이지에서 입력 시, 들어간다.
         if(client.funeralHall != null && client.funeralHall.isNotBlank()){
+
             val funeralHall = memberRoleService.getFuneralHallByName2(client.funeralHall)
-            model.addAttribute("departmentName", funeralHall.department)
-            model.addAttribute("departmentDetailSelected", funeralHall.departmentDetail)
-            model.addAttribute("funeralHallNameSelected", funeralHall.name)
-            // 운구차가 호출된 경우, 해당 장례식장이 속한 시/군/구를 불러온다.
-            val departmentDetails = memberRoleService.getDepartmentDetailsByDepartment(funeralHall.department)
-            model.addAttribute("departmentDetails", departmentDetails)
+            // 운구차 호출에서 직접 입력을 했을 때, 장례식장이 아닌 경우, 위 funeralHall은 조회되지 않는다.
+            if(funeralHall != null){
 
-            val funeralHallNames = memberRoleService.getFuneralHallNamesByDepartmentDetail(funeralHall.departmentDetail)
-            model.addAttribute("funeralHallNames", funeralHallNames)
+                // client 테이블의 funeralHall에 값이 있는 경우, 해당 장례식장 관련 정보를 불러온다.
+                model.addAttribute("departmentName", funeralHall.department)
+                model.addAttribute("departmentDetailSelected", funeralHall.departmentDetail)
+                model.addAttribute("funeralHallNameSelected", funeralHall.name)
 
+                val departmentDetails = memberRoleService.getDepartmentDetailsByDepartment(funeralHall.department)
+                model.addAttribute("departmentDetails", departmentDetails)
 
-
+                val funeralHallNames = memberRoleService.getFuneralHallNamesByDepartmentDetail(funeralHall.departmentDetail)
+                model.addAttribute("funeralHallNames", funeralHallNames)
+            }
         }
 
         model.addAttribute("client", client)
