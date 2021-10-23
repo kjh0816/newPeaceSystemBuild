@@ -20,7 +20,8 @@ class VendorService(
     private val vendorRepository: VendorRepository,
     private val memberRepository: MemberRepository,
     private val clientRepository: ClientRepository,
-    private val clientService: ClientService
+    private val clientService: ClientService,
+    private val memberRoleService: MemberRoleService
 
 ) {
     @Autowired
@@ -672,6 +673,10 @@ class VendorService(
         // 운구차 사용 여부를 true로 변경
         clientRepository.updateCoffinTransporterUseStatus(funeralId, true)
 
+        // client 테이블에 운구차 departureAddress, destinationAddress 정보를 넣는다.
+        val coffinTransporter = getCoffinTransporterByFuneralId(funeral.id)
+        val funeralHall = memberRoleService.getFuneralHallByAddress(coffinTransporter!!.destinationAddress)
+        clientService.modifyClientFuneralHallDeceasedAddress(clientId, funeralHall.name, departureAddress)
 
 
         return ResultData.from("S-1", "운구차 출동 요청이 완료되었습니다.")

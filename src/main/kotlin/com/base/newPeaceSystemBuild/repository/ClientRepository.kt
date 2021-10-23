@@ -282,5 +282,16 @@ interface ClientRepository {
     )
     fun updateCoffinTransporterUseStatus(funeralId: Int, bool: Boolean)
 
+    @Update(
+            """
+                UPDATE client
+                SET updateDate = NOW(),
+                funeralHall = #{name},
+                deceasedAddress = #{deceasedAddress}
+                WHERE id = #{clientId}
+            """
+    )
+    fun modifyClientFuneralHallDeceasedAddress(clientId: Int, name: String, deceasedAddress: String)
+
 
 }

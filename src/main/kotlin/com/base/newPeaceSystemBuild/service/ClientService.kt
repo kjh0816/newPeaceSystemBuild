@@ -280,5 +280,9 @@ class ClientService(
         return clientRepository.getCoffinTransporterByFuneralId(id)
     }
 
+    fun modifyClientFuneralHallDeceasedAddress(clientId: Int, name: String, departureAddress: String) {
+        return clientRepository.modifyClientFuneralHallDeceasedAddress(clientId, name, departureAddress)
+    }
+
 
 }

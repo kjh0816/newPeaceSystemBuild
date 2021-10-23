@@ -269,6 +269,7 @@ SELECT * FROM genFile;
 
 
 
+
 # 고인에 대한 정보를 담는 테이블
 
 CREATE TABLE `client`(

@@ -416,9 +416,10 @@ class UsrDirectorController(
 
         val departments = memberService.getDepartments()
 
-        val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral.id)
-        if(coffinTransporter != null){
-            val funeralHall = memberRoleService.getFuneralHallByAddress(coffinTransporter.destinationAddress)
+        // client 테이블의 funeralHall 칼럼에 값이 있는 경우에만 실행
+        // client.funeralHall의 값은 운구차 호출 시, 장례 정보 수정 및 입력 페이지에서 입력 시, 들어간다.
+        if(client.funeralHall != null && client.funeralHall.isNotBlank()){
+            val funeralHall = memberRoleService.getFuneralHallByName2(client.funeralHall)
             model.addAttribute("departmentName", funeralHall.department)
             model.addAttribute("departmentDetailSelected", funeralHall.departmentDetail)
             model.addAttribute("funeralHallNameSelected", funeralHall.name)
