@@ -437,6 +437,10 @@ class UsrDirectorController(
             }
         }
 
+
+        val banks = memberService.getBanks()
+
+        model.addAttribute("banks", banks)
         model.addAttribute("client", client)
         model.addAttribute("funeral", funeral)
         model.addAttribute("chief", chief)
@@ -482,10 +486,12 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") chiefRelation: String,
             @RequestParam(defaultValue = "") chiefCellphoneNo: String,
             @RequestParam(defaultValue = "") chiefAddress: String,
+            @RequestParam(defaultValue = "") chiefAccountNum: String,
+            @RequestParam(defaultValue = "") chiefBank: String,
             @RequestParam(defaultValue = "0") clientId: Int
     ): String{
 
-        return Ut.getJsonStrFromObj(clientService.modifyFuneral(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, birthLunar, deceasedLunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingTime, leavingDate, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId, sex))
+        return Ut.getJsonStrFromObj(clientService.modifyFuneral(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, birthLunar, deceasedLunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingTime, leavingDate, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId, sex, chiefAccountNum, chiefBank))
     }
 
     @RequestMapping("/usr/director/addFamily")

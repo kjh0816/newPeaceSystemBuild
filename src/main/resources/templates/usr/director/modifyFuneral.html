@@ -60,7 +60,7 @@
                             호실
                         </span>
                     </label>
-                    <input type="text" id="funeralHallRoom" name="funeralHallRoom" maxlength="20" placeholder="장례식장 호실을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
+                    <input th:value="${client?.funeralHallRoom}"  type="text" id="funeralHallRoom" name="funeralHallRoom" maxlength="20" placeholder="장례식장 호실을 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
 
                     <label class="label">
                         <span class="label-text font-bold">
@@ -340,6 +340,23 @@
                     <!--                    <input type="text"  style="width:500px;" id="roadFullAddr"  name="roadFullAddr" />-->
                     <input readonly th:value="${chief?.address}" type="text" id="chiefAddress" name="chiefAddress" placeholder="왼쪽 버튼을 통해 주소를 검색해주세요." class="input input-bordered my-2 w-1/2 font-bold"/>
                 </div>
+
+                <label class="label flex flex-col">
+                        <span class="label-text self-start font-bold">
+                            계좌번호
+                        </span>
+                    <span class="label-text self-start">
+                            (부조금을 받을 계좌를 입력해주십시오.)
+                        </span>
+                </label>
+                <select id="bank" name="bank" class="select select-bordered select-sm w-full max-w-xs">
+                    <option value="" disabled selected>은행 선택</option>
+                    <div th:each="bank : ${banks}" th:object="${bank}">
+                        <option th:value="*{bankName}" th:text="*{bankName}" th:selected="${chief.bank} == *{bankName}"></option>
+                    </div>
+                </select>
+                <input th:value="${chief.accountNum}" type="text" id="accountNum" name="accountNum" maxlength="16" placeholder="계좌번호" autocomplete="off" class="input input-bordered my-2"/>
+
 
                 <label class="label">
                         <span class="label-text font-bold">

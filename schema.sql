@@ -341,9 +341,6 @@ CREATE TABLE family(
 
 
 
-
-
-
 # '제단꽃 표준' 테이블
 #
 CREATE TABLE flower(

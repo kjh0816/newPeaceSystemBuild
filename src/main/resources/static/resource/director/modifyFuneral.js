@@ -30,17 +30,21 @@ function DirectorModifyFuneral__submit(form){
     var casketTime = form.casketTime.value;
     var leavingDate = form.leavingDate.value;
     var leavingTime = form.leavingTime.value;
+
+    // 상주 관련 정보
     var chiefName = form.chiefName.value;
     var chiefRelation = form.chiefRelation.value;
     var chiefCellphoneNo = form.chiefCellphoneNo.value;
     var chiefAddress = form.chiefAddress.value;
+    var chiefAccountNum = form.accountNum.value;
+    var chiefBank = form.bank.value;
 
+
+    // 검시필증이 체크가 안 된 경우, 값을 직접 넣어준다.
     if(autopsyCheck == null){
         autopsyCheck = 'F';
     }
 
-
-    console.log('autopsyCheck: ' + autopsyCheck);
 
 
     $.ajax({
@@ -74,10 +78,13 @@ function DirectorModifyFuneral__submit(form){
                         clientId:clientId,
                         sex:sex,
                         birthLunar:birthLunar,
-                        deceasedLunar:deceasedLunar
+                        deceasedLunar:deceasedLunar,
+                        chiefAccountNum:chiefAccountNum,
+                        chiefBank:chiefBank
                         },
                         success: function(result){
                             alert(result.msg);
+//                            window.location.replace('/usr/director/progress');
                         }
     });
 }

@@ -249,7 +249,7 @@ interface ClientRepository {
                 WHERE id = #{clientId} 
             """
     )
-    fun modifyClient(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, birthLunar: Char, deceasedLunar: Char, funeralMethod: Char, cremationLocation: String, buryLocation: String, cause: String, papers: Char, autopsyCheck: Char, casketDate: String, casketTime: String, leavingDate: String, leavingTime: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int, sex: Char)
+    fun modifyClient(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, birthLunar: Char, deceasedLunar: Char, funeralMethod: Char, cremationLocation: String, buryLocation: String, cause: String, papers: Char, autopsyCheck: Char, casketDate: String, casketTime: String, leavingDate: String, leavingTime: String, clientId: Int, sex: Char)
 
     @Select(
             """
@@ -293,6 +293,21 @@ interface ClientRepository {
             """
     )
     fun modifyClientFuneralHallDeceasedAddress(clientId: Int, name: String, deceasedAddress: String)
+
+    @Update(
+            """
+                UPDATE family
+                SET name = #{chiefName},
+                relation = #{chiefRelation},
+                cellphoneNo = #{chiefCellphoneNo},
+                address = #{chiefAddress},
+                bank = #{chiefBank},
+                accountNum = #{chiefAccountNum}
+                WHERE clientId = #{clientId}
+                AND chiefStatus = 1
+            """
+    )
+    fun modifyChief(clientId: Int, chiefRelation: String, chiefName: String, chiefAddress: String, chiefCellphoneNo: String, chiefAccountNum: String, chiefBank: String)
 
 
 }

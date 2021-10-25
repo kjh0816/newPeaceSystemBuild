@@ -269,9 +269,13 @@ class ClientService(
         return ResultData.from("S-1", "해당 유가족의 정보를 삭제했습니다.")
     }
 
-    fun modifyFuneral(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, birthLunar: Char, deceasedLunar: Char, funeralMethod: Char, cremationLocation: String, buryLocation: String, cause: String, papers: Char, autopsyCheck: Char, casketDate: String, casketTime: String, leavingTime: String, leavingDate: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int, sex: Char): ResultData {
+    fun modifyFuneral(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, birthLunar: Char, deceasedLunar: Char, funeralMethod: Char, cremationLocation: String, buryLocation: String, cause: String, papers: Char, autopsyCheck: Char, casketDate: String, casketTime: String, leavingTime: String, leavingDate: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int, sex: Char, chiefAccountNum: String, chiefBank: String): ResultData {
 
-        clientRepository.modifyClient(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, birthLunar, deceasedLunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingDate, leavingTime, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId, sex)
+        // client 테이블의 정보를 수정한다.
+        clientRepository.modifyClient(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, birthLunar, deceasedLunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingDate, leavingTime, clientId, sex)
+
+        // 해당 client의 상주 정보를 수정한다.
+        clientRepository.modifyChief(clientId, chiefRelation, chiefName, chiefAddress, chiefCellphoneNo, chiefAccountNum, chiefBank)
 
         return ResultData.from("S-1", "입력하신 정보가 저장되었습니다.")
     }
