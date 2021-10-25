@@ -14,6 +14,8 @@
     <!-- JS에서 Thymeleaf 변수를 사용하기 위한 부분 ( 시작 ) -->
     <script th:inline="javascript">
         var clientId = [[${client.id}]];
+
+
     </script>
     <!-- JS에서 Thymeleaf 변수를 사용하기 위한 부분 ( 끝 ) -->
     <form method="POST" onsubmit="DirectorModifyFuneral__submit(this); return false;">
@@ -223,6 +225,21 @@
                         </label>
                         <input type="text" id="buryLocation" name="buryLocation" maxlength="30" placeholder="장지를 입력해주세요." autocomplete="off" class="input input-bordered my-2 w-1/2"/>
                     </div>
+
+                    <script>
+                        // 페이지 렌더링 시, 매장/화장 값에 따른 렌더링 (시작)
+                        var checkValue = $('input[type=radio][name=funeralMethod]:checked').val();
+                        if(checkValue == 'M'){
+                            // 매장을 클릭했을 때
+                            $('#hideCremationInput').css('display', 'none');
+                            $('#hideBuryInput').css('display', 'block');
+                        }else if(checkValue == 'F'){
+                            // 화장을 클릭했을 때
+                            $('#hideCremationInput').css('display', 'block');
+                            $('#hideBuryInput').css('display', 'block');
+                        }
+                        // 페이지 렌더링 시, 매장/화장 값에 따른 렌더링 (끝)
+                    </script>
 
                     <div class="divider w-1/2">서류 확인</div>
 

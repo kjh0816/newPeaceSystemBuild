@@ -32,11 +32,6 @@ function DirectorModifyFuneral__submit(form){
     var leavingDate = form.leavingDate.value.toString().trim();
     var leavingTime = form.leavingTime.value.toString().trim();
 
-    console.log('casketDate: ' + casketDate);
-    console.log('casketTime: ' + casketTime);
-    console.log('leavingDate: ' + leavingDate);
-    console.log('leavingTime: ' + leavingTime);
-
     // 상주 관련 정보
     var chiefName = form.chiefName.value;
     var chiefRelation = form.chiefRelation.value;
@@ -344,11 +339,12 @@ $('input[type=radio][name=funeralMethod]').on('click', function() {
 
     var checkValue = $('input[type=radio][name=funeralMethod]:checked').val();
 
-    if(checkValue == '0'){
+    if(checkValue == 'M'){
         // 매장을 클릭했을 때
+        $('#cremationLocation').val(''); // 화장장에 입력한 정보는 지운다.
         $('#hideCremationInput').css('display', 'none');
         $('#hideBuryInput').css('display', 'block');
-    }else if(checkValue == '1'){
+    }else if(checkValue == 'F'){
         // 화장을 클릭했을 때
         $('#hideCremationInput').css('display', 'block');
         $('#hideBuryInput').css('display', 'block');
