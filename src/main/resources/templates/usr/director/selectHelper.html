@@ -11,6 +11,19 @@
     </th:block>
 </head>
 <main layout:fragment="main">
+    <script th:inline="javascript">
+
+        var clientId = [[${client.id}]];
+
+        var funeralHall = [[${client.funeralHall}]];
+        var funeralHallRoom = [[${client.funeralHallRoom}]];
+        if(funeralHall.length == 0 || funeralHallRoom.length == 0){
+            alert('먼저 장례식장 정보를 입력해주십시오.');
+            window.location.replace('/usr/director/progress?clientId=' + clientId);
+        }
+
+    </script>
+
     <div class="p-10 card bg-base-200">
         <div class="bg-white">
             <div class="card-body text-sm border border-base-300">
@@ -28,6 +41,15 @@
         <div class="p-10 card bg-base-200">
             <div class="bg-white">
                 <div class="card-body text-sm border border-base-300">
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            ※ 도우미 호출 시, 현재 입력된 장례식장 주소를 알려줍니다.
+                        </span>
+                    </label>
+
+                    <br>
+                    <br>
+
                     <label class="label">
                         <span class="label-text font-bold">
                             도우미 추가
