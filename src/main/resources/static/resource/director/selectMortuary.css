@@ -1,8 +1,10 @@
 /* active 처리 */
-.incenseIdSelectBox.active{
-    background: #d2d4d7;
-}
-
-.incenseTributeIdSelectBox.active{
+.incenseIdSelectBox.active,
+.candleIdSelectBox.active,
+.ancestralTabletIdSelectBox.active,
+.condolenceMoneyBookIdSelectBox.active,
+.condolenceBookIdSelectBox.active,
+.pictureRibbonIdSelectBox.active
+{
     background: #d2d4d7;
 }

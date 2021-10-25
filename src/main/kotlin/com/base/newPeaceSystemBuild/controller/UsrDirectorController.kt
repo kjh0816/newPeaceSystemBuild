@@ -707,10 +707,20 @@ class UsrDirectorController(
         val funeral = clientService.getFuneralByClientId(clientId)
 
         val incenses = vendorService.getIncenses()
+        val candles = vendorService.getCandles()
+        val ancestralTablets = vendorService.getAncestralTablets()
+        val condolenceMoneyBooks = vendorService.getCondolenceMoneyBooks()
+        val condolenceBooks = vendorService.getCondolenceBooks()
+        val pictureRibbons = vendorService.getPictureRibbons()
 
         if (funeral != null) {
             val details = mutableListOf<String>()
             details.add("incense")
+            details.add("candle")
+            details.add("ancestralTablet")
+            details.add("condolenceMoneyBook")
+            details.add("condolenceBook")
+            details.add("pictureRibbon")
 
             for(detail in details){
                 val order = vendorService.getOrderByFuneralIdAndCompletionStatusAndDetail(
@@ -725,6 +735,12 @@ class UsrDirectorController(
 
 
         model.addAttribute("incenses", incenses)
+        model.addAttribute("candles", candles)
+        model.addAttribute("ancestralTablets", ancestralTablets)
+        model.addAttribute("condolenceMoneyBooks", condolenceMoneyBooks)
+        model.addAttribute("condolenceBooks", condolenceBooks)
+        model.addAttribute("pictureRibbons", pictureRibbons)
+
         model.addAttribute("funeral", funeral)
 
         return "usr/director/selectMortuary"
