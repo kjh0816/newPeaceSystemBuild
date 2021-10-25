@@ -1,10 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/default}">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>도우미 호출</title>
+    <th:block layout:fragment="js">
+        <script type="text/javascript" src="/resource/director/selectHelper.js" charset="utf-8" defer>
+        </script>
+    </th:block>
 </head>
-<body>
-$END$
-</body>
-</html>
+<main layout:fragment="main">
+    <div class="p-10 card bg-base-200">
+        <div class="bg-white">
+            <div class="card-body text-sm border border-base-300">
+                <label class="label">
+                        <span class="label-text font-bold">
+                            도우미 시급 정보
+                        </span>
+                </label>
+            <span>기본 시급: 9,000원</span>
+            <span>추가 근무 시급: 15,000원</span>
+            </div>
+        </div>
+    </div>
+    <form method="POST" onsubmit="DirectorSelectHelper__submit(this); return false;">
+        <div class="p-10 card bg-base-200">
+            <div class="bg-white">
+                <div class="card-body text-sm border border-base-300">
+                    <label class="label">
+                        <span class="label-text font-bold">
+                            도우미 추가
+                        </span>
+                    </label>
+                    <div class="flex">
+                        <select id="department" name="department" class="select select-bordered select-sm max-w-xs w-1/12">
+                            <option value="" disabled selected>시/도</option>
+                            <div th:each="department : ${departments}" th:object="${department}">
+                                <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                            </div>
+                        </select>
+                        <input type="date" id="workDate" name="workDate" class="input input-bordered w-1/12 hidden">
+                        <select id="workStartTime" name="workStartTime" class="select select-bordered select-sm max-w-xs w-2/12">
+                            <option value="" disabled selected>근무시작 시간</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select id="workFinishTime" name="workFinishTime" class="select select-bordered select-sm max-w-xs w-2/12">
+                            <option value="" disabled selected>근무종료 시간</option>
+                            <option value="20">20</option>
+                            <option value="22">22</option>
+                        </select>
+                        <i onclick="addHelper(this);" class='far fa-plus-square self-center text-4xl ml-3 cursor-pointer'></i>
+                    </div>
+                    <br>
+
+                    <div class="divider w-1/2">현재 추가된 도우미</div>
+                    <br>
+                    <ul id="helperList">
+                        <!-- 유가족 추가 시, 정보가 들어가는 부분 -->
+                        <div th:each="helper : ${helpers}" th:object="${helper}">
+                            <li class='flex'>
+                                <input type='text' disabled class='input input-bordered w-1/12' th:value="*{relation}">
+                                <input type='text' disabled class='input input-bordered w-1/12' th:value="*{name}">
+                                <input type='text' disabled class='input input-bordered w-2/12' th:value="*{cellphoneNo}">
+                                <i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i>
+                            </li>
+                        </div>
+                    </ul>
+                    <button id="helper-submit" class="btn btn-outline" onclick="if ( confirm('진짜?') == false ) return false;">일괄 호출하기</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>

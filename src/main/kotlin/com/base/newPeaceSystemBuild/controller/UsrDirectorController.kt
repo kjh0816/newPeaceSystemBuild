@@ -938,6 +938,19 @@ class UsrDirectorController(
         )
     }
 
+    @RequestMapping("/usr/director/selectHelper")
+    fun showSelectHelper(
+            model: Model
+    ): String{
+
+        val departments = memberService.getDepartments()
+
+
+        model.addAttribute("departments", departments)
+
+        return "usr/director/selectHelper"
+    }
+
     @RequestMapping("/usr/director/moveProgress", method = [RequestMethod.POST])
     @ResponseBody
     fun doMoveProgressPage(
