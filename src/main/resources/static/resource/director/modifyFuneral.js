@@ -35,6 +35,12 @@ function DirectorModifyFuneral__submit(form){
     var chiefCellphoneNo = form.chiefCellphoneNo.value;
     var chiefAddress = form.chiefAddress.value;
 
+    if(autopsyCheck == null){
+        autopsyCheck = 'F';
+    }
+
+
+    console.log('autopsyCheck: ' + autopsyCheck);
 
 
     $.ajax({

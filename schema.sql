@@ -303,7 +303,7 @@ CREATE TABLE `client`(
 	buryLocation CHAR(100) NOT NULL DEFAULT '' COMMENT '매장지(매장/화장 둘 다 필요)',
 	cause SMALLINT(1) NOT NULL DEFAULT 0 COMMENT '사망 원인(병사 = 0, 사고사 = 1, 기타 = 2)',
 	papers CHAR(1) NOT NULL DEFAULT 'N' COMMENT '사망 서류(N = null, 진단서 = M, 사체검안서 = F)',
-	autopsyCheck CHAR(1) NOT NULL DEFAULT 0 COMMENT '검시필증(사체검안서에 대해 추가로 필요할 수 있음)N = null, F = 없음, M = 있음',
+	autopsyCheck CHAR(1) NOT NULL DEFAULT 'N' COMMENT '검시필증(사체검안서에 대해 추가로 필요할 수 있음)N = null, F = 없음, M = 있음',
 	casketDate CHAR(20) NOT NULL DEFAULT '' COMMENT '입관날짜',
 	casketTime CHAR(20) NOT NULL DEFAULT '' COMMENT '입관시간(분까지)',
 	leavingDate CHAR(20) NOT NULL DEFAULT '' COMMENT '발인날짜',
