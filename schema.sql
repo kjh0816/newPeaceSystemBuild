@@ -272,6 +272,8 @@ SELECT * FROM genFile;
 
 # 고인에 대한 정보를 담는 테이블
 
+
+
 CREATE TABLE `client`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
@@ -286,7 +288,7 @@ CREATE TABLE `client`(
 	deceasedAddress CHAR(100) NOT NULL DEFAULT '' COMMENT '운구차가 찾아가기 위한 주소',
 	deceasedHomeAddress CHAR(100) NOT NULL DEFAULT '' COMMENT '장례지도사가 서류상 대조할 수 있도록',
 	deceasedDate CHAR(20) NOT NULL DEFAULT '' COMMENT '사망일',
-	deaceasedLunar CHAR(1) NOT NULL DEFAULT 'N' COMMENT '기일이 음력인지 아닌지(N = null, M = 양력, F = 음력)',
+	deceasedLunar CHAR(1) NOT NULL DEFAULT 'N' COMMENT '기일이 음력인지 아닌지(N = null, M = 양력, F = 음력)',
 	frontNum CHAR(60) NOT NULL DEFAULT '' COMMENT '고인의 주민등록번호 앞자리',
 	backNum CHAR(60) NOT NULL DEFAULT '' COMMENT '고인의 주민등록번호 뒷자리',
 	birth CHAR(20) NOT NULL DEFAULT '' COMMENT '고인의 생년월일',
@@ -307,6 +309,8 @@ CREATE TABLE `client`(
 	leavingDate CHAR(20) NOT NULL DEFAULT '' COMMENT '발인날짜',
 	leavingTime CHAR(20) NOT NULL DEFAULT '' COMMENT '발인시간(분까지)'
 );
+
+
 
 
 

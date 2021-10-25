@@ -30,7 +30,7 @@ data class Client(
     val funeralMethod: Char,
     val cremationLocation: String,
     val buryLocation: String,
-    val cause: Int,
+    val cause: Char,
     val papers: Char,
     val autopsyCheck: Char,
     val casketDate: String,

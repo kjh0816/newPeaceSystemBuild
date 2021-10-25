@@ -15,8 +15,8 @@ function DirectorModifyFuneral__submit(form){
 
     var sex = $('input[name="sex"]:checked').val();
 
-    var birthLunar = $('inout[name="birthLunar"]:checked').val();
-    var deceasedLunar = $('inout[name="deceasedLunar"]:checked').val();
+    var birthLunar = $('input[name="birthLunar"]:checked').val();
+    var deceasedLunar = $('input[name="deceasedLunar"]:checked').val();
     var funeralMethod = $('input[name="funeralMethod"]:checked').val();
 
     var cremationLocation = form.cremationLocation.value;
@@ -34,7 +34,6 @@ function DirectorModifyFuneral__submit(form){
     var chiefRelation = form.chiefRelation.value;
     var chiefCellphoneNo = form.chiefCellphoneNo.value;
     var chiefAddress = form.chiefAddress.value;
-
 
 
 
