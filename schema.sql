@@ -39,7 +39,6 @@ SET regDate = NOW(),
 updateDate = NOW(),
 roleName = '도우미';
 
-
 SELECT * FROM `role`;
 
 
@@ -648,6 +647,10 @@ CREATE TABLE coffinTransporter(
 	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '운구 완료 여부(0 = 미완료, 1 = 완료)'
 );
 
+
+
+
+
 SELECT * FROM coffinTransporter;
 
 
@@ -675,7 +678,6 @@ CREATE TABLE helperWorkTime(
 	pay CHAR(20) NOT NULL DEFAULT '9000' COMMENT '시급',
 	additionalPay CHAR(20) NOT NULL DEFAULT '15000' COMMENT '추가근무 시급'
 );
-
 
 
 
