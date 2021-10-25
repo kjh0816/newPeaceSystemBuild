@@ -16,9 +16,10 @@
 
     <div class="p-10 card bg-base-200">
         <form onsubmit="selectMortuary__submit(this); return false;">
+            <input type="hidden" name="funeralId" th:value="${funeral.id}">
+            <!-- 향 -->
             <div class="card-body text-sm border border-base-300 bg-white mb-2">
                 <h2 class="card-title">향 선택</h2>
-                <input type="hidden" name="funeralId" th:value="${funeral.id}">
                 <div class="flex flex-col w-full"  th:each="incense : ${incenses}">
                     <div class="card card-side mb-2 w-full bg-base-200 shadow">
                         <figure>
@@ -53,6 +54,196 @@
                 $(".incenseIdSelectBox#incense[[${incenseOrder.standardId}]]").text("선택 됨");
                 $("input[value='[[${incenseOrder.standardId}]]']#incenseId").prop('checked', true);
                 $("#incenseCnt"+[[${incenseOrder.standardId}]]).css("display", "block");
+            </script>
+            <!-- 양초 -->
+            <div class="card-body text-sm border border-base-300 bg-white mb-2">
+                <h2 class="card-title">양초 선택</h2>
+                <div class="flex flex-col w-full"  th:each="candle : ${candles}">
+                    <div class="card card-side mb-2 w-full bg-base-200 shadow">
+                        <figure>
+                            <img th:src="@{../../../resource/img/candle/candle{candleId}.png(candleId = ${candle.id})}" alt="" style="width: 400px; height: 250px;">
+                        </figure>
+                        <div class="card-body">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">상품명</div>
+                                <p class="pl-2">[[${candle.name}]]</p>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">가격</div>
+                                <p class="pl-2">[[${candle.retailPriceFormat}]] 원</p>
+                            </div>
+                            <div class="card-actions">
+                                <div class="form-control flex">
+                                    <span class="candleIdSelectBox btn btn-ghost" th:id="|candle${candle.id}|" th:value="${candle.id}">선택하기</span>
+                                    <input id="candleId" type="radio" name="candleId" class="radio" th:value="${candle.id}" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" th:id="|candleCnt${candle.id}|" name="candleCnt" placeholder="필요한 양초 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${candleOrder != null} ? ${candleOrder.extra__candleCnt} : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" th:if="${candles.size != candle.id}">OR</div>
+                </div>
+            </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${candleOrder != null}">
+                $(".candleIdSelectBox#candle[[${candleOrder.standardId}]]").addClass('active');
+                $(".candleIdSelectBox#candle[[${candleOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${candleOrder.standardId}]]']#candleId").prop('checked', true);
+                $("#candleCnt"+[[${candleOrder.standardId}]]).css("display", "block");
+            </script>
+            <!-- 위패 -->
+            <div class="card-body text-sm border border-base-300 bg-white mb-2">
+                <h2 class="card-title">위패 선택</h2>
+                <div class="flex flex-col w-full"  th:each="ancestralTablet : ${ancestralTablets}">
+                    <div class="card card-side mb-2 w-full bg-base-200 shadow">
+                        <figure>
+                            <img th:src="@{../../../resource/img/ancestralTablet/ancestralTablet{ancestralTabletId}.png(ancestralTabletId = ${ancestralTablet.id})}" alt="" style="width: 400px; height: 250px;">
+                        </figure>
+                        <div class="card-body">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">상품명</div>
+                                <p class="pl-2">[[${ancestralTablet.name}]]</p>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">가격</div>
+                                <p class="pl-2">[[${ancestralTablet.retailPriceFormat}]] 원</p>
+                            </div>
+                            <div class="card-actions">
+                                <div class="form-control flex">
+                                    <span class="ancestralTabletIdSelectBox btn btn-ghost" th:id="|ancestralTablet${ancestralTablet.id}|" th:value="${ancestralTablet.id}">선택하기</span>
+                                    <input id="ancestralTabletId" type="radio" name="ancestralTabletId" class="radio" th:value="${ancestralTablet.id}" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" th:id="|ancestralTabletCnt${ancestralTablet.id}|" name="ancestralTabletCnt" placeholder="필요한 위패 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${ancestralTabletOrder != null} ? ${ancestralTabletOrder.extra__ancestralTabletCnt} : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" th:if="${ancestralTablets.size != ancestralTablet.id}">OR</div>
+                </div>
+            </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${ancestralTabletOrder != null}">
+                $(".ancestralTabletIdSelectBox#ancestralTablet[[${ancestralTabletOrder.standardId}]]").addClass('active');
+                $(".ancestralTabletIdSelectBox#ancestralTablet[[${ancestralTabletOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${ancestralTabletOrder.standardId}]]']#ancestralTabletId").prop('checked', true);
+                $("#ancestralTabletCnt"+[[${ancestralTabletOrder.standardId}]]).css("display", "block");
+            </script>
+            <!-- 부의록 -->
+            <div class="card-body text-sm border border-base-300 bg-white mb-2">
+                <h2 class="card-title">부의록 선택</h2>
+                <div class="flex flex-col w-full"  th:each="condolenceMoneyBook : ${condolenceMoneyBooks}">
+                    <div class="card card-side mb-2 w-full bg-base-200 shadow">
+                        <figure>
+                            <img th:src="@{../../../resource/img/condolenceMoneyBook/condolenceMoneyBook{condolenceMoneyBookId}.png(condolenceMoneyBookId = ${condolenceMoneyBook.id})}" alt="" style="width: 400px; height: 250px;">
+                        </figure>
+                        <div class="card-body">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">상품명</div>
+                                <p class="pl-2">[[${condolenceMoneyBook.name}]]</p>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">가격</div>
+                                <p class="pl-2">[[${condolenceMoneyBook.retailPriceFormat}]] 원</p>
+                            </div>
+                            <div class="card-actions">
+                                <div class="form-control flex">
+                                    <span class="condolenceMoneyBookIdSelectBox btn btn-ghost" th:id="|condolenceMoneyBook${condolenceMoneyBook.id}|" th:value="${condolenceMoneyBook.id}">선택하기</span>
+                                    <input id="condolenceMoneyBookId" type="radio" name="condolenceMoneyBookId" class="radio" th:value="${condolenceMoneyBook.id}" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" th:id="|condolenceMoneyBookCnt${condolenceMoneyBook.id}|" name="condolenceMoneyBookCnt" placeholder="필요한 부의록 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${condolenceMoneyBookOrder != null} ? ${condolenceMoneyBookOrder.extra__condolenceMoneyBookCnt} : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" th:if="${condolenceMoneyBooks.size != condolenceMoneyBook.id}">OR</div>
+                </div>
+            </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${condolenceMoneyBookOrder != null}">
+                $(".condolenceMoneyBookIdSelectBox#condolenceMoneyBook[[${condolenceMoneyBookOrder.standardId}]]").addClass('active');
+                $(".condolenceMoneyBookIdSelectBox#condolenceMoneyBook[[${condolenceMoneyBookOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${condolenceMoneyBookOrder.standardId}]]']#condolenceMoneyBookId").prop('checked', true);
+                $("#condolenceMoneyBookCnt"+[[${condolenceMoneyBookOrder.standardId}]]).css("display", "block");
+            </script>
+            <!-- 조의록 -->
+            <div class="card-body text-sm border border-base-300 bg-white mb-2">
+                <h2 class="card-title">조의록 선택</h2>
+                <div class="flex flex-col w-full"  th:each="condolenceBook : ${condolenceBooks}">
+                    <div class="card card-side mb-2 w-full bg-base-200 shadow">
+                        <figure>
+                            <img th:src="@{../../../resource/img/condolenceBook/condolenceBook{condolenceBookId}.png(condolenceBookId = ${condolenceBook.id})}" alt="" style="width: 400px; height: 250px;">
+                        </figure>
+                        <div class="card-body">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">상품명</div>
+                                <p class="pl-2">[[${condolenceBook.name}]]</p>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">가격</div>
+                                <p class="pl-2">[[${condolenceBook.retailPriceFormat}]] 원</p>
+                            </div>
+                            <div class="card-actions">
+                                <div class="form-control flex">
+                                    <span class="condolenceBookIdSelectBox btn btn-ghost" th:id="|condolenceBook${condolenceBook.id}|" th:value="${condolenceBook.id}">선택하기</span>
+                                    <input id="condolenceBookId" type="radio" name="condolenceBookId" class="radio" th:value="${condolenceBook.id}" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" th:id="|condolenceBookCnt${condolenceBook.id}|" name="condolenceBookCnt" placeholder="필요한 조의록 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${condolenceBookOrder != null} ? ${condolenceBookOrder.extra__condolenceBookCnt} : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" th:if="${condolenceBooks.size != condolenceBook.id}">OR</div>
+                </div>
+            </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${condolenceBookOrder != null}">
+                $(".condolenceBookIdSelectBox#condolenceBook[[${condolenceBookOrder.standardId}]]").addClass('active');
+                $(".condolenceBookIdSelectBox#condolenceBook[[${condolenceBookOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${condolenceBookOrder.standardId}]]']#condolenceBookId").prop('checked', true);
+                $("#condolenceBookCnt"+[[${condolenceBookOrder.standardId}]]).css("display", "block");
+            </script>
+            <!-- 사진리본 -->
+            <div class="card-body text-sm border border-base-300 bg-white mb-2">
+                <h2 class="card-title">사진리본 선택</h2>
+                <div class="flex flex-col w-full"  th:each="pictureRibbon : ${pictureRibbons}">
+                    <div class="card card-side mb-2 w-full bg-base-200 shadow">
+                        <figure>
+                            <img th:src="@{../../../resource/img/pictureRibbon/pictureRibbon{pictureRibbonId}.png(pictureRibbonId = ${pictureRibbon.id})}" alt="" style="width: 400px; height: 250px;">
+                        </figure>
+                        <div class="card-body">
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">상품명</div>
+                                <p class="pl-2">[[${pictureRibbon.name}]]</p>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <div class="badge badge-md">가격</div>
+                                <p class="pl-2">[[${pictureRibbon.retailPriceFormat}]] 원</p>
+                            </div>
+                            <div class="card-actions">
+                                <div class="form-control flex">
+                                    <span class="pictureRibbonIdSelectBox btn btn-ghost" th:id="|pictureRibbon${pictureRibbon.id}|" th:value="${pictureRibbon.id}">선택하기</span>
+                                    <input id="pictureRibbonId" type="radio" name="pictureRibbonId" class="radio" th:value="${pictureRibbon.id}" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input type="text" th:id="|pictureRibbonCnt${pictureRibbon.id}|" name="pictureRibbonCnt" placeholder="필요한 사진리본 갯수를 입력해 주세요." class="input input-bordered my-2 hidden" th:value="${pictureRibbonOrder != null} ? ${pictureRibbonOrder.extra__pictureRibbonCnt} : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" th:if="${pictureRibbons.size != pictureRibbon.id}">OR</div>
+                </div>
+            </div>
+            <!-- script로 db에서 조회된 데이터가 있을경우 데이터를 기반으로 선택했던 정보들을 표시해줌 -->
+            <script th:if="${pictureRibbonOrder != null}">
+                $(".pictureRibbonIdSelectBox#pictureRibbon[[${pictureRibbonOrder.standardId}]]").addClass('active');
+                $(".pictureRibbonIdSelectBox#pictureRibbon[[${pictureRibbonOrder.standardId}]]").text("선택 됨");
+                $("input[value='[[${pictureRibbonOrder.standardId}]]']#pictureRibbonId").prop('checked', true);
+                $("#pictureRibbonCnt"+[[${pictureRibbonOrder.standardId}]]).css("display", "block");
             </script>
             <br>
 

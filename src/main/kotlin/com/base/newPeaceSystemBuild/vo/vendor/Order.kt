@@ -32,6 +32,11 @@ data class Order (
     var extra__deceasedHomeAddress: String? = null
     // 빈소용품 주문정보 관련 데이터
     var extra__incenseCnt: Int? = null
+    var extra__candleCnt: Int? = null
+    var extra__ancestralTabletCnt: Int? = null
+    var extra__condolenceMoneyBookCnt: Int? = null
+    var extra__condolenceBookCnt: Int? = null
+    var extra__pictureRibbonCnt: Int? = null
 
     private val formatter = DecimalFormat("###,###")
 

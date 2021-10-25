@@ -209,6 +209,26 @@ interface VendorRepository {
                 , I.retailPrice AS `extra__retailPrice`
                 , IO.incenseCnt AS `extra__incenseCnt`
             </if>
+            <if test="detail == 'candle'">
+                , C.retailPrice AS `extra__retailPrice`
+                , CO.candleCnt AS `extra__candleCnt`
+            </if>
+            <if test="detail == 'ancestralTablet'">
+                , AT.retailPrice AS `extra__retailPrice`
+                , ATO.ancestralTabletCnt AS `extra__ancestralTabletCnt`
+            </if>
+            <if test="detail == 'condolenceMoneyBook'">
+                , CMB.retailPrice AS `extra__retailPrice`
+                , CMBO.condolenceMoneyBookCnt AS `extra__condolenceMoneyBookCnt`
+            </if>
+            <if test="detail == 'condolenceBook'">
+                , CB.retailPrice AS `extra__retailPrice`
+                , CBO.condolenceBookCnt AS `extra__condolenceBookCnt`
+            </if>
+            <if test="detail == 'pictureRibbon'">
+                , PR.retailPrice AS `extra__retailPrice`
+                , PRO.pictureRibbonCnt AS `extra__pictureRibbonCnt`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -269,6 +289,36 @@ interface VendorRepository {
                 ON O.standardId = I.id
                 LEFT JOIN incenseOrder AS IO
                 ON O.id = IO.orderId
+            </if>
+            <if test="detail == 'candle'">
+                LEFT JOIN candle AS C
+                ON O.standardId = C.id
+                LEFT JOIN candleOrder AS CO
+                ON O.id = CO.orderId
+            </if>
+            <if test="detail == 'ancestralTablet'">
+                LEFT JOIN ancestralTablet AS AT
+                ON O.standardId = AT.id
+                LEFT JOIN ancestralTabletOrder AS ATO
+                ON O.id = ATO.orderId
+            </if>
+            <if test="detail == 'condolenceMoneyBook'">
+                LEFT JOIN condolenceMoneyBook AS CMB
+                ON O.standardId = CMB.id
+                LEFT JOIN condolenceMoneyBookOrder AS CMBO
+                ON O.id = CMBO.orderId
+            </if>
+            <if test="detail == 'condolenceBook'">
+                LEFT JOIN condolenceBook AS CB
+                ON O.standardId = CB.id
+                LEFT JOIN condolenceBookOrder AS CBO
+                ON O.id = CBO.orderId
+            </if>
+            <if test="detail == 'pictureRibbon'">
+                LEFT JOIN pictureRibbon AS PR
+                ON O.standardId = PR.id
+                LEFT JOIN pictureRibbonOrder AS PRO
+                ON O.id = PRO.orderId
             </if>
             WHERE O.vendorMemberId = #{vendorMemberId}
             AND O.orderStatus = #{orderStatus}
@@ -325,6 +375,26 @@ interface VendorRepository {
                 , I.retailPrice AS `extra__retailPrice`
                 , IO.incenseCnt AS `extra__incenseCnt`
             </if>
+            <if test="detail == 'candle'">
+                , C.retailPrice AS `extra__retailPrice`
+                , CO.candleCnt AS `extra__candleCnt`
+            </if>
+            <if test="detail == 'ancestralTablet'">
+                , AT.retailPrice AS `extra__retailPrice`
+                , ATO.ancestralTabletCnt AS `extra__ancestralTabletCnt`
+            </if>
+            <if test="detail == 'condolenceMoneyBook'">
+                , CMB.retailPrice AS `extra__retailPrice`
+                , CMBO.condolenceMoneyBookCnt AS `extra__condolenceMoneyBookCnt`
+            </if>
+            <if test="detail == 'condolenceBook'">
+                , CB.retailPrice AS `extra__retailPrice`
+                , CBO.condolenceBookCnt AS `extra__condolenceBookCnt`
+            </if>
+            <if test="detail == 'pictureRibbon'">
+                , PR.retailPrice AS `extra__retailPrice`
+                , PRO.pictureRibbonCnt AS `extra__pictureRibbonCnt`
+            </if>
             FROM `order` AS O
             <if test="detail == 'flower'">
                 LEFT JOIN flower AS F
@@ -385,6 +455,36 @@ interface VendorRepository {
                 ON O.standardId = I.id
                 LEFT JOIN incenseOrder AS IO
                 ON O.id = IO.orderId
+            </if>
+            <if test="detail == 'candle'">
+                LEFT JOIN candle AS C
+                ON O.standardId = C.id
+                LEFT JOIN candleOrder AS CO
+                ON O.id = CO.orderId
+            </if>
+            <if test="detail == 'ancestralTablet'">
+                LEFT JOIN ancestralTablet AS AT
+                ON O.standardId = AT.id
+                LEFT JOIN ancestralTabletOrder AS ATO
+                ON O.id = ATO.orderId
+            </if>
+            <if test="detail == 'condolenceMoneyBook'">
+                LEFT JOIN condolenceMoneyBook AS CMB
+                ON O.standardId = CMB.id
+                LEFT JOIN condolenceMoneyBookOrder AS CMBO
+                ON O.id = CMBO.orderId
+            </if>
+            <if test="detail == 'condolenceBook'">
+                LEFT JOIN condolenceBook AS CB
+                ON O.standardId = CB.id
+                LEFT JOIN condolenceBookOrder AS CBO
+                ON O.id = CBO.orderId
+            </if>
+            <if test="detail == 'pictureRibbon'">
+                LEFT JOIN pictureRibbon AS PR
+                ON O.standardId = PR.id
+                LEFT JOIN pictureRibbonOrder AS PRO
+                ON O.id = PRO.orderId
             </if>
             WHERE completionStatus = #{completionStatus}
             AND detail = #{detail}
@@ -445,6 +545,26 @@ interface VendorRepository {
             <if test="detail == 'incense'">
                 , I.retailPrice AS `extra__retailPrice`
                 , IO.incenseCnt AS `extra__incenseCnt`
+            </if>
+            <if test="detail == 'candle'">
+                , C.retailPrice AS `extra__retailPrice`
+                , CO.candleCnt AS `extra__candleCnt`
+            </if>
+            <if test="detail == 'ancestralTablet'">
+                , AT.retailPrice AS `extra__retailPrice`
+                , ATO.ancestralTabletCnt AS `extra__ancestralTabletCnt`
+            </if>
+            <if test="detail == 'condolenceMoneyBook'">
+                , CMB.retailPrice AS `extra__retailPrice`
+                , CMBO.condolenceMoneyBookCnt AS `extra__condolenceMoneyBookCnt`
+            </if>
+            <if test="detail == 'condolenceBook'">
+                , CB.retailPrice AS `extra__retailPrice`
+                , CBO.condolenceBookCnt AS `extra__condolenceBookCnt`
+            </if>
+            <if test="detail == 'pictureRibbon'">
+                , PR.retailPrice AS `extra__retailPrice`
+                , PRO.pictureRibbonCnt AS `extra__pictureRibbonCnt`
             </if>
             FROM `order` AS O
             <if test="detail == 'coffin'">
@@ -512,6 +632,36 @@ interface VendorRepository {
                 ON O.standardId = I.id
                 LEFT JOIN incenseOrder AS IO
                 ON O.id = IO.orderId
+            </if>
+            <if test="detail == 'candle'">
+                LEFT JOIN candle AS C
+                ON O.standardId = C.id
+                LEFT JOIN candleOrder AS CO
+                ON O.id = CO.orderId
+            </if>
+            <if test="detail == 'ancestralTablet'">
+                LEFT JOIN ancestralTablet AS AT
+                ON O.standardId = AT.id
+                LEFT JOIN ancestralTabletOrder AS ATO
+                ON O.id = ATO.orderId
+            </if>
+            <if test="detail == 'condolenceMoneyBook'">
+                LEFT JOIN condolenceMoneyBook AS CMB
+                ON O.standardId = CMB.id
+                LEFT JOIN condolenceMoneyBookOrder AS CMBO
+                ON O.id = CMBO.orderId
+            </if>
+            <if test="detail == 'condolenceBook'">
+                LEFT JOIN condolenceBook AS CB
+                ON O.standardId = CB.id
+                LEFT JOIN condolenceBookOrder AS CBO
+                ON O.id = CBO.orderId
+            </if>
+            <if test="detail == 'pictureRibbon'">
+                LEFT JOIN pictureRibbon AS PR
+                ON O.standardId = PR.id
+                LEFT JOIN pictureRibbonOrder AS PRO
+                ON O.id = PRO.orderId
             </if>
             WHERE O.funeralId = #{funeralId}
             AND O.completionStatus = #{completionStatus}
@@ -926,6 +1076,46 @@ interface VendorRepository {
         """
     )
     fun getIncenses(): List<Mortuary>
+
+    @Select(
+        """
+            SELECT * 
+            FROM `candle`
+        """
+    )
+    fun getCandles(): List<Mortuary>
+
+    @Select(
+        """
+            SELECT * 
+            FROM `ancestralTablet`
+        """
+    )
+    fun getAncestralTablets(): List<Mortuary>
+
+    @Select(
+        """
+            SELECT * 
+            FROM `condolenceMoneyBook`
+        """
+    )
+    fun getCondolenceMoneyBooks(): List<Mortuary>
+
+    @Select(
+        """
+            SELECT * 
+            FROM `condolenceBook`
+        """
+    )
+    fun getCondolenceBooks(): List<Mortuary>
+
+    @Select(
+        """
+            SELECT * 
+            FROM `pictureRibbon`
+        """
+    )
+    fun getPictureRibbons(): List<Mortuary>
 
     @Insert(
         """

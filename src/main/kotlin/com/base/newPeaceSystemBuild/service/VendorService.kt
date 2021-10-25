@@ -792,6 +792,26 @@ class VendorService(
         return vendorRepository.getIncenses()
     }
 
+    fun getCandles(): List<Mortuary> {
+        return vendorRepository.getCandles()
+    }
+
+    fun getAncestralTablets(): List<Mortuary> {
+        return vendorRepository.getAncestralTablets()
+    }
+
+    fun getCondolenceMoneyBooks(): List<Mortuary> {
+        return vendorRepository.getCondolenceMoneyBooks()
+    }
+
+    fun getCondolenceBooks(): List<Mortuary> {
+        return vendorRepository.getCondolenceBooks()
+    }
+
+    fun getPictureRibbons(): List<Mortuary> {
+        return vendorRepository.getPictureRibbons()
+    }
+
     fun getCoffinById(coffinId: Int): Coffin? {
         return vendorRepository.getCoffinById(coffinId)
     }
