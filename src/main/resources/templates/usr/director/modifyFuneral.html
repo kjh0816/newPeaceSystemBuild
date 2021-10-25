@@ -235,17 +235,17 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input value="0" type="radio" id="disease" name="cause" class="radio"/>
+                            <input th:checked="${#strings.equals('0', client.cause) }" value="0" type="radio" id="disease" name="cause" class="radio"/>
                             <span>&nbsp;병사&nbsp;</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input value="1" type="radio" id="accident" name="cause" class="radio"/>
+                            <input th:checked="${#strings.equals('1', client.cause) }" value="1" type="radio" id="accident" name="cause" class="radio"/>
                             <span>&nbsp;사고사&nbsp;&nbsp;</span>
                         </div>
 
                         <div class="flex">
-                            <input value="2" type="radio" id="causeElse" name="cause" class="radio"/>
+                            <input th:checked="${#strings.equals('2', client.cause) }" value="2" type="radio" id="causeElse" name="cause" class="radio"/>
                             <span>&nbsp;기타</span>
                         </div>
                     </div>
@@ -285,8 +285,8 @@
                         </span>
                     </label>
                     <div class="flex">
-                    <input type="date" min="getToday();" id="casketDate" name="casketDate" class="input input-bordered w-1/6"/>
-                    <input type="time" min="getNow();" id="casketTime" name="casketTime" class="input input-bordered w-1/6"/>
+                    <input type="date" th:value="${client.casketDate}" id="casketDate" name="casketDate" class="input input-bordered w-1/6"/>
+                    <input type="time" th:value="${client.casketTime}" id="casketTime" name="casketTime" class="input input-bordered w-1/6"/>
                     </div>
 
                     <br>
@@ -296,8 +296,8 @@
                         </span>
                     </label>
                     <div class="flex">
-                        <input type="date" min="getToday();" id="leavingDate" name="leavingDate" class="input input-bordered w-1/6"/>
-                        <input type="time" min="getNow();" id="leavingTime" name="leavingTime" class="input input-bordered w-1/6"/>
+                        <input th:value="${client.leavingDate}" type="date" min="getToday();" id="leavingDate" name="leavingDate" class="input input-bordered w-1/6"/>
+                        <input th:value="${client.leavingTime}" type="time" min="getNow();" id="leavingTime" name="leavingTime" class="input input-bordered w-1/6"/>
                     </div>
 
                 </div>

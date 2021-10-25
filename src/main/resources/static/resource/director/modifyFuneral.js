@@ -13,6 +13,7 @@ function DirectorModifyFuneral__submit(form){
     var birth = form.birth.value;
     var deceasedDate = form.deceasedDate.value;
 
+
     var sex = $('input[name="sex"]:checked').val();
 
     var birthLunar = $('input[name="birthLunar"]:checked').val();
@@ -26,10 +27,15 @@ function DirectorModifyFuneral__submit(form){
     var papers = $('input[name="papers"]:checked').val();
     var autopsyCheck = $('input[name="autopsyCheck"]:checked').val();
 
-    var casketDate = form.casketDate.value;
-    var casketTime = form.casketTime.value;
-    var leavingDate = form.leavingDate.value;
-    var leavingTime = form.leavingTime.value;
+    var casketDate = form.casketDate.value.toString().trim();
+    var casketTime = form.casketTime.value.toString().trim();
+    var leavingDate = form.leavingDate.value.toString().trim();
+    var leavingTime = form.leavingTime.value.toString().trim();
+
+    console.log('casketDate: ' + casketDate);
+    console.log('casketTime: ' + casketTime);
+    console.log('leavingDate: ' + leavingDate);
+    console.log('leavingTime: ' + leavingTime);
 
     // 상주 관련 정보
     var chiefName = form.chiefName.value;
@@ -60,6 +66,7 @@ function DirectorModifyFuneral__submit(form){
                         deceasedHomeAddress:deceasedHomeAddress,
                         familyClan:familyClan,
                         religion:religion,
+                        birth:birth,
                         duty:duty,
                         funeralMethod:funeralMethod,
                         cremationLocation:cremationLocation,
@@ -80,7 +87,8 @@ function DirectorModifyFuneral__submit(form){
                         birthLunar:birthLunar,
                         deceasedLunar:deceasedLunar,
                         chiefAccountNum:chiefAccountNum,
-                        chiefBank:chiefBank
+                        chiefBank:chiefBank,
+                        deceasedDate:deceasedDate
                         },
                         success: function(result){
                             alert(result.msg);
