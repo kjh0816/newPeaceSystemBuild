@@ -34,6 +34,11 @@ SET regDate = NOW(),
 updateDate = NOW(),
 roleName = '물품 공급업자';
 
+INSERT INTO `role`
+SET regDate = NOW(),
+updateDate = NOW(),
+roleName = '도우미';
+
 
 SELECT * FROM `role`;
 
@@ -638,14 +643,33 @@ CREATE TABLE coffinTransporter(
 	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '운구 완료 여부(0 = 미완료, 1 = 완료)'
 );
 
-
-
-
-
 SELECT * FROM coffinTransporter;
 
 
 
+# 도우미 테이블
+CREATE TABLE helper(
+	id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	funeralId INT(10) UNSIGNED NOT NULL,
+	memberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음'
+);
+
+
+# 도우미의 하루 근무 정보를 담는 테이블
+CREATE TABLE helperWorkTime(
+	id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	funeralId INT(10) UNSIGNED NOT NULL,
+	helperMemberId INT(10) UNSIGNED NOT NULL,
+	workDate CHAR(20) NOT NULL,
+	workTime CHAR(20) NOT NULL,
+	additionalWorkTime SMALLINT(1) NOT NULL DEFAULT 0 '추가 근무 시간(시간 단위)',
+	pay CHAR(20) NOT NULL DEFAULT '9000' COMMENT '시급',
+	additionalPay CHAR(20) NOT NULL DEFAULT '15000' COMMENT '추가근무 시급'
+);
 
 
 
