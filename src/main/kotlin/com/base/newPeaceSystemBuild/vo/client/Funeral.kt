@@ -31,6 +31,18 @@ data class Funeral(
     val shroudId: Int,
 // coffinId = 관 스탠다드 번호
     val coffinId: Int,
+// incenseId = 향 스탠다드 번호
+    val incenseId: Int,
+// incenseId = 양초 스탠다드 번호
+    val candleId: Int,
+// incenseId = 위패 스탠다드 번호
+    val ancestralTabletId: Int,
+// incenseId = 부의록 스탠다드 번호
+    val condolenceMoneyBookId: Int,
+// incenseId = 조의록 스탠다드 번호
+    val condolenceBookId: Int,
+// incenseId = 사진리본 스탠다드 번호
+    val pictureRibbonId: Int,
 
 // progress = 장례 진행 상태(장례지도사 연결 여부 ~ 장례식 종료) default = 0(장례지도사 연결 안 됨)
     val progress: Int

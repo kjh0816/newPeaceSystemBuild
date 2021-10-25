@@ -293,6 +293,153 @@
                 </div>
             </div>
         </div>
+        <!-- 빈소용품 -->
+        <div class="card card-side shadow mb-2 bg-white">
+            <figure>
+
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">빈소용품 (초동용품)</h2>
+                <th:block th:if="${incenses[i] == null}">
+                    <p>향을 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${incenses[i] == null}">
+                    <p class="font-bold">향</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상품명</div>
+                        <p class="pl-2" th:text="${incenses[i].name}"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2" th:text="|${incenses[i].retailPriceFormat} 원 (단품)|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2" th:text="|${incenseOrders[i].extra__incenseCnt} 개|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2" th:text="|${incensePrices[i]} 원|"></p>
+                    </div>
+                </th:block>
+                <th:block th:if="${candles[i] == null}">
+                    <p>양초를 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${candles[i] == null}">
+                    <p class="font-bold">양초</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상품명</div>
+                        <p class="pl-2" th:text="${candles[i].name}"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2" th:text="|${candles[i].retailPriceFormat} 원 (단품)|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2" th:text="|${candleOrders[i].extra__candleCnt} 개|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2" th:text="|${candlePrices[i]} 원|"></p>
+                    </div>
+                </th:block>
+                <th:block th:if="${ancestralTablets[i] == null}">
+                    <p>위패를 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${ancestralTablets[i] == null}">
+                    <p class="font-bold">위패</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상품명</div>
+                        <p class="pl-2" th:text="${ancestralTablets[i].name}"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2" th:text="|${ancestralTablets[i].retailPriceFormat} 원 (단품)|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2" th:text="|${ancestralTabletOrders[i].extra__ancestralTabletCnt} 개|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2" th:text="|${ancestralTabletPrices[i]} 원|"></p>
+                    </div>
+                </th:block>
+                <th:block th:if="${condolenceMoneyBooks[i] == null}">
+                    <p>부의록을 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${condolenceMoneyBooks[i] == null}">
+                    <p class="font-bold">부의록</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상품명</div>
+                        <p class="pl-2" th:text="${condolenceMoneyBooks[i].name}"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2" th:text="|${condolenceMoneyBooks[i].retailPriceFormat} 원 (단품)|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2" th:text="|${condolenceMoneyBookOrders[i].extra__condolenceMoneyBookCnt} 개|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2" th:text="|${condolenceMoneyBookPrices[i]} 원|"></p>
+                    </div>
+                </th:block>
+                <th:block th:if="${condolenceBooks[i] == null}">
+                    <p>조의록을 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${condolenceBooks[i] == null}">
+                    <p class="font-bold">조의록</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상품명</div>
+                        <p class="pl-2" th:text="${condolenceBooks[i].name}"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2" th:text="|${condolenceBooks[i].retailPriceFormat} 원 (단품)|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2" th:text="|${condolenceBookOrders[i].extra__condolenceBookCnt} 개|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2" th:text="|${condolenceBookPrices[i]} 원|"></p>
+                    </div>
+                </th:block>
+                <th:block th:if="${pictureRibbons[i] == null}">
+                    <p>사진리본을 선택할 수 있습니다.</p>
+                </th:block>
+                <th:block th:unless="${pictureRibbons[i] == null}">
+                    <p class="font-bold">사진리본</p>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">상품명</div>
+                        <p class="pl-2" th:text="${pictureRibbons[i].name}"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">가격</div>
+                        <p class="pl-2" th:text="|${pictureRibbons[i].retailPriceFormat} 원 (단품)|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">갯수</div>
+                        <p class="pl-2" th:text="|${pictureRibbonOrders[i].extra__pictureRibbonCnt} 개|"></p>
+                    </div>
+                    <div class="flex items-center mb-1">
+                        <div class="badge badge-md">합계</div>
+                        <p class="pl-2" th:text="|${pictureRibbonPrices[i]} 원|"></p>
+                    </div>
+                </th:block>
+                <div class="card-actions">
+                    <form action="./selectMortuary">
+                        <input type="hidden" name="clientId" th:value="${filteredFunerals[i].clientId}">
+                        <button class="btn btn-ghost" type="submit">빈소용품 (초동용품) 선택하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </main>

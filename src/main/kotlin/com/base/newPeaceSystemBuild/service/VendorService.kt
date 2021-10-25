@@ -499,31 +499,31 @@ class VendorService(
                     }
                     "candle" -> {
                         vendorRepository.modifyCandleOrderIntoCandleCntByOrderId(
-                            incenseCnt,
+                            candleCnt,
                             order.id
                         )
                     }
                     "ancestralTablet" -> {
                         vendorRepository.modifyAncestralTabletOrderIntoAncestralTabletCntByOrderId(
-                            incenseCnt,
+                            ancestralTabletCnt,
                             order.id
                         )
                     }
                     "condolenceMoneyBook" -> {
                         vendorRepository.modifyCondolenceMoneyBookOrderIntoCondolenceMoneyBookCntByOrderId(
-                            incenseCnt,
+                            condolenceMoneyBookCnt,
                             order.id
                         )
                     }
                     "condolenceBook" -> {
                         vendorRepository.modifyCondolenceBookOrderIntoCondolenceBookCntByOrderId(
-                            incenseCnt,
+                            condolenceBookCnt,
                             order.id
                         )
                     }
                     "pictureRibbon" -> {
                         vendorRepository.modifyPictureRibbonOrderIntoPictureRibbonCntByOrderId(
-                            incenseCnt,
+                            pictureRibbonCnt,
                             order.id
                         )
                     }
@@ -895,6 +895,30 @@ class VendorService(
 
     fun getCoffinById(coffinId: Int): Coffin? {
         return vendorRepository.getCoffinById(coffinId)
+    }
+
+    fun getIncenseById(incenseId: Int): Mortuary? {
+        return vendorRepository.getIncenseById(incenseId)
+    }
+
+    fun getCandleById(candleId: Int): Mortuary? {
+        return vendorRepository.getCandleById(candleId)
+    }
+
+    fun getAncestralTabletById(ancestralTabletId: Int): Mortuary? {
+        return vendorRepository.getAncestralTabletById(ancestralTabletId)
+    }
+
+    fun getCondolenceMoneyBookById(condolenceMoneyBookId: Int): Mortuary? {
+        return vendorRepository.getCondolenceMoneyBookById(condolenceMoneyBookId)
+    }
+
+    fun getCondolenceBookById(condolenceBookId: Int): Mortuary? {
+        return vendorRepository.getCondolenceBookById(condolenceBookId)
+    }
+
+    fun getPictureRibbonById(pictureRibbonId: Int): Mortuary? {
+        return vendorRepository.getpictureRibbonById(pictureRibbonId)
     }
 
 }

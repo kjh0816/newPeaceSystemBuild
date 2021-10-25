@@ -86,6 +86,12 @@ class UsrDirectorController(
         val necktiePrices = mutableListOf<String>()
         val shroudPrices = mutableListOf<String>()
         val coffinPrices = mutableListOf<String>()
+        val incensePrices = mutableListOf<String>()
+        val candlePrices = mutableListOf<String>()
+        val ancestralTabletPrices = mutableListOf<String>()
+        val condolenceMoneyBookPrices = mutableListOf<String>()
+        val condolenceBookPrices = mutableListOf<String>()
+        val pictureRibbonPrices = mutableListOf<String>()
         // 가격 합계
         val sums = mutableListOf<String>()
         // 스탠다드
@@ -98,6 +104,12 @@ class UsrDirectorController(
         val neckties = mutableListOf<MourningCloth?>()
         val shrouds = mutableListOf<Shroud?>()
         val coffins = mutableListOf<Coffin?>()
+        val incenses = mutableListOf<Mortuary?>()
+        val candles = mutableListOf<Mortuary?>()
+        val ancestralTablets = mutableListOf<Mortuary?>()
+        val condolenceMoneyBooks = mutableListOf<Mortuary?>()
+        val condolenceBooks = mutableListOf<Mortuary?>()
+        val pictureRibbons = mutableListOf<Mortuary?>()
         // 주문정보
         val flowerOrders = mutableListOf<Order?>()
         val flowerTributeOrders = mutableListOf<Order?>()
@@ -108,6 +120,12 @@ class UsrDirectorController(
         val necktieOrders = mutableListOf<Order?>()
         val shroudOrders = mutableListOf<Order?>()
         val coffinOrders = mutableListOf<Order?>()
+        val incenseOrders = mutableListOf<Order?>()
+        val candleOrders = mutableListOf<Order?>()
+        val ancestralTabletOrders = mutableListOf<Order?>()
+        val condolenceMoneyBookOrders = mutableListOf<Order?>()
+        val condolenceBookOrders = mutableListOf<Order?>()
+        val pictureRibbonOrders = mutableListOf<Order?>()
         // 운구차 업자 정보
         val coffinTransporters = mutableListOf<CoffinTransporter?>()
         val coffinTransporterMembers = mutableListOf<Member?>()
@@ -126,6 +144,12 @@ class UsrDirectorController(
             var necktiePrice = 0
             var shroudPrice = 0
             var coffinPrice = 0
+            var incensePrice = 0
+            var candlePrice = 0
+            var ancestralTabletPrice = 0
+            var condolenceMoneyBookPrice = 0
+            var condolenceBookPrice = 0
+            var pictureRibbonPrice = 0
 
             // 합계
             var sum = 0
@@ -140,6 +164,12 @@ class UsrDirectorController(
             val necktie = vendorService.getNecktieById(funeral.necktieId)
             val shroud = vendorService.getShroudById(funeral.shroudId)
             val coffin = vendorService.getCoffinById(funeral.coffinId)
+            val incense = vendorService.getIncenseById(funeral.incenseId)
+            val candle = vendorService.getCandleById(funeral.candleId)
+            val ancestralTablet = vendorService.getAncestralTabletById(funeral.ancestralTabletId)
+            val condolenceMoneyBook = vendorService.getCondolenceMoneyBookById(funeral.condolenceMoneyBookId)
+            val condolenceBook = vendorService.getCondolenceBookById(funeral.condolenceBookId)
+            val pictureRibbon = vendorService.getPictureRibbonById(funeral.pictureRibbonId)
 
             // 운구차 데이터
             val coffinTransporter = vendorService.getCoffinTransporterByFuneralId(funeral.id)
@@ -169,6 +199,12 @@ class UsrDirectorController(
             neckties.add(necktie)
             shrouds.add(shroud)
             coffins.add(coffin)
+            incenses.add(incense)
+            candles.add(candle)
+            ancestralTablets.add(ancestralTablet)
+            condolenceMoneyBooks.add(condolenceMoneyBook)
+            condolenceBooks.add(condolenceBook)
+            pictureRibbons.add(pictureRibbon)
 
             // 장례별 선택된 스텐다드 데이터의 주문 상세정보
             val flowerOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
@@ -212,9 +248,39 @@ class UsrDirectorController(
                 funeral.id
             )
             val coffinOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
-                    false,
-                    "coffin",
-                    funeral.id
+                false,
+                "coffin",
+                funeral.id
+            )
+            val incenseOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
+                false,
+                "incense",
+                funeral.id
+            )
+            val candleOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
+                false,
+                "candle",
+                funeral.id
+            )
+            val ancestralTabletOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
+                false,
+                "ancestralTablet",
+                funeral.id
+            )
+            val condolenceMoneyBookOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
+                false,
+                "condolenceMoneyBook",
+                funeral.id
+            )
+            val condolenceBookOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
+                false,
+                "condolenceBook",
+                funeral.id
+            )
+            val pictureRibbonOrder = vendorService.getOrderByCompletionStatusAndDetailAndFuneralId(
+                false,
+                "pictureRibbon",
+                funeral.id
             )
 
             // 장레별 선택된 주문의 상세정보를 배열에 넣어줌
@@ -227,6 +293,12 @@ class UsrDirectorController(
             necktieOrders.add(necktieOrder)
             shroudOrders.add(shroudOrder)
             coffinOrders.add(coffinOrder)
+            incenseOrders.add(incenseOrder)
+            candleOrders.add(candleOrder)
+            ancestralTabletOrders.add(ancestralTabletOrder)
+            condolenceMoneyBookOrders.add(condolenceMoneyBookOrder)
+            condolenceBookOrders.add(condolenceBookOrder)
+            pictureRibbonOrders.add(pictureRibbonOrder)
 
             // 주문된 상품들의 합계랑 각각의 상품들의 가격을 계산해줌
             if (flower != null) {
@@ -321,6 +393,60 @@ class UsrDirectorController(
                 coffinPrices.add(formatter.format(coffinPrice))
             }
 
+            if (incense != null) {
+                incensePrice = incense.retailPrice.toInt() * incenseOrder!!.extra__incenseCnt!!
+                sum += incensePrice
+                incensePrices.add(formatter.format(incensePrice))
+            }
+            else{
+                incensePrices.add(formatter.format(incensePrice))
+            }
+
+            if (candle != null) {
+                candlePrice = candle.retailPrice.toInt() * candleOrder!!.extra__candleCnt!!
+                sum += candlePrice
+                candlePrices.add(formatter.format(candlePrice))
+            }
+            else{
+                candlePrices.add(formatter.format(candlePrice))
+            }
+
+            if (ancestralTablet != null) {
+                ancestralTabletPrice = ancestralTablet.retailPrice.toInt() * ancestralTabletOrder!!.extra__ancestralTabletCnt!!
+                sum += ancestralTabletPrice
+                ancestralTabletPrices.add(formatter.format(ancestralTabletPrice))
+            }
+            else{
+                ancestralTabletPrices.add(formatter.format(ancestralTabletPrice))
+            }
+
+            if (condolenceMoneyBook != null) {
+                condolenceMoneyBookPrice = condolenceMoneyBook.retailPrice.toInt() * condolenceMoneyBookOrder!!.extra__condolenceMoneyBookCnt!!
+                sum += condolenceMoneyBookPrice
+                condolenceMoneyBookPrices.add(formatter.format(condolenceMoneyBookPrice))
+            }
+            else{
+                condolenceMoneyBookPrices.add(formatter.format(condolenceMoneyBookPrice))
+            }
+
+            if (condolenceBook != null) {
+                condolenceBookPrice = condolenceBook.retailPrice.toInt() * condolenceBookOrder!!.extra__condolenceBookCnt!!
+                sum += condolenceBookPrice
+                condolenceBookPrices.add(formatter.format(condolenceBookPrice))
+            }
+            else{
+                condolenceBookPrices.add(formatter.format(condolenceBookPrice))
+            }
+
+            if (pictureRibbon != null) {
+                pictureRibbonPrice = pictureRibbon.retailPrice.toInt() * pictureRibbonOrder!!.extra__pictureRibbonCnt!!
+                sum += pictureRibbonPrice
+                pictureRibbonPrices.add(formatter.format(pictureRibbonPrice))
+            }
+            else{
+                pictureRibbonPrices.add(formatter.format(pictureRibbonPrice))
+            }
+
             // 장례별 총 사용액을 배열에 넣어줌
             sums.add(formatter.format(sum))
 
@@ -354,6 +480,12 @@ class UsrDirectorController(
         model.addAttribute("necktiePrices", necktiePrices)
         model.addAttribute("shroudPrices", shroudPrices)
         model.addAttribute("coffinPrices", coffinPrices)
+        model.addAttribute("incensePrices", incensePrices)
+        model.addAttribute("candlePrices", candlePrices)
+        model.addAttribute("ancestralTabletPrices", ancestralTabletPrices)
+        model.addAttribute("condolenceMoneyBookPrices", condolenceMoneyBookPrices)
+        model.addAttribute("condolenceBookPrices", condolenceBookPrices)
+        model.addAttribute("pictureRibbonPrices", pictureRibbonPrices)
         model.addAttribute("sums", sums)
         // 스탠다드
         model.addAttribute("flowers", flowers)
@@ -365,6 +497,12 @@ class UsrDirectorController(
         model.addAttribute("neckties", neckties)
         model.addAttribute("shrouds", shrouds)
         model.addAttribute("coffins", coffins)
+        model.addAttribute("incenses", incenses)
+        model.addAttribute("candles", candles)
+        model.addAttribute("ancestralTablets", ancestralTablets)
+        model.addAttribute("condolenceMoneyBooks", condolenceMoneyBooks)
+        model.addAttribute("condolenceBooks", condolenceBooks)
+        model.addAttribute("pictureRibbons", pictureRibbons)
         // 주문정보
         model.addAttribute("flowerOrders", flowerOrders)
         model.addAttribute("flowerTributeOrders", flowerTributeOrders)
@@ -375,6 +513,12 @@ class UsrDirectorController(
         model.addAttribute("necktieOrders", necktieOrders)
         model.addAttribute("shroudOrders", shroudOrders)
         model.addAttribute("coffinOrders", coffinOrders)
+        model.addAttribute("incenseOrders", incenseOrders)
+        model.addAttribute("candleOrders", candleOrders)
+        model.addAttribute("ancestralTabletOrders", ancestralTabletOrders)
+        model.addAttribute("condolenceMoneyBookOrders", condolenceMoneyBookOrders)
+        model.addAttribute("condolenceBookOrders", condolenceBookOrders)
+        model.addAttribute("pictureRibbonOrders", pictureRibbonOrders)
         // 운구차 정보
         model.addAttribute("coffinTransporters", coffinTransporters)
         model.addAttribute("coffinTransporterMembers", coffinTransporterMembers)

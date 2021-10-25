@@ -1053,12 +1053,66 @@ interface VendorRepository {
     fun insertIntoCoffinOrder(orderId: Int)
     @Select(
             """
-                SELECT *
-                FROM coffin
-                WHERE id = #{coffinId}
+            SELECT *
+            FROM coffin
+            WHERE id = #{coffinId}
             """
     )
     fun getCoffinById(coffinId: Int): Coffin?
+
+    @Select(
+            """
+            SELECT *
+            FROM incense
+            WHERE id = #{incenseId}
+            """
+    )
+    fun getIncenseById(incenseId: Int): Mortuary?
+
+    @Select(
+        """
+            SELECT *
+            FROM candle
+            WHERE id = #{candleId}
+            """
+    )
+    fun getCandleById(candleId: Int): Mortuary?
+
+    @Select(
+        """
+            SELECT *
+            FROM ancestralTablet
+            WHERE id = #{ancestralTabletId}
+            """
+    )
+    fun getAncestralTabletById(ancestralTabletId: Int): Mortuary?
+
+    @Select(
+        """
+            SELECT *
+            FROM condolenceMoneyBook
+            WHERE id = #{condolenceMoneyBookId}
+            """
+    )
+    fun getCondolenceMoneyBookById(condolenceMoneyBookId: Int): Mortuary?
+
+    @Select(
+        """
+            SELECT *
+            FROM condolenceBook
+            WHERE id = #{condolenceBookId}
+            """
+    )
+    fun getCondolenceBookById(condolenceBookId: Int): Mortuary?
+
+    @Select(
+        """
+            SELECT *
+            FROM pictureRibbon
+            WHERE id = #{pictureRibbonId}
+            """
+    )
+    fun getpictureRibbonById(pictureRibbonId: Int): Mortuary?
 
     @Update(
             """
