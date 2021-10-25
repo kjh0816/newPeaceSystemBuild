@@ -226,10 +226,11 @@ interface ClientRepository {
                 sex = #{sex},
                 deceasedHomeAddress = #{deceasedHomeAddress},
                 deceasedDate = #{deceasedDate},
+                deceasedLunar = #{deceasedLunar},
                 frontNum = #{frontNum},
                 backNum = #{backNum},
                 birth = #{birth},
-                lunar = #{lunar},
+                birthLunar = #{birthLunar},
                 funeralHall = #{funeralHallName},
                 funeralHallRoom = #{funeralHallRoom},
                 familyClan = #{familyClan},
@@ -248,7 +249,7 @@ interface ClientRepository {
                 WHERE id = #{clientId} 
             """
     )
-    fun modifyClient(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, lunar: Int, funeralMethod: Int, cremationLocation: String, buryLocation: String, cause: String, papers: Int, autopsyCheck: Boolean, casketDate: String, casketTime: String, leavingDate: String, leavingTime: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int, sex: Char)
+    fun modifyClient(funeralHallName: String, funeralHallRoom: String, deceasedName: String, frontNum: String, backNum: String, deceasedHomeAddress: String, familyClan: String, religion: String, duty: String, birth: String, deceasedDate: String, birthLunar: Char, deceasedLunar: Char, funeralMethod: Char, cremationLocation: String, buryLocation: String, cause: String, papers: Char, autopsyCheck: Char, casketDate: String, casketTime: String, leavingDate: String, leavingTime: String, chiefName: String, chiefRelation: String, chiefCellphoneNo: String, chiefAddress: String, clientId: Int, sex: Char)
 
     @Select(
             """

@@ -463,15 +463,16 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") deceasedDate: String,
 
             @RequestParam(defaultValue = "N") sex: Char,
-            @RequestParam(defaultValue = "0") lunar: Int,
-            @RequestParam(defaultValue = "0") funeralMethod: Int,
+            @RequestParam(defaultValue = "0") birthLunar: Char,
+            @RequestParam(defaultValue = "0") deceasedLunar: Char,
+            @RequestParam(defaultValue = "0") funeralMethod: Char,
 
             @RequestParam(defaultValue = "") cremationLocation: String,
             @RequestParam(defaultValue = "") buryLocation: String,
 
             @RequestParam(defaultValue = "0") cause: String,
-            @RequestParam(defaultValue = "0") papers: Int,
-            @RequestParam(defaultValue = "false") autopsyCheck: Boolean,
+            @RequestParam(defaultValue = "0") papers: Char,
+            @RequestParam(defaultValue = "false") autopsyCheck: Char,
 
             @RequestParam(defaultValue = "") casketDate: String,
             @RequestParam(defaultValue = "") casketTime: String,
@@ -483,7 +484,7 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") chiefAddress: String,
             @RequestParam(defaultValue = "0") clientId: Int
     ): String{
-        return Ut.getJsonStrFromObj(clientService.modifyFuneral(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, lunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingTime, leavingDate, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId, sex))
+        return Ut.getJsonStrFromObj(clientService.modifyFuneral(funeralHallName, funeralHallRoom, deceasedName, frontNum, backNum, deceasedHomeAddress, familyClan, religion, duty, birth, deceasedDate, birthLunar, deceasedLunar, funeralMethod, cremationLocation, buryLocation, cause, papers, autopsyCheck, casketDate, casketTime, leavingTime, leavingDate, chiefName, chiefRelation, chiefCellphoneNo, chiefAddress, clientId, sex))
     }
 
     @RequestMapping("/usr/director/addFamily")

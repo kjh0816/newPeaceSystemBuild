@@ -140,6 +140,24 @@
 
                     <label class="label">
                         <span class="label-text font-bold">
+                            고인 생년월일의 양력/음력
+                        </span>
+                    </label>
+                    <br>
+                    <div class="flex">
+                        <div class="flex">
+                            <input th:checked="${#strings.equals('M', client.birthLunar) }" value="M" type="radio" id="birthSolar" name="birthLunar" class="radio"/>
+                            <span>&nbsp;양력</span>
+                        </div>
+                        &nbsp;
+                        <div class="flex">
+                            <input th:checked="${#strings.equals('F', client.birthLunar) }" value="F" type="radio" id="birthLunar" name="birthLunar" class="radio"/>
+                            <span>&nbsp;음력</span>
+                        </div>
+                    </div>
+
+                    <label class="label">
+                        <span class="label-text font-bold">
                             고인이 돌아가신 날짜
                         </span>
                     </label>
@@ -147,18 +165,18 @@
 
                     <label class="label">
                         <span class="label-text font-bold">
-                            양력/음력
+                            기일의 양력/음력
                         </span>
                     </label>
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input value="0" type="radio" id="solar" name="lunar" class="radio"/>
+                            <input th:checked="${#strings.equals('M', client.deceasedLunar) }" value="M" type="radio" id="deceasedSolar" name="deceasedLunar" class="radio"/>
                             <span>&nbsp;양력</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input value="1" type="radio" id="lunar" name="lunar" class="radio"/>
+                            <input th:checked="${#strings.equals('F', client.deceasedLunar) }" value="F" type="radio" id="deceasedLunar" name="deceasedLunar" class="radio"/>
                             <span>&nbsp;음력</span>
                         </div>
                     </div>
@@ -175,12 +193,12 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input value="0" type="radio" id="bury" name="funeralMethod" class="radio"/>
+                            <input th:checked="${#strings.equals('M', client.funeralMethod) }" value="M" type="radio" id="bury" name="funeralMethod" class="radio"/>
                             <span>&nbsp;매장</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input value="1" type="radio" id="cremation" name="funeralMethod" class="radio"/>
+                            <input th:checked="${#strings.equals('F', client.funeralMethod) }" value="F" type="radio" id="cremation" name="funeralMethod" class="radio"/>
                             <span>&nbsp;화장</span>
                         </div>
                     </div>
@@ -241,17 +259,17 @@
                     <br>
                     <div class="flex">
                         <div class="flex">
-                            <input value="0" type="radio" id="deathDiagnosis" name="papers" class="radio"/>
+                            <input th:checked="${#strings.equals('M', client.papers) }" value="M" type="radio" id="deathDiagnosis" name="papers" class="radio"/>
                             <span>&nbsp;사망진단서&nbsp;</span>
                         </div>
                         &nbsp;
                         <div class="flex">
-                            <input value="1" type="radio" id="deathCertificate" name="papers" class="radio"/>
+                            <input th:checked="${#strings.equals('F', client.papers) }" value="F" type="radio" id="deathCertificate" name="papers" class="radio"/>
                             <span>&nbsp;사체검안서&nbsp;&nbsp;</span>
                         </div>
 
                         <div class="flex">
-                            <input type="checkbox" id="autopsied" name="autopsyCheck" class="checkbox"/>
+                            <input th:checked="${#strings.equals('M', client.autopsyCheck) }" value="M" type="radio" id="autopsyCheck" name="autopsyCheck" class="checkbox"/>
                             <span>&nbsp;검시필증</span>
                         </div>
                     </div>
