@@ -960,13 +960,25 @@ class UsrDirectorController(
 
     @RequestMapping("/usr/director/selectHelper")
     fun showSelectHelper(
-            model: Model
+            model: Model,
+            @RequestParam(defaultValue = "0") clientId: Int
     ): String{
+
+        val client = clientService.getClientById(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
+        // 이상한 URL 접근 차단
+        if(client == null || funeral == null){
+            return "usr/home/main"
+        }
+
+
 
         val departments = memberService.getDepartments()
 
 
         model.addAttribute("departments", departments)
+        model.addAttribute("funeral", funeral)
+        model.addAttribute("client", client)
 
         return "usr/director/selectHelper"
     }
