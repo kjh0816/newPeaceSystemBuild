@@ -676,7 +676,12 @@ class VendorService(
         // client 테이블에 운구차 departureAddress, destinationAddress 정보를 넣는다.
         val coffinTransporter = getCoffinTransporterByFuneralId(funeral.id)
         val funeralHall = memberRoleService.getFuneralHallByAddress(coffinTransporter!!.destinationAddress)
-        clientService.modifyClientFuneralHallDeceasedAddress(clientId, funeralHall.name, departureAddress)
+
+        // 직접입력에 의해 장례식장(funeralHall)이 조회되지 않는 경우에는 주소값을 바꿔서 입력하지 않는다.
+        if(funeralHall != null){
+            clientService.modifyClientFuneralHallDeceasedAddress(clientId, funeralHall.name, departureAddress)
+        }
+
 
 
         return ResultData.from("S-1", "운구차 출동 요청이 완료되었습니다.")
