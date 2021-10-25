@@ -888,13 +888,33 @@ class UsrDirectorController(
     fun doSelectMortuary(
         funeralId: Int,
         @RequestParam(defaultValue = "0") incenseId: Int,
-        @RequestParam(defaultValue = "0") incenseCnt: Int
+        @RequestParam(defaultValue = "0") incenseCnt: Int,
+        @RequestParam(defaultValue = "0") candleId: Int,
+        @RequestParam(defaultValue = "0") candleCnt: Int,
+        @RequestParam(defaultValue = "0") ancestralTabletId: Int,
+        @RequestParam(defaultValue = "0") ancestralTabletCnt: Int,
+        @RequestParam(defaultValue = "0") condolenceMoneyBookId: Int,
+        @RequestParam(defaultValue = "0") condolenceMoneyBookCnt: Int,
+        @RequestParam(defaultValue = "0") condolenceBookId: Int,
+        @RequestParam(defaultValue = "0") condolenceBookCnt: Int,
+        @RequestParam(defaultValue = "0") pictureRibbonId: Int,
+        @RequestParam(defaultValue = "0") pictureRibbonCnt: Int
     ): String {
         return Ut.getJsonStrFromObj(
             vendorService.modifyFuneralIntoMortuaryIds(
                 funeralId,
                 incenseId,
-                incenseCnt
+                incenseCnt,
+                candleId,
+                candleCnt,
+                ancestralTabletId,
+                ancestralTabletCnt,
+                condolenceMoneyBookId,
+                condolenceMoneyBookCnt,
+                condolenceBookId,
+                condolenceBookCnt,
+                pictureRibbonId,
+                pictureRibbonCnt
             )
         )
     }

@@ -1128,6 +1128,61 @@ interface VendorRepository {
     )
     fun insertIntoIncenseOrder(orderId: Int, incenseCnt: Int)
 
+    @Insert(
+        """
+            INSERT INTO candleOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            candleCnt = #{candleCnt}
+        """
+    )
+    fun insertIntoCandleOrder(orderId: Int, candleCnt: Int)
+
+    @Insert(
+        """
+            INSERT INTO ancestralTabletOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            ancestralTabletCnt = #{ancestralTabletCnt}
+        """
+    )
+    fun insertIntoAncestralTabletOrder(orderId: Int, ancestralTabletCnt: Int)
+
+    @Insert(
+        """
+            INSERT INTO condolenceMoneyBookOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            condolenceMoneyBookCnt = #{condolenceMoneyBookCnt}
+        """
+    )
+    fun insertIntoCondolenceMoneyBookOrder(orderId: Int, condolenceMoneyBookCnt: Int)
+
+    @Insert(
+        """
+            INSERT INTO condolenceBookOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            condolenceBookCnt = #{condolenceBookCnt}
+        """
+    )
+    fun insertIntoCondolenceBookOrder(orderId: Int, condolenceBookCnt: Int)
+
+    @Insert(
+        """
+            INSERT INTO pictureRibbonOrder
+            SET regDate = NOW(),
+            updateDate = NOW(),
+            orderId = #{orderId},
+            pictureRibbonCnt = #{pictureRibbonCnt}
+        """
+    )
+    fun insertIntoPictureRibbonOrder(orderId: Int, pictureRibbonCnt: Int)
+
     @Update(
         """
             UPDATE incenseOrder
@@ -1136,8 +1191,73 @@ interface VendorRepository {
             WHERE orderId = #{orderId}
         """
     )
-    fun modifyIncenseOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+    fun modifyIncenseOrderIntoIncenseCntByOrderId(
         incenseCnt: Int,
+        orderId: Int
+    )
+
+    @Update(
+        """
+            UPDATE candleOrder
+            SET updateDate = NOW(),
+            candleCnt = #{candleCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyCandleOrderIntoCandleCntByOrderId(
+        candleCnt: Int,
+        orderId: Int
+    )
+
+    @Update(
+        """
+            UPDATE ancestralTabletOrder
+            SET updateDate = NOW(),
+            ancestralTabletCnt = #{ancestralTabletCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyAncestralTabletOrderIntoAncestralTabletCntByOrderId(
+        ancestralTabletCnt: Int,
+        orderId: Int
+    )
+
+    @Update(
+        """
+            UPDATE condolenceMoneyBookOrder
+            SET updateDate = NOW(),
+            condolenceMoneyBookCnt = #{condolenceMoneyBookCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyCondolenceMoneyBookOrderIntoCondolenceMoneyBookCntByOrderId(
+        condolenceMoneyBookCnt: Int,
+        orderId: Int
+    )
+
+    @Update(
+        """
+            UPDATE condolenceBookOrder
+            SET updateDate = NOW(),
+            condolenceBookCnt = #{condolenceBookCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyCondolenceBookOrderIntoCondolenceBookCntByOrderId(
+        condolenceBookCnt: Int,
+        orderId: Int
+    )
+
+    @Update(
+        """
+            UPDATE pictureRibbonOrder
+            SET updateDate = NOW(),
+            pictureRibbonCnt = #{pictureRibbonCnt}
+            WHERE orderId = #{orderId}
+        """
+    )
+    fun modifyPictureRibbonOrderIntoPictureRibbonCntByOrderId(
+        pictureRibbonCnt: Int,
         orderId: Int
     )
 
@@ -1149,4 +1269,49 @@ interface VendorRepository {
         """
     )
     fun modifyFuneralIntoIncenseId(funeralId: Int, incenseId: Int)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET candleId = #{candleId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoCandleId(funeralId: Int, candleId: Int)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET ancestralTabletId = #{ancestralTabletId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoAncestralTabletId(funeralId: Int, ancestralTabletId: Int)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET condolenceMoneyBookId = #{condolenceMoneyBookId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoCondolenceMoneyBookId(funeralId: Int, condolenceMoneyBookId: Int)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET condolenceBookId = #{condolenceBookId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoCondolenceBookId(funeralId: Int, condolenceBookId: Int)
+
+    @Update(
+        """
+            UPDATE funeral 
+            SET pictureRibbonId = #{pictureRibbonId} 
+            WHERE id = #{funeralId};
+        """
+    )
+    fun modifyFuneralIntoPictureRibbonId(funeralId: Int, pictureRibbonId: Int)
 }

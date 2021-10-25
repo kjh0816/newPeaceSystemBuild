@@ -388,7 +388,17 @@ class VendorService(
     fun modifyFuneralIntoMortuaryIds(
         funeralId: Int,
         incenseId: Int,
-        incenseCnt: Int
+        incenseCnt: Int,
+        candleId: Int,
+        candleCnt: Int,
+        ancestralTabletId: Int,
+        ancestralTabletCnt: Int,
+        condolenceMoneyBookId: Int,
+        condolenceMoneyBookCnt: Int,
+        condolenceBookId: Int,
+        condolenceBookCnt: Int,
+        pictureRibbonId: Int,
+        pictureRibbonCnt: Int
     ): ResultData {
         val funeral = getFuneralById(funeralId) ?: return ResultData.from("F-1", "올바르지 않은 접근입니다.")
 
@@ -398,12 +408,32 @@ class VendorService(
         // detail List
         val details = mutableListOf<String>()
         details.add("incense")
+        details.add("candle")
+        details.add("ancestralTablet")
+        details.add("condolenceMoneyBook")
+        details.add("condolenceBook")
+        details.add("pictureRibbon")
 
         for(detail in details){
             // detail 에 따라 standardId 값을 변경
             val standardId = when (detail) {
                 "incense" -> {
                     incenseId
+                }
+                "candle" -> {
+                    candleId
+                }
+                "ancestralTablet" -> {
+                    ancestralTabletId
+                }
+                "condolenceMoneyBook" -> {
+                    condolenceMoneyBookId
+                }
+                "condolenceBook" -> {
+                    condolenceBookId
+                }
+                "pictureRibbon" -> {
+                    pictureRibbonId
                 }
                 else -> {
                     0
@@ -433,6 +463,21 @@ class VendorService(
                     "incense" -> {
                         vendorRepository.insertIntoIncenseOrder(orderId, incenseCnt)
                     }
+                    "candle" -> {
+                        vendorRepository.insertIntoCandleOrder(orderId, candleCnt)
+                    }
+                    "ancestralTablet" -> {
+                        vendorRepository.insertIntoAncestralTabletOrder(orderId, ancestralTabletCnt)
+                    }
+                    "condolenceMoneyBook" -> {
+                        vendorRepository.insertIntoCondolenceMoneyBookOrder(orderId, condolenceMoneyBookCnt)
+                    }
+                    "condolenceBook" -> {
+                        vendorRepository.insertIntoCondolenceBookOrder(orderId, condolenceBookCnt)
+                    }
+                    "pictureRibbon" -> {
+                        vendorRepository.insertIntoPictureRibbonOrder(orderId, pictureRibbonCnt)
+                    }
                 }
             }
             // DB에 order 정보가 있을경우엔 Update 문으로 Order 를 수정
@@ -447,7 +492,37 @@ class VendorService(
                 // 반복문으로 돌아가는 detail 에 따라 상세주문 테이블도 Update 해줌
                 when (detail) {
                     "incense" -> {
-                        vendorRepository.modifyIncenseOrderIntoFemaleClothCntAndFemaleClothColorByOrderId(
+                        vendorRepository.modifyIncenseOrderIntoIncenseCntByOrderId(
+                            incenseCnt,
+                            order.id
+                        )
+                    }
+                    "candle" -> {
+                        vendorRepository.modifyCandleOrderIntoCandleCntByOrderId(
+                            incenseCnt,
+                            order.id
+                        )
+                    }
+                    "ancestralTablet" -> {
+                        vendorRepository.modifyAncestralTabletOrderIntoAncestralTabletCntByOrderId(
+                            incenseCnt,
+                            order.id
+                        )
+                    }
+                    "condolenceMoneyBook" -> {
+                        vendorRepository.modifyCondolenceMoneyBookOrderIntoCondolenceMoneyBookCntByOrderId(
+                            incenseCnt,
+                            order.id
+                        )
+                    }
+                    "condolenceBook" -> {
+                        vendorRepository.modifyCondolenceBookOrderIntoCondolenceBookCntByOrderId(
+                            incenseCnt,
+                            order.id
+                        )
+                    }
+                    "pictureRibbon" -> {
+                        vendorRepository.modifyPictureRibbonOrderIntoPictureRibbonCntByOrderId(
                             incenseCnt,
                             order.id
                         )
@@ -458,6 +533,12 @@ class VendorService(
 
         // funeral 테이블에 standardId 들을 업데이트 한다.
         vendorRepository.modifyFuneralIntoIncenseId(funeralId, incenseId)
+        vendorRepository.modifyFuneralIntoCandleId(funeralId, candleId)
+        vendorRepository.modifyFuneralIntoAncestralTabletId(funeralId, ancestralTabletId)
+        vendorRepository.modifyFuneralIntoCondolenceMoneyBookId(funeralId, condolenceMoneyBookId)
+        vendorRepository.modifyFuneralIntoCondolenceBookId(funeralId, condolenceBookId)
+        vendorRepository.modifyFuneralIntoPictureRibbonId(funeralId, pictureRibbonId)
+
 
         // 연결된 물품 공급업자에게 주문 정보를 주기 위해 orderId를 성공 시, 같이 return
 

@@ -39,7 +39,6 @@ SET regDate = NOW(),
 updateDate = NOW(),
 roleName = '도우미';
 
-
 SELECT * FROM `role`;
 
 
@@ -429,6 +428,11 @@ ALTER TABLE funeral ADD COLUMN necktieId INT(10) UNSIGNED NOT NULL DEFAULT 0 COM
 ALTER TABLE funeral ADD COLUMN coffinTransporterUseStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER necktieId;
 ALTER TABLE funeral ADD COLUMN shroudId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER coffinTransporterUseStatus;
 ALTER TABLE funeral ADD COLUMN incenseId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER shroudId;
+ALTER TABLE funeral ADD COLUMN candleId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER incenseId;
+ALTER TABLE funeral ADD COLUMN ancestralTabletId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER candleId;
+ALTER TABLE funeral ADD COLUMN condolenceMoneyBookId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER ancestralTabletId;
+ALTER TABLE funeral ADD COLUMN condolenceBookId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER condolenceMoneyBookId;
+ALTER TABLE funeral ADD COLUMN pictureRibbonId INT(10) NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음' AFTER condolenceBookId;
 
 
 SELECT * FROM funeral;
@@ -643,6 +647,10 @@ CREATE TABLE coffinTransporter(
 	completionStatus TINYINT(1) NOT NULL DEFAULT 0 COMMENT '운구 완료 여부(0 = 미완료, 1 = 완료)'
 );
 
+
+
+
+
 SELECT * FROM coffinTransporter;
 
 
@@ -672,7 +680,6 @@ CREATE TABLE helperWork(
 	pay CHAR(20) NOT NULL DEFAULT '9000' COMMENT '시급',
 	additionalPay CHAR(20) NOT NULL DEFAULT '15000' COMMENT '추가근무 시급'
 );
-
 
 
 
@@ -817,6 +824,14 @@ updateDate = NOW(),
 retailPrice = '15000',
 costPrice = '6000';
 
+CREATE TABLE `candleOrder` (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	candleCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
 CREATE TABLE `ancestralTablet`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
@@ -832,6 +847,14 @@ updateDate = NOW(),
 `name` = '기본 위패',
 retailPrice = '30000',
 costPrice = '15000';
+
+CREATE TABLE `ancestralTabletOrder` (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	ancestralTabletCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
 
 CREATE TABLE `condolenceMoneyBook`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -849,6 +872,14 @@ updateDate = NOW(),
 retailPrice = '15000',
 costPrice = '8000';
 
+CREATE TABLE `condolenceMoneyBookOrder` (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	condolenceMoneyBookCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
 CREATE TABLE `condolenceBook`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
@@ -865,6 +896,14 @@ updateDate = NOW(),
 retailPrice = '15000',
 costPrice = '8000';
 
+CREATE TABLE `condolenceBookOrder` (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	condolenceBookCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
 CREATE TABLE `pictureRibbon`(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
@@ -880,6 +919,15 @@ updateDate = NOW(),
 `name` = '기본 사진리본',
 retailPrice = '5000',
 costPrice = '1500';
+
+CREATE TABLE `pictureRibbonOrder` (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	orderId INT(10) UNSIGNED NOT NULL,
+	pictureRibbonCnt INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
 # 관
 CREATE TABLE coffin(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
