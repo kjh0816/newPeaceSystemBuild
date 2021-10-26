@@ -658,12 +658,14 @@ SELECT * FROM coffinTransporter;
 
 
 # 도우미 테이블
+# funeralId, helperMemberId가 같더라도, work 관련 칼럼이 다름으로 하나로 묶어진 여러 일이 구분될 수 있다.
 CREATE TABLE helper(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	funeralId INT(10) UNSIGNED NOT NULL,
 	helperMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음',
+	helperMemberCount INT(10) UNSIGNED NOT NULL COMMENT '해당 근무에 몇 명이 필요한지',
 	department CHAR(20) NOT NULL,
 	workDate CHAR(20) NOT NULL,
 	workStartTime CHAR(10) NOT NULL COMMENT '10:00, 12:00',

@@ -64,10 +64,6 @@ function addHelper(yee){
     $('#helperList').append(htmlCodes);
 
     // 서버로 데이터 전송 및 HTML 출력 (끝)
-
-
-
-
 }
 
 
