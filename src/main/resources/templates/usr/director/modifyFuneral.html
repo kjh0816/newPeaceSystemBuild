@@ -14,8 +14,6 @@
     <!-- JS에서 Thymeleaf 변수를 사용하기 위한 부분 ( 시작 ) -->
     <script th:inline="javascript">
         var clientId = [[${client.id}]];
-
-
     </script>
     <!-- JS에서 Thymeleaf 변수를 사용하기 위한 부분 ( 끝 ) -->
     <form method="POST" onsubmit="DirectorModifyFuneral__submit(this); return false;">
