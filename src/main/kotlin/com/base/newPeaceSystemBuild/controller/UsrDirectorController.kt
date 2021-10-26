@@ -1178,16 +1178,6 @@ class UsrDirectorController(
 
     }
 
-    @RequestMapping("/usr/director/addHelper", method = [RequestMethod.POST])
-    @ResponseBody
-    fun addHelper(
-        @RequestParam(defaultValue = "0") clientId: Int,
-        @RequestParam(defaultValue = "") department: String,
-        @RequestParam(defaultValue = "") workDate: String,
-        @RequestParam(defaultValue = "") workStartTime: String,
-        @RequestParam(defaultValue = "") workFinishTime: String
-    ): String{
-        return Ut.getJsonStrFromObj(memberRoleService.addHelper(clientId, department, workDate, workStartTime, workFinishTime))
-    }
+
 
 }

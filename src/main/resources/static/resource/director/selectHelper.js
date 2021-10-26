@@ -1,4 +1,5 @@
 
+var helperCount = 0;
 
 function addHelper(yee){
 
@@ -25,35 +26,15 @@ function addHelper(yee){
         return
     }
     // 입력 여부 검사 (끝)
+    helperCount++;
+
+    alert(helperCount + '번째 도우미가 추가되었습니다.');
 
 
-    // 서버로 데이터 전송 및 HTML 출력 (시작)
+    // 실제 보여줄 데이터를 HTML에 전달
+    var htmlCodes = "<li class='flex'><input type='text' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
+    $('#helperList').append(htmlCodes);
 
-    $.ajax({
-        type: 'POST',
-        url: './addHelper',
-        dataType: 'json',
-        data: {
-        department:department,
-        workDate:workDate,
-        workStartTime:workStartTime,
-        workFinishTime:workFinishTime
-        },
-        success: function(result){
-            if ( result.success ) {
-
-                alert(result.msg);
-                // 실제 보여줄 데이터를 HTML에 전달
-                var htmlCodes = "<li class='flex'><input type='text' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
-                $('#familyList').append(htmlCodes);
-
-            }
-            else {
-                alert(result.msg);
-            }
-        }
-
-    });
     // 서버로 데이터 전송 및 HTML 출력 (끝)
 
 

@@ -85,34 +85,7 @@ class MemberRoleService(
         return memberRoleRepository.getFuneralHallNamesByDepartmentDetail(departmentDetail)
     }
 
-    fun addHelper(clientId: Int, department: String, workDate: String, workStartTime: String, workFinishTime: String): ResultData {
 
-        val client = clientService.getClientById(clientId)
-        val funeral = clientService.getFuneralByClientId(clientId)
-        if(client == null || funeral == null){
-            return ResultData.from("S-1", "잘못된 접근입니다.")
-        }
-
-        if(department.isBlank()){
-            return ResultData.from("F-2", "시/도를 선택해주십시오.")
-        }
-        if(workDate.isBlank()){
-            return ResultData.from("F-3", "근무날짜를 선택해주십시오.")
-        }
-        if(workStartTime.isBlank()){
-            return ResultData.from("F-4", "근무시작 시간을 선택해주십시오.")
-        }
-        if(workFinishTime.isBlank()){
-            return ResultData.from("F-5", "근무종료 시간을 선택해주십시오.")
-        }
-
-        // helper 테이블에 데이터 삽입
-        memberRoleRepository.insertIntoHelper(funeral.id, department, workDate, workStartTime, workFinishTime)
-        val helperId = memberRoleRepository.getLastInsertId()
-        // helperWork 테이블에 데이터 삽입
-
-
-    }
 
 
 }
