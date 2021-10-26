@@ -23,6 +23,7 @@
         }
 
 
+
     </script>
 
     <div class="p-10 card bg-base-200">
@@ -67,49 +68,57 @@
                             도우미 추가
                         </span>
                     </label>
-                    <div class="flex">
-                        <select id="department" name="department" class="select select-bordered w-1/12">
-                            <option value="" disabled selected>시/도</option>
-                            <div th:each="department : ${departments}" th:object="${department}">
-                                <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
-                            </div>
-                        </select>
-                        <input type="date" id="workDate" name="workDate" class="input input-bordered w-2/12">
-                        <select id="workStartTime" name="workStartTime" class="select select-bordered w-2/12">
-                            <option value="" disabled selected>근무시작 시간</option>
-                            <option value="10:00">10:00</option>
-                            <option value="12:00">12:00</option>
-                        </select>
-                        <select id="workFinishTime" name="workFinishTime" class="select select-bordered w-2/12">
-                            <option value="" disabled selected>근무종료 시간</option>
-                            <option value="20:00">20:00</option>
-                            <option value="22:00">22:00</option>
-                        </select>
-                        <i onclick="addHelper(this);"
-                           class='far fa-plus-square self-center text-4xl ml-3 cursor-pointer'></i>
+
+                        <div class="flex">
+                            <select id="department" name="department" class="select select-bordered w-1/12">
+                                <option value="" disabled selected>시/도</option>
+                                <div th:each="department : ${departments}" th:object="${department}">
+                                    <option th:value="*{departmentName}" th:text="*{departmentName}"></option>
+                                </div>
+                            </select>
+                            <input type="date" id="workDate1" name="workDate1" class="input input-bordered w-2/12">
+                            <select id="workStartTime1" name="workStartTime1" class="select select-bordered w-2/12">
+                                <option value="" disabled selected>근무시작 시간</option>
+                                <option value="10:00">10:00</option>
+                                <option value="12:00">12:00</option>
+                            </select>
+                            <select id="workFinishTime1" name="workFinishTime1" class="select select-bordered w-2/12">
+                                <option value="" disabled selected>근무종료 시간</option>
+                                <option value="20:00">20:00</option>
+                                <option value="22:00">22:00</option>
+                            </select>
+                            <button type="button" class="btn" onclick="addSchedule(this);">근무일정 추가</button>
+                            <input type="text" placeholder="인원 수" class="input input-bordered w-1/12">
+                            <i onclick="addHelper(this);"
+                               class='far fa-plus-square self-center text-4xl ml-3 cursor-pointer'></i>
+                        </div>
+                    <div id="scheduleList">
+                    <!-- 도우미 스케줄이 추가되는 부분 -->
                     </div>
+
                     <br>
                     <br>
                     <div class="divider font-bold">현재 추가된 도우미</div>
                     <br>
                     <form method="POST" onsubmit="DirectorCallHelper__submit(this); return false;">
-                            <div class="overflow-x-auto">
-                                <table class="table w-full">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>지역</th>
-                                        <th>근무 날짜</th>
-                                        <th>근무 시작</th>
-                                        <th>근무 종료</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="helperList">
-                                    <!-- 도우미 추가 시, 정보가 들어가는 부분 -->
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="overflow-x-auto">
+                            <table class="table w-full">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>지역</th>
+                                    <th>근무 날짜</th>
+                                    <th>근무 시작</th>
+                                    <th>근무 종료</th>
+                                    <th>인원 수</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="helperList">
+                                <!-- 도우미 추가 시, 정보가 들어가는 부분 -->
+                                </tbody>
+                            </table>
+                        </div>
                         <br>
                         <br>
                         <br>
