@@ -656,31 +656,27 @@ SELECT * FROM coffinTransporter;
 
 
 
+
 # 도우미 테이블
 CREATE TABLE helper(
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	funeralId INT(10) UNSIGNED NOT NULL,
-	memberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음'
-);
-
-
-# 도우미의 하루 근무 정보를 담는 테이블
-CREATE TABLE helperWork(
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	regDate DATETIME NOT NULL,
-	updateDate DATETIME NOT NULL,
-	funeralId INT(10) UNSIGNED NOT NULL,
-	helperMemberId INT(10) UNSIGNED NOT NULL,
+	helperMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음',
 	department CHAR(20) NOT NULL,
 	workDate CHAR(20) NOT NULL,
-	workStartTime SMALLINT(1) NOT NULL COMMENT '10, 12',
-	workFinishTime SMALLINT(1) NOT NULL COMMENT '20, 22',
+	workStartTime CHAR(10) NOT NULL COMMENT '10:00, 12:00',
+	workFinishTime CHAR(10) NOT NULL COMMENT '20:00, 22:00',
 	additionalWorkHour SMALLINT(1) NOT NULL DEFAULT 0  COMMENT'추가 근무 시간(시간 단위)',
 	pay CHAR(20) NOT NULL DEFAULT '9000' COMMENT '시급',
-	additionalPay CHAR(20) NOT NULL DEFAULT '15000' COMMENT '추가근무 시급'
+	additionalPay CHAR(20) NOT NULL DEFAULT '15000' COMMENT '추가근무 시급',
+	completionStatus TINYINT(0) NOT NULL DEFAULT 0 COMMENT '0 = 미완료, 1 = 완료'
 );
+
+
+SELECT * FROM helper;
+
 
 
 
@@ -1121,6 +1117,7 @@ size = '2단특',
 chi = '1.5',
 costPrice = '10000',
 retailPrice = '20000';
+
 
 
 

@@ -113,5 +113,26 @@ interface MemberRoleRepository {
     )
     fun getFuneralHallNamesByDepartmentDetail(departmentDetail: String): List<String>
 
+    @Insert(
+            """
+                INSERT INTO helper
+                SET regDate = NOW(),
+                updateDate = NOW(),
+                funeralId = #{funeralId},
+                department = #{department},
+                workDate = #{workDate},
+                workStartTime = #{workStartTime},
+                workFinishTime = #{workFinishTime}
+            """
+    )
+    fun insertIntoHelper(funeralId: Int, department: String, workDate: String, workStartTime: String, workFinishTime: String)
+
+    @Select(
+            """
+            SELECT LAST_INSERT_ID();
+        """
+    )
+    fun getLastInsertId(): Int
+
 
 }
