@@ -32,7 +32,7 @@ function addHelper(yee){
 
 
     // 실제 보여줄 데이터를 HTML에 전달
-    var htmlCodes = "<li class='flex'><input type='text' disabled class='input input-bordered w-1/12' value=" + familyRelation + "><input type='text' disabled class='input input-bordered w-1/12' value="+ familyName +"><input type='text' disabled class='input input-bordered w-2/12' value=" + familyCellphoneNo + "><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeFamily(this);'></i></li>";
+    var htmlCodes = "<tr><th>" + helperCount + "</th><td><input type='text' disabled class='input input-bordered' value=" + department + "></td><td><input type='text' disabled class='input input-bordered' value="+ workDate +"></td><td><input type='text' disabled class='input input-bordered' value=" + workStartTime + "></td><td><input type='text' disabled class='input input-bordered' value=" + workFinishTime + "></td><td><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
     $('#helperList').append(htmlCodes);
 
     // 서버로 데이터 전송 및 HTML 출력 (끝)

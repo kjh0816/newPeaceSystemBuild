@@ -89,13 +89,30 @@
                            class='far fa-plus-square self-center text-4xl ml-3 cursor-pointer'></i>
                     </div>
                     <br>
-
-                    <div class="divider w-1/2">현재 추가된 도우미</div>
+                    <br>
+                    <div class="divider font-bold">현재 추가된 도우미</div>
                     <br>
                     <form method="POST" onsubmit="DirectorCallHelper__submit(this); return false;">
-                        <ul id="helperList">
-                            <!-- 유가족 추가 시, 정보가 들어가는 부분 -->
-                        </ul>
+                            <div class="overflow-x-auto">
+                                <table class="table w-full">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>지역</th>
+                                        <th>근무 날짜</th>
+                                        <th>근무 시작</th>
+                                        <th>근무 종료</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="helperList">
+                                    <!-- 도우미 추가 시, 정보가 들어가는 부분 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        <br>
+                        <br>
+                        <br>
                         <button id="helper-submit" class="btn btn-outline"
                                 onclick="if ( confirm('진짜?') == false ) return false;">일괄 호출하기
                         </button>
