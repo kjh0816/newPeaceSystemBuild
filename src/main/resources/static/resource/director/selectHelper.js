@@ -2,8 +2,14 @@
 // 해당 도우미에 대한 일정 추가 시 (1번은 이미 나와있는 최소 입력값)
 var scheduleCount = 1;
 
-// 도우미 추가 완료 시
+// 일괄 호출 시, 이중 반복문의 j 값이 된다.
+var maxScheduleCount = 0;
+
+// 도우미 추가 완료 시 (일괄 호출 시, 이중 반복문의 i 값이 된다.)
 var helperCount = 0;
+
+// 호출할 총 도우미 수
+var totalHelperNum = 0;
 
 function isDefined(variable){
     return variable !== 'undefined';
@@ -62,10 +68,12 @@ function addHelper(yee){
 
     // 추가된 도우미 수만큼
     helperCount++;
+    // helperNum은 String 타입이므로 parsing해서 더해준다.
+    totalHelperNum += parseInt(helperNum);
 
 
 
-    alert(helperNum + '명의 도우미가 추가되었습니다. (현재 총 ' + helperCount+'명)');
+    alert(helperNum + '명의 도우미가 추가되었습니다. (현재 총 ' + totalHelperNum+'명)');
 
     var actualScheduleCount = 1;
 
@@ -79,6 +87,12 @@ function addHelper(yee){
             }
 
         }
+        // i가 최대값에 도달했을 때, i가 maxScheduleCount 보다 크다면, maxScheduleCount에 i를 할당한다.
+        if(i == scheduleCount){
+            if(i > maxScheduleCount){
+                maxScheduleCount = i;
+            }
+        }
     }
 
 
@@ -88,7 +102,7 @@ function addHelper(yee){
     // ex) workDate1-2 ( 1 = helperCount, 2 = actualScheduleCount )
     // (2) 도우미 공통 데이터인 경우(helperCount, department, helperNum)
     // ex) department1 ( 1 = helperCount )
-    var htmlCodes = "<tr><th rowspan='"+ actualScheduleCount +"'>" + helperCount + "</th><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
+    var htmlCodes = "<tr><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
     $('#helperList').append(htmlCodes);
 
 
@@ -107,8 +121,7 @@ function addHelper(yee){
 
         }
     }
-    // br 로 단락을 구분
-    $('#helperList').append("<br><br>");
+
 
     // HTML 출력 (끝)
 
@@ -118,10 +131,16 @@ function addHelper(yee){
     scheduleCount = 1;
 
 
+
+}
+
+function removeHelper(yee){
+    $(yee).closest("tr").remove();
 }
 
 
 // 제출 시 이루어져야하는 것들 (1) 도우미 개인마다 다른 문자 메시지 전송 (일괄 호출)
 function DirectorSelectHelper__submit(form){
+    if ( confirm("현재 입력된 " + totalHelperNum + "명의 도우미를 호출하시겠습니까?") == false ) return false;
 
 }
