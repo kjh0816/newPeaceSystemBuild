@@ -141,6 +141,23 @@ function removeHelper(yee){
 
 // 제출 시 이루어져야하는 것들 (1) 도우미 개인마다 다른 문자 메시지 전송 (일괄 호출)
 function DirectorSelectHelper__submit(form){
+    if(totalHelperNum == 0){
+         alert('입력된 도우미 근무 정보가 없습니다.')
+         return;
+    }
     if ( confirm("현재 입력된 " + totalHelperNum + "명의 도우미를 호출하시겠습니까?") == false ) return false;
+
+
+
+    var list = new Array();
+
+    for(i = 1; i <= helperCount; i++){
+        for(j = 1; j <= maxScheduleCount; j++){
+            if($("#department" + i)){
+                eval("var count"+i+"-"+j+"=30");
+            }
+
+        }
+    }
 
 }
