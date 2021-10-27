@@ -4,11 +4,16 @@ var scheduleCount = 1;
 
 // 도우미 추가 완료 시
 var helperCount = 0;
+
+function isDefined(variable){
+    return variable !== 'undefined';
+}
+
 function addSchedule(yee){
 
     scheduleCount++;
 
-    var schedule = "<div class='flex' id='scheduleBlock'><div class='w-1/12'></div><input type='date' id='workDate" + scheduleCount + "' name='workDate"+scheduleCount+"' class='input input-bordered w-2/12'><select id='workStartTime"+scheduleCount+"' name='workStartTime"+scheduleCount+"' class='select select-bordered w-2/12'><option value='' disabled selected>근무시작 시간</option><option value='10:00'>10:00</option><option value='12:00'>12:00</option></select><select id='workFinishTime"+scheduleCount+"' name='workFinishTime"+scheduleCount+"' class='select select-bordered w-2/12'><option value='' disabled selected>근무종료 시간</option><option value='20:00'>20:00</option><option value='22:00'>22:00</option></select><button type='button' class='btn' onclick='addSchedule(this);'>근무일정 추가</button><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeSchedule(this);'></i></div>"
+    var schedule = "<div class='flex' id='scheduleBlock'><div class='w-1/12'></div><input type='date' id='workDate" + scheduleCount + "' name='workDate"+scheduleCount+"' class='input input-bordered w-2/12'><select id='workStartTime"+scheduleCount+"' name='workStartTime"+scheduleCount+"' class='select select-bordered w-2/12'><option value='' disabled selected>근무시작 시간</option><option value='10:00'>10:00</option><option value='12:00'>12:00</option></select><select id='workFinishTime"+scheduleCount+"' name='workFinishTime"+scheduleCount+"' class='select select-bordered w-2/12'><option value='' disabled selected>근무종료 시간</option><option value='20:00'>20:00</option><option value='22:00'>22:00</option></select><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeSchedule(this);'></i></div>"
 
     $('#scheduleList').append(schedule);
 
@@ -22,19 +27,18 @@ function removeSchedule(yee){
 function addHelper(yee){
 
     var department = $(yee).siblings(document.getElementById('department')).val();
-    var workDate = $(yee).prev().prev().prev().prev().prev().val();
-    var workStartTime = $(yee).prev().prev().prev().prev().val();
-    var workFinishTime = $(yee).prev().prev().prev().val();
+    var workDate1 = $(yee).prev().prev().prev().prev().prev().val();
+    var workStartTime1 = $(yee).prev().prev().prev().prev().val();
+    var workFinishTime1 = $(yee).prev().prev().prev().val();
     var helperNum = $(yee).prev().val();
-
 
     // 입력 여부 검사 (시작) ※ 필수 입력값은 첫번째 로우로만 한다.
     if(department == null){
         alert('시도를 선택해주십시오.');
         return
     }
-    if(workDate1.length == 0 || workDate == null){
-        alert('근무날짜를 선택해주십시오.')
+    if(workDate1.length == 0 || workDate1 == null){
+        alert('근무날짜를 선택해주십시오.');
         return
     }
     if(workStartTime1 == null){
@@ -54,18 +58,66 @@ function addHelper(yee){
         return
     }
     // 입력 여부 검사 (끝)
+
+
+    // 추가된 도우미 수만큼
     helperCount++;
 
-    alert(helperCount + '번째 도우미가 추가되었습니다.');
 
 
-    // 실제 보여줄 데이터를 HTML에 전달
-    var htmlCodes = "<tr><th rowspan='2'>" + helperCount + "</th><td rowspan='2'><input type='text' disabled class='input input-bordered' value=" + department + "></td><td><input type='text' disabled class='input input-bordered' value="+ workDate +"></td><td><input type='text' disabled class='input input-bordered' value=" + workStartTime + "></td><td><input type='text' disabled class='input input-bordered' value=" + workFinishTime + "></td><td rowspan='2'><input type='text' disabled class='input input-bordered' value=" + helperNum + "></td><td rowspan='2'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
+    alert(helperNum + '명의 도우미가 추가되었습니다. (현재 총 ' + helperCount+'명)');
+
+    var actualScheduleCount = 1;
+
+    // 실제 입력된 스케줄의 수를 파악한다(이후, rowspan의 값이 된다.) workDate, workStartTime, workFinishTime 이 모두 입력된 경우만
+    for(i = 2; i <= scheduleCount; i++){
+        // workDate의 길이를 따지기 위해서는 해당 값이 define 돼야하므로, define이 됐는지 먼저 따진다.
+        if(isDefined($('#workDate'+i).val()) && isDefined($('#workStartTime'+i).val()) && isDefined($('#workFinishTime'+i).val())){
+            // 각 id 가 define 돼도, 값이 없을 경우, 유효하지 않다.
+            if($('#workDate'+i).val().length != 0 && $('#workStartTime'+i).val() != null && $('#workFinishTime'+i).val() != null){
+                actualScheduleCount++;
+            }
+
+        }
+    }
+
+
+    // 출력 (시작)
+    // 하나의 도우미 단락을 생성할 때, 고유 id를 부여해준다
+    // (1) 각각의 데이터가 다른 경우,
+    // ex) workDate1-2 ( 1 = helperCount, 2 = actualScheduleCount )
+    // (2) 도우미 공통 데이터인 경우(helperCount, department, helperNum)
+    // ex) department1 ( 1 = helperCount )
+    var htmlCodes = "<tr><th rowspan='"+ actualScheduleCount +"'>" + helperCount + "</th><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
     $('#helperList').append(htmlCodes);
 
-    var htmlCodes2 = "<tr><td><input type='text' disabled class='input input-bordered' value="+ workDate +"></td><td><input type='text' disabled class='input input-bordered' value=" + workStartTime + "></td><td><input type='text' disabled class='input input-bordered' value=" + workFinishTime + "></td></tr>";
-    $('#helperList').append(htmlCodes2);
-    // 서버로 데이터 전송 및 HTML 출력 (끝)
+
+    // 추가된 스케줄들을 반복문을 통해 갯수만큼 출력한다.
+
+    for(i = 2; i <= scheduleCount; i++){
+        if(isDefined($('#workDate'+i).val()) && isDefined($('#workStartTime'+i).val()) && isDefined($('#workFinishTime'+i).val())){
+            if($('#workDate'+i).val().length != 0 && $('#workStartTime'+i).val() != null && $('#workFinishTime'+i).val() != null){
+                var workDate = $('#workDate'+i).val();
+                var workStartTime = $('#workStartTime'+i).val();
+                var workFinishTime = $('#workFinishTime'+i).val();
+
+                var htmlCodes2 = "<tr><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"-"+i+"' value='"+ workDate +"'></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"-"+i+"' value='" + workStartTime + "'></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"-"+i+"' value='" + workFinishTime + "'></td></tr>";
+                $('#helperList').append(htmlCodes2);
+            }
+
+        }
+    }
+    // br 로 단락을 구분
+    $('#helperList').append("<br><br>");
+
+    // HTML 출력 (끝)
+
+    // 기존 입력된 근무일정들을 지운다.
+    $('#scheduleList').empty();
+    // 추가된 스케줄 전역변수를 1로 초기화한다.
+    scheduleCount = 1;
+
+
 }
 
 
