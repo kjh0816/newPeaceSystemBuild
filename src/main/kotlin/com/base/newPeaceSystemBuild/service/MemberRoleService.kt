@@ -85,7 +85,9 @@ class MemberRoleService(
         return memberRoleRepository.getFuneralHallNamesByDepartmentDetail(departmentDetail)
     }
 
-
+    fun doSelectHelper(clientId: Int, jsonStr: String): ResultData {
+        return ResultData.from("S-1", "Tlqkf")
+    }
 
 
 }

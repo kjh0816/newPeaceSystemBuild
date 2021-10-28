@@ -129,7 +129,6 @@ function addHelper(yee){
     $('#scheduleList').empty();
     // 추가된 스케줄 전역변수를 1로 초기화한다.
     scheduleCount = 1;
-    console.log('maxScheduleCount: ' + maxScheduleCount);
 
 
 
@@ -152,49 +151,64 @@ function DirectorSelectHelper__submit(form){
 
 
 
-var list = new Array();
+    var list = new Array();
 
-for(i = 1; i <= helperCount; i++){
-    for(j = 1; j <= maxScheduleCount; j++){
-        if(isDefined( $("#department" + i).val() ) ){
+    for(i = 1; i <= helperCount; i++){
+        for(j = 1; j <= maxScheduleCount; j++){
+            if(isDefined( $("#department" + i).val() ) ){
 
-            console.log('i = ' + i)
-            console.log('j = ' + j)
+                console.log('i = ' + i)
+                console.log('j = ' + j)
 
-            var lowerList = new Array();
-            var obj = new Object();
+                var lowerList = new Array();
+                var obj = new Object();
 
-            var department = $('#department'+i+'-1').val();
-            var workDate = $('#workDate'+i+'-'+j).val();
-            var workStartTime = $('#workStartTime'+i+'-'+j).val();
-            var workFinishTime = $('#workFinishTime'+i+'-'+j).val();
-            var helperNum = $('#helperNum'+i+'-1').val();
+                var department = $('#department'+i+'-1').val();
+                var workDate = $('#workDate'+i+'-'+j).val();
+                var workStartTime = $('#workStartTime'+i+'-'+j).val();
+                var workFinishTime = $('#workFinishTime'+i+'-'+j).val();
+                var helperNum = $('#helperNum'+i+'-1').val();
 
-            obj = {
-            department : department,
-            workDate : workDate,
-            workStartTime : workStartTime,
-            workFinishTime : workFinishTime,
-            helperNum : helperNum,
-            };
+                obj = {
+                    department : department,
+                    workDate : workDate,
+                    workStartTime : workStartTime,
+                    workFinishTime : workFinishTime,
+                    helperNum : helperNum,
+                };
 
-            console.log('departmentObj: ' + obj.department)
-            console.log('workDateObj: ' + obj.workDate)
-            console.log('workStartTimeObj: ' + obj.workStartTime)
-            console.log('workFinishTimeObj: ' + obj.workFinishTime)
-            console.log('helperNumObj: ' + obj.helperNum)
+                console.log('departmentObj: ' + obj.department)
+                console.log('workDateObj: ' + obj.workDate)
+                console.log('workStartTimeObj: ' + obj.workStartTime)
+                console.log('workFinishTimeObj: ' + obj.workFinishTime)
+                console.log('helperNumObj: ' + obj.helperNum)
 
 
-            lowerList.push(obj);
-            list.push(lowerList);
-            console.log('lowerList: ' + lowerList)
-            console.log('list: ' + list)
+                lowerList.push(obj);
+                list.push(lowerList);
+                console.log('lowerList: ' + lowerList)
+                console.log('list: ' + list)
+            }
         }
     }
-}
+    var jsonStr = JSON.stringify(list)
 
 console.log('최종 list: ' + list)
 console.log('최종 Json: ' + JSON.stringify(list))
+
+    $.ajax({
+        type: 'POST',
+        url: './doSelectHelper',
+        dataType: 'json',
+        data:{
+            clientId:clientId,
+            jsonStr:jsonStr
+        },
+        success: function(result){
+            alert('꿹');
+
+        }
+    });
 
 }
 

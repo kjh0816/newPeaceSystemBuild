@@ -1178,6 +1178,28 @@ class UsrDirectorController(
 
     }
 
+    @RequestMapping("/usr/director/doSelectHelper", method = [RequestMethod.POST])
+    @ResponseBody
+    fun doSelectHelper(
+            @RequestParam(defaultValue = "0") clientId: Int,
+            @RequestParam(defaultValue = "") jsonStr: String
+    ): String{
+
+        println("clientId: $clientId")
+
+        println("jsonStr $jsonStr")
+        println("jsonStr $jsonStr")
+        println("jsonStr $jsonStr")
+        println("jsonStr $jsonStr")
+        println("jsonStr $jsonStr")
+        println("jsonStr $jsonStr")
+        println("jsonStr $jsonStr")
+
+
+
+        return Ut.getJsonStrFromObj(memberRoleService.doSelectHelper(clientId, jsonStr))
+    }
+
 
 
 }
