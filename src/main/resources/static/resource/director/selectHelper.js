@@ -3,7 +3,7 @@
 var scheduleCount = 1;
 
 // 일괄 호출 시, 이중 반복문의 j 값이 된다.
-var maxScheduleCount = 0;
+var maxScheduleCount = 1;
 
 // 도우미 추가 완료 시 (일괄 호출 시, 이중 반복문의 i 값이 된다.)
 var helperCount = 0;
@@ -102,7 +102,7 @@ function addHelper(yee){
     // ex) workDate1-2 ( 1 = helperCount, 2 = actualScheduleCount )
     // (2) 도우미 공통 데이터인 경우(helperCount, department, helperNum)
     // ex) department1 ( 1 = helperCount )
-    var htmlCodes = "<tr><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
+    var htmlCodes = "<tr><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"-1' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"-1' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"-1' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"-1' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"-1' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
     $('#helperList').append(htmlCodes);
 
 
@@ -129,6 +129,7 @@ function addHelper(yee){
     $('#scheduleList').empty();
     // 추가된 스케줄 전역변수를 1로 초기화한다.
     scheduleCount = 1;
+    console.log('maxScheduleCount: ' + maxScheduleCount);
 
 
 
@@ -137,6 +138,8 @@ function addHelper(yee){
 function removeHelper(yee){
     $(yee).closest("tr").remove();
 }
+
+
 
 
 // 제출 시 이루어져야하는 것들 (1) 도우미 개인마다 다른 문자 메시지 전송 (일괄 호출)
@@ -149,15 +152,49 @@ function DirectorSelectHelper__submit(form){
 
 
 
-    var list = new Array();
+var list = new Array();
 
-    for(i = 1; i <= helperCount; i++){
-        for(j = 1; j <= maxScheduleCount; j++){
-            if($("#department" + i)){
-                eval("var count"+i+"-"+j+"=30");
-            }
+for(i = 1; i <= helperCount; i++){
+    for(j = 1; j <= maxScheduleCount; j++){
+        if(isDefined( $("#department" + i).val() ) ){
 
+            console.log('i = ' + i)
+            console.log('j = ' + j)
+
+            var lowerList = new Array();
+            var obj = new Object();
+
+            var department = $('#department'+i+'-1').val();
+            var workDate = $('#workDate'+i+'-'+j).val();
+            var workStartTime = $('#workStartTime'+i+'-'+j).val();
+            var workFinishTime = $('#workFinishTime'+i+'-'+j).val();
+            var helperNum = $('#helperNum'+i+'-1').val();
+
+            obj = {
+            department : department,
+            workDate : workDate,
+            workStartTime : workStartTime,
+            workFinishTime : workFinishTime,
+            helperNum : helperNum,
+            };
+
+            console.log('departmentObj: ' + obj.department)
+            console.log('workDateObj: ' + obj.workDate)
+            console.log('workStartTimeObj: ' + obj.workStartTime)
+            console.log('workFinishTimeObj: ' + obj.workFinishTime)
+            console.log('helperNumObj: ' + obj.helperNum)
+
+
+            lowerList.push(obj);
+            list.push(lowerList);
+            console.log('lowerList: ' + lowerList)
+            console.log('list: ' + list)
         }
     }
+}
+
+console.log('최종 list: ' + list)
+console.log('최종 Json: ' + JSON.stringify(list))
 
 }
+
