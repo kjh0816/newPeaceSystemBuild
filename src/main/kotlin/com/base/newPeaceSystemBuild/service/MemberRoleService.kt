@@ -96,6 +96,15 @@ class MemberRoleService(
 
         val str = jsonStr.drop(2).dropLast(2)
         val jsonStringsArr = str.split("],[")
+
+        println("jsonStringsArr: $jsonStringsArr")
+        println("jsonStringsArr: $jsonStringsArr")
+        println("jsonStringsArr: $jsonStringsArr")
+        println("jsonStringsArr: $jsonStringsArr")
+        println("jsonStringsArr: $jsonStringsArr")
+        println("jsonStringsArr: $jsonStringsArr")
+
+
         for(i in jsonStringsArr.indices){
 
         }

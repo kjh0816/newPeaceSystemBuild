@@ -174,7 +174,7 @@ function DirectorSelectHelper__submit(form){
                     var workDate = $('#workDate'+i+'-'+j).val();
                     var workStartTime = $('#workStartTime'+i+'-'+j).val();
                     var workFinishTime = $('#workFinishTime'+i+'-'+j).val();
-                    var helperNum = $('#helperNum'+i+'-1').val();
+                    var helperNum = $('#helperNum'+i+'-1').val();z
 
                     obj = {
                         packageCount : packageCount,
