@@ -99,28 +99,19 @@ class MemberRoleService(
         // 순수 Json 형식으로 정제한다.
         val str = jsonStr.drop(1).dropLast(5)
         val jsonStringsArr = str.split(",\"/\",")
+        
 
         for(jsonStringArr in jsonStringsArr){
-            println("jsonStringArr: $jsonStringArr")
+            val helpersTemp = mutableListOf<HelperTemp>()
+
+            val str1 = jsonStringArr.drop(1) + ",["
+
+            val objBits = str1.split("],[")
+
+            // 마지막 String 배열은 항상 빈 값이므로 지운다.
+            objBits.drop(objBits.size - 1)
+
         }
-
-
-
-        val helpersTemp = mutableListOf<HelperTemp>()
-
-
-        // helperTemp 객체로 변환해서 list 에 담는다.
-        for(i in jsonStringsArr.indices){
-            val helperTemp = Ut.getObjFromJsonStr<HelperTemp>(jsonStringsArr[i])
-
-            // i + 1이 jsonStringsArr 의 size 를 초과하지 않을 때
-            if(i + 1 != jsonStringsArr.size){
-
-            }
-
-            helpersTemp.add(helperTemp)
-        }
-
 
         
         return ResultData.from("S-1", "완료")
