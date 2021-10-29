@@ -1185,7 +1185,6 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") jsonStr: String
     ): String{
 
-        println("clientId: $clientId")
 
         println("jsonStr $jsonStr")
         println("jsonStr $jsonStr")

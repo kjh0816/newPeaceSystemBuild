@@ -8,11 +8,13 @@ var maxScheduleCount = 1;
 // 도우미 추가 완료 시 (일괄 호출 시, 이중 반복문의 i 값이 된다.)
 var helperCount = 0;
 
+// 같은 일감으로 묶을 수 있는 번호
+var packageCount = 1;
 // 호출할 총 도우미 수
 var totalHelperNum = 0;
 
-function isDefined(variable){
-    return variable !== 'undefined';
+function isDefined(str){
+    return str !== undefined;
 }
 
 function addSchedule(yee){
@@ -77,6 +79,8 @@ function addHelper(yee){
 
     var actualScheduleCount = 1;
 
+
+
     // 실제 입력된 스케줄의 수를 파악한다(이후, rowspan의 값이 된다.) workDate, workStartTime, workFinishTime 이 모두 입력된 경우만
     for(i = 2; i <= scheduleCount; i++){
         // workDate의 길이를 따지기 위해서는 해당 값이 define 돼야하므로, define이 됐는지 먼저 따진다.
@@ -102,7 +106,7 @@ function addHelper(yee){
     // ex) workDate1-2 ( 1 = helperCount, 2 = actualScheduleCount )
     // (2) 도우미 공통 데이터인 경우(helperCount, department, helperNum)
     // ex) department1 ( 1 = helperCount )
-    var htmlCodes = "<tr><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"-1' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"-1' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"-1' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"-1' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"-1' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
+    var htmlCodes = "<tr><th class='hidden' rowspan='"+ actualScheduleCount +"'><input type='hidden' disabled class='input input-bordered' id='packageCount="+packageCount+"' value='" + packageCount + "'></th><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"-1' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"-1' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"-1' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"-1' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"-1' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
     $('#helperList').append(htmlCodes);
 
 
@@ -110,6 +114,7 @@ function addHelper(yee){
 
     for(i = 2; i <= scheduleCount; i++){
         if(isDefined($('#workDate'+i).val()) && isDefined($('#workStartTime'+i).val()) && isDefined($('#workFinishTime'+i).val())){
+
             if($('#workDate'+i).val().length != 0 && $('#workStartTime'+i).val() != null && $('#workFinishTime'+i).val() != null){
                 var workDate = $('#workDate'+i).val();
                 var workStartTime = $('#workStartTime'+i).val();
@@ -129,6 +134,7 @@ function addHelper(yee){
     $('#scheduleList').empty();
     // 추가된 스케줄 전역변수를 1로 초기화한다.
     scheduleCount = 1;
+    packageCount++;
 
 
 
@@ -150,18 +156,6 @@ function DirectorSelectHelper__submit(form){
     }
     if ( confirm("현재 입력된 " + totalHelperNum + "명의 도우미를 호출하시겠습니까?") == false ) return false;
 
-    $.ajax({
-        type: 'POST',
-        url: './doSelectHelper',
-        dataType: 'json',
-        data:{
-            clientId:clientId
-        },
-        success:function(result){
-            alert('컨트롤러 실행됨');
-        }
-    });
-    return;
 
     var list = new Array();
 
@@ -169,12 +163,10 @@ function DirectorSelectHelper__submit(form){
         for(j = 1; j <= maxScheduleCount; j++){
             if(isDefined( $("#department" + i).val() ) ){
 
-                console.log('i = ' + i)
-                console.log('j = ' + j)
-
                 var lowerList = new Array();
                 var obj = new Object();
 
+                var packageCount = $('#packageCount'+i).val();
                 var department = $('#department'+i+'-1').val();
                 var workDate = $('#workDate'+i+'-'+j).val();
                 var workStartTime = $('#workStartTime'+i+'-'+j).val();
@@ -182,6 +174,7 @@ function DirectorSelectHelper__submit(form){
                 var helperNum = $('#helperNum'+i+'-1').val();
 
                 obj = {
+                    packageCount : packageCount
                     department : department,
                     workDate : workDate,
                     workStartTime : workStartTime,
@@ -189,24 +182,15 @@ function DirectorSelectHelper__submit(form){
                     helperNum : helperNum,
                 };
 
-                console.log('departmentObj: ' + obj.department)
-                console.log('workDateObj: ' + obj.workDate)
-                console.log('workStartTimeObj: ' + obj.workStartTime)
-                console.log('workFinishTimeObj: ' + obj.workFinishTime)
-                console.log('helperNumObj: ' + obj.helperNum)
-
 
                 lowerList.push(obj);
                 list.push(lowerList);
-                console.log('lowerList: ' + lowerList)
-                console.log('list: ' + list)
+
             }
         }
     }
     var jsonStr = JSON.stringify(list)
 
-console.log('최종 list: ' + list)
-console.log('최종 Json: ' + JSON.stringify(list))
 
     $.ajax({
         type: 'POST',
@@ -217,7 +201,11 @@ console.log('최종 Json: ' + JSON.stringify(list))
             jsonStr:jsonStr
         },
         success: function(result){
-            alert('꿹');
+            if(result.success){
+
+            }else{
+
+            }
         }
     });
 

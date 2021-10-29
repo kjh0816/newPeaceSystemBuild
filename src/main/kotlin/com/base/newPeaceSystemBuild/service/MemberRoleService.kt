@@ -1,6 +1,7 @@
 package com.base.newPeaceSystemBuild.service
 
 import com.base.newPeaceSystemBuild.repository.MemberRoleRepository
+import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.FuneralHall
@@ -86,7 +87,21 @@ class MemberRoleService(
     }
 
     fun doSelectHelper(clientId: Int, jsonStr: String): ResultData {
-        return ResultData.from("S-1", "Tlqkf")
+
+        val client = clientService.getClientById(clientId)
+        val funeral = clientService.getFuneralByClientId(clientId)
+        if(client == null || funeral == null){
+            return ResultData.from("F-1", "")
+        }
+
+        val str = jsonStr.drop(1).dropLast(1)
+        var jsonStringsArr = str.split("],[")
+        for(jsonStringArr in jsonStringsArr){
+
+        }
+        
+        return ResultData.from("S-1", "")
+
     }
 
 
