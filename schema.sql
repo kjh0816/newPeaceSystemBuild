@@ -666,6 +666,7 @@ CREATE TABLE helper(
 	funeralId INT(10) UNSIGNED NOT NULL,
 	helperMemberId INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 = 아직 정해지지 않음',
 	helperMemberCount INT(10) UNSIGNED NOT NULL COMMENT '해당 근무에 몇 명이 필요한지',
+	helperPackageId INT(10) UNSIGNED NOT NULL COMMENT '일감을 묶어주기 위한 칼럼',
 	department CHAR(20) NOT NULL,
 	workDate CHAR(20) NOT NULL,
 	workStartTime CHAR(10) NOT NULL COMMENT '10:00, 12:00',
@@ -676,8 +677,15 @@ CREATE TABLE helper(
 	completionStatus TINYINT(0) NOT NULL DEFAULT 0 COMMENT '0 = 미완료, 1 = 완료'
 );
 
-
 SELECT * FROM helper;
+
+
+# helper 테이블에서 분리된 업무들을 묶어주기 위한 테이블
+CREATE TABLE helperPackage(
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL
+);
 
 
 

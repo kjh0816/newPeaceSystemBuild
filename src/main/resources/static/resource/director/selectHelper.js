@@ -106,7 +106,7 @@ function addHelper(yee){
     // ex) workDate1-2 ( 1 = helperCount, 2 = actualScheduleCount )
     // (2) 도우미 공통 데이터인 경우(helperCount, department, helperNum)
     // ex) department1 ( 1 = helperCount )
-    var htmlCodes = "<tr><th class='hidden' rowspan='"+ actualScheduleCount +"'><input type='hidden' disabled class='input input-bordered' id='packageCount="+packageCount+"' value='" + packageCount + "'></th><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"-1' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"-1' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"-1' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"-1' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"-1' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
+    var htmlCodes = "<tr><th class='hidden' rowspan='"+ actualScheduleCount +"'><input type='hidden' disabled class='input input-bordered' id='packageCount"+packageCount+"' value='" + packageCount + "'></th><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='department"+helperCount+"-1' value='" + department + "'></td><td><input type='text' disabled class='input input-bordered' id='workDate"+helperCount+"-1' value="+ workDate1 +"></td><td><input type='text' disabled class='input input-bordered' id='workStartTime"+helperCount+"-1' value=" + workStartTime1 + "></td><td><input type='text' disabled class='input input-bordered' id='workFinishTime"+helperCount+"-1' value=" + workFinishTime1 + "></td><td rowspan='"+ actualScheduleCount +"'><input type='text' disabled class='input input-bordered' id='helperNum"+helperCount+"-1' value=" + helperNum + "></td><td rowspan='"+ actualScheduleCount +"'><i class='fas fa-times self-center text-4xl ml-3 cursor-pointer' onclick='removeHelper(this);'></i></td></tr>";
     $('#helperList').append(htmlCodes);
 
 
@@ -161,31 +161,33 @@ function DirectorSelectHelper__submit(form){
 
     for(i = 1; i <= helperCount; i++){
         for(j = 1; j <= maxScheduleCount; j++){
-            if(isDefined( $("#department" + i).val() ) ){
+            // package 존재 여부 체크
+            if(isDefined($("#department"+i+'-1').val())){
+                // package 내, 세부 데이터 존재 여부 체크
+                if(isDefined($('#workDate'+i+'-'+j).val())){
 
-                var lowerList = new Array();
-                var obj = new Object();
+                    var lowerList = new Array();
+                    var obj = new Object();
 
-                var packageCount = $('#packageCount'+i).val();
-                var department = $('#department'+i+'-1').val();
-                var workDate = $('#workDate'+i+'-'+j).val();
-                var workStartTime = $('#workStartTime'+i+'-'+j).val();
-                var workFinishTime = $('#workFinishTime'+i+'-'+j).val();
-                var helperNum = $('#helperNum'+i+'-1').val();
+                    var packageCount = $('#packageCount'+i).val();
+                    var department = $('#department'+i+'-1').val();
+                    var workDate = $('#workDate'+i+'-'+j).val();
+                    var workStartTime = $('#workStartTime'+i+'-'+j).val();
+                    var workFinishTime = $('#workFinishTime'+i+'-'+j).val();
+                    var helperNum = $('#helperNum'+i+'-1').val();
 
-                obj = {
-                    packageCount : packageCount
-                    department : department,
-                    workDate : workDate,
-                    workStartTime : workStartTime,
-                    workFinishTime : workFinishTime,
-                    helperNum : helperNum,
-                };
+                    obj = {
+                        packageCount : packageCount,
+                        department : department,
+                        workDate : workDate,
+                        workStartTime : workStartTime,
+                        workFinishTime : workFinishTime,
+                        helperNum : helperNum
+                    };
 
-
-                lowerList.push(obj);
-                list.push(lowerList);
-
+                    lowerList.push(obj);
+                    list.push(lowerList);
+                }
             }
         }
     }

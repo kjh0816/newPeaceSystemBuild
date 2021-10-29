@@ -91,16 +91,16 @@ class MemberRoleService(
         val client = clientService.getClientById(clientId)
         val funeral = clientService.getFuneralByClientId(clientId)
         if(client == null || funeral == null){
-            return ResultData.from("F-1", "")
+            return ResultData.from("F-1", "잘못된 접근입니다.")
         }
 
-        val str = jsonStr.drop(1).dropLast(1)
-        var jsonStringsArr = str.split("],[")
-        for(jsonStringArr in jsonStringsArr){
+        val str = jsonStr.drop(2).dropLast(2)
+        val jsonStringsArr = str.split("],[")
+        for(i in jsonStringsArr.indices){
 
         }
         
-        return ResultData.from("S-1", "")
+        return ResultData.from("S-1", "완료")
 
     }
 

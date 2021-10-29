@@ -7,6 +7,7 @@ data class Helper(
         val funeralId: Int,
         val helperMemberId: Int,
         val helperMemberCount: Int,
+        val helperPackageId: Int,
         val department: String,
         val workDate: String,
         val workStartTime: String,
