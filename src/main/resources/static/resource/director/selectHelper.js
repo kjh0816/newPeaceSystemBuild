@@ -73,7 +73,7 @@ function addHelper(yee){
 
 
 
-    alert(helperNum + '명의 도우미가 추가되었습니다. (현재 총 ' + totalHelperNum+'명)');
+    alert(helperNum + '명의 도우미가 추가되었습니다.');
 
     var actualScheduleCount = 1;
 
@@ -135,6 +135,7 @@ function addHelper(yee){
 }
 
 function removeHelper(yee){
+
     $(yee).closest("tr").remove();
 }
 
@@ -149,7 +150,18 @@ function DirectorSelectHelper__submit(form){
     }
     if ( confirm("현재 입력된 " + totalHelperNum + "명의 도우미를 호출하시겠습니까?") == false ) return false;
 
-
+    $.ajax({
+        type: 'POST',
+        url: './doSelectHelper',
+        dataType: 'json',
+        data:{
+            clientId:clientId
+        },
+        success:function(result){
+            alert('컨트롤러 실행됨');
+        }
+    });
+    return;
 
     var list = new Array();
 
@@ -206,7 +218,6 @@ console.log('최종 Json: ' + JSON.stringify(list))
         },
         success: function(result){
             alert('꿹');
-
         }
     });
 
