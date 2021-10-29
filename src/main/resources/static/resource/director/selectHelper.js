@@ -158,6 +158,7 @@ function DirectorSelectHelper__submit(form){
 
 
     var list = new Array();
+    var finalList = new Array();
 
     for(i = 1; i <= helperCount; i++){
         for(j = 1; j <= maxScheduleCount; j++){
@@ -174,7 +175,7 @@ function DirectorSelectHelper__submit(form){
                     var workDate = $('#workDate'+i+'-'+j).val();
                     var workStartTime = $('#workStartTime'+i+'-'+j).val();
                     var workFinishTime = $('#workFinishTime'+i+'-'+j).val();
-                    var helperNum = $('#helperNum'+i+'-1').val();z
+                    var helperNum = $('#helperNum'+i+'-1').val();
 
                     obj = {
                         packageCount : packageCount,
@@ -187,9 +188,11 @@ function DirectorSelectHelper__submit(form){
 
                     lowerList.push(obj);
                     list.push(lowerList);
+
                 }
             }
         }
+        list.push("/")
     }
     var jsonStr = JSON.stringify(list)
 

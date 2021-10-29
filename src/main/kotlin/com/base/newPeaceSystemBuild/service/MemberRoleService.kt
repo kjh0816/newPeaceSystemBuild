@@ -5,6 +5,8 @@ import com.base.newPeaceSystemBuild.util.Ut
 import com.base.newPeaceSystemBuild.vo.ResultData
 import com.base.newPeaceSystemBuild.vo.client.Family
 import com.base.newPeaceSystemBuild.vo.client.FuneralHall
+import com.base.newPeaceSystemBuild.vo.worker.Helper
+import com.base.newPeaceSystemBuild.vo.worker.HelperTemp
 import org.springframework.stereotype.Service
 
 
@@ -94,20 +96,32 @@ class MemberRoleService(
             return ResultData.from("F-1", "잘못된 접근입니다.")
         }
 
-        val str = jsonStr.drop(2).dropLast(2)
-        val jsonStringsArr = str.split("],[")
+        // 순수 Json 형식으로 정제한다.
+        val str = jsonStr.drop(1).dropLast(5)
+        val jsonStringsArr = str.split(",\"/\",")
 
-        println("jsonStringsArr: $jsonStringsArr")
-        println("jsonStringsArr: $jsonStringsArr")
-        println("jsonStringsArr: $jsonStringsArr")
-        println("jsonStringsArr: $jsonStringsArr")
-        println("jsonStringsArr: $jsonStringsArr")
-        println("jsonStringsArr: $jsonStringsArr")
-
-
-        for(i in jsonStringsArr.indices){
-
+        for(jsonStringArr in jsonStringsArr){
+            println("jsonStringArr: $jsonStringArr")
         }
+
+
+
+        val helpersTemp = mutableListOf<HelperTemp>()
+
+
+        // helperTemp 객체로 변환해서 list 에 담는다.
+        for(i in jsonStringsArr.indices){
+            val helperTemp = Ut.getObjFromJsonStr<HelperTemp>(jsonStringsArr[i])
+
+            // i + 1이 jsonStringsArr 의 size 를 초과하지 않을 때
+            if(i + 1 != jsonStringsArr.size){
+
+            }
+
+            helpersTemp.add(helperTemp)
+        }
+
+
         
         return ResultData.from("S-1", "완료")
 
