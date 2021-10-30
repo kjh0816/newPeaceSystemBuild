@@ -111,6 +111,18 @@ class MemberRoleService(
             // 마지막 String 배열은 항상 빈 값이므로 지운다.
             objBits.drop(objBits.size - 1)
 
+            // 히나의 일 단위를 helpersTemp 라는 배열에 담음
+            for(objBit in objBits){
+                val helperTemp = Ut.getObjFromJsonStr<HelperTemp>(objBit)
+
+                helpersTemp.add(helperTemp)
+            }
+            // 배열에 담긴 하나의 일 단위를 DB에 저장 후, SMS 발송
+
+            for(helperTemp in helpersTemp){
+                
+            }
+
         }
 
         
