@@ -106,10 +106,14 @@ class MemberRoleService(
 
             val str1 = jsonStringArr.drop(1) + ",["
 
-            val objBits = str1.split("],[")
+            val objBits: MutableList<String> = str1.split("],[") as MutableList<String>
 
+            println("objBits size(drop 전) ${objBits.size}")
+            println("objBits drop 전: $objBits")
             // 마지막 String 배열은 항상 빈 값이므로 지운다.
-            objBits.drop(objBits.size - 1)
+            objBits.removeAt(objBits.size - 1)
+            println("objBits size(drop 후) ${objBits.size}")
+            println("objBits drop 후: $objBits")
 
             // 히나의 일 단위를 helpersTemp 라는 배열에 담음
             for(objBit in objBits){
@@ -120,7 +124,7 @@ class MemberRoleService(
             // 배열에 담긴 하나의 일 단위를 DB에 저장 후, SMS 발송
 
             for(helperTemp in helpersTemp){
-                
+                println("helperTemp: $helperTemp")
             }
 
         }
