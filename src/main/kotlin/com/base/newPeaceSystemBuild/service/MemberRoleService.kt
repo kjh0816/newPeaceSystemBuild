@@ -108,12 +108,10 @@ class MemberRoleService(
 
             val objBits: MutableList<String> = str1.split("],[") as MutableList<String>
 
-            println("objBits size(drop 전) ${objBits.size}")
-            println("objBits drop 전: $objBits")
+
             // 마지막 String 배열은 항상 빈 값이므로 지운다.
             objBits.removeAt(objBits.size - 1)
-            println("objBits size(drop 후) ${objBits.size}")
-            println("objBits drop 후: $objBits")
+
 
             // 히나의 일 단위를 helpersTemp 라는 배열에 담음
             for(objBit in objBits){
@@ -124,7 +122,9 @@ class MemberRoleService(
             // 배열에 담긴 하나의 일 단위를 DB에 저장 후, SMS 발송
 
             for(helperTemp in helpersTemp){
-                println("helperTemp: $helperTemp")
+                // (1) helper의 일 단위에 대한 테이블 데이터 생성
+                // (2) 1번에서 만든 테이블의 id를 helper 객체를 테이블에 담을 때 같이 넣어준다.
+                // (3) SMS 발송
             }
 
         }
