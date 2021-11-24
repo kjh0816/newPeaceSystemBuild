@@ -111,6 +111,7 @@ class MemberRoleService(
 
             // 마지막 String 배열은 항상 빈 값이므로 지운다.
             objBits.removeAt(objBits.size - 1)
+            // 일감 별로 맞지 않는 부분 추가할 필요가 있다.
 
 
             // 히나의 일 단위를 helpersTemp 라는 배열에 담음
