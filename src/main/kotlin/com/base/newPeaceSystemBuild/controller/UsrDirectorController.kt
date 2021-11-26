@@ -1185,17 +1185,6 @@ class UsrDirectorController(
             @RequestParam(defaultValue = "") jsonStr: String
     ): String{
 
-
-
-        println("jsonStr: $jsonStr")
-        println("jsonStr: $jsonStr")
-        println("jsonStr: $jsonStr")
-        println("jsonStr: $jsonStr")
-        println("jsonStr: $jsonStr")
-
-
-
-
         return Ut.getJsonStrFromObj(memberRoleService.doSelectHelper(clientId, jsonStr))
     }
 

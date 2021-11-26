@@ -100,7 +100,6 @@ class MemberRoleService(
         val str = jsonStr.drop(1).dropLast(5)
         val jsonStringsArr = str.split(",\"/\",")
         
-
         for(jsonStringArr in jsonStringsArr){
             val helpersTemp = mutableListOf<HelperTemp>()
 
@@ -108,11 +107,8 @@ class MemberRoleService(
 
             val objBits: MutableList<String> = str1.split("],[") as MutableList<String>
 
-
             // 마지막 String 배열은 항상 빈 값이므로 지운다.
             objBits.removeAt(objBits.size - 1)
-            // 일감 별로 맞지 않는 부분 추가할 필요가 있다.
-
 
             // 히나의 일 단위를 helpersTemp 라는 배열에 담음
             for(objBit in objBits){

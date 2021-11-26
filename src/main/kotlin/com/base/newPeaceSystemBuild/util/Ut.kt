@@ -151,20 +151,10 @@ class Ut(
                     }
                     input.close()
                 }
-
-
-
-
-
-
-
                 return getObjFromJsonStr(result)
 
             } catch (e: Exception) {
 
-                println("Ut.sendSms함수가 Exception으로 빠짐")
-                println("Ut.sendSms함수가 Exception으로 빠짐")
-                println("Ut.sendSms함수가 Exception으로 빠짐")
                 e.printStackTrace()
                 val rb = Aligo__send__ResponseBody("Exception", e.localizedMessage, "-1", 0, 1, "msg")
 
